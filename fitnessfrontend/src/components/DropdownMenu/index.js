@@ -7,12 +7,12 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 let cx = classNames.bind(style);
 
 export default function DropdownMenu({ data }) {
-  const [dropdown, setDropdown] = useState();
-  const active = cx("active");
+  const [timeOut, setTimeOut] = useState("");
+
   const dropdownList = [
     {
       content: "Home",
-      path: "#",
+      path: "",
       icon: faCaretDown,
       children: [
         {
@@ -38,7 +38,7 @@ export default function DropdownMenu({ data }) {
     { content: "Service", path: "", icon: null, children: [] },
     {
       content: "Pages",
-      path: "#",
+      path: "",
       icon: faCaretDown,
       children: [
         {
@@ -54,6 +54,54 @@ export default function DropdownMenu({ data }) {
     { content: "News", path: "", icon: null, children: [] },
     { content: "Contacts", path: "", icon: null, children: [] },
   ];
+
+  //get the closet parent node through classname
+  const getParentByClassName = (currentNode, className) => {
+    if (currentNode) {
+      console.log(currentNode);
+      var currentClass = currentNode.className;
+      if (currentClass === className) {
+        return currentNode;
+      }
+
+      var nearestParentNode = currentNode.offsetParent;
+      if (nearestParentNode) {
+        if (nearestParentNode.className === className) {
+          return nearestParentNode;
+        }
+        return getParentByClassName(nearestParentNode, className);
+      }
+    }
+  };
+  // active dropdown when hover
+  const handleMouseEnterDropdown = (item) => (event) => {
+    if (item.children.length > 0) {
+      var menuItem = event.currentTarget;
+      if (menuItem) {
+        if (timeOut) {
+          clearTimeout(timeOut);
+          setTimeOut("");
+        }
+        menuItem.classList.add(cx("active"));
+      }
+    }
+  };
+
+  // deactive dropdown when leave
+  const handleMouseLeaveDropdown = (item) => (event) => {
+    if (item.children.length > 0) {
+      var menuItem = event.currentTarget;
+
+      if (menuItem) {
+        var timeOutFn = setTimeout(() => {
+          menuItem.classList.remove(cx("active"));
+
+          setTimeOut(timeOutFn);
+        }, 1000);
+      }
+    }
+  };
+
   return (
     <nav className={cx("nav-menu")}>
       <ul className={cx("nav-list")}>
@@ -62,13 +110,8 @@ export default function DropdownMenu({ data }) {
             <li
               key={index}
               className={item.children.length > 0 ? cx("dropdown") : ""}
-              onMouseEnter={(e) => {
-                if (item.children.length > 0) {
-                  var menuItem = e.currentTarget;
-                  setDropdown(menuItem);
-                  menuItem.classList.add(active);
-                }
-              }}
+              onMouseEnter={handleMouseEnterDropdown(item)}
+              onMouseLeave={handleMouseLeaveDropdown(item)}
             >
               <a href={item.path}>
                 {item.content}
@@ -78,13 +121,8 @@ export default function DropdownMenu({ data }) {
                 <ul>
                   {item.children.map((itemChild, index) => {
                     return (
-                      <li
-                        key={index}
-                        onMouseLeave={(e) => {
-                          dropdown.classList.remove(active);
-                        }}
-                      >
-                        <a href={itemChild.path}>{itemChild.content}</a>
+                      <li key={index}>
+                        <a href={item.path}>{itemChild.content}</a>
                       </li>
                     );
                   })}

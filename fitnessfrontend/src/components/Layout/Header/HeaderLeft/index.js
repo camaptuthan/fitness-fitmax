@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames/bind";
-import style from "./HeaderLeft.module.scss";
+import style from "../../../GlobalStyles/GlobalStyles.module.scss";
 import { faClockFour, faPhoneAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 

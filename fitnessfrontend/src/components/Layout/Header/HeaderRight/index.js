@@ -1,7 +1,7 @@
 import React from "react";
 
 import classNames from "classnames/bind";
-import style from "./HeaderRight.module.scss";
+import style from "../../../GlobalStyles/GlobalStyles.module.scss";
 import {
   faFacebookF,
   faInstagram,
@@ -24,10 +24,10 @@ export default function HeaderRight() {
       <form className={cx("search-form")}>
         <input
           type="search"
-          className={cx("search-field")}
+          className={cx("search-form__field")}
           placeholder="Search"
         />
-        <button type="submit" className={cx("search-submit")}>
+        <button type="submit" className={cx("search-form__submit")}>
           <i>
             <FontAwesomeIcon icon={faSearch} />
           </i>
