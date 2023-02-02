@@ -7,6 +7,8 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 let cx = classNames.bind(style);
 
 export default function DropdownMenu({ data }) {
+  const [dropdown, setDropdown] = useState();
+  const active = cx("active");
   const dropdownList = [
     {
       content: "Home",
@@ -56,7 +58,6 @@ export default function DropdownMenu({ data }) {
     <nav className={cx("nav-menu")}>
       <ul className={cx("nav-list")}>
         {dropdownList.map((item, index) => {
-          const active = cx("active");
           return (
             <li
               key={index}
@@ -64,10 +65,8 @@ export default function DropdownMenu({ data }) {
               onMouseEnter={(e) => {
                 if (item.children.length > 0) {
                   var menuItem = e.currentTarget;
+                  setDropdown(menuItem);
                   menuItem.classList.add(active);
-                  setTimeout(() => {
-                    menuItem.classList.remove(active);
-                  }, 500);
                 }
               }}
             >
@@ -79,7 +78,12 @@ export default function DropdownMenu({ data }) {
                 <ul>
                   {item.children.map((itemChild, index) => {
                     return (
-                      <li key={index}>
+                      <li
+                        key={index}
+                        onMouseLeave={(e) => {
+                          dropdown.classList.remove(active);
+                        }}
+                      >
                         <a href={itemChild.path}>{itemChild.content}</a>
                       </li>
                     );
