@@ -1,8 +1,7 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/scss/bootstrap-grid.scss";
 import "./GlobalStyles.module.scss";
-
 function GlobalStyles({ children }) {
-  return <div id="body">{children}</div>;
+  return <>{children}</>;
 }
 
 export default GlobalStyles;

@@ -1,6 +1,8 @@
 import React from "react";
-import classNames from "classnames/bind";
+import SocialList from "../../SocialList";
+
 import style from "../../GlobalStyles/GlobalStyles.module.scss";
+import classNames from "classnames/bind";
 let cx = classNames.bind(style);
 export default function Footer() {
   return (
@@ -16,28 +18,7 @@ export default function Footer() {
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             </p>
-            <ul className={cx("social-list")}>
-              <li>
-                <a target="_blank" href="https://www.facebook.com/rovadex">
-                  <i className="fa fa-facebook" aria-hidden="true"></i>
-                </a>
-              </li>
-              <li>
-                <a target="_blank" href="https://twitter.com/RovadexStudio">
-                  <i className="fa fa-twitter" aria-hidden="true"></i>
-                </a>
-              </li>
-              <li>
-                <a target="_blank" href="https://www.youtube.com/">
-                  <i className="fa fa-youtube" aria-hidden="true"></i>
-                </a>
-              </li>
-              <li>
-                <a target="_blank" href="https://www.instagram.com/rovadex">
-                  <i className="fa fa-instagram" aria-hidden="true"></i>
-                </a>
-              </li>
-            </ul>
+            <SocialList />
           </div>
           <div
             className={cx(
