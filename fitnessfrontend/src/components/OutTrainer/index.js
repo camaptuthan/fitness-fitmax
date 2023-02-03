@@ -3,9 +3,7 @@ import SocialList from "../SocialList";
 
 import bgContacts from "../../assets/img/bg-contacts.svg";
 
-import style from "../GlobalStyles/GlobalStyles.module.scss";
-import classNames from "classnames/bind";
-let cx = classNames.bind(style);
+import cx from "../ClassBinding";
 
 export default function OutTrainer() {
   const outTrainer = [

@@ -1,9 +1,7 @@
 import React from "react";
 import SocialList from "../../SocialList";
 
-import style from "../../GlobalStyles/GlobalStyles.module.scss";
-import classNames from "classnames/bind";
-let cx = classNames.bind(style);
+import cx from "../../ClassBinding";
 export default function Footer() {
   return (
     <footer>

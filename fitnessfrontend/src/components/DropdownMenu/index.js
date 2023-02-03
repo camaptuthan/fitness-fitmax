@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import classNames from "classnames/bind";
-import style from "./DropdownMenu.module.scss";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-
-let cx = classNames.bind(style);
+import cx from "../ClassBinding";
 
 export default function DropdownMenu({ data }) {
   const [timeOut, setTimeOut] = useState("");

@@ -1,13 +1,11 @@
 import React from "react";
-import classNames from "classnames/bind";
-import style from "../../GlobalStyles/GlobalStyles.module.scss";
 
 import logo from "../../../assets/img/logo.svg";
 import DropdownMenu from "../../DropdownMenu";
 import HeaderLeft from "./HeaderLeft";
 import HeaderRight from "./HeaderRight";
 
-let cx = classNames.bind(style);
+import cx from "../../ClassBinding";
 
 export default function Header() {
   return (

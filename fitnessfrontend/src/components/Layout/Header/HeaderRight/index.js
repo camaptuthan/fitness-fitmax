@@ -2,11 +2,9 @@ import React from "react";
 
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import classNames from "classnames/bind";
-import style from "../../../GlobalStyles/GlobalStyles.module.scss";
 import SocialList from "../../../SocialList";
-let cx = classNames.bind(style);
+
+import cx from "../../../ClassBinding";
 
 export default function HeaderRight() {
   return (

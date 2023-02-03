@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import Footer from "../Footer";
 import Header from "../Header";
 
-import style from "../../GlobalStyles/GlobalStyles.module.scss";
-import classNames from "classnames/bind";
-let cx = classNames.bind(style);
+import cx from "../../ClassBinding";
 
 export default function DefaultLayout({ children }) {
   // const [loaded, setLoaded] = useState(false);

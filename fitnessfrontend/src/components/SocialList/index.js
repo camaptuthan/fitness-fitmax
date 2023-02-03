@@ -7,9 +7,8 @@ import {
   faTwitter,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
-import classNames from "classnames/bind";
-import style from "../GlobalStyles/GlobalStyles.module.scss";
-let cx = classNames.bind(style);
+
+import cx from "../ClassBinding";
 
 export default function SocialList() {
   const socialList = [
