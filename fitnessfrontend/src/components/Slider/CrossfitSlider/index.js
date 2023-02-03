@@ -16,7 +16,7 @@ export default function CrossfitSlider() {
       <div className={cx("crossfit-slider")}>
         {slider.map((slider, index) => {
           return (
-            <div className={cx("crossfit-slide")}>
+            <div className={cx("crossfit-slide")} key={index}>
               <div className={cx("crossfit-slider-effect effect-1")}>
                 <div data-hover-only="true" className={cx("scene")}>
                   <span
