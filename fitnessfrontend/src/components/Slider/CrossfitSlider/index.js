@@ -13,7 +13,7 @@ export default function CrossfitSlider() {
   ];
   return (
     <section className={cx("s-crossfit-slider")}>
-      <div className={cx("crossfit-slider")}>
+      <div className={cx("s-crossfit-slider")}>
         {slider.map((slider, index) => {
           return (
             <div className={cx("crossfit-slide")} key={index}>
@@ -39,7 +39,7 @@ export default function CrossfitSlider() {
                 className={cx("crossfit-slide-bg")}
                 style={{ backgroundImage: `url(${slide1})` }}
               ></div>
-              <div className={cx("container")}>
+              <div className={cx({ "container ": true }, "container-style")}>
                 <div className={cx("crossfit-slide-cover")}>
                   <h2 className={cx("title")}>
                     push <span>yourself</span>
@@ -52,7 +52,7 @@ export default function CrossfitSlider() {
         })}
       </div>
       <div className={cx("slider-navigation")}>
-        <div className={cx({ "container ": true })}>
+        <div className={cx({ "container ": true }, "container-style")}>
           <div className={cx("slider-navigation-cover")}></div>
         </div>
       </div>

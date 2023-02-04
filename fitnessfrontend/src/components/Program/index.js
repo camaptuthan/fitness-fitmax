@@ -17,7 +17,7 @@ export default function Program() {
         className={cx("our-programs-effect")}
         style={{ backgroundImage: `url(${bgProgramssvg})` }}
       ></div>
-      <div className={cx({ "container ": true })}>
+      <div className={cx({ "container ": true }, "container")}>
         <h2 className={cx("title-decor")}>
           Our <span>Programs</span>
         </h2>
