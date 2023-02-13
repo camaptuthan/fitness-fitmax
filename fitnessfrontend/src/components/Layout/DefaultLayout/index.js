@@ -12,7 +12,7 @@ export default function DefaultLayout({ children }) {
   return (
     <>
       <Header />
-      <div>{children}</div>
+      {children}
       <Footer />
     </>
   );
