@@ -1,6 +1,6 @@
 package fivemonkey.com.fitnessbackend.entitties;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "category_blog", schema = "dbo")

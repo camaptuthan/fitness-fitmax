@@ -1,6 +1,6 @@
 package fivemonkey.com.fitnessbackend.entitties;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,7 +48,7 @@ public class Services {
     private List<Class> classes = new ArrayList<>();
 
 
-//    @OneToOne(mappedBy = "service")
-//    private Registration registration;
+    @OneToOne(mappedBy = "service")
+    private Registration registration;
 }
 
