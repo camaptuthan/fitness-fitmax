@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @NoArgsConstructor
@@ -31,12 +29,21 @@ public class Services {
     @Column(name = "created_date")
     private Date created_date;
 
-    @OneToMany(mappedBy = "service")
-    private List<CategoryService> categoryServices = new ArrayList<>();
-
     @ManyToOne
     @JoinColumn(name = "studio_id",referencedColumnName = "studio_id")
     private Studio studio;
+
+    @ManyToMany
+    @JoinTable(
+            name = "service_category",
+            joinColumns = {@JoinColumn(name = "service_id")},
+            inverseJoinColumns = {@JoinColumn(name = "category_id")}
+    )
+    List<Category> categoryList = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "assistant_email", referencedColumnName = "assistant_email")
+    private Assistant assistant;
 
     @OneToMany(mappedBy = "service")
     private List<Package> packages = new ArrayList<>();
@@ -47,8 +54,7 @@ public class Services {
     @OneToMany(mappedBy = "service")
     private List<Class> classes = new ArrayList<>();
 
-
-//    @OneToOne(mappedBy = "service")
-//    private Registration registration;
+    @OneToOne(mappedBy = "service")
+    private Registration registration;
 }
 

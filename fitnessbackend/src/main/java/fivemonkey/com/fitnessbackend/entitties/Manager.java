@@ -18,6 +18,11 @@ public class Manager {
     @Column(name = "manager_email")
     private String email;
 
-//    @OneToOne(mappedBy = "manager")
+    @OneToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "role_id")
+    private Role role;
 
+    @OneToOne
+    @JoinColumn(name = "studio_id", referencedColumnName = "studio_id")
+    private Studio studio;
 }

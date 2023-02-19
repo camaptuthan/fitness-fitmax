@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,6 +32,9 @@ public class Class {
     @Column(name = "duration")
     private int duration;
 
+    @Column(name = "description", columnDefinition = "TINYTEXT")
+    private String description;
+
     @Column(name = "price")
     private Double price;
 
@@ -44,4 +49,10 @@ public class Class {
     @JoinColumn(name = "service_id", referencedColumnName = "service_id")
     private Services service;
 
+    @OneToMany(mappedBy = "aClass")
+    private List<Session> sessions = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "trainer_email", referencedColumnName = "trainer_email")
+    private Trainer trainer;
 }

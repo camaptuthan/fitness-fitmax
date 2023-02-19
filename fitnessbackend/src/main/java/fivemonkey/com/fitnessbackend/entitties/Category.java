@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,9 +34,9 @@ public class Category {
     @Column(name = "status", columnDefinition = "BOOLEAN")
     private boolean status;
 
-    @OneToMany(mappedBy = "category")
-    private List<CategoryService> categoryServices = new ArrayList<>();
+    @ManyToMany(mappedBy = "categoryList")
+    private List<Blog> blogs = new ArrayList<>();
 
-    @OneToMany(mappedBy = "category_blog")
-    private List<CategoryBlog> categoryBlogs = new ArrayList<>();
+    @ManyToMany(mappedBy = "categoryList")
+    private List<Services> service = new ArrayList<>();
 }

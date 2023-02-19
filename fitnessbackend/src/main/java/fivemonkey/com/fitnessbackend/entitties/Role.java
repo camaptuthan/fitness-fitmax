@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -27,9 +28,18 @@ public class Role {
     @Column(name = "description", columnDefinition = "TINYTEXT")
     private String description;
 
-    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<User> users;
+    @OneToMany(mappedBy = "role")
+    private List<User> users = new ArrayList<>();
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "")
+    @OneToOne(mappedBy = "role")
+    private Manager manager;
+
+    @OneToOne(mappedBy = "role")
+    private Assistant assistant;
+
+    @OneToOne(mappedBy = "role")
+    private Trainer trainer;
+
+    @OneToOne(mappedBy = "role")
+    private Trainee trainee;
 }

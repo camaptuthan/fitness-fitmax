@@ -33,6 +33,10 @@ public class Registration {
     private User user;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "service_id", referencedColumnName = "service_id")
+    @JoinTable(name = "regis_serv",
+            joinColumns =
+                    { @JoinColumn(name = "registration_id", referencedColumnName = "registration_id") },
+            inverseJoinColumns =
+                    { @JoinColumn(name = "service_id", referencedColumnName = "service_id") })
     private Services service;
 }

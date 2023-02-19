@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.print.attribute.standard.MediaSize;
-import java.util.Date;
+import java.util.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,4 +38,12 @@ public class Blog {
     @ManyToOne
     @JoinColumn(name = "writer_email", referencedColumnName = "email")
     private User user;
+
+    @ManyToMany
+    @JoinTable(
+            name = "blog_category",
+            joinColumns = {@JoinColumn(name = "blog_id")},
+            inverseJoinColumns = {@JoinColumn(name = "category_id")}
+    )
+    List<Category> categoryList = new ArrayList<>();
 }

@@ -50,4 +50,7 @@ public class Studio {
 
     @OneToMany(mappedBy = "studio",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Services> services = new ArrayList<>();
+
+    @OneToOne(mappedBy = "studio")
+    private Manager manager;
 }

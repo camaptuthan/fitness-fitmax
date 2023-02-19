@@ -40,4 +40,8 @@ public class PersonalTraining {
     @ManyToOne
     @JoinColumn(name = "service_id", referencedColumnName = "service_id")
     private Services service;
+
+    @ManyToOne
+    @JoinColumn(name = "trainer_email", referencedColumnName = "trainer_email")
+    private Trainer trainer;
 }
