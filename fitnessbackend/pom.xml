@@ -14,7 +14,7 @@
     <name>fitnessbackend</name>
     <description>fitnessbackend</description>
     <properties>
-        <java.version>16</java.version>
+        <java.version>19</java.version>
     </properties>
     <dependencies>
         <dependency>
