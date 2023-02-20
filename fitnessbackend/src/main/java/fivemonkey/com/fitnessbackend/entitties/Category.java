@@ -21,24 +21,19 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    private int id;
+    private Long id;
 
-    @Column(name = "category_name")
+    @Column(name = "name")
     private String name;
 
     @Column(name = "description", columnDefinition = "TINYTEXT")
-    private String description;
+    private String des;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "created_date")
-    private Date date;
-
-    @Column(name = "status", columnDefinition = "BOOLEAN")
-    private boolean status;
-
+    //blog-category relationship
     @ManyToMany(mappedBy = "categoryList")
-    private List<Blog> blogs = new ArrayList<>();
+    private List<Blog> blogs;
 
+    //service-category relationship
     @ManyToMany(mappedBy = "categoryList")
-    private List<Services> service = new ArrayList<>();
+    private List<Services> services;
 }

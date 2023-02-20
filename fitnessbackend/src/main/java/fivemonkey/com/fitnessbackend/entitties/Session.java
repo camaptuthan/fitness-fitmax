@@ -28,7 +28,8 @@ public class Session {
     @Column(name = "date")
     private Date date;
 
-    @ManyToOne
+    //class-session relationship
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "class_id", referencedColumnName = "class_id")
     private Class aClass;
 }

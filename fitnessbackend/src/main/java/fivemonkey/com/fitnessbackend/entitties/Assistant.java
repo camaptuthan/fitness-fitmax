@@ -23,11 +23,13 @@ public class Assistant {
     @Column(name = "assistant_email")
     private String email;
 
+    //assistant-service relationship
     @OneToMany(mappedBy = "assistant")
-    private List<Services> services = new ArrayList<>();
+    private List<Services> services;
 
+    //assistant-role relationship
     @OneToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "role_id")
+    @JoinColumn(name = "role_id", referencedColumnName = "role_id", unique = true)
     private Role role;
 }
 

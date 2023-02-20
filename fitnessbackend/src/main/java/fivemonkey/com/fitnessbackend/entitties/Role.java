@@ -22,24 +22,29 @@ public class Role {
     @Column(name = "role_id")
     private Long id;
 
-    @Column(name = "role_name")
-    private String role_name;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "description", columnDefinition = "TINYTEXT")
-    private String description;
+    private String des;
 
+    //role-user relationship
     @OneToMany(mappedBy = "role")
-    private List<User> users = new ArrayList<>();
+    private List<User> users;
 
+    //manager-role relationship
     @OneToOne(mappedBy = "role")
     private Manager manager;
 
+    //assistant-role relationship
     @OneToOne(mappedBy = "role")
     private Assistant assistant;
 
+    //trainer-role relationship
     @OneToOne(mappedBy = "role")
     private Trainer trainer;
 
+    //trainee-role relationship
     @OneToOne(mappedBy = "role")
     private Trainee trainee;
 }

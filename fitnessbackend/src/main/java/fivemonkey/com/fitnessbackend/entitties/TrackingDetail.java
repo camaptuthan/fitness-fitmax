@@ -14,12 +14,12 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "tracking_detail", schema = "dbo")
+@Table(name = "trackingdetail", schema = "dbo")
 public class TrackingDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tracking_detail_id")
+    @Column(name = "trackingdetail_id")
     private Long id;
 
     @Column(name = "height")
@@ -43,20 +43,26 @@ public class TrackingDetail {
     @Column(name = "thigh")
     private Double thigh;
 
-    @ManyToMany
-    @JoinTable(
-            name = "trackingDetail_nutrition",
-            joinColumns = {@JoinColumn(name = "tracking_detail_id")},
-            inverseJoinColumns = {@JoinColumn(name = "nutrition_id")}
-    )
-    List<Nutrition> nutritionList = new ArrayList<>();
+    //tracking-trackingDetail relationship
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "tracking_id", referencedColumnName = "tracking_id")
+    private Tracking tracking;
 
-
-    @ManyToMany
+    //trackingDetail-exercise relationship
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "trackingDetail_exercise",
-            joinColumns = {@JoinColumn(name = "tracking_detail_id")},
+            name = "trackingdetail_exercise",
+            joinColumns = {@JoinColumn(name = "trackingdetail_id")},
             inverseJoinColumns = {@JoinColumn(name = "exercise_id")}
     )
-    List<Exercise> exercises = new ArrayList<>();
+    private List<Exercise> exercises;
+
+    //trackingDetail-nutrition relationship
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "trackingdetail_nutrition",
+            joinColumns = {@JoinColumn(name = "trackingdetail_id")},
+            inverseJoinColumns = {@JoinColumn(name = "nutrition_id")}
+    )
+    private List<Nutrition> nutritionList;
 }

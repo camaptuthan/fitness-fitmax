@@ -34,6 +34,7 @@ public class Exercise {
     @Column(name = "set")
     private int set;
 
+    //trackingDetail-exercise relationship
     @ManyToMany(mappedBy = "exercises")
-    private List<TrackingDetail> trackingDetails = new ArrayList<>();
+    private List<TrackingDetail> trackingDetails;
 }

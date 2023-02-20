@@ -32,11 +32,11 @@ public class Class {
     @Column(name = "duration")
     private int duration;
 
-    @Column(name = "description", columnDefinition = "TINYTEXT")
-    private String description;
-
     @Column(name = "price")
-    private Double price;
+    private Float price;
+
+    @Column(name = "description", columnDefinition = "TINYTEXT")
+    private String des;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
@@ -45,14 +45,17 @@ public class Class {
     @Column(name = "status", columnDefinition = "BOOLEAN")
     private boolean status;
 
-    @ManyToOne
+    //service-class relationship
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "service_id", referencedColumnName = "service_id")
-    private Services service;
+    private Services services;
 
-    @OneToMany(mappedBy = "aClass")
-    private List<Session> sessions = new ArrayList<>();
-
-    @ManyToOne
+    //trainer-class relationship
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "trainer_email", referencedColumnName = "trainer_email")
     private Trainer trainer;
+
+    //class-session relationship
+    @OneToMany(mappedBy = "aClass")
+    private List<Session> sessions;
 }

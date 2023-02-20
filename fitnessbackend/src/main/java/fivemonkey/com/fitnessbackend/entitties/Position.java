@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -28,6 +29,7 @@ public class Position {
     @Column(name = "description", columnDefinition = "TINYTEXT")
     private String description;
 
-    @ManyToMany(mappedBy = "position")
-    private Set<Trainer> trainer = new HashSet<>();
+    //trainer-position relationship
+    @ManyToMany(mappedBy = "positions")
+    private List<Trainer> trainers;
 }

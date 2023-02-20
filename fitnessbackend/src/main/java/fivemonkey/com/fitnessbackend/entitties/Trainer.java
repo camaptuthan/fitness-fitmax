@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.parameters.P;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,32 +24,37 @@ public class Trainer {
     private String email;
 
     @Column(name = "certificate")
-    private String certificate;
+    private String certi;
 
-    @Column(name = "exp")
+    @Column(name = "experience")
     private String exp;
 
     @Column(name = "status", columnDefinition = "BOOLEAN")
     private boolean status;
 
-    @OneToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "role_id")
-    private Role role;
+    //trainer-personalTraining relationship
+    @OneToMany(mappedBy = "trainer")
+    private List<PersonalTraining> personalTrainings;
 
-    @ManyToMany
+    //trainer-class relationship
+    @OneToMany(mappedBy = "trainer")
+    private List<Class> classes;
+
+    //trainer-position relationship
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "trainer_position",
-            joinColumns = {@JoinColumn(name = "trainer_id")},
+            joinColumns = {@JoinColumn(name = "trainer_email")},
             inverseJoinColumns = {@JoinColumn(name = "position_id")}
     )
-    Set<Position> position = new HashSet<>();
+    private List<Position> positions;
 
+    //trainer-tracking relationship
     @OneToMany(mappedBy = "trainer")
-    private List<PersonalTraining> personalTraining = new ArrayList<>();
+    private List<Tracking> trackings;
 
-    @OneToMany(mappedBy = "trainer")
-    private List<Class> classes = new ArrayList<>();
-
-    @OneToMany(mappedBy = "trainer")
-    private List<Tracking> trackings = new ArrayList<>();
+    //trainer-role relationship
+    @OneToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "role_id", unique = true)
+    private Role role;
 }

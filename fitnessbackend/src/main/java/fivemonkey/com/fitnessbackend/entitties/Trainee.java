@@ -28,10 +28,12 @@ public class Trainee {
     @Column(name = "weight")
     private Double weight;
 
-    @OneToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "role_id")
-    private Role role;
-
+    //trainee-tracking relationship
     @OneToMany(mappedBy = "trainee")
-    private List<Tracking> trackings = new ArrayList<>();
+    private List<Tracking> trackings;
+
+    //trainee-role relationship
+    @OneToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "role_id", unique = true)
+    private Role role;
 }

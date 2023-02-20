@@ -15,20 +15,23 @@ public class PersonalTraining {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "PT_id")
+    @Column(name = "personaltraining_id")
     private Long id;
+
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "slot")
     private int slot;
 
     @Column(name = "price")
-    private Double price;
+    private Float price;
 
     @Column(name = "duration")
     private int duration;
 
-    @Column(name = "descripiton", columnDefinition = "TINYTEXT")
-    private String description;
+    @Column(name = "description", columnDefinition = "TINYTEXT")
+    private String des;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
@@ -37,10 +40,12 @@ public class PersonalTraining {
     @Column(name = "status", columnDefinition = "BOOLEAN")
     private boolean status;
 
-    @ManyToOne
+    //service-personalTraining relationship
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "service_id", referencedColumnName = "service_id")
-    private Services service;
+    private Services services;
 
+    //trainer-personalTraining relationship
     @ManyToOne
     @JoinColumn(name = "trainer_email", referencedColumnName = "trainer_email")
     private Trainer trainer;
