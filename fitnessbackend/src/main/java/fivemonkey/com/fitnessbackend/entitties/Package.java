@@ -21,14 +21,17 @@ public class Package {
     @Column(name = "package_id")
     private Long id;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "duration")
     private int duration;
 
     @Column(name = "price")
-    private Double price;
+    private Float price;
 
     @Column(name = "description", columnDefinition = "TINYTEXT")
-    private String description;
+    private String des;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
@@ -37,8 +40,8 @@ public class Package {
     @Column(name = "status", columnDefinition = "BOOLEAN")
     private boolean status;
 
-    @ManyToOne
+    //service-package relationship
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "service_id", referencedColumnName = "service_id")
-    private Services service;
-
+    private Services services;
 }

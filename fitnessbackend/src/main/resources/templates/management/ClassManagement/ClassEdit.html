@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<!-- Mirrored from appstack.bootlab.io/dashboard-default.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 18 Feb 2022 07:08:06 GMT -->
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<!-- /Added by HTTrack -->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description"
+	content="Responsive Bootstrap 5 Admin &amp; Dashboard Template">
+<meta name="author" content="Bootlab">
+
+<title>List Movie</title>
+
+<link rel="canonical" href="dashboard-default.html" />
+<link rel="shortcut icon" th:href="@{/templates/management/img/favicon.ico}">
+
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&amp;display=swap"
+	rel="stylesheet">
+
+<link class="js-stylesheet" th:href="@{/templates/management/css/light.css}"
+	rel="stylesheet">
+
+<link class="js-stylesheet" th:href="@{/templates/management/css/employee.css}"
+	rel="stylesheet">
+</head>
+
+<body data-theme="default" data-layout="fluid"
+	data-sidebar-position="left" data-sidebar-behavior="sticky">
+	<div class="wrapper">
+		<th:block th:insert="~{management/fragments/sidebar}"></th:block>
+		<div class="main">
+			<th:block th:insert="~{management/fragments/topbar}"></th:block>
+			<main class="content">
+
+				<h2>Edit employee</h2>
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header text-center">
+							
+							<h5 class="card-title">Account information</h5>
+						</div>
+						<div class="card-body">
+							<form method="post" th:action="@{/templates/management/employee/edit}"
+								th:object="${editMemberDTO}" enctype="multipart/form-data">
+								<input class="form-control form-control-lg d-none" type="text"
+									name="id" th:field="*{id}" placeholder="Enter your name" />
+								<div class="mb-3">
+									<label class="form-label">Account <span
+										class="text-danger">*</span></label> <input
+										class="form-control form-control-lg" type="text"
+										name="account" th:field="*{account}"
+										placeholder="Enter your name" readonly />
+									<div class="alert alert-warning p-1"
+										th:if="${#fields.hasErrors('account')}" th:errors="*{account}"></div>
+
+								</div>
+								<label class="form-label">Password <span
+									class="text-danger">*</span></label>
+								<div class="input-group">
+									<input class="form-control form-control-lg" type="text"
+										id="pass" name="password" th:field="*{password}"
+										placeholder="Enter your password" />
+									<div class="input-group-append">
+										<span class="input-group-text"><i
+											class="fa-solid fa-eye-slash p-2" id="eye1"></i></span>
+									</div>
+
+								</div>
+								<div class="alert alert-warning p-1"
+									th:if="${#fields.hasErrors('password')}"
+									th:errors="*{password}"></div>
+								<div class="mb-3"></div>
+
+								<label class="form-label">Confirm Password <span
+									class="text-danger">*</span></label>
+								<div class="input-group">
+									<input class="form-control form-control-lg" type="text"
+										id="confirmPass" name="confirmPassword"
+										th:field="*{confirmPassword}"
+										placeholder="Enter your password" />
+									<div class="input-group-append">
+										<span class="input-group-text"><i
+											class="fa-solid fa-eye-slash p-2" id="eye2"></i></span>
+									</div>
+
+								</div>
+								<div class="alert alert-warning p-1"
+									th:if="${#fields.hasErrors('confirmPassword')}"
+									th:errors="*{confirmPassword}"></div>
+								<div class="mb-3"></div>
+
+								<div class="mb-3">
+									<label class="form-label">Full name <span
+										class="text-danger">*</span></label> <input
+										class="form-control form-control-lg" type="text"
+										name="fullName" th:field="*{fullName}"
+										placeholder="Enter your full name" />
+									<div class="alert alert-warning p-1"
+										th:if="${#fields.hasErrors('fullName')}"
+										th:errors="*{fullName}"></div>
+								</div>
+								<div class="mb-3">
+									<label class="form-label">Date of birth <span
+										class="text-danger">*</span></label> <input
+										class="form-control form-control-lg" type="date"
+										name="dateOfBirth" th:field="*{dateOfBirth}"
+										placeholder="Enter your date of birth" />
+									<div class="alert alert-warning p-1"
+										th:if="${#fields.hasErrors('dateOfBirth')}"
+										th:errors="*{dateOfBirth}"></div>
+								</div>
+								<div class="mb-3">
+									<input type="radio" th:field="*{gender}" th:value="MALE" /> <label
+										th:text="Nam"></label> <input type="radio"
+										th:field="*{gender}" th:value="FEMALE" /> <label th:text="Nữ"></label>
+									<div class="alert alert-warning p-1"
+										th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></div>
+								</div>
+								<div class="mb-3">
+									<label class="form-label">Email <span
+										class="text-danger">*</span></label> <input
+										class="form-control form-control-lg" type="email" name="email"
+										th:field="*{email}" placeholder="Enter your email" />
+									<div class="alert alert-warning p-1"
+										th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+								</div>
+								<div class="mb-3">
+									<label class="form-label">Identity card <span
+										class="text-danger">*</span></label> <input
+										class="form-control form-control-lg" type="text"
+										name="identityCard" th:field="*{identityCard}"
+										placeholder="Enter your identity card" readonly />
+									<div class="alert alert-warning p-1"
+										th:if="${#fields.hasErrors('identityCard')}"
+										th:errors="*{identityCard}"></div>
+								</div>
+								<div class="mb-3">
+									<label class="form-label">Phone number <span
+										class="text-danger">*</span></label> <input
+										class="form-control form-control-lg" type="text"
+										name="phoneNumber" th:field="*{phoneNumber}"
+										placeholder="Enter your phone number" />
+									<div class="alert alert-warning p-1"
+										th:if="${#fields.hasErrors('phoneNumber')}"
+										th:errors="*{phoneNumber}"></div>
+								</div>
+								<div class="mb-3">
+									<label class="form-label">Address</label> <input
+										class="form-control form-control-lg" type="text"
+										name="address" th:field="*{address}"
+										placeholder="Enter your address" />
+									<div class="alert alert-warning p-1"
+										th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+								</div>
+								<div class="mb-3">
+									<label class="form-label w-100">File input</label> <input
+										type="file" th:field="*{image}" id="fine-uploader-gallery" accept="image/*">
+								</div>
+								<button type="submit" class="btn btn-lg btn-primary">Submit</button>
+								<a class="btn btn-lg btn-primary ml-1">Back</a>
+							</form>
+						</div>
+					</div>
+				</div>
+
+			</main>
+
+			<th:block th:insert="~{management/fragments/footer}"></th:block>
+		</div>
+	</div>
+	<script
+		src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script
+		src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"
+		type="text/javascript"></script>
+	<script th:src="@{/templates/management/js/app.js}"></script>
+	<script th:src="@{/templates/management/js/index.js}"></script>
+
+</body>
+
+</html>

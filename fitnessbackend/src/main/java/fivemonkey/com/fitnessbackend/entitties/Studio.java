@@ -32,9 +32,6 @@ public class Studio {
     @Column(name = "district")
     private String district;
 
-    @Column(name = "road")
-    private String road;
-
     @Column(name = "contact")
     private String contact;
 
@@ -45,12 +42,16 @@ public class Studio {
     @Column(name = "status", columnDefinition = "BOOLEAN")
     private boolean status;
 
-    @OneToMany(mappedBy = "studio",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<User> users = new ArrayList<>();
+    //studio-user relationship
+    @OneToMany(mappedBy = "studio")
+    private List<User> users;
 
-    @OneToMany(mappedBy = "studio",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<Services> services = new ArrayList<>();
+    //studio-service relationship
+    @OneToMany(mappedBy = "studio")
+    private List<Services> services;
 
-    @OneToOne(mappedBy = "studio")
+    //studio-manager relationship
+    @OneToOne
+    @JoinColumn(name = "manager_email", referencedColumnName = "manager_email", unique = true)
     private Manager manager;
 }

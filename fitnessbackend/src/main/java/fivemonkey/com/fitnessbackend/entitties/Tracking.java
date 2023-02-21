@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.catalina.LifecycleState;
 
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,12 +27,17 @@ public class Tracking {
     @Column(name = "created_date")
     private Date created_date;
 
-    @ManyToOne
+    //trainer-tracking relationship
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "trainer_email", referencedColumnName = "trainer_email")
     private Trainer trainer;
 
-    @ManyToOne
+    //trainee-tracking relationship
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "trainee_email", referencedColumnName = "trainee_email")
     private Trainee trainee;
 
+    //tracking-trackingDetail relationship
+    @OneToMany(mappedBy = "tracking")
+    private List<TrackingDetail> trackingDetails;
 }

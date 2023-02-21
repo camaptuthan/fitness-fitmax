@@ -1,12 +1,15 @@
 package fivemonkey.com.fitnessbackend.entitties;
 
 import javax.persistence.*;
+
+import jdk.dynalink.linker.LinkerServices;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,18 +28,19 @@ public class Registration {
     @Column(name = "registration_date")
     private Date date;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "started_date")
+    private Date startDate;
+
     @Column(name = "status", columnDefinition = "BOOLEAN")
     private boolean status;
 
-    @ManyToOne
+    //user-registration relationship
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_email", referencedColumnName = "email")
     private User user;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "regis_serv",
-            joinColumns =
-                    { @JoinColumn(name = "registration_id", referencedColumnName = "registration_id") },
-            inverseJoinColumns =
-                    { @JoinColumn(name = "service_id", referencedColumnName = "service_id") })
-    private Services service;
+    //registration-service relationship
+//    @OneToMany(mappedBy = "registration")
+//    private List<Services> services;
 }

@@ -34,7 +34,7 @@ public class Nutrition {
     @Column(name = "quantity")
     private int quantity;
 
+    //trackingDetail-nutrition relationship
     @ManyToMany(mappedBy = "nutritionList")
-    private List<TrackingDetail> trackingDetails = new ArrayList<>();
-
+    private List<TrackingDetail> trackingDetails;
 }

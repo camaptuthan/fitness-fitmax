@@ -18,11 +18,16 @@ import java.util.List;
 @Table(name = "user",schema = "dbo")
 public class User {
 
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     @Id
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
     @Column(name = "first_name")
@@ -34,35 +39,42 @@ public class User {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone")
     private String phone;
 
     @Column(name = "avatar")
-    private String avatarUrl;
+    private String avatar;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "created_at")
-    private Date createdAt;
+    @Column(name = "created_date")
+    private Date date;
 
     @Column(name = "status", columnDefinition = "BOOLEAN")
     private boolean status;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Blog> blogs;
-
-    @ManyToOne
-    @JoinColumn(name = "studio_id", referencedColumnName = "studio_id")
-    private Studio studio;
-
-    @ManyToOne
+    //role-user relationship
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
 
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
+    //studio-user relationship
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "studio_id", referencedColumnName = "studio_id")
+    private Studio studio;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //user-blog relationship
+    @OneToMany(mappedBy = "user")
+    private List<Blog> blogs;
+
+    //user-registration relationship
+    @OneToMany(mappedBy = "user")
     private List<Registration> registrations;
+
+    //user-user(manager) relationship
+    @OneToMany(mappedBy = "user")
+    private List<User> users;
+
+    @ManyToOne
+    @JoinColumn(name = "managed_by", referencedColumnName = "email")
+    private User user;
 }

@@ -33,15 +33,18 @@ public class Blog {
     @Column(name = "status", columnDefinition = "BOOLEAN")
     private boolean status;
 
-    @ManyToOne
+    //user-blog relationship
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "writer_email", referencedColumnName = "email")
     private User user;
 
-    @ManyToMany
+    //blog-category relationship
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "blog_category",
             joinColumns = {@JoinColumn(name = "blog_id")},
             inverseJoinColumns = {@JoinColumn(name = "category_id")}
     )
-    List<Category> categoryList = new ArrayList<>();
+    private List<Category> categoryList;
+
 }

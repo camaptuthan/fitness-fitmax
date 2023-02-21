@@ -20,41 +20,46 @@ public class Services {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "service_id")
-    private Long service_id;
+    private Long id;
 
-    @Column(name = "service_name")
+    @Column(name = "name")
     private String name;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "created_date")
-    private Date created_date;
+    @Column(name = "status", columnDefinition = "BOOLEAN")
+    private boolean status;
 
-    @ManyToOne
-    @JoinColumn(name = "studio_id",referencedColumnName = "studio_id")
+    //studio-service relationship
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "studio_id", referencedColumnName = "studio_id")
     private Studio studio;
 
-    @ManyToMany
+    //service-category relationship
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "service_category",
             joinColumns = {@JoinColumn(name = "service_id")},
             inverseJoinColumns = {@JoinColumn(name = "category_id")}
     )
-    List<Category> categoryList = new ArrayList<>();
+    private List<Category> categoryList;
 
-    @ManyToOne
+    //registration-service relationship
+
+
+    //service-package relationship
+    @OneToMany(mappedBy = "services")
+    private List<Package> packages;
+
+    //service-personalTraining relationship
+    @OneToMany(mappedBy = "services")
+    private List<PersonalTraining> personalTrainings;
+
+    //service-class relationship
+    @OneToMany(mappedBy = "services")
+    private List<Class> classes;
+
+    //assistant-service relationship
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "assistant_email", referencedColumnName = "assistant_email")
     private Assistant assistant;
-
-    @OneToMany(mappedBy = "service")
-    private List<Package> packages = new ArrayList<>();
-
-    @OneToMany(mappedBy = "service")
-    private List<PersonalTraining> personalTrainings = new ArrayList<>();
-
-    @OneToMany(mappedBy = "service")
-    private List<Class> classes = new ArrayList<>();
-
-    @OneToOne(mappedBy = "service")
-    private Registration registration;
 }
 
