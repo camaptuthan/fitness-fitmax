@@ -8,7 +8,10 @@ public class HomeController {
 
     @GetMapping("/index")
     public String home(){
-        return "trainer";
+        return "/management/classmanagement/classlist";
     }
+
+
+
 
 }
