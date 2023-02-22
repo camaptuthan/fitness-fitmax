@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Fitmax - Services</title>
+  <!-- =================== META =================== -->
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <th:block th:insert="~{fragments/head::link}"></th:block>>
+</head>
+
+<body id="home">
+<!--================ PRELOADER ================-->
+<div class="preloader-cover">
+  <div id="cube-loader">
+    <div class="caption">
+      <div class="cube-loader">
+        <div class="cube loader-1"></div>
+        <div class="cube loader-2"></div>
+        <div class="cube loader-4"></div>
+        <div class="cube loader-3"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--============== PRELOADER END ==============-->
+
+<!-- ================= HEADER ================= -->
+<div th:include="fragments/header.html"></div>
+<!-- =============== HEADER END =============== -->
+
+<!-- =============== HEADER-TITLE =============== -->
+<section class="s-header-title" style="background-image: url(static/img/bg-1-min.png);">
+  <div class="container">
+    <h1 class="title">Services</h1>
+    <ul class="breadcrambs">
+      <li><a href="index-2.html">Home</a></li>
+      <li>Services</li>
+    </ul>
+  </div>
+</section>
+<!-- ============= HEADER-TITLE END ============= -->
+
+<!-- ================ S-CROSSFIT ================ -->
+<section class="s-crossfit">
+  <div class="container">
+    <img th:src="@{/img/group-circle-2.svg}" alt="img" class="crossfit-icon-1">
+    <img th:src="@{/img/line-red-1.svg}" alt="img" class="crossfit-icon-2">
+    <img th:src="@{/img/tringle-about-top.svg}" alt="img" class="crossfit-icon-3">
+    <h2 class="title-decor">Welcome To <span>Crossfit</span></h2>
+    <p class="slogan">Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor tincidunt lorem ut, venenatis dapibus miq.</p>
+    <div class="row">
+      <div class="col-md-4 crossfit-col">
+        <div class="crossfit-item">
+          <img th:src="@{/img/serv-1.svg}" alt="img">
+          <h3>body bulding</h3>
+          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+          <a class="btn" href="program.html">view Schedule</a>
+        </div>
+      </div>
+      <div class="col-md-4 crossfit-col">
+        <div class="crossfit-item">
+          <img th:src="@{/img/serv-2.svg}" alt="img">
+          <h3>group workouts</h3>
+          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+          <a class="btn" href="program.html">view Schedule</a>
+        </div>
+      </div>
+      <div class="col-md-4 crossfit-col">
+        <div class="crossfit-item">
+          <img th:src="@{/img/serv-3.svg}" alt="img">
+          <h3>boxing</h3>
+          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+          <a class="btn" href="program.html">view Schedule</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ============== S-CROSSFIT END ============== -->
+
+<!-- ============== S-OUR-PROGRAMS ============== -->
+<div th:include="fragments/home_program.html"></div>
+<!-- ============ S-OUR-PROGRAMS END ============ -->
+
+<!-- ============== S-CLUB-CARDS ============== -->
+<div th:include="fragments/club_card.html"></div>
+<!-- ============ S-CLUB-CARDS END ============ -->
+
+<!-- ============ S-CROSSFIT-BANNER ============ -->
+<section class="s-crossfit-banner">
+  <div class="crossfit-banner-left" style="background-image: url(static/img/crossmax-2.jpg);"></div>
+  <div class="crossfit-banner-right">
+    <div class="text-top">open</div>
+    <h2>crossmax</h2>
+    <div class="text-bottom">free open <a href="program.html">training</a></div>
+  </div>
+</section>
+<!-- ========== S-CROSSFIT-BANNER END ========== -->
+
+<!-- =========== S-TRAINING-SCHEDULE =========== -->
+<section class="s-training-schedule" style="background-image: url(static/img/bg-table-1.svg);">
+  <div class="container">
+    <h2 class="title-decor">Training <span>Schedule</span></h2>
+    <p class="slogan">Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor tincidunt lorem ut, venenatis dapibus miq.</p>
+    <div class="training-schedule-cover">
+      <h3 class="training-schedule-top">1-7 APRIL, 2019</h3>
+      <div class="training-schedule-table">
+        <table>
+          <thead>
+          <th></th>
+          <th>monday</th>
+          <th>tuesday</th>
+          <th>wednesday</th>
+          <th>thursday</th>
+          <th>friday</th>
+          <th>saturday</th>
+          <th>sunday</th>
+          </thead>
+          <tbody>
+          <tr>
+            <td>9-00</td>
+            <td>
+              <h4>body bulding</h4>
+              <div class="date">9-00 – 11:00</div>
+              <div class="name">Mark Klark</div>
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+              <h4>boxing</h4>
+              <div class="date">9-00 – 11:00</div>
+              <div class="name">Mark Klark</div>
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+              <h4>boxing</h4>
+              <div class="date">9-00 – 11:00</div>
+              <div class="name">Mark Klark</div>
+            </td>
+          </tr>
+          <tr>
+            <td>10-00</td>
+            <td></td>
+            <td>
+              <h4>yoga</h4>
+              <div class="date">10-00 – 12:00</div>
+              <div class="name">Mark Klark</div>
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+              <h4>body bulding</h4>
+              <div class="date">10-00 – 12:00</div>
+              <div class="name">Mark Klark</div>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>11-00</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <h4>body bulding</h4>
+              <div class="date">11-00 – 12:00</div>
+              <div class="name">Mark Klark</div>
+            </td>
+            <td></td>
+            <td>
+              <h4>body bulding</h4>
+              <div class="date">11-00 – 12:00</div>
+              <div class="name">Mark Klark</div>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>12-00</td>
+            <td>
+              <h4>body bulding</h4>
+              <div class="date">12-00 – 13:00</div>
+              <div class="name">Mark Klark</div>
+            </td>
+            <td></td>
+            <td>
+              <h4>karate</h4>
+              <div class="date">12-00 – 13:00</div>
+              <div class="name">Mark Klark</div>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <h4>karate</h4>
+              <div class="date">12-00 – 13:00</div>
+              <div class="name">Mark Klark</div>
+            </td>
+          </tr>
+          <tr>
+            <td>13-00</td>
+            <td></td>
+            <td>
+              <h4>body bulding</h4>
+              <div class="date">13-00 – 14:00</div>
+              <div class="name">Mark Klark</div>
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+              <h4>body bulding</h4>
+              <div class="date">13-00 – 14:00</div>
+              <div class="name">Mark Klark</div>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ========= S-TRAINING-SCHEDULE END ========= -->
+
+<!-- ================== FOOTER ================== -->
+<div th:include="fragments/footer.html"></div>
+<!-- ================ FOOTER END ================ -->
+
+<!--=================== TO TOP ===================-->
+<a class="to-top" href="#home">
+  <i class="fa fa-chevron-up" aria-hidden="true"></i>
+</a>
+<!--================= TO TOP END =================-->
+
+<!--=================== SCRIPT	===================-->
+<script th:src="@{/js/jquery-2.2.4.min.js}"></script>
+<script th:src="@{/js/scripts.js}"></script>
+</body>
+
+</html>
