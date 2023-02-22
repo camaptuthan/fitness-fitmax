@@ -1,6 +1,5 @@
 package fivemonkey.com.fitnessbackend.dto;
 
-import fivemonkey.com.fitnessbackend.entitties.Services;
 import lombok.*;
 
 import java.util.Date;

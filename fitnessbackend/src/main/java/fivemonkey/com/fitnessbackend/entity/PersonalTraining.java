@@ -1,10 +1,7 @@
-package fivemonkey.com.fitnessbackend.entitties;
+package fivemonkey.com.fitnessbackend.entity;
 
 import javax.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
@@ -13,22 +10,25 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name = "package", schema = "dbo")
-public class Package {
+@Table(name = "personal_training", schema = "dbo")
+public class PersonalTraining {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "package_id")
+    @Column(name = "personaltraining_id")
     private Long id;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "duration")
-    private int duration;
+    @Column(name = "slot")
+    private int slot;
 
     @Column(name = "price")
     private Float price;
+
+    @Column(name = "duration")
+    private int duration;
 
     @Column(name = "description", columnDefinition = "TINYTEXT")
     private String des;
@@ -40,8 +40,13 @@ public class Package {
     @Column(name = "status", columnDefinition = "BOOLEAN")
     private boolean status;
 
-    //service-package relationship
+    //service-personalTraining relationship
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "service_id", referencedColumnName = "service_id")
     private Services services;
+
+    //trainer-personalTraining relationship
+    @ManyToOne
+    @JoinColumn(name = "trainer_email", referencedColumnName = "trainer_email")
+    private Trainer trainer;
 }

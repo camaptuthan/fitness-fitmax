@@ -1,13 +1,11 @@
-package fivemonkey.com.fitnessbackend.controllers;
+package fivemonkey.com.fitnessbackend.controller;
 
-import fivemonkey.com.fitnessbackend.dto.ClassDTO;
-import fivemonkey.com.fitnessbackend.entitties.Clazz;
+import fivemonkey.com.fitnessbackend.entity.Clazz;
 import fivemonkey.com.fitnessbackend.services.ClassService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +27,11 @@ public class ClassController {
     @GetMapping("add-class")
     public String addClass(Model model){
 
-        return "management/classmanagement/classadd";
+        return "management/classmanagement/classlist";
     }
+
+
+
+
+
 }

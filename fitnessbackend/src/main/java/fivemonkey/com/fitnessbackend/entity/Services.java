@@ -1,4 +1,4 @@
-package fivemonkey.com.fitnessbackend.entitties;
+package fivemonkey.com.fitnessbackend.entity;
 
 import javax.persistence.*;
 import lombok.AllArgsConstructor;

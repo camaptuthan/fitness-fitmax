@@ -1,6 +1,6 @@
-package fivemonkey.com.fitnessbackend.controllers;
+package fivemonkey.com.fitnessbackend.controller;
 
-import fivemonkey.com.fitnessbackend.entitties.Studio;
+import fivemonkey.com.fitnessbackend.entity.Studio;
 import fivemonkey.com.fitnessbackend.services.StudioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -1,6 +1,6 @@
 package fivemonkey.com.fitnessbackend.services;
 
-import fivemonkey.com.fitnessbackend.entitties.Studio;
+import fivemonkey.com.fitnessbackend.entity.Studio;
 import fivemonkey.com.fitnessbackend.repository.StudioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;

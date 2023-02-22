@@ -1,4 +1,4 @@
-package fivemonkey.com.fitnessbackend.entitties;
+package fivemonkey.com.fitnessbackend.entity;
 
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -14,12 +13,12 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "nutrition", schema = "dbo")
-public class Nutrition {
+@Table(name = "exercise", schema = "dbo")
+public class Exercise {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "nutrition_id")
+    @Column(name = "exercise_id")
     private Long id;
 
     @Column(name = "name")
@@ -28,13 +27,13 @@ public class Nutrition {
     @Column(name = "description", columnDefinition = "MEDIUMTEXT")
     private String description;
 
-    @Column(name = "calorie")
-    private int calorie;
+    @Column(name = "rep")
+    private int rep;
 
-    @Column(name = "quantity")
-    private int quantity;
+    @Column(name = "set")
+    private int set;
 
-    //trackingDetail-nutrition relationship
-    @ManyToMany(mappedBy = "nutritionList")
+    //trackingDetail-exercise relationship
+    @ManyToMany(mappedBy = "exercises")
     private List<TrackingDetail> trackingDetails;
 }

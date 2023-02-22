@@ -1,4 +1,4 @@
-package fivemonkey.com.fitnessbackend.controllers;
+package fivemonkey.com.fitnessbackend.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

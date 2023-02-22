@@ -1,13 +1,11 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
-import fivemonkey.com.fitnessbackend.dto.ClassDTO;
-import fivemonkey.com.fitnessbackend.entitties.Clazz;
+import fivemonkey.com.fitnessbackend.entity.Clazz;
 import fivemonkey.com.fitnessbackend.repository.ClassRepository;
 import fivemonkey.com.fitnessbackend.services.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,8 +30,8 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public Clazz save(Clazz c) {
-        return null;
+    public String save(Clazz c) {
+           return "";
     }
 
     @Override
@@ -41,13 +39,10 @@ public class ClassServiceImpl implements ClassService {
         return null;
     }
 
-    @Override
-    public Clazz delete(Long id) {
-        return null;
-    }
+
 
     @Override
-    public Clazz enableById(Long id) {
+    public String enableById(Long id) {
         return null;
     }
 }

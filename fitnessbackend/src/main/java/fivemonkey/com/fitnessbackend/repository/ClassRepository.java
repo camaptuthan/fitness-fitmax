@@ -1,6 +1,6 @@
 package fivemonkey.com.fitnessbackend.repository;
 
-import fivemonkey.com.fitnessbackend.entitties.Clazz;
+import fivemonkey.com.fitnessbackend.entity.Clazz;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
