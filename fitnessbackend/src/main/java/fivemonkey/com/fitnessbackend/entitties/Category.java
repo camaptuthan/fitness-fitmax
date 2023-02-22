@@ -30,10 +30,10 @@ public class Category {
     private String des;
 
     //blog-category relationship
-    @ManyToMany(mappedBy = "categoryList")
+    @ManyToMany(mappedBy = "categoryList", fetch = FetchType.LAZY)
     private List<Blog> blogs;
 
     //service-category relationship
-    @ManyToMany(mappedBy = "categoryList")
+    @ManyToMany(mappedBy = "categoryList", fetch = FetchType.LAZY)
     private List<Services> services;
 }

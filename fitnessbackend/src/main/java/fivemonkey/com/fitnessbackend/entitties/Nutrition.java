@@ -35,6 +35,6 @@ public class Nutrition {
     private int quantity;
 
     //trackingDetail-nutrition relationship
-    @ManyToMany(mappedBy = "nutritionList")
+    @ManyToMany(mappedBy = "nutritionList", fetch = FetchType.LAZY)
     private List<TrackingDetail> trackingDetails;
 }

@@ -39,6 +39,9 @@ public class Studio {
     @Column(name = "created_date")
     private Date date;
 
+    @Column(name = "description", columnDefinition = "MEDIUMTEXT")
+    private String des;
+
     @Column(name = "status", columnDefinition = "BOOLEAN")
     private boolean status;
 

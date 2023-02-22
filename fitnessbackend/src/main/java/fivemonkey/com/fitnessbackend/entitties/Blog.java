@@ -34,12 +34,12 @@ public class Blog {
     private boolean status;
 
     //user-blog relationship
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_email", referencedColumnName = "email")
     private User user;
 
     //blog-category relationship
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "blog_category",
             joinColumns = {@JoinColumn(name = "blog_id")},

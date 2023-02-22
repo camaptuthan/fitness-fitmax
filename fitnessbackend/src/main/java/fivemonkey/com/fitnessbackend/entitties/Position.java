@@ -30,6 +30,6 @@ public class Position {
     private String description;
 
     //trainer-position relationship
-    @ManyToMany(mappedBy = "positions")
+    @ManyToMany(mappedBy = "positions", fetch = FetchType.LAZY)
     private List<Trainer> trainers;
 }

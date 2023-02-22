@@ -41,7 +41,7 @@ public class Trainer {
     private List<Class> classes;
 
     //trainer-position relationship
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "trainer_position",
             joinColumns = {@JoinColumn(name = "trainer_email")},

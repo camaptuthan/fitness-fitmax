@@ -29,12 +29,12 @@ public class Services {
     private boolean status;
 
     //studio-service relationship
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "studio_id", referencedColumnName = "studio_id")
     private Studio studio;
 
     //service-category relationship
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "service_category",
             joinColumns = {@JoinColumn(name = "service_id")},
@@ -43,7 +43,8 @@ public class Services {
     private List<Category> categoryList;
 
     //registration-service relationship
-
+    @OneToMany(mappedBy = "services")
+    private List<Registration> registrations;
 
     //service-package relationship
     @OneToMany(mappedBy = "services")
@@ -58,7 +59,7 @@ public class Services {
     private List<Class> classes;
 
     //assistant-service relationship
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "assistant_email", referencedColumnName = "assistant_email")
     private Assistant assistant;
 }

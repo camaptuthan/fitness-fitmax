@@ -41,12 +41,12 @@ public class PersonalTraining {
     private boolean status;
 
     //service-personalTraining relationship
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id", referencedColumnName = "service_id")
     private Services services;
 
     //trainer-personalTraining relationship
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "trainer_email", referencedColumnName = "trainer_email")
     private Trainer trainer;
 }

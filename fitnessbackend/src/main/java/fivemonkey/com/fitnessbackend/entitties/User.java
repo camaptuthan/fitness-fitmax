@@ -53,12 +53,12 @@ public class User {
     private boolean status;
 
     //role-user relationship
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
 
     //studio-user relationship
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "studio_id", referencedColumnName = "studio_id")
     private Studio studio;
 
@@ -74,7 +74,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<User> users;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "managed_by", referencedColumnName = "email")
     private User user;
 }

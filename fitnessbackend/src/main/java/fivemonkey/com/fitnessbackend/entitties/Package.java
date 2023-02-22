@@ -41,7 +41,7 @@ public class Package {
     private boolean status;
 
     //service-package relationship
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id", referencedColumnName = "service_id")
     private Services services;
 }

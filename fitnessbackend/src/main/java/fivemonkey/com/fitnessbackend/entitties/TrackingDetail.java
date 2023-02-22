@@ -44,12 +44,12 @@ public class TrackingDetail {
     private Double thigh;
 
     //tracking-trackingDetail relationship
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "tracking_id", referencedColumnName = "tracking_id")
     private Tracking tracking;
 
     //trackingDetail-exercise relationship
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "trackingdetail_exercise",
             joinColumns = {@JoinColumn(name = "trackingdetail_id")},
@@ -58,7 +58,7 @@ public class TrackingDetail {
     private List<Exercise> exercises;
 
     //trackingDetail-nutrition relationship
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "trackingdetail_nutrition",
             joinColumns = {@JoinColumn(name = "trackingdetail_id")},

@@ -36,11 +36,12 @@ public class Registration {
     private boolean status;
 
     //user-registration relationship
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_email", referencedColumnName = "email")
     private User user;
 
     //registration-service relationship
-//    @OneToMany(mappedBy = "registration")
-//    private List<Services> services;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_id", referencedColumnName = "service_id")
+    private Services services;
 }
