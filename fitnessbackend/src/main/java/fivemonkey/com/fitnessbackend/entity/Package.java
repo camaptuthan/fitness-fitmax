@@ -1,11 +1,11 @@
 package fivemonkey.com.fitnessbackend.entity;
 
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -30,18 +30,18 @@ public class Package {
     @Column(name = "price")
     private Float price;
 
-    @Column(name = "description", columnDefinition = "TINYTEXT")
+    @Column(name = "description", columnDefinition = "text")
     private String des;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
     private Date date;
 
-    @Column(name = "status", columnDefinition = "BOOLEAN")
+    @Column(name = "status", nullable = false)
     private boolean status;
 
     //service-package relationship
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id", referencedColumnName = "service_id")
     private Services services;
 }

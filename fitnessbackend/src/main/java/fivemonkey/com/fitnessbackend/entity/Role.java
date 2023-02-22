@@ -1,11 +1,9 @@
 package fivemonkey.com.fitnessbackend.entity;
-
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import javax.persistence.*;
 import java.util.List;
 
 @NoArgsConstructor
@@ -24,26 +22,11 @@ public class Role {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description", columnDefinition = "TINYTEXT")
+    @Column(name = "description", columnDefinition = "text")
     private String des;
 
     //role-user relationship
     @OneToMany(mappedBy = "role")
     private List<User> users;
 
-    //manager-role relationship
-    @OneToOne(mappedBy = "role")
-    private Manager manager;
-
-    //assistant-role relationship
-    @OneToOne(mappedBy = "role")
-    private Assistant assistant;
-
-    //trainer-role relationship
-    @OneToOne(mappedBy = "role")
-    private Trainer trainer;
-
-    //trainee-role relationship
-    @OneToOne(mappedBy = "role")
-    private Trainee trainee;
 }

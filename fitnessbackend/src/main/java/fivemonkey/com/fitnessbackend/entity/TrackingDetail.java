@@ -1,11 +1,9 @@
 package fivemonkey.com.fitnessbackend.entity;
-
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import javax.persistence.*;
 import java.util.List;
 
 @NoArgsConstructor
@@ -43,12 +41,12 @@ public class TrackingDetail {
     private Double thigh;
 
     //tracking-trackingDetail relationship
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "tracking_id", referencedColumnName = "tracking_id")
     private Tracking tracking;
 
     //trackingDetail-exercise relationship
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "trackingdetail_exercise",
             joinColumns = {@JoinColumn(name = "trackingdetail_id")},
@@ -57,11 +55,16 @@ public class TrackingDetail {
     private List<Exercise> exercises;
 
     //trackingDetail-nutrition relationship
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "trackingdetail_nutrition",
             joinColumns = {@JoinColumn(name = "trackingdetail_id")},
             inverseJoinColumns = {@JoinColumn(name = "nutrition_id")}
     )
     private List<Nutrition> nutritionList;
+
+    //trackingDetail-session relationship
+    @OneToOne
+    @JoinColumn(name = "schedule_id", referencedColumnName = "schedule_id", unique = true)
+    private Schedule schedule;
 }

@@ -1,13 +1,10 @@
 package fivemonkey.com.fitnessbackend.entity;
-
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.List;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -24,10 +21,11 @@ public class Assistant {
     @OneToMany(mappedBy = "assistant")
     private List<Services> services;
 
-    //assistant-role relationship
+    //assistant-user relationship
     @OneToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "role_id", unique = true)
-    private Role role;
+    @MapsId
+    @JoinColumn(name = "assistant_email")
+    private User user;
 }
 
 

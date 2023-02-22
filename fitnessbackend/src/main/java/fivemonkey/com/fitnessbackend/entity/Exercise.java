@@ -1,10 +1,12 @@
 package fivemonkey.com.fitnessbackend.entity;
 
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+
+import javax.persistence.*;
 
 import java.util.List;
 
@@ -24,16 +26,16 @@ public class Exercise {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description", columnDefinition = "MEDIUMTEXT")
+    @Column(name = "description", columnDefinition = "text")
     private String description;
 
     @Column(name = "rep")
     private int rep;
 
-    @Column(name = "set")
+    @Column(name = "[set]")
     private int set;
 
     //trackingDetail-exercise relationship
-    @ManyToMany(mappedBy = "exercises")
+    @ManyToMany(mappedBy = "exercises", fetch = FetchType.LAZY)
     private List<TrackingDetail> trackingDetails;
 }

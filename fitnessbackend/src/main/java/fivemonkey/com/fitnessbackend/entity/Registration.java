@@ -1,12 +1,11 @@
 package fivemonkey.com.fitnessbackend.entity;
-
 import javax.persistence.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -30,15 +29,16 @@ public class Registration {
     @Column(name = "started_date")
     private Date startDate;
 
-    @Column(name = "status", columnDefinition = "BOOLEAN")
+    @Column(name = "status", nullable = false)
     private boolean status;
 
-    //user-registration relationship
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_email", referencedColumnName = "email")
-    private User user;
-
     //registration-service relationship
-//    @OneToMany(mappedBy = "registration")
-//    private List<Services> services;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_id", referencedColumnName = "service_id")
+    private Services services;
+
+    //trainee-registration relationship
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_email", referencedColumnName = "trainee_email")
+    private Trainee trainee;
 }

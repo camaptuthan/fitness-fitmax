@@ -23,23 +23,23 @@ public class Blog {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "description", columnDefinition = "MEDIUMTEXT")
+    @Column(name = "description", columnDefinition = "text")
     private String description;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
     private Date date;
 
-    @Column(name = "status", columnDefinition = "BOOLEAN")
+    @Column(name = "status", nullable = false)
     private boolean status;
 
     //user-blog relationship
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_email", referencedColumnName = "email")
     private User user;
 
     //blog-category relationship
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "blog_category",
             joinColumns = {@JoinColumn(name = "blog_id")},

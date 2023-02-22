@@ -1,12 +1,14 @@
 package fivemonkey.com.fitnessbackend.entity;
 
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
+import javax.persistence.*;
 import java.util.List;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,10 +26,10 @@ public class Position {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description", columnDefinition = "TINYTEXT")
+    @Column(name = "description", columnDefinition = "text")
     private String description;
 
     //trainer-position relationship
-    @ManyToMany(mappedBy = "positions")
+    @ManyToMany(mappedBy = "positions", fetch = FetchType.LAZY)
     private List<Trainer> trainers;
 }

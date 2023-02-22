@@ -1,10 +1,12 @@
 package fivemonkey.com.fitnessbackend.entity;
 
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+
+import javax.persistence.*;
 
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class Nutrition {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description", columnDefinition = "MEDIUMTEXT")
+    @Column(name = "description", columnDefinition = "text")
     private String description;
 
     @Column(name = "calorie")
@@ -34,6 +36,6 @@ public class Nutrition {
     private int quantity;
 
     //trackingDetail-nutrition relationship
-    @ManyToMany(mappedBy = "nutritionList")
+    @ManyToMany(mappedBy = "nutritionList", fetch = FetchType.LAZY)
     private List<TrackingDetail> trackingDetails;
 }
