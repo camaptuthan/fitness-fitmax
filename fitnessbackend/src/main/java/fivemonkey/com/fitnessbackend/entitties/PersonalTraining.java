@@ -30,14 +30,15 @@ public class PersonalTraining {
     @Column(name = "duration")
     private int duration;
 
-    @Column(name = "description", columnDefinition = "TINYTEXT")
+    @Column(name = "description", columnDefinition = "text")
+
     private String des;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
     private Date date;
 
-    @Column(name = "status", columnDefinition = "BOOLEAN")
+    @Column(name = "status", nullable = false)
     private boolean status;
 
     //service-personalTraining relationship

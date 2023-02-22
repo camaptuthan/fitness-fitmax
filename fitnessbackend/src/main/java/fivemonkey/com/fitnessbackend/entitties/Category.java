@@ -1,13 +1,12 @@
 package fivemonkey.com.fitnessbackend.entitties;
 
 
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.ArrayList;
-import java.util.Date;
+
+import javax.persistence.*;
 import java.util.List;
 
 @NoArgsConstructor
@@ -26,7 +25,7 @@ public class Category {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description", columnDefinition = "TINYTEXT")
+    @Column(name = "description", columnDefinition = "text")
     private String des;
 
     //blog-category relationship

@@ -1,13 +1,11 @@
 package fivemonkey.com.fitnessbackend.entitties;
 
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Date;
+import javax.persistence.*;
 import java.util.List;
 
 @NoArgsConstructor
@@ -32,8 +30,9 @@ public class Trainee {
     @OneToMany(mappedBy = "trainee")
     private List<Tracking> trackings;
 
-    //trainee-role relationship
+    //trainee-user relationship
     @OneToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "role_id", unique = true)
-    private Role role;
+    @MapsId
+    @JoinColumn(name = "trainee_email")
+    private User user;
 }

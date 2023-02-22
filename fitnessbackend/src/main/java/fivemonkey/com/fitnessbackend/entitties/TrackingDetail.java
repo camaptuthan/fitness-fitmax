@@ -1,12 +1,11 @@
 package fivemonkey.com.fitnessbackend.entitties;
 
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.List;
 
 @NoArgsConstructor
@@ -65,4 +64,9 @@ public class TrackingDetail {
             inverseJoinColumns = {@JoinColumn(name = "nutrition_id")}
     )
     private List<Nutrition> nutritionList;
+
+    //trackingDetail-session relationship
+    @OneToOne
+    @JoinColumn(name = "schedule_id", referencedColumnName = "schedule_id", unique = true)
+    private Schedule schedule;
 }

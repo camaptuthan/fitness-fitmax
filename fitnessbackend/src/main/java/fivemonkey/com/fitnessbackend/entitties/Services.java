@@ -1,12 +1,12 @@
 package fivemonkey.com.fitnessbackend.entitties;
 
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.*;
+import javax.persistence.*;
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -25,7 +25,7 @@ public class Services {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "status", columnDefinition = "BOOLEAN")
+    @Column(name = "status", nullable = false)
     private boolean status;
 
     //studio-service relationship

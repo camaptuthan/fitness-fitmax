@@ -1,12 +1,11 @@
 package fivemonkey.com.fitnessbackend.entitties;
 
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.catalina.LifecycleState;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 

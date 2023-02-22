@@ -22,8 +22,9 @@ public class Manager {
     @OneToOne(mappedBy = "manager")
     private Studio studio;
 
-    //manager-role relationship
+    //manager-user relationship
     @OneToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "role_id", unique = true)
-    private Role role;
+    @MapsId
+    @JoinColumn(name = "manager_email")
+    private User user;
 }

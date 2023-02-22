@@ -1,10 +1,11 @@
 package fivemonkey.com.fitnessbackend.entitties;
-import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.List;
 
 @NoArgsConstructor
@@ -25,7 +26,7 @@ public class Trainer {
     @Column(name = "experience")
     private String exp;
 
-    @Column(name = "status", columnDefinition = "BOOLEAN")
+    @Column(name = "status", nullable = false)
     private boolean status;
 
     //trainer-personalTraining relationship
@@ -49,8 +50,9 @@ public class Trainer {
     @OneToMany(mappedBy = "trainer")
     private List<Tracking> trackings;
 
-    //trainer-role relationship
+    //trainer-user relationship
     @OneToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "role_id", unique = true)
-    private Role role;
+    @MapsId
+    @JoinColumn(name = "trainer_email")
+    private User user;
 }

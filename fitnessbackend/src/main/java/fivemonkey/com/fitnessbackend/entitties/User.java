@@ -1,11 +1,11 @@
 package fivemonkey.com.fitnessbackend.entitties;
 
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "user",schema = "dbo")
+@Table(name = "[user]",schema = "dbo")
 public class User {
 
     public User(String email, String password) {
@@ -49,7 +49,7 @@ public class User {
     @Column(name = "created_date")
     private Date date;
 
-    @Column(name = "status", columnDefinition = "BOOLEAN")
+    @Column(name = "status", nullable = false)
     private boolean status;
 
     //role-user relationship
@@ -70,11 +70,23 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Registration> registrations;
 
-    //user-user(manager) relationship
-    @OneToMany(mappedBy = "user")
-    private List<User> users;
+    //user-manager relationship
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Manager manager;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "managed_by", referencedColumnName = "email")
-    private User user;
+    //assistant-user relationship
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Assistant assistant;
+
+    //trainee-user relationship
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Trainee trainee;
+
+    //trainer-user relationship
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Trainer trainer;
 }

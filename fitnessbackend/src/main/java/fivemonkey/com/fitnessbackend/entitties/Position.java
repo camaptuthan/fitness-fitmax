@@ -1,14 +1,12 @@
 package fivemonkey.com.fitnessbackend.entitties;
 
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
+import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,7 +24,7 @@ public class Position {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description", columnDefinition = "TINYTEXT")
+    @Column(name = "description", columnDefinition = "text")
     private String description;
 
     //trainer-position relationship

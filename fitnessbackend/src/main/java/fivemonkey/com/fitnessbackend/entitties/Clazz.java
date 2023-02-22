@@ -1,11 +1,11 @@
 package fivemonkey.com.fitnessbackend.entitties;
 
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -34,14 +34,14 @@ public class Clazz {
     @Column(name = "price")
     private Float price;
 
-    @Column(name = "description", columnDefinition = "TINYTEXT")
+    @Column(name = "description", columnDefinition = "text")
     private String des;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
     private Date date;
 
-    @Column(name = "status", columnDefinition = "BOOLEAN")
+    @Column(name = "status", nullable = false)
     private boolean status;
 
     //service-class relationship

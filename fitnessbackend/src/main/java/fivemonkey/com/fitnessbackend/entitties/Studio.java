@@ -1,12 +1,11 @@
 package fivemonkey.com.fitnessbackend.entitties;
 
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -39,10 +38,10 @@ public class Studio {
     @Column(name = "created_date")
     private Date date;
 
-    @Column(name = "description", columnDefinition = "MEDIUMTEXT")
+    @Column(name = "description", columnDefinition = "text")
     private String des;
 
-    @Column(name = "status", columnDefinition = "BOOLEAN")
+    @Column(name = "status", nullable = false)
     private boolean status;
 
     //studio-user relationship

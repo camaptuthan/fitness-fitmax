@@ -23,14 +23,14 @@ public class Blog {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "description", columnDefinition = "MEDIUMTEXT")
+    @Column(name = "description", columnDefinition = "text")
     private String description;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
     private Date date;
 
-    @Column(name = "status", columnDefinition = "BOOLEAN")
+    @Column(name = "status", nullable = false)
     private boolean status;
 
     //user-blog relationship

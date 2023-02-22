@@ -1,12 +1,11 @@
 package fivemonkey.com.fitnessbackend.entitties;
 
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.List;
 
 @NoArgsConstructor
@@ -25,7 +24,7 @@ public class Nutrition {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description", columnDefinition = "MEDIUMTEXT")
+    @Column(name = "description", columnDefinition = "text")
     private String description;
 
     @Column(name = "calorie")
