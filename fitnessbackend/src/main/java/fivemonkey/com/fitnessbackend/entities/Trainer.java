@@ -1,4 +1,4 @@
-package fivemonkey.com.fitnessbackend.entity;
+package fivemonkey.com.fitnessbackend.entities;
 
 import javax.persistence.*;
 

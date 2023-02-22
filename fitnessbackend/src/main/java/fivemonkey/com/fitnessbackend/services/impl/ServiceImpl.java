@@ -1,6 +1,6 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
-import fivemonkey.com.fitnessbackend.entity.Services;
+import fivemonkey.com.fitnessbackend.entities.Services;
 import fivemonkey.com.fitnessbackend.repository.ServiceRepository;
 import fivemonkey.com.fitnessbackend.services.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;

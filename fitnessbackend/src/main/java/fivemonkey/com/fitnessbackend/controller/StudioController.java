@@ -1,23 +1,19 @@
 package fivemonkey.com.fitnessbackend.controller;
 
-import fivemonkey.com.fitnessbackend.entity.Studio;
-import fivemonkey.com.fitnessbackend.services.StudioService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 @Controller
 @RequestMapping("/studio")
 public class StudioController {
 
-    @Autowired
-    private StudioService studioService;
+//    @Autowired
+//    private StudioService studioService;
 
-    @GetMapping("/studios")
-    public List<Studio> getStudio(){
-        return studioService.getStudios();
-    }
+//    @GetMapping("/studios")
+//    public List<Studio> getStudio(){
+//        return studioService.getStudios();
+//    }
 
 
 //    @GetMapping("/addstudios")
@@ -30,16 +26,16 @@ public class StudioController {
 //                          @RequestParam(name="description") String description){
 //        studioService.addStudio(new Studio(id,name,city,district,road,contact,description));
 //    }
-    @PostMapping("/insertstudios")
-    public void insertStudio(@RequestBody(required = false) Studio studio) {
-        studioService.insertStudio(studio);
-    }
-//    @PostMapping("/updatestudio")
-//    public Studio updateStudio(@RequestBody(required = false) Studio studio){
-//        return studioService.updateStudio(studio);
+//    @PostMapping("/insertstudios")
+//    public void insertStudio(@RequestBody(required = false) Studio studio) {
+//        studioService.insertStudio(studio);
 //    }
-    @GetMapping("/findstudios")
-    public List<Studio> findStudios(@RequestParam(name="city") String studioCity){
-        return studioService.findStudio(studioCity);
-    }
+////    @PostMapping("/updatestudio")
+////    public Studio updateStudio(@RequestBody(required = false) Studio studio){
+////        return studioService.updateStudio(studio);
+////    }
+//    @GetMapping("/findstudios")
+//    public List<Studio> findStudios(@RequestParam(name="city") String studioCity){
+//        return studioService.findStudio(studioCity);
+//    }
 }

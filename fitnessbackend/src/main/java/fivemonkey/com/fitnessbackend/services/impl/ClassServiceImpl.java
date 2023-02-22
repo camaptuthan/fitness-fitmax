@@ -1,6 +1,6 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
-import fivemonkey.com.fitnessbackend.entity.Clazz;
+import fivemonkey.com.fitnessbackend.entities.Clazz;
 import fivemonkey.com.fitnessbackend.repository.ClassRepository;
 import fivemonkey.com.fitnessbackend.services.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +39,10 @@ public class ClassServiceImpl implements ClassService {
         return null;
     }
 
+    @Override
+    public void deleteClass(Long id) {
+
+    }
 
 
     @Override

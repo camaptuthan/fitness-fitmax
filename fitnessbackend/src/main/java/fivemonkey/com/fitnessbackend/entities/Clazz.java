@@ -1,21 +1,25 @@
-package fivemonkey.com.fitnessbackend.entity;
+package fivemonkey.com.fitnessbackend.entities;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import lombok.*;
-
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "personal_training", schema = "dbo")
-public class PersonalTraining {
+@Table(name = "class", schema = "dbo")
+public class Clazz {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "personaltraining_id")
+    @Column(name = "class_id")
     private Long id;
 
     @Column(name = "name")
@@ -24,14 +28,13 @@ public class PersonalTraining {
     @Column(name = "slot")
     private int slot;
 
-    @Column(name = "price")
-    private Float price;
-
     @Column(name = "duration")
     private int duration;
 
-    @Column(name = "description", columnDefinition = "text")
+    @Column(name = "price")
+    private Float price;
 
+    @Column(name = "description", columnDefinition = "text")
     private String des;
 
     @Temporal(TemporalType.DATE)
@@ -41,13 +44,20 @@ public class PersonalTraining {
     @Column(name = "status", nullable = false)
     private boolean status;
 
-    //service-personalTraining relationship
+    //service-class relationship
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id", referencedColumnName = "service_id")
     private Services services;
 
-    //trainer-personalTraining relationship
-    @ManyToOne(fetch = FetchType.LAZY)
+    //trainer-class relationship
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "trainer_email", referencedColumnName = "trainer_email")
     private Trainer trainer;
+
+    //class-session relationship
+    @OneToMany(mappedBy = "aClass")
+    private List<Session> sessions;
+
+
+    private String img;
 }

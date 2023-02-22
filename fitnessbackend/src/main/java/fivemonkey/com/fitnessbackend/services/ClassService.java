@@ -1,6 +1,6 @@
 package fivemonkey.com.fitnessbackend.services;
 
-import fivemonkey.com.fitnessbackend.entity.Clazz;
+import fivemonkey.com.fitnessbackend.entities.Clazz;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ public interface ClassService {
     String save(Clazz c);
     Clazz update(Clazz c);
 
-
+     void deleteClass(Long id);
 
     String enableById(Long id);
 }
