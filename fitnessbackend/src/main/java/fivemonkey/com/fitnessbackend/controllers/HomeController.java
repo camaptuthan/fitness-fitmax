@@ -6,12 +6,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-    @GetMapping("/index")
-    public String home(){
-        return "/management/classmanagement/classlist";
+
+
+
+    @GetMapping("/trainer")
+    public String trainer(){
+        return "/trainer";
     }
 
-
+    @GetMapping("/program")
+    public String program(){
+        return "/program";
+    }
+    @GetMapping("/service")
+    public String service(){
+        return "/service";
+    }
 
 
 }

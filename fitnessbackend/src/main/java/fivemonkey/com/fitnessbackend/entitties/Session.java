@@ -31,5 +31,5 @@ public class Session {
     //class-session relationship
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "class_id", referencedColumnName = "class_id")
-    private Class aClass;
+    private Clazz aClass;
 }

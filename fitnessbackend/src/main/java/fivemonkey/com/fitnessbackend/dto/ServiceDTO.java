@@ -1,4 +1,5 @@
 package fivemonkey.com.fitnessbackend.dto;
 
-public class UserDto {
+public class ServiceDTO {
+
 }

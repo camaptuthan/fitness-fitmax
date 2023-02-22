@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +15,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "class", schema = "dbo")
-public class Class {
+public class Clazz {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,4 +57,7 @@ public class Class {
     //class-session relationship
     @OneToMany(mappedBy = "aClass")
     private List<Session> sessions;
+
+
+    private String img;
 }

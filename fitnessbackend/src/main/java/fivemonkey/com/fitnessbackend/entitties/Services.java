@@ -55,7 +55,7 @@ public class Services {
 
     //service-class relationship
     @OneToMany(mappedBy = "services")
-    private List<Class> classes;
+    private List<Clazz> classes;
 
     //assistant-service relationship
     @ManyToOne(cascade = CascadeType.ALL)
