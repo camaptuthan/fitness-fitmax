@@ -8,7 +8,8 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 
 public class FitnessbackendApplication {
-    public static void main(String[] args) {
+    public static void main(
+            String[] args) {
         SpringApplication.run(FitnessbackendApplication.class, args);
     }
 
