@@ -35,4 +35,8 @@ public class Trainee {
     @MapsId
     @JoinColumn(name = "trainee_email")
     private User user;
+
+    //trainee-registration relationship
+    @OneToMany(mappedBy = "trainee")
+    private List<Registration> registrations;
 }

@@ -66,10 +66,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Blog> blogs;
 
-    //user-registration relationship
-    @OneToMany(mappedBy = "user")
-    private List<Registration> registrations;
-
     //user-manager relationship
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn

@@ -32,13 +32,13 @@ public class Registration {
     @Column(name = "status", nullable = false)
     private boolean status;
 
-    //user-registration relationship
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_email", referencedColumnName = "email")
-    private User user;
-
     //registration-service relationship
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id", referencedColumnName = "service_id")
     private Services services;
+
+    //trainee-registration relationship
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_email", referencedColumnName = "trainee_email")
+    private Trainee trainee;
 }
