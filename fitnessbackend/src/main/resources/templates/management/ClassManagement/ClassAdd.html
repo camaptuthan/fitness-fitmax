@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+<head>
+    <meta charset="UTF-8">
 
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script th:src="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js}"></script>
-<script th:src="@{//code.jquery.com/jquery-1.11.1.min.js}"></script>
+    <!-- =================== META =================== -->
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link th:href="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css}" rel="stylesheet" id="bootstrap-css">
+    <script th:src="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js}"></script>
+    <script th:src="@{//code.jquery.com/jquery-1.11.1.min.js}"></script>
+</head>
+
 <!------ Include the above in your HEAD tag ---------->
 
-<form class="form-horizontal">
+<form class="form-horizontal" th:action="@{/save-class}" method="post"  th:object="${clazz}">
     <fieldset>
 
         <!-- Form Name -->
@@ -15,19 +25,15 @@
 
         <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-4 control-label" for="id" > ID</label>
-            <div class="col-md-4">
-                <input id="id" name="id" placeholder=" ID" class="form-control input-md" required=""
-                       type="text">
+            <label class="col-md-4 control-label"  > Form Add Class</label>
 
-            </div>
         </div>
 
         <!-- Text input-->
-        <div class="form-group">
+        <div  class="form-group">
             <label class="col-md-4 control-label" for="name">NAME</label>
             <div class="col-md-4">
-                <input id="name" name="name" placeholder=" NAME" class="form-control input-md"
+                <input id="name"  name="name"  th:value="${clazz.name}"  placeholder=" NAME" class="form-control input-md"
                        required="" type="text">
 
             </div>
@@ -36,37 +42,58 @@
 
         <!-- Select Basic -->
         <div class="form-group">
-            <label class="col-md-4 control-label" for="categorie"> CATEGORY</label>
+            <label class="col-md-4 control-label" for="service"> Service Type</label>
             <div class="col-md-4">
-                <select id="categorie" name="categorie" class="form-control">
+                <select id="service"  name="service" class="form-control">
+                    <option th:each="list:${list}" th:value="${list.id}"  th:text="${list.name}"  >
+
+                    </option>
                 </select>
             </div>
         </div>
 
-        <
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="des">Description</label>
+            <div class="col-md-4">
+                <input id="des" name="des" th:value="${clazz.des}" placeholder=" NAME" class="form-control input-md"
+                       required="" type="text">
+
+            </div>
+
+        </div>
         <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-4 control-label" for="alert">Price</label>
+            <label class="col-md-4 control-label" for="price">Price</label>
             <div class="col-md-4">
-                <input id="alert" name="alert" placeholder="Price" class="form-control input-md" required=""
-                       type="text">
+                <input id="price" th:value="${clazz.price}" name="price" placeholder="Price" class="form-control input-md" required=""
+                       type="number">
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="duration">Duration</label>
+            <div class="col-md-4">
+                <input id="duration" th:value="${clazz.duration}" name="duration" placeholder="Duration" class="form-control input-md" required=""
+                       type="number">
 
             </div>
         </div>
 
 
         <!-- Text input-->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="author">AUTHOR</label>
-            <div class="col-md-4">
-                <input id="author" name="author" placeholder="AUTHOR" class="form-control input-md" required=""
-                       type="text">
 
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="trainer"> Trainer</label>
+            <div class="col-md-4">
+                <select  id="trainer" name="trainer" class="form-control">
+                    <option th:each="c:${listTrainer}" th:value="${clazz.id}"  th:text="${c.email}"  >
+
+                    </option>
+                </select>
             </div>
         </div>
 
-
-        <!-- File Button -->
         <div class="form-group">
             <label class="col-md-4 control-label" for="filebutton">Img</label>
             <div class="col-md-4">
@@ -81,6 +108,9 @@
                 <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Save</button>
             </div>
         </div>
+
+
+
 
     </fieldset>
 </form>

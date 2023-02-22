@@ -1,16 +1,20 @@
 package fivemonkey.com.fitnessbackend.services;
 
+import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.entities.Clazz;
 
 import java.util.List;
 
 
 public interface ClassService {
-    List<Clazz> findAll();
-    String save(Clazz c);
-    Clazz update(Clazz c);
+    List<ClassDTO> findAll();
+    Clazz save(ClassDTO c);
+    Clazz update(ClassDTO c);
 
-     void deleteClass(Long id);
+     void disableClass(Long id);
 
-    String enableById(Long id);
+    void enableById(Long id);
+
+
+    ClassDTO getClassById(Long id);
 }
