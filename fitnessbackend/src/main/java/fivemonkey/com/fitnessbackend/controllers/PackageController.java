@@ -1,5 +1,6 @@
 package fivemonkey.com.fitnessbackend.controllers;
 
+import fivemonkey.com.fitnessbackend.dto.PackageDTO;
 import fivemonkey.com.fitnessbackend.entitties.Package;
 import fivemonkey.com.fitnessbackend.services.PackageService;
 import org.dom4j.rule.Mode;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -22,20 +24,84 @@ public class PackageController {
     public String getAllPackages(Model model) {
         List<Package> packageList = packageServices.getAllPackages();
         model.addAttribute("packageList", packageList);
-        return "management/PackageManagement/packageList";
+        return "management/PackageManagement/package-list";
     }
 
-    //add new packages
-    @PostMapping("/add")
-    public void addPackage(@RequestBody Package p) {
-        packageServices.addPackage(p);
+    //add new package
+    @GetMapping("/add-package")
+    public String addPackage(Model model) {
+        model.addAttribute("packagenew", new PackageDTO());
+        return "management/PackageManagement/package-add";
     }
 
-    //view package by Id
+    //save new package
+    @PostMapping("/save-package")
+    public String savePackage(@ModelAttribute("packagenew") PackageDTO packageDTO, RedirectAttributes redirectAttributes){
+        try{
+            packageServices.save(packageDTO);
+            redirectAttributes.addFlashAttribute("success","Add successful!");
+        }catch (Exception e){
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("fail","Add fail!");
+        }
+        return "redirect:/package/packages";
+    }
+
+    //view package by id
     @GetMapping("/package_detail/{id}")
     public String viewPackageDetail(@PathVariable(name = "id") Long id, Model model) {
-        Package p = packageServices.getPackageById(id);
+        PackageDTO p = packageServices.getPackageById(id);
         model.addAttribute("package", p);
-        return "management/PackageManagement/packageDetail";
+        return "management/PackageManagement/detail";
     }
+
+    //disable package
+    @RequestMapping(value="/disable-package/{id}",method = {RequestMethod.PUT,RequestMethod.GET})
+    public String disablePackage(@PathVariable("id") Long id,RedirectAttributes redirectAttributes){
+        try{
+            packageServices.disablePackageById(id);
+            redirectAttributes.addFlashAttribute("success","Disabled");
+        }catch (Exception e){
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("fail","Fail to disable");
+        }
+        return "redirect:/package/packages";
+    }
+
+    //enable package
+    @RequestMapping(value="/enable-package/{id}",method = {RequestMethod.PUT,RequestMethod.GET})
+    public String enablePackage(@PathVariable("id") Long id,RedirectAttributes redirectAttributes){
+        try{
+            packageServices.enablePackageById(id);
+            redirectAttributes.addFlashAttribute("success","Enable");
+        }catch (Exception e){
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("fail","Fail to enable");
+        }
+        return "redirect:/package/packages";
+    }
+
+    //get package detail
+    @GetMapping("/update-package/{id}")
+    public String getDetail(@PathVariable("id") Long id,Model model){
+        PackageDTO packageDTO=packageServices.getPackageById(id);
+        System.out.println("name package: "+packageDTO.getName());
+        model.addAttribute("package",packageDTO);
+        return "management/PackageManagement/package-edit";
+    }
+
+
+    //edit package
+    @PostMapping("/update-package/{id}")
+    public String processUpdate(@PathVariable("id") Long id,@ModelAttribute("package") PackageDTO packageDTO,RedirectAttributes redirectAttributes){
+        try{
+            packageServices.update(packageDTO);
+            redirectAttributes.addFlashAttribute("success","Update Successfully");
+        }catch (Exception e){
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("fail","Fail");
+        }
+        return "redirect:/package/packages";
+    }
+
 }
