@@ -24,7 +24,6 @@ public class HomeController {
         return "/blog";
     }
 
-<<<<<<< HEAD
     @GetMapping("/login")
     public String login(){
         return "/login";
@@ -41,6 +40,5 @@ public class HomeController {
         return "/reset_password";
     }
 
-=======
->>>>>>> huydt_schedule
+
 }
