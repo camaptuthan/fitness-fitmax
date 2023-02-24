@@ -14,7 +14,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="/about" class="fs-3" id="class-name">About</a>
+                    <a class="fs-3" id="class-name">Current class name</a>
                 </li>
             </ul>
         </nav>
@@ -33,105 +33,8 @@
                     <th>saturday</th>
                     <th>sunday</th>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>9-00</td>
-                        <td>
-                            <h4>body bulding</h4>
-                            <div class="date">9-00 – 11:00</div>
-                            <div class="name">Mark Klark</div>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <h4>boxing</h4>
-                            <div class="date">9-00 – 11:00</div>
-                            <div class="name">Mark Klark</div>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <h4>boxing</h4>
-                            <div class="date">9-00 – 11:00</div>
-                            <div class="name">Mark Klark</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>10-00</td>
-                        <td></td>
-                        <td>
-                            <h4>yoga</h4>
-                            <div class="date">10-00 – 12:00</div>
-                            <div class="name">Mark Klark</div>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <h4>body bulding</h4>
-                            <div class="date">10-00 – 12:00</div>
-                            <div class="name">Mark Klark</div>
-                        </td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>11-00</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <h4>body bulding</h4>
-                            <div class="date">11-00 – 12:00</div>
-                            <div class="name">Mark Klark</div>
-                        </td>
-                        <td></td>
-                        <td>
-                            <h4>body bulding</h4>
-                            <div class="date">11-00 – 12:00</div>
-                            <div class="name">Mark Klark</div>
-                        </td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>12-00</td>
-                        <td>
-                            <h4>body bulding</h4>
-                            <div class="date">12-00 – 13:00</div>
-                            <div class="name">Mark Klark</div>
-                        </td>
-                        <td></td>
-                        <td>
-                            <h4>karate</h4>
-                            <div class="date">12-00 – 13:00</div>
-                            <div class="name">Mark Klark</div>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <h4>karate</h4>
-                            <div class="date">12-00 – 13:00</div>
-                            <div class="name">Mark Klark</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>13-00</td>
-                        <td></td>
-                        <td>
-                            <h4>body bulding</h4>
-                            <div class="date">13-00 – 14:00</div>
-                            <div class="name">Mark Klark</div>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <h4>body bulding</h4>
-                            <div class="date">13-00 – 14:00</div>
-                            <div class="name">Mark Klark</div>
-                        </td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    <tbody id="schedule-body">
+
                     </tbody>
                 </table>
             </div>
@@ -153,6 +56,32 @@
             const classInformation = data;
             const scheduleInformation = data.scheduleDTO;
             $('#class-name').html(classInformation.name);
+
+            console.log(scheduleInformation);
+            let body = "";
+            $("#schedule-body").html("");
+            scheduleInformation.forEach(schedule => {
+                $("#schedule-body").append(`<tr id="slot-${schedule.id}">
+                                                 <td>${schedule.startTime}</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>`);
+                console.log($(`#schedule-body > tr`).eq(schedule.id));
+                schedule.sessionDTOs.forEach(session => {
+                    $(`#slot-${schedule.id} > td`).eq(session.weekDay).html("something").html(
+                        `   <h4>${classInformation.name}</h4>
+                            <div class="date">${schedule.startTime} – ${schedule.endTime}</div>
+                            <div class="name">Session Id: ${session.id}</div>`)
+
+                })
+            })
+
+
         })
             .fail(function (data) {
                 console.log("lỗi quá!")
@@ -174,4 +103,5 @@
             })
         })
     }
+
 </script>

@@ -29,14 +29,10 @@ public class Schedule {
     @Column(name = "end_time")
     private Date endTime;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
     private Date createdDate;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "session_schedule",
-            joinColumns = {@JoinColumn(name = "schedule_id")},
-            inverseJoinColumns = {@JoinColumn(name = "session_id")})
+    @OneToMany(mappedBy = "schedule",fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
     private List<Session> sessions;
 
 //    @Override

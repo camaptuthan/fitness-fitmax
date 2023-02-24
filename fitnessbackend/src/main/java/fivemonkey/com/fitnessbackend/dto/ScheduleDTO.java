@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
@@ -15,11 +14,10 @@ import java.util.List;
 public class ScheduleDTO {
     private Long id;
 
-    private Date startTime;
+    private String startTime;
 
-    private Date endTime;
+    private String endTime;
 
     private List<SessionDTO> sessionDTOs;
-
 
 }
