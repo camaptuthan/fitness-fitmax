@@ -1,0 +1,103 @@
+--
+--
+-- /*select * from role;*/
+-- insert into role(name,description) values ('Admin','');
+-- insert into role(name,description) values ('Manager','');
+-- insert into role(name,description) values ('Assistant','');
+-- insert into role(name,description) values ('Trainer','');
+-- insert into role(name,description) values ('Trainee','');
+--
+-- /*select * from studio;*/
+-- insert into studio(city,contact,district,name,status) values ('Ha Noi','','Ba Dinh','Phong gym 1',1);
+-- insert into studio(city,contact,district,name,status) values ('HCM','','Thu Duc','Phong gym 2',1);
+-- insert into studio(city,contact,district,name,status) values ('Da Nang','','Son Tra','Phong gym 3',1);
+-- insert into studio(city,contact,district,name,status) values ('Ha Noi','','Hai Ba Trung','Phong gym 4',1);
+-- insert into studio(city,contact,district,name,status) values ('Ha Noi','','Cau Giay','Phong gym 5',1);
+--
+-- /*select * from user;*/
+-- insert into user(email,password,first_name,last_name,role_id,status) values ('fivemonkeys.co@gmail.com','123456','Monkey','Five',1,1);
+-- insert into user(email,password,first_name,last_name,role_id,studio_id,status) values ('hungha19156@gmail.com','hungha1915','Ha','Pham',2,1,1);
+-- insert into user(email,password,first_name,last_name,role_id,studio_id,status) values ('tuanduong144@gmail.com','123456','Tuan','Duong',2,2,1);
+-- insert into user(email,password,first_name,last_name,role_id,studio_id,status) values ('huy191101@gmail.com','123456','Huy','Duong',2,3,1);
+-- insert into user(email,password,first_name,last_name,role_id,studio_id,status) values ('nguyenvanduc14012000@gmail.com','123456','Duc','Nguyen',2,4,1);
+-- insert into user(email,password,first_name,last_name,role_id,studio_id,status) values ('parkhunjk@gmail.com','123456','Viet Anh','Cao',2,5,1);
+-- insert into user(email,password,first_name,last_name,role_id,studio_id,status) values ('davidpham95aka201@gmail.com','123456','A','Nguyen',3,1,1);
+-- insert into user(email,password,first_name,last_name,role_id,studio_id,status) values ('haphhe151269@fpt.edu.vn','123456','Ha','Pham',5,1,1);
+-- insert into user(email,password,first_name,last_name,role_id,studio_id,status) values ('ducnvhe141646@fpt.edu.vn','123456','Duc','Nguyen',4,1,1);
+--
+-- /*select * from manager;*/
+-- insert into manager(manager_email) values ('hungha19156@gmail.com');
+-- insert into manager(manager_email) values ('tuanduong144@gmail.com');
+-- insert into manager(manager_email) values ('huy191101@gmail.com');
+-- insert into manager(manager_email) values ('nguyenvanduc14012000@gmail.com');
+-- insert into manager(manager_email) values ('parkhunjk@gmail.com');
+--
+-- update studio set manager_email = 'hungha19156@gmail.com' where studio_id = 1;
+-- update studio set manager_email = 'tuanduong144@gmail.com' where studio_id = 2;
+-- update studio set manager_email = 'huy191101@gmail.com' where studio_id = 3;
+-- update studio set manager_email = 'nguyenvanduc14012000@gmail.com' where studio_id = 4;
+-- update studio set manager_email = 'parkhunjk@gmail.com' where studio_id = 5;
+--
+-- /*select * from assistant;*/
+-- insert into assistant(assistant_email) values ('davidpham95aka201@gmail.com');
+--
+-- /*select * from service;*/
+-- insert into service(name,status,assistant_email,studio_id) values ('Tap luyen toan than',1,'davidpham95aka201@gmail.com',1);
+-- insert into service(name,status,assistant_email,studio_id) values ('Tap luyen the luc',1,'davidpham95aka201@gmail.com',1);
+-- insert into service(name,status,assistant_email,studio_id) values ('Tap luyen tay',1,'davidpham95aka201@gmail.com',1);
+-- insert into service(name,status,assistant_email,studio_id) values ('Tap luyen chan',1,'davidpham95aka201@gmail.com',1);
+--
+-- /*select * from category;*/
+-- insert into category(description,name) values ('Tap tay','');
+-- insert into category(description,name) values ('Tap chan','');
+-- insert into category(description,name) values ('Tap toan than','');
+-- insert into category(description,name) values ('Tap the luc','');
+-- insert into category(description,name) values ('Quang cao','');
+-- insert into category(description,name) values ('Tap luyen','');
+-- insert into category(description,name) values ('An uong','');
+--
+-- /*select * from service_category;*/
+-- insert into service_category(service_id,category_id) values (4,2);
+-- insert into service_category(service_id,category_id) values (1,3);
+-- insert into service_category(service_id,category_id) values (3,1);
+-- insert into service_category(service_id,category_id) values (2,4);
+--
+-- /*select * from blog;*/
+-- insert into blog(title,writer_email,description,status) values ('Quang cao 1','davidpham95aka201@gmail.com','',1);
+-- insert into blog(title,writer_email,description,status) values ('Quang cao 2','davidpham95aka201@gmail.com','',1);
+-- insert into blog(title,writer_email,description,status) values ('Quang cao 3','davidpham95aka201@gmail.com','',1);
+-- insert into blog(title,writer_email,description,status) values ('Quang cao 4','davidpham95aka201@gmail.com','',1);
+--
+-- /*select * from blog_category;*/
+-- insert into blog_category(blog_id,category_id) values (1,5);
+-- insert into blog_category(blog_id,category_id) values (2,5);
+-- insert into blog_category(blog_id,category_id) values (3,5);
+-- insert into blog_category(blog_id,category_id) values (4,5);
+--
+-- /*select * from trainee;*/
+-- insert into trainee(trainee_email) values ('haphhe151269@fpt.edu.vn');
+--
+-- /*select * from registration;*/
+-- insert into registration(user_email,service_id,status) values ('haphhe151269@fpt.edu.vn',1,1);
+-- insert into registration(user_email,service_id,status) values ('haphhe151269@fpt.edu.vn',2,1);
+-- insert into registration(user_email,service_id,status) values ('haphhe151269@fpt.edu.vn',3,1);
+-- insert into registration(user_email,service_id,status) values ('haphhe151269@fpt.edu.vn',4,1);
+--
+-- /*select * from trainer;*/
+-- insert into trainer(trainer_email,status) values ('ducnvhe141646@fpt.edu.vn',1);
+--
+-- /*select * from class;*/
+-- insert into class(description,duration,name,price,status,service_id,trainer_email) values ('Tap Yoga trong vong 6 thang',6,'Tap Yoga',500,1,1,'ducnvhe141646@fpt.edu.vn');
+-- insert into class(description,duration,name,price,status,service_id,trainer_email) values ('Tap Yoga trong vong 12 thang',12,'Tap Yoga',950,1,1,'ducnvhe141646@fpt.edu.vn');
+-- insert into class(description,duration,name,price,status,service_id,trainer_email) values ('Tap KickBoxing trong vong 3 thang',3,'Tap KickBoxing',350,1,4,'ducnvhe141646@fpt.edu.vn');
+-- insert into class(description,duration,name,price,status,service_id,trainer_email) values ('Tap KickBoxing trong vong 6 thang',6,'Tap KickBoxing',100,1,4,'ducnvhe141646@fpt.edu.vn');
+--
+-- /*select * from package;*/
+-- insert into package(name,description,duration,price,status,service_id) values ('Tap tu do','Tap tu do trong vong 3 thang',3,150,1,1);
+-- insert into package(name,description,duration,price,status,service_id) values ('Tap tu do','Tap tu do trong vong 6 thang',6,270,1,1);
+-- insert into package(name,description,duration,price,status,service_id) values ('Tap tu do','Tap tu do trong vong 12 thang',12,500,1,1);
+--
+--
+--
+--
+--

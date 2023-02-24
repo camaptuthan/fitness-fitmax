@@ -1,16 +1,20 @@
 package fivemonkey.com.fitnessbackend.services;
 
+
 import fivemonkey.com.fitnessbackend.dto.PackageDTO;
-import fivemonkey.com.fitnessbackend.entitties.Package;
+
+import fivemonkey.com.fitnessbackend.entities.Package;
 import fivemonkey.com.fitnessbackend.repository.PackageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.modelmapper.ModelMapper;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+
 public class PackageService {
 
     @Autowired

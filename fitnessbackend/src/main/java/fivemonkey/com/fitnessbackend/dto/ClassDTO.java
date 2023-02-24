@@ -1,6 +1,7 @@
 package fivemonkey.com.fitnessbackend.dto;
 
-import fivemonkey.com.fitnessbackend.entitties.Services;
+import fivemonkey.com.fitnessbackend.entities.Services;
+import fivemonkey.com.fitnessbackend.entities.Trainer;
 import lombok.*;
 
 import java.util.Date;
@@ -17,7 +18,14 @@ public class ClassDTO {
 
      private Float price;
 
-//     private Services services;
+     private Services services;
      private String img;
+
+     private boolean status;
+     private String des,duration;
+
+     private Trainer trainer;
+
+
 
 }

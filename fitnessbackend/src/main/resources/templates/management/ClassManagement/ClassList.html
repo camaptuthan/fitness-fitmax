@@ -132,6 +132,9 @@
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip();
         });
+
+
+
     </script>
 </head>
 <body>
@@ -140,13 +143,23 @@
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-8"><h2>Customer <b>Details</b></h2></div>
+                    <div class="col-sm-8"><h2>Class <b>List</b></h2></div>
+
                     <div class="col-sm-4">
                         <div class="search-box">
                             <i class="material-icons">&#xE8B6;</i>
                             <input type="text" class="form-control" placeholder="Search&hellip;">
                         </div>
                     </div>
+                </div>
+            </div>
+            <div>
+                <a th:href="@{/add-class}" style="color: blue">Add</a>
+                <div th:if="${success}">
+                    <p style="color: green" th:text="${success}"></p>
+                </div>
+                <div th:if="${fail}">
+                    <p style="color: red" th:text="${fail}"></p>
                 </div>
             </div>
             <div th:if="${size}==0">
@@ -157,8 +170,10 @@
                 <tr >
                     <th>ID</th>
                     <th>Name <i class="fa fa-sort"></i></th>
-                    <th>Date</th>
-                    <th>Price <i class="fa fa-sort"></i></th>
+<!--                    <th>Date</th>-->
+                    <th>Description</th>
+                    <th>Date Created</th>
+                    <th>Price </th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -166,33 +181,51 @@
                 <tr th:each="c : ${list}">
                     <td th:text="${c.id}"></td>
                     <td th:text="${c.name}"></td>
-                    <td th:text="${c.price}"></td>
+<!--                    <td th:text="${c.date}"></td>-->
+                    <td th:text="${c.des}"></td>
                     <td th:text="${c.date}"></td>
+                    <td th:text="${c.price}"></td>
                     <td>
-                        <a th:href="@{/add-class}" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                        <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                        <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+
+                        <a th:href="@{'/update-class/' + ${c.id}}" class="edit" title="Edit" data-toggle="tooltip">Edit &nbsp;<i class="material-icons">&#xE254;</i></a>
+<!--                        <button type="button" class="btn btn-danger">Danger</button>-->
+
+
+                        <a th:if="${c.status==true}"   th:href="@{'/disable-class/' + ${c.id}}" class="disable" title="Disable" data-toggle="tooltip" >
+
+                            <button onclick="return confirm('Are you sure you want to disable class')" type="button" class="btn btn-danger">Disable</button>
+
+                        </a>
+                        <a  th:if="${c.status==false}"  th:href="@{'/enable-class/' + ${c.id}}"  class="enable" title="Enable" data-toggle="tooltip" >
+
+                            <button onclick="return confirm('Are you sure you want to enable class')" type="button" class="btn btn-warning" >Enable</button>
+
+                        </a>
                     </td>
                 </tr>
 
                 </tbody>
             </table>
             <div class="clearfix">
-                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                 <ul class="pagination">
-                    <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
+<!--                    <li th:if="${currentPage != 0}" class="page-item disabled">-->
+<!--                        <a th:href="@{'/page/'+${currentPage} -1  }">-->
+<!--                        <i class="fa fa-angle-double-left"></i></a>-->
+<!--                    </li>-->
+<!--                    <li th:each="i:${#numbers.sequence(1 , totalPages)}"  th:classappend = "${currentPage == i - 1 ? 'active' : ''}" class="page-item">-->
+<!--                        <a th:href="@{'/page/'+ ${i - 1}}" class="page-link"><span th:text="${i}"></span></a>-->
+<!--                    </li>-->
+
+<!--                    <li th:if = "${currentPage + 1 != totalPages}" class="page-item">-->
+<!--                        <a th:href="@{'/page/' + ${currentPage + 1}}" class="page-link"><i class="fa fa-angle-double-right"></i></a>-->
+<!--                    </li>-->
                 </ul>
             </div>
         </div>
     </div>
+
 </div>
 </body>
-</html>
 
 </html>
+
