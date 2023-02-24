@@ -1,16 +1,32 @@
 package fivemonkey.com.fitnessbackend.services;
 
+import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.entities.Clazz;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 
 public interface ClassService {
-    List<Clazz> findAll();
-    String save(Clazz c);
-    Clazz update(Clazz c);
 
-     void deleteClass(Long id);
+    List<ClassDTO> findAll();
 
-    String enableById(Long id);
+    Clazz save(ClassDTO c);
+
+    Clazz update(ClassDTO c);
+
+    void disableClass(Long id);
+
+    void enableById(Long id);
+
+
+    ClassDTO getClassById(Long id);
+
+
+    Page<Clazz> pageClass(int pageNo, int pageSize);
+
+
+    List<ClassDTO> searchByName(String keyword);
+
+
 }

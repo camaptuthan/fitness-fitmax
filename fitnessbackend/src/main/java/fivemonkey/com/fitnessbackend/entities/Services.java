@@ -62,5 +62,6 @@ public class Services {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "assistant_email", referencedColumnName = "assistant_email")
     private Assistant assistant;
+
 }
 

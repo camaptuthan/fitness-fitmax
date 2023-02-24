@@ -55,4 +55,5 @@ public class Studio {
     @OneToOne
     @JoinColumn(name = "manager_email", referencedColumnName = "manager_email", unique = true)
     private Manager manager;
+
 }
