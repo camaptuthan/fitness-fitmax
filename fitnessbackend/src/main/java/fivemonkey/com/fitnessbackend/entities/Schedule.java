@@ -4,14 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "schedule",schema = "dbo")
+@Table(name = "schedule", schema = "dbo")
 public class Schedule {
 
     @Id
@@ -19,22 +22,31 @@ public class Schedule {
     @Column(name = "schedule_id")
     private Long id;
 
-    @Column(name = "slot")
-    private int slot;
+    @Column(name = "start_time")
+    private Date startTime;
 
-    @Column(name = "duration")
-    private int duration;
+
+    @Column(name = "end_time")
+    private Date endTime;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "date")
-    private Date date;
+    @Column(name = "created_date")
+    private Date createdDate;
 
-    //schedule-session relationship
-   @OneToOne(mappedBy = "schedule")
-    private Session session;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "session_schedule",
+            joinColumns = {@JoinColumn(name = "schedule_id")},
+            inverseJoinColumns = {@JoinColumn(name = "session_id")})
+    private List<Session> sessions;
 
-    //trackingDetail-session relationship
-    @OneToOne(mappedBy = "schedule")
-    private Session sessions;
-
+//    @Override
+//    public String toString() {
+//        return "Schedule{" +
+//                "id=" + id +
+//                ", startTime=" + startTime +
+//                ", endTime=" + endTime +
+//                ", createdDate=" + createdDate +
+//                ", sessions=" + sessions +
+//                '}';
+//    }
 }

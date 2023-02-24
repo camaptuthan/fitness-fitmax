@@ -62,5 +62,21 @@ public class Services {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "assistant_email", referencedColumnName = "assistant_email")
     private Assistant assistant;
+
+//    @Override
+//    public String toString() {
+//        return "Services{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", status=" + status +
+//                ", studio=" + studio +
+//                ", categoryList=" + categoryList +
+//                ", registrations=" + registrations +
+//                ", packages=" + packages +
+//                ", personalTrainings=" + personalTrainings +
+//                ", classes=" + classes +
+//                ", assistant=" + assistant +
+//                '}';
+//    }
 }
 
