@@ -24,4 +24,20 @@ public class HomeController {
         return "/blog";
     }
 
+    @GetMapping("/login")
+    public String login(){
+        return "/login";
+    }
+
+
+    @GetMapping("/register")
+    public String register(){
+        return "/register";
+    }
+
+    @GetMapping("/reset-password")
+    public String resetPassword(){
+        return "/reset_password";
+    }
+
 }

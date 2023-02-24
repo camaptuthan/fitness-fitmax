@@ -10,6 +10,7 @@ import fivemonkey.com.fitnessbackend.services.ServiceService;
 import fivemonkey.com.fitnessbackend.services.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -132,6 +133,17 @@ public class ClassController {
         model.addAttribute("list",list);
         return "management/classmanagement/classlist";
 
+    }
+
+    //search class by name
+    @GetMapping("/list-class/search")
+    public String searchByName(Model model,@Param("keyword") String keyword){
+        List<ClassDTO> list= classService.searchByName(keyword);
+        System.out.println("size is"+ list.size());
+        model.addAttribute("list",list);
+        model.addAttribute("keyword",keyword);
+        model.addAttribute("size", list.size());
+        return "management/classmanagement/classlist";
     }
 
 

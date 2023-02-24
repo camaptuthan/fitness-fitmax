@@ -17,28 +17,34 @@
             background: #f5f5f5;
             font-family: 'Roboto', sans-serif;
         }
+
         .table-responsive {
             margin: 30px 0;
         }
+
         .table-wrapper {
             min-width: 1000px;
             background: #fff;
             padding: 20px;
-            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
         }
+
         .table-title {
             padding-bottom: 10px;
             margin: 0 0 10px;
             min-width: 100%;
         }
+
         .table-title h2 {
             margin: 8px 0 0;
             font-size: 22px;
         }
+
         .search-box {
             position: relative;
             float: right;
         }
+
         .search-box input {
             height: 34px;
             border-radius: 20px;
@@ -46,9 +52,11 @@
             border-color: #ddd;
             box-shadow: none;
         }
+
         .search-box input:focus {
             border-color: #3FBAE4;
         }
+
         .search-box i {
             color: #a0a5b1;
             position: absolute;
@@ -56,44 +64,56 @@
             top: 8px;
             left: 10px;
         }
+
         table.table tr th, table.table tr td {
             border-color: #e9e9e9;
         }
+
         table.table-striped tbody tr:nth-of-type(odd) {
             background-color: #fcfcfc;
         }
+
         table.table-striped.table-hover tbody tr:hover {
             background: #f5f5f5;
         }
+
         table.table th i {
             font-size: 13px;
             margin: 0 5px;
             cursor: pointer;
         }
+
         table.table td:last-child {
             width: 130px;
         }
+
         table.table td a {
             color: #a0a5b1;
             display: inline-block;
             margin: 0 5px;
         }
+
         table.table td a.view {
             color: #03A9F4;
         }
+
         table.table td a.edit {
             color: #FFC107;
         }
+
         table.table td a.delete {
             color: #E34724;
         }
+
         table.table td i {
             font-size: 19px;
         }
+
         .pagination {
             float: right;
             margin: 0 0 5px;
         }
+
         .pagination li a {
             border: none;
             font-size: 95%;
@@ -106,22 +126,28 @@
             text-align: center;
             padding: 0;
         }
+
         .pagination li a:hover {
             color: #666;
         }
+
         .pagination li.active a {
             background: #03A9F4;
         }
+
         .pagination li.active a:hover {
             background: #0397d6;
         }
+
         .pagination li.disabled i {
             color: #ccc;
         }
+
         .pagination li i {
             font-size: 16px;
             padding-top: 6px
         }
+
         .hint-text {
             float: left;
             margin-top: 6px;
@@ -129,10 +155,9 @@
         }
     </style>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
-
 
 
     </script>
@@ -146,10 +171,14 @@
                     <div class="col-sm-8"><h2>Class <b>List</b></h2></div>
 
                     <div class="col-sm-4">
-                        <div class="search-box">
-                            <i class="material-icons">&#xE8B6;</i>
-                            <input type="text" class="form-control" placeholder="Search&hellip;">
-                        </div>
+                        <form th:action="@{/list-class/search}" method="get" >
+                            <div  class="search-box">
+                                <i class="material-icons">&#xE8B6;</i>
+                                <input th:value="${keyword}" name="keyword" id="keyword" type="text"
+                                       class="form-control" placeholder="Search&hellip;">
+<!--                                <input type="submit" placeholder="submit">-->
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -163,42 +192,49 @@
                 </div>
             </div>
             <div th:if="${size}==0">
-                        <h1>No Class</h1>
+                <h1>No Class</h1>
             </div>
             <table class="table table-striped table-hover table-bordered" th:if="${size>0}">
                 <thead>
-                <tr >
+                <tr>
                     <th>ID</th>
-                    <th>Name <i class="fa fa-sort"></i></th>
-<!--                    <th>Date</th>-->
+                    <th>Name </i></th>
+                    <!--                    <th>Date</th>-->
                     <th>Description</th>
                     <th>Date Created</th>
-                    <th>Price </th>
+                    <th>Price</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="c : ${list}">
+                <tr th:each="c : ${list}" >
                     <td th:text="${c.id}"></td>
                     <td th:text="${c.name}"></td>
-<!--                    <td th:text="${c.date}"></td>-->
+                    <!--                    <td th:text="${c.date}"></td>-->
                     <td th:text="${c.des}"></td>
                     <td th:text="${c.date}"></td>
                     <td th:text="${c.price}"></td>
                     <td>
 
-                        <a th:href="@{'/update-class/' + ${c.id}}" class="edit" title="Edit" data-toggle="tooltip">Edit &nbsp;<i class="material-icons">&#xE254;</i></a>
-<!--                        <button type="button" class="btn btn-danger">Danger</button>-->
+                        <a th:href="@{'/update-class/' + ${c.id}}" class="edit" title="Edit" data-toggle="tooltip">Edit
+                            &nbsp;<i class="material-icons">&#xE254;</i></a>
+                        <!--                        <button type="button" class="btn btn-danger">Danger</button>-->
 
 
-                        <a th:if="${c.status==true}"   th:href="@{'/disable-class/' + ${c.id}}" class="disable" title="Disable" data-toggle="tooltip" >
+                        <a th:if="${c.status==true}" th:href="@{'/disable-class/' + ${c.id}}" class="disable"
+                           title="Disable" data-toggle="tooltip">
 
-                            <button onclick="return confirm('Are you sure you want to disable class')" type="button" class="btn btn-danger">Disable</button>
+                            <button onclick="return confirm('Are you sure you want to disable class')" type="button"
+                                    class="btn btn-danger">Disable
+                            </button>
 
                         </a>
-                        <a  th:if="${c.status==false}"  th:href="@{'/enable-class/' + ${c.id}}"  class="enable" title="Enable" data-toggle="tooltip" >
+                        <a th:if="${c.status==false}" th:href="@{'/enable-class/' + ${c.id}}" class="enable"
+                           title="Enable" data-toggle="tooltip">
 
-                            <button onclick="return confirm('Are you sure you want to enable class')" type="button" class="btn btn-warning" >Enable</button>
+                            <button onclick="return confirm('Are you sure you want to enable class')" type="button"
+                                    class="btn btn-warning">Enable
+                            </button>
 
                         </a>
                     </td>
@@ -208,17 +244,17 @@
             </table>
             <div class="clearfix">
                 <ul class="pagination">
-<!--                    <li th:if="${currentPage != 0}" class="page-item disabled">-->
-<!--                        <a th:href="@{'/page/'+${currentPage} -1  }">-->
-<!--                        <i class="fa fa-angle-double-left"></i></a>-->
-<!--                    </li>-->
-<!--                    <li th:each="i:${#numbers.sequence(1 , totalPages)}"  th:classappend = "${currentPage == i - 1 ? 'active' : ''}" class="page-item">-->
-<!--                        <a th:href="@{'/page/'+ ${i - 1}}" class="page-link"><span th:text="${i}"></span></a>-->
-<!--                    </li>-->
+                    <!--                    <li th:if="${currentPage != 0}" class="page-item disabled">-->
+                    <!--                        <a th:href="@{'/page/'+${currentPage} -1  }">-->
+                    <!--                        <i class="fa fa-angle-double-left"></i></a>-->
+                    <!--                    </li>-->
+                    <!--                    <li th:each="i:${#numbers.sequence(1 , totalPages)}"  th:classappend = "${currentPage == i - 1 ? 'active' : ''}" class="page-item">-->
+                    <!--                        <a th:href="@{'/page/'+ ${i - 1}}" class="page-link"><span th:text="${i}"></span></a>-->
+                    <!--                    </li>-->
 
-<!--                    <li th:if = "${currentPage + 1 != totalPages}" class="page-item">-->
-<!--                        <a th:href="@{'/page/' + ${currentPage + 1}}" class="page-link"><i class="fa fa-angle-double-right"></i></a>-->
-<!--                    </li>-->
+                    <!--                    <li th:if = "${currentPage + 1 != totalPages}" class="page-item">-->
+                    <!--                        <a th:href="@{'/page/' + ${currentPage + 1}}" class="page-link"><i class="fa fa-angle-double-right"></i></a>-->
+                    <!--                    </li>-->
                 </ul>
             </div>
         </div>

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ClassServiceImpl implements ClassService {
@@ -23,14 +22,15 @@ public class ClassServiceImpl implements ClassService {
 
     @Autowired
     ModelMapper modelMapper;
+
     //mapper class to class dto
     @Override
     public List<ClassDTO> findAll() {
 
-        List<ClassDTO> classDTOList= new ArrayList<>();
-        List<Clazz> clazzList=classRepository.findAll();
-        for (Clazz c : clazzList){
-            ClassDTO classDTO=modelMapper.map(c,ClassDTO.class);
+        List<ClassDTO> classDTOList = new ArrayList<>();
+        List<Clazz> clazzList = classRepository.findAll();
+        for (Clazz c : clazzList) {
+            ClassDTO classDTO = modelMapper.map(c, ClassDTO.class);
             classDTOList.add(classDTO);
         }
         return classDTOList;
@@ -39,7 +39,7 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public Clazz save(ClassDTO c) {
-        Clazz clazz= new Clazz();
+        Clazz clazz = new Clazz();
         clazz.setName(c.getName());
         clazz.setPrice(c.getPrice());
         clazz.setDes(c.getDes());
@@ -52,15 +52,15 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public Clazz update(ClassDTO c) {
-        try{
-            Clazz clazz=classRepository.getById(c.getId());
+        try {
+            Clazz clazz = classRepository.getById(c.getId());
             clazz.setName(c.getName());
             clazz.setPrice(c.getPrice());
             clazz.setDes(c.getDes());
             clazz.setServices(c.getServices());
             clazz.setTrainer(c.getTrainer());
             return classRepository.save(clazz);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -70,7 +70,7 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public void disableClass(Long id) {
-        Clazz clazz=classRepository.getById(id);
+        Clazz clazz = classRepository.getById(id);
         clazz.setStatus(false);
         classRepository.save(clazz);
     }
@@ -78,7 +78,7 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public void enableById(Long id) {
-        Clazz clazz=classRepository.getById(id);
+        Clazz clazz = classRepository.getById(id);
         clazz.setStatus(true);
         classRepository.save(clazz);
     }
@@ -86,22 +86,38 @@ public class ClassServiceImpl implements ClassService {
     // map dto
     @Override
     public ClassDTO getClassById(Long id) {
-        Clazz clazz= classRepository.getById(id);
-        ClassDTO classDTO= new ClassDTO();
-        classDTO=modelMapper.map(clazz,ClassDTO.class);
+        Clazz clazz = classRepository.getById(id);
+        ClassDTO classDTO = new ClassDTO();
+        classDTO = modelMapper.map(clazz, ClassDTO.class);
         return classDTO;
     }
 
     //paging
     @Override
-    public Page<Clazz> pageClass(int pageNo,int pageSize) {
-        Pageable pageable= PageRequest.of(pageNo-1,pageSize);
+    public Page<Clazz> pageClass(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return classRepository.findAll(pageable);
     }
+
+    @Override
+    public List<ClassDTO> searchByName(String keyword) {
+
+        List<ClassDTO> classDTOList= new ArrayList<>();
+        List<Clazz> list = classRepository.searchClassByKeyword(keyword);
+        for (Clazz c : list)
+        {
+            ClassDTO classDTO= new ClassDTO();
+            modelMapper.map(c,ClassDTO.class);
+            classDTOList.add(classDTO);
+        }
+        if (keyword != null) {
+                 return classDTOList;
+        }
+
+        return classDTOList;
+
+    }
     //search
-
-
-
 
 
 }
