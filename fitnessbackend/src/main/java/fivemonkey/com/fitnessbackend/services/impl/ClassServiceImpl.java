@@ -6,9 +6,13 @@ import fivemonkey.com.fitnessbackend.repository.ClassRepository;
 import fivemonkey.com.fitnessbackend.services.ClassService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,15 +21,16 @@ public class ClassServiceImpl implements ClassService {
     @Autowired
     ClassRepository classRepository;
 
-
+    @Autowired
+    ModelMapper modelMapper;
     //mapper class to class dto
     @Override
     public List<ClassDTO> findAll() {
-        ModelMapper mapper= new ModelMapper();
+
         List<ClassDTO> classDTOList= new ArrayList<>();
         List<Clazz> clazzList=classRepository.findAll();
         for (Clazz c : clazzList){
-            ClassDTO classDTO=mapper.map(c,ClassDTO.class);
+            ClassDTO classDTO=modelMapper.map(c,ClassDTO.class);
             classDTOList.add(classDTO);
         }
         return classDTOList;
@@ -40,6 +45,7 @@ public class ClassServiceImpl implements ClassService {
         clazz.setDes(c.getDes());
         clazz.setServices(c.getServices());
         clazz.setTrainer(c.getTrainer());
+        clazz.setDate(new Date());
         clazz.setStatus(true);
         return classRepository.save(clazz);
     }
@@ -82,8 +88,20 @@ public class ClassServiceImpl implements ClassService {
     public ClassDTO getClassById(Long id) {
         Clazz clazz= classRepository.getById(id);
         ClassDTO classDTO= new ClassDTO();
-        ModelMapper mapper= new ModelMapper();
-        classDTO=mapper.map(clazz,ClassDTO.class);
+        classDTO=modelMapper.map(clazz,ClassDTO.class);
         return classDTO;
     }
+
+    //paging
+    @Override
+    public Page<Clazz> pageClass(int pageNo,int pageSize) {
+        Pageable pageable= PageRequest.of(pageNo-1,pageSize);
+        return classRepository.findAll(pageable);
+    }
+    //search
+
+
+
+
+
 }

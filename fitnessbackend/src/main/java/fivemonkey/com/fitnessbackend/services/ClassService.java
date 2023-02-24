@@ -2,6 +2,8 @@ package fivemonkey.com.fitnessbackend.services;
 
 import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.entities.Clazz;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -17,4 +19,10 @@ public interface ClassService {
 
 
     ClassDTO getClassById(Long id);
+
+
+    Page<Clazz> pageClass(int pageNo,int pageSize);
+
+
+
 }

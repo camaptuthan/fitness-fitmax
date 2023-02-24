@@ -19,6 +19,9 @@ public class HomeController {
     public String service(){
         return "/service";
     }
-
+    @GetMapping("/blog")
+    public String blog(){
+        return "/blog";
+    }
 
 }

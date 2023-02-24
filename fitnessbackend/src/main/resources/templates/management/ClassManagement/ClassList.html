@@ -132,6 +132,9 @@
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip();
         });
+
+
+
     </script>
 </head>
 <body>
@@ -169,7 +172,8 @@
                     <th>Name <i class="fa fa-sort"></i></th>
 <!--                    <th>Date</th>-->
                     <th>Description</th>
-                    <th>Price <i class="fa fa-sort"></i></th>
+                    <th>Date Created</th>
+                    <th>Price </th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -179,6 +183,7 @@
                     <td th:text="${c.name}"></td>
 <!--                    <td th:text="${c.date}"></td>-->
                     <td th:text="${c.des}"></td>
+                    <td th:text="${c.date}"></td>
                     <td th:text="${c.price}"></td>
                     <td>
 
@@ -186,14 +191,14 @@
 <!--                        <button type="button" class="btn btn-danger">Danger</button>-->
 
 
-                        <a th:if="${c.status==true}"  th:href="@{'/disable-class/' + ${c.id}}" class="disable" title="Disable" data-toggle="tooltip" >
+                        <a th:if="${c.status==true}"   th:href="@{'/disable-class/' + ${c.id}}" class="disable" title="Disable" data-toggle="tooltip" >
 
-                            <button type="button" class="btn btn-danger">Disable</button>
+                            <button onclick="return confirm('Are you sure you want to disable class')" type="button" class="btn btn-danger">Disable</button>
 
                         </a>
-                        <a  th:if="${c.status==false}"  th:href="@{'/enable-class/' + ${c.id}}" class="enable" title="Enable" data-toggle="tooltip" >
+                        <a  th:if="${c.status==false}"  th:href="@{'/enable-class/' + ${c.id}}"  class="enable" title="Enable" data-toggle="tooltip" >
 
-                            <button type="button" class="btn btn-warning">Enable</button>
+                            <button onclick="return confirm('Are you sure you want to enable class')" type="button" class="btn btn-warning" >Enable</button>
 
                         </a>
                     </td>
@@ -202,21 +207,25 @@
                 </tbody>
             </table>
             <div class="clearfix">
-                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                 <ul class="pagination">
-                    <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
+<!--                    <li th:if="${currentPage != 0}" class="page-item disabled">-->
+<!--                        <a th:href="@{'/page/'+${currentPage} -1  }">-->
+<!--                        <i class="fa fa-angle-double-left"></i></a>-->
+<!--                    </li>-->
+<!--                    <li th:each="i:${#numbers.sequence(1 , totalPages)}"  th:classappend = "${currentPage == i - 1 ? 'active' : ''}" class="page-item">-->
+<!--                        <a th:href="@{'/page/'+ ${i - 1}}" class="page-link"><span th:text="${i}"></span></a>-->
+<!--                    </li>-->
+
+<!--                    <li th:if = "${currentPage + 1 != totalPages}" class="page-item">-->
+<!--                        <a th:href="@{'/page/' + ${currentPage + 1}}" class="page-link"><i class="fa fa-angle-double-right"></i></a>-->
+<!--                    </li>-->
                 </ul>
             </div>
         </div>
     </div>
+
 </div>
 </body>
-</html>
 
 </html>
+

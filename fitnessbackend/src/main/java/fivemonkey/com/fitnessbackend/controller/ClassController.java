@@ -9,6 +9,7 @@ import fivemonkey.com.fitnessbackend.services.ClassService;
 import fivemonkey.com.fitnessbackend.services.ServiceService;
 import fivemonkey.com.fitnessbackend.services.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,7 @@ public class ClassController {
 
     @Autowired
     ServiceService serviceService;
+
 
     @GetMapping("/list-class")
     public String classes(Model model) {
@@ -116,6 +118,20 @@ public class ClassController {
                redirectAttributes.addFlashAttribute("fail","Fail");
            }
         return "redirect:/list-class";
+    }
+
+    //paging class
+
+    @GetMapping("page/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo,Model model){
+        int pageSize=5;
+        Page<Clazz> c= classService.pageClass(pageNo,pageSize);
+        List<Clazz> list= c.getContent();
+        model.addAttribute("currentPage",pageNo);
+        model.addAttribute("totalPages",c.getTotalPages());
+        model.addAttribute("list",list);
+        return "management/classmanagement/classlist";
+
     }
 
 
