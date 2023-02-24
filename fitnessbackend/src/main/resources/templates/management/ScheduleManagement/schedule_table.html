@@ -47,6 +47,7 @@
 <script>
     $(window).on("load", (event) => {
         fetchingClass();
+        fetchingScheduleByClassId(1);
     })
 
     const fetchingScheduleByClassId = (id) => {
@@ -57,7 +58,6 @@
             const scheduleInformation = data.scheduleDTO;
             $('#class-name').html(classInformation.name);
 
-            console.log(scheduleInformation);
             let body = "";
             $("#schedule-body").html("");
             scheduleInformation.forEach(schedule => {
@@ -71,17 +71,13 @@
                                                 <td></td>
                                                 <td></td>
                                             </tr>`);
-                console.log($(`#schedule-body > tr`).eq(schedule.id));
                 schedule.sessionDTOs.forEach(session => {
                     $(`#slot-${schedule.id} > td`).eq(session.weekDay).html("something").html(
                         `   <h4>${classInformation.name}</h4>
                             <div class="date">${schedule.startTime} – ${schedule.endTime}</div>
                             <div class="name">Session Id: ${session.id}</div>`)
-
                 })
             })
-
-
         })
             .fail(function (data) {
                 console.log("lỗi quá!")
