@@ -1,16 +1,11 @@
 package fivemonkey.com.fitnessbackend.entities;
 
-<<<<<<< HEAD
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-=======
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
->>>>>>> huydt_schedule
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,7 +16,6 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@ToString
 @Table(name = "class", schema = "dbo")
 public class Clazz {
 
