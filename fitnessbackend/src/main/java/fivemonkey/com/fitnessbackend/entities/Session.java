@@ -1,5 +1,6 @@
 package fivemonkey.com.fitnessbackend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,8 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name = "session", schema = "dbo")
+@Table(name = "session", schema = "dbo", uniqueConstraints = {@UniqueConstraint(columnNames = {"happened_date","schedule_id"})})
+
 public class Session {
 
     @Id
@@ -25,16 +27,34 @@ public class Session {
     private String description;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "date")
-    private Date date;
+    @Column(name = "happened_date")
+    private Date happenedDate;
+
+    @Column(name = "created_date")
+    private Date createdDate;
 
     //class-session relationship
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "class_id", referencedColumnName = "class_id")
+    @JsonIgnore
     private Clazz aClass;
 
     //session-schedule relationship
-    @OneToOne
-    @JoinColumn(name = "schedule_id", referencedColumnName = "schedule_id", unique = true)
+
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "schedule_id")
+    @JsonIgnore
     private Schedule schedule;
+
+    @Override
+    public String toString() {
+        return "Session{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", happenedDate=" + happenedDate +
+                ", createdDate=" + createdDate +
+
+                '}';
+    }
 }

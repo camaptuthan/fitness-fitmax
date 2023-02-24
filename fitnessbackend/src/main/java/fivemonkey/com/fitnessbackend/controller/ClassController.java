@@ -59,11 +59,11 @@ public class ClassController {
     public String saveClass(@ModelAttribute("clazz") ClassDTO classDTO,
                             RedirectAttributes attributes){
         try {
-                classService.save(classDTO);
-                attributes.addFlashAttribute("success","Add successfully");
+            classService.save(classDTO);
+            attributes.addFlashAttribute("success","Add successfully");
 
         }catch (Exception e){
-              e.printStackTrace();
+            e.printStackTrace();
             attributes.addFlashAttribute("fail","Add failed");
         }
         return "redirect:/list-class";
@@ -72,14 +72,14 @@ public class ClassController {
     //enable class
     @RequestMapping(value="/enable-class/{id}",method = {RequestMethod.PUT,RequestMethod.GET})
     public String enableClass(@PathVariable("id") Long id,RedirectAttributes redirectAttributes){
-           try{
-               classService.enableById(id);
-               redirectAttributes.addFlashAttribute("success","Enable Successfully");
-           }catch (Exception e){
-               e.printStackTrace();
-               redirectAttributes.addFlashAttribute("fail","Fail to enabled");
-           }
-           return "redirect:/list-class";
+        try{
+            classService.enableById(id);
+            redirectAttributes.addFlashAttribute("success","Enable Successfully");
+        }catch (Exception e){
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("fail","Fail to enabled");
+        }
+        return "redirect:/list-class";
     }
 
     //disable class
@@ -105,19 +105,19 @@ public class ClassController {
         model.addAttribute("clazz",clazzDTO);
         model.addAttribute("listTrainer",trainerList);
 
-          return "management/classmanagement/classedit";
+        return "management/classmanagement/classedit";
     }
 
 
     @PostMapping("/update-class/{id}")
     public String processUpdate(@PathVariable("id") Long id,@ModelAttribute("clazz") ClassDTO classDTO,RedirectAttributes redirectAttributes){
-           try{
-               classService.update(classDTO);
-               redirectAttributes.addFlashAttribute("success","Update Successfully");
-           }catch (Exception e){
-               e.printStackTrace();
-               redirectAttributes.addFlashAttribute("fail","Fail");
-           }
+        try{
+            classService.update(classDTO);
+            redirectAttributes.addFlashAttribute("success","Update Successfully");
+        }catch (Exception e){
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("fail","Fail");
+        }
         return "redirect:/list-class";
     }
 
