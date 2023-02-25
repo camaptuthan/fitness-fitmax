@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 
@@ -29,6 +30,10 @@ public class Services {
 
     @Column(name = "status", nullable = false)
     private boolean status;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "created_date")
+    private Date date;
 
     //studio-service relationship
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
