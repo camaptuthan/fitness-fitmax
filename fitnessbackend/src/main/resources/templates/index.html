@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <th:block th:insert="~{fragments/head::link}"></th:block>
+    <script th:src="@{/js/jquery-2.2.4.min.js}"></script>
 </head>
 
 <body id="home">
@@ -310,7 +311,7 @@
 <!--============== RELATED POSTS END ==============-->
 
 <!-- =========== S-TRAINING-SCHEDULE =========== -->
-<div th:include="fragments/traning_schedule.html"></div>
+<div th:include="management/ScheduleManagement/schedule_table"></div>
 <!-- ========= S-TRAINING-SCHEDULE END ========= -->
 
 <!-- ================== FOOTER ================== -->
@@ -357,11 +358,12 @@
 <!--================= TO TOP END =================-->
 
 <!--=================== SCRIPT	===================-->
-<script th:src="@{/js/jquery-2.2.4.min.js}"></script>
+
 <script th:src="@{/js/slick.min.js}"></script>
 <script th:src="@{/js/rx-lazy.js}"></script>
 <script th:src="@{/js/parallax.min.js}"></script>
 <script th:src="@{/js/scripts.js}"></script>
+
 </body>
 
 </html>

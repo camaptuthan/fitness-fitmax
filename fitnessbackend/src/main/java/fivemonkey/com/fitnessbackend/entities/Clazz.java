@@ -1,11 +1,11 @@
 package fivemonkey.com.fitnessbackend.entities;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -27,9 +27,6 @@ public class Clazz {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "slot")
-    private int slot;
-
     @Column(name = "duration")
     private int duration;
 
@@ -46,20 +43,39 @@ public class Clazz {
     @Column(name = "status", nullable = false)
     private boolean status;
 
+    @Column(name = "image")
+    private String img;
     //service-class relationship
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id", referencedColumnName = "service_id")
+    @JsonIgnore
     private Services services;
 
     //trainer-class relationship
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "trainer_email", referencedColumnName = "trainer_email")
+    @JsonIgnore
     private Trainer trainer;
 
     //class-session relationship
     @OneToMany(mappedBy = "aClass")
+    @JsonIgnore
     private List<Session> sessions;
 
-
-    private String img;
+//    @Override
+//    public String toString() {
+//        return "Clazz{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", duration=" + duration +
+//                ", price=" + price +
+//                ", des='" + des + '\'' +
+//                ", date=" + date +
+//                ", status=" + status +
+//                ", img='" + img + '\'' +
+//                ", services=" + services +
+//                ", trainer=" + trainer +
+//                ", sessions=" + sessions +
+//                '}';
+//    }
 }
