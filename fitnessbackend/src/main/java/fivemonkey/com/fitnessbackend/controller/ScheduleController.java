@@ -35,8 +35,8 @@ public class ScheduleController {
         return scheduleService.getByClassId(id);
     }
 
-    @GetMapping("/list-class")
-    public List<Clazz> getClasses() {
-        return classService.findAll();
-    }
+//    @GetMapping("/list-class")
+//    public List<Clazz> getClasses() {
+//        return classService.findAll();
+//    }
 }

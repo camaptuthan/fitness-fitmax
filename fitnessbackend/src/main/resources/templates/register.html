@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<th:block th:insert="fragments/common_fragment/head"></th:block>
+<div th:include="fragments/common_fragment/head.html"></div>
 <body id="bg">
 <div class="page-wraper">
     <div id="loading-icon-bx"></div>
@@ -15,13 +15,28 @@
                     <h2 class="title-head">Sign Up <span>Now</span></h2>
                     <p>Login Your Account <a href="/login">Click here</a></p>
                 </div>
-                <form class="contact-bx" th:action="@{/user/register-user}" th:object="${user}" method="post">
+                <form class="contact-bx" th:action="@{/user/register}" th:object="${user}" method="post">
                     <div class="row placeani">
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <div class="input-group">
-                                    <label>Phone</label>
-                                    <input  type="text" required="" class="form-control">
+                                    <input placeholder="First Name" name="firstName"  type="text" required="" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input placeholder="Last Name" name="lastName"  type="text" required="" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="input-group">
+
+                                    <input placeholder="Phone" name="phone"  type="text" required="" class="form-control">
+                                    <h6 style="color: red" th:text="${regexPhone}"></h6>
                                 </div>
                             </div>
                         </div>
@@ -30,6 +45,7 @@
                                 <div class="input-group">
                                     <label>Your Email Address</label>
                                     <input  name="email" type="email" required="" class="form-control">
+                                    <h6 style="color: red" th:text="${fail}"></h6>
                                 </div>
                             </div>
                         </div>
@@ -42,11 +58,16 @@
                             </div>
                         </div>
                         <div class="col-lg-12 m-b30">
+
+
+                            <h6 style="color: green" th:text="${message}"></h6>
                             <button name="submit" type="submit" value="Submit" class="btn button-md">Sign Up</button>
-                            <span style="color: green" th:utext="${message}"></span>
+
+
                         </div>
-                        <div class="col-lg-12">
-                            <h6>Sign Up with Social media</h6>
+
+                        <div   class="col-lg-12">
+
                             <div class="d-flex">
                                 <a class="btn flex-fill m-r5 facebook" href="#"><i class="fa fa-facebook"></i>Facebook</a>
                                 <a class="btn flex-fill m-l5 google-plus" href="#"><i class="fa fa-google-plus"></i>Google Plus</a>
@@ -59,7 +80,7 @@
     </div>
 </div>
 <!-- External JavaScripts -->
-<th:block th:insert="fragments/common_fragment/script"></th:block>
+<div th:include="fragments/common_fragment/script.html"></div>
 </body>
 
 </html>

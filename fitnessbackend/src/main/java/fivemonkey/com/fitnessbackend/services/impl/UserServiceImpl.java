@@ -20,22 +20,27 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
     @Override
-    public void registerUser(String email,String password,String phone) {
+    public void registerUser(String email,String password,String phone,String firstName,String lastName) {
         User user= new User();
         user.setPassword(password);
         user.setEmail(email);
         user.setPhone(phone);
         user.setStatus(true);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
         Role r= new Role();
         r.setId(6L);
         user.setRole(r);
         Studio s= new Studio();
         s.setId(1L);
+        user.setStudio(s);
         user.setDate(new Date());
         userRepository.save(user);
 
     }
 
+
+    //check email exist ,phone may be optional
     @Override
     public List<Object> isUserPresent(UserDTO user) {
         boolean userExists = false;
@@ -45,15 +50,15 @@ public class UserServiceImpl implements UserService {
             userExists = true;
             message = "Email Already Present!";
         }
-        Optional<User> existingUserMobile = userRepository.findByMobile(user.getPhone());
-        if(existingUserMobile.isPresent()){
-            userExists = true;
-            message = "Mobile Number Already Present!";
-        }
-        if (existingUserEmail.isPresent() && existingUserMobile.isPresent()) {
-            message = "Email and Mobile Number Both Already Present!";
-        }
-        System.out.println("existingUserEmail.isPresent() - "+existingUserEmail.isPresent()+"existingUserMobile.isPresent() - "+existingUserMobile.isPresent());
+//        Optional<User> existingUserMobile = userRepository.findByMobile(user.getPhone());
+//        if(existingUserMobile.isPresent()){
+//            userExists = true;
+//            message = "Mobile Number Already Present!";
+//        }
+//        if (existingUserEmail.isPresent() && existingUserMobile.isPresent()) {
+//            message = "Email and Mobile Number Both Already Present!";
+//        }
+        System.out.println("existingUserEmail.isPresent() - "+existingUserEmail.isPresent());
         return Arrays.asList(userExists, message);
     }
 
