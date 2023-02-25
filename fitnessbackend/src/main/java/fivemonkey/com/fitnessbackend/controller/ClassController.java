@@ -70,7 +70,7 @@ public class ClassController {
 
     //enable class
     @RequestMapping(value="/enable-class/{id}",method = {RequestMethod.PUT,RequestMethod.GET})
-    public String enableClass(@PathVariable("id") Long id,RedirectAttributes redirectAttributes){
+    public String enableClass(@PathVariable("id") String id,RedirectAttributes redirectAttributes){
            try{
                classService.enableById(id);
                redirectAttributes.addFlashAttribute("success","Enable Successfully");
@@ -84,7 +84,7 @@ public class ClassController {
     //disable class
 
     @RequestMapping(value="/disable-class/{id}",method = {RequestMethod.PUT,RequestMethod.GET})
-    public String disableClass(@PathVariable("id") Long id,RedirectAttributes redirectAttributes){
+    public String disableClass(@PathVariable("id") String id,RedirectAttributes redirectAttributes){
         try{
             classService.disableClass(id);
             redirectAttributes.addFlashAttribute("success","Disabled");
@@ -98,7 +98,7 @@ public class ClassController {
 
     //get information of class
     @GetMapping("update-class/{id}")
-    public String getInformtionFormUpdate(@PathVariable("id") Long id,Model model){
+    public String getInformtionFormUpdate(@PathVariable("id") String id,Model model){
         List<Trainer> trainerList=trainerService.getAll();
         ClassDTO clazzDTO=classService.getClassById(id);
         model.addAttribute("clazz",clazzDTO);
@@ -109,7 +109,7 @@ public class ClassController {
 
 
     @PostMapping("/update-class/{id}")
-    public String processUpdate(@PathVariable("id") Long id,@ModelAttribute("clazz") ClassDTO classDTO,RedirectAttributes redirectAttributes){
+    public String processUpdate(@PathVariable("id") String id,@ModelAttribute("clazz") ClassDTO classDTO,RedirectAttributes redirectAttributes){
            try{
                classService.update(classDTO);
                redirectAttributes.addFlashAttribute("success","Update Successfully");

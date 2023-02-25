@@ -13,12 +13,12 @@ public interface ClassService {
     Clazz save(ClassDTO c);
     Clazz update(ClassDTO c);
 
-     void disableClass(Long id);
+     void disableClass(String id);
 
-    void enableById(Long id);
+    void enableById(String id);
 
 
-    ClassDTO getClassById(Long id);
+    ClassDTO getClassById(String id);
 
 
     Page<Clazz> pageClass(int pageNo,int pageSize);

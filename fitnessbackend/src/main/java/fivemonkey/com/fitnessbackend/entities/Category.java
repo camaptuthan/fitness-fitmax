@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,9 +18,10 @@ import java.util.List;
 public class Category {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "category_generator")
+    @GenericGenerator(name = "category_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.CategoryIdentifier")
     @Column(name = "category_id")
-    private Long id;
+    private String id;
 
     @Column(name = "name")
     private String name;

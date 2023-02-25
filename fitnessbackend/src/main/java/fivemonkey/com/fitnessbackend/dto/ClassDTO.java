@@ -12,7 +12,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class ClassDTO {
-     private Long id;
+     private String id;
      private String name;
      private Date date;
 

@@ -26,7 +26,7 @@ public class PackageService {
     }
 
     //get package by id
-    public PackageDTO getPackageById(Long id) {
+    public PackageDTO getPackageById(String id) {
         Package p= packageRepository.getById(id);
         PackageDTO packageDTO= new PackageDTO();
         ModelMapper mapper= new ModelMapper();
@@ -62,14 +62,14 @@ public class PackageService {
     }
 
     //disable package
-    public void disablePackageById(Long id){
+    public void disablePackageById(String id){
         Package p = packageRepository.getById(id);
         p.setStatus(false);
         packageRepository.save(p);
     }
 
     //enable package
-    public void enablePackageById(Long id){
+    public void enablePackageById(String id){
         Package p = packageRepository.getById(id);
         p.setStatus(true);
         packageRepository.save(p);

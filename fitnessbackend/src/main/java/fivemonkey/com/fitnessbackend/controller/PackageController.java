@@ -50,7 +50,7 @@ public class PackageController {
 
     //view package by id
     @GetMapping("/package_detail/{id}")
-    public String viewPackageDetail(@PathVariable(name = "id") Long id, Model model) {
+    public String viewPackageDetail(@PathVariable(name = "id") String id, Model model) {
         PackageDTO p = packageServices.getPackageById(id);
         model.addAttribute("package", p);
         return "management/PackageManagement/detail";
@@ -58,7 +58,7 @@ public class PackageController {
 
     //disable package
     @RequestMapping(value="/disable-package/{id}",method = {RequestMethod.PUT,RequestMethod.GET})
-    public String disablePackage(@PathVariable("id") Long id,RedirectAttributes redirectAttributes){
+    public String disablePackage(@PathVariable("id") String id,RedirectAttributes redirectAttributes){
         try{
             packageServices.disablePackageById(id);
             redirectAttributes.addFlashAttribute("success","Disabled");
@@ -71,7 +71,7 @@ public class PackageController {
 
     //enable package
     @RequestMapping(value="/enable-package/{id}",method = {RequestMethod.PUT,RequestMethod.GET})
-    public String enablePackage(@PathVariable("id") Long id,RedirectAttributes redirectAttributes){
+    public String enablePackage(@PathVariable("id") String id,RedirectAttributes redirectAttributes){
         try{
             packageServices.enablePackageById(id);
             redirectAttributes.addFlashAttribute("success","Enable");
@@ -84,7 +84,7 @@ public class PackageController {
 
     //get package detail
     @GetMapping("/update-package/{id}")
-    public String getDetail(@PathVariable("id") Long id,Model model){
+    public String getDetail(@PathVariable("id") String id,Model model){
         PackageDTO packageDTO=packageServices.getPackageById(id);
         System.out.println("name package: "+packageDTO.getName());
         model.addAttribute("package",packageDTO);
@@ -94,7 +94,7 @@ public class PackageController {
 
     //edit package
     @PostMapping("/update-package/{id}")
-    public String processUpdate(@PathVariable("id") Long id,@ModelAttribute("package") PackageDTO packageDTO,RedirectAttributes redirectAttributes){
+    public String processUpdate(@PathVariable("id") String id,@ModelAttribute("package") PackageDTO packageDTO,RedirectAttributes redirectAttributes){
         try{
             packageServices.update(packageDTO);
             redirectAttributes.addFlashAttribute("success","Update Successfully");

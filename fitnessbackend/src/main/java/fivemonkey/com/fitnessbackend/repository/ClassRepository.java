@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ClassRepository extends JpaRepository<Clazz,Long> {
+public interface ClassRepository extends JpaRepository<Clazz,String> {
 
     //paging
     @Query("select c from Clazz c")

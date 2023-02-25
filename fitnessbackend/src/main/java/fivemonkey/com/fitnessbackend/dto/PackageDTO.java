@@ -2,7 +2,7 @@ package fivemonkey.com.fitnessbackend.dto;
 
 public class PackageDTO {
 
-    private Long id;
+    private String id;
     private String name;
     private int duration;
     private Float price;
@@ -20,11 +20,11 @@ public class PackageDTO {
         this.status = status;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

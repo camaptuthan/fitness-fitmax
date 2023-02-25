@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,9 +18,10 @@ import java.util.Date;
 public class Package {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "package_generator")
+    @GenericGenerator(name = "package_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.PackageIdentifier")
     @Column(name = "package_id")
-    private Long id;
+    private String id;
 
     @Column(name = "name")
     private String name;

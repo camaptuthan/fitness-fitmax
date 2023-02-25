@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -18,9 +19,10 @@ import java.util.List;
 public class Tracking {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "tracking_generator")
+    @GenericGenerator(name = "tracking_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.TrackingIdentifier")
     @Column(name = "tracking_id")
-    private Long id;
+    private String id;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
