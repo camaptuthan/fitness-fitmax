@@ -51,7 +51,6 @@
             }
 
             var menuItem = $(event.currentTarget);
-            console.log(menuItem);
             if (menuItem[0].timeOutMenu) {
                 clearTimeout(menuItem[0].timeOutMenu);
             }

@@ -29,7 +29,7 @@ public class ScheduleController {
     }
 
     @GetMapping("/{id}")
-    public ClassDTO getScheduleByClassId(@PathVariable("id") Long id) {
+    public ClassDTO getScheduleByClassId(@PathVariable("id") String id) {
         return scheduleService.getByClassId(id);
     }
 

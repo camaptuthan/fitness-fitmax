@@ -10,10 +10,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SessionDTO {
-    private Long id;
+    private String id;
     private String weekDay;
 
-    private Long classId;
+    private String name;
+    private String classId;
 
     @Override
     public String toString() {

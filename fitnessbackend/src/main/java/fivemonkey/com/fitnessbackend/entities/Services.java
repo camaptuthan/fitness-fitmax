@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 
@@ -18,15 +20,20 @@ import java.util.List;
 public class Services {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "service_generator")
+    @GenericGenerator(name = "service_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.ServiceIdentifier")
     @Column(name = "service_id")
-    private Long id;
+    private String id;
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "status", nullable = false)
     private boolean status;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "created_date")
+    private Date date;
 
     //studio-service relationship
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -62,6 +69,5 @@ public class Services {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "assistant_email", referencedColumnName = "assistant_email")
     private Assistant assistant;
-
 }
 

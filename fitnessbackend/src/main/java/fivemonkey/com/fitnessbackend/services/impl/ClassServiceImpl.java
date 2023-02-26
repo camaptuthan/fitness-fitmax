@@ -70,7 +70,7 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public void disableClass(Long id) {
-        Clazz clazz = classRepository.getById(id);
+        Clazz clazz = classRepository.getById(""+id);
         clazz.setStatus(false);
         classRepository.save(clazz);
     }
@@ -78,7 +78,7 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public void enableById(Long id) {
-        Clazz clazz = classRepository.getById(id);
+        Clazz clazz = classRepository.getById(""+id);
         clazz.setStatus(true);
         classRepository.save(clazz);
     }
@@ -86,7 +86,7 @@ public class ClassServiceImpl implements ClassService {
     // map dto
     @Override
     public ClassDTO getClassById(Long id) {
-        Clazz clazz = classRepository.getById(id);
+        Clazz clazz = classRepository.getById(""+id);
         ClassDTO classDTO = new ClassDTO();
         classDTO = modelMapper.map(clazz, ClassDTO.class);
         return classDTO;
