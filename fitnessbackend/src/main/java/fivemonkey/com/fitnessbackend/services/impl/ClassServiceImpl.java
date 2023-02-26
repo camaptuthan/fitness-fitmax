@@ -25,7 +25,9 @@ public class ClassServiceImpl implements ClassService {
         List<ClassDTO> classDTOList= new ArrayList<>();
         List<Clazz> clazzList=classRepository.findAll();
         for (Clazz c : clazzList){
+
             ClassDTO classDTO=mapper.map(c,ClassDTO.class);
+           classDTO.setSlot(1);
             classDTOList.add(classDTO);
         }
         return classDTOList;

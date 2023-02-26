@@ -29,4 +29,13 @@ public class Role {
     @OneToMany(mappedBy = "role")
     private List<User> users;
 
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", des='" + des + '\'' +
+                ", users=" + users +
+                '}';
+    }
 }

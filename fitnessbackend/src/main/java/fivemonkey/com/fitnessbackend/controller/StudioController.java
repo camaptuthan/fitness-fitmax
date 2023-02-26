@@ -3,8 +3,8 @@ package fivemonkey.com.fitnessbackend.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("/studio")
+//@Controller
+//@RequestMapping("/studio")
 public class StudioController {
 
 //    @Autowired

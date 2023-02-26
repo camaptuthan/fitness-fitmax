@@ -26,6 +26,8 @@ public class ClassDTO {
 
      private Trainer trainer;
 
+     private int slot;
+
 
 
 }
