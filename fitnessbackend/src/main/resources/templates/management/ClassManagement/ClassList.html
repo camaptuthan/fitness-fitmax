@@ -17,54 +17,34 @@
             background: #f5f5f5;
             font-family: 'Roboto', sans-serif;
         }
-<<<<<<< HEAD
-        .table-responsive {
-            margin: 30px 0;
-        }
-=======
 
         .table-responsive {
             margin: 30px 0;
         }
 
->>>>>>> backend
         .table-wrapper {
             min-width: 1000px;
             background: #fff;
             padding: 20px;
-<<<<<<< HEAD
-            box-shadow: 0 1px 1px rgba(0,0,0,.05);
-        }
-=======
             box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
         }
 
->>>>>>> backend
         .table-title {
             padding-bottom: 10px;
             margin: 0 0 10px;
             min-width: 100%;
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> backend
         .table-title h2 {
             margin: 8px 0 0;
             font-size: 22px;
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> backend
         .search-box {
             position: relative;
             float: right;
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> backend
         .search-box input {
             height: 34px;
             border-radius: 20px;
@@ -72,17 +52,11 @@
             border-color: #ddd;
             box-shadow: none;
         }
-<<<<<<< HEAD
-        .search-box input:focus {
-            border-color: #3FBAE4;
-        }
-=======
 
         .search-box input:focus {
             border-color: #3FBAE4;
         }
 
->>>>>>> backend
         .search-box i {
             color: #a0a5b1;
             position: absolute;
@@ -90,17 +64,6 @@
             top: 8px;
             left: 10px;
         }
-<<<<<<< HEAD
-        table.table tr th, table.table tr td {
-            border-color: #e9e9e9;
-        }
-        table.table-striped tbody tr:nth-of-type(odd) {
-            background-color: #fcfcfc;
-        }
-        table.table-striped.table-hover tbody tr:hover {
-            background: #f5f5f5;
-        }
-=======
 
         table.table tr th, table.table tr td {
             border-color: #e9e9e9;
@@ -114,42 +77,21 @@
             background: #f5f5f5;
         }
 
->>>>>>> backend
         table.table th i {
             font-size: 13px;
             margin: 0 5px;
             cursor: pointer;
         }
-<<<<<<< HEAD
-        table.table td:last-child {
-            width: 130px;
-        }
-=======
 
         table.table td:last-child {
             width: 130px;
         }
 
->>>>>>> backend
         table.table td a {
             color: #a0a5b1;
             display: inline-block;
             margin: 0 5px;
         }
-<<<<<<< HEAD
-        table.table td a.view {
-            color: #03A9F4;
-        }
-        table.table td a.edit {
-            color: #FFC107;
-        }
-        table.table td a.delete {
-            color: #E34724;
-        }
-        table.table td i {
-            font-size: 19px;
-        }
-=======
 
         table.table td a.view {
             color: #03A9F4;
@@ -167,15 +109,11 @@
             font-size: 19px;
         }
 
->>>>>>> backend
         .pagination {
             float: right;
             margin: 0 0 5px;
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> backend
         .pagination li a {
             border: none;
             font-size: 95%;
@@ -188,20 +126,6 @@
             text-align: center;
             padding: 0;
         }
-<<<<<<< HEAD
-        .pagination li a:hover {
-            color: #666;
-        }
-        .pagination li.active a {
-            background: #03A9F4;
-        }
-        .pagination li.active a:hover {
-            background: #0397d6;
-        }
-        .pagination li.disabled i {
-            color: #ccc;
-        }
-=======
 
         .pagination li a:hover {
             color: #666;
@@ -219,15 +143,11 @@
             color: #ccc;
         }
 
->>>>>>> backend
         .pagination li i {
             font-size: 16px;
             padding-top: 6px
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> backend
         .hint-text {
             float: left;
             margin-top: 6px;
@@ -235,17 +155,11 @@
         }
     </style>
     <script>
-<<<<<<< HEAD
-        $(document).ready(function(){
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-=======
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
 
 
->>>>>>> backend
     </script>
 </head>
 <body>
@@ -255,26 +169,6 @@
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-8"><h2>Class <b>List</b></h2></div>
-<<<<<<< HEAD
-                    <div class="col-sm-4">
-                        <div class="search-box">
-                            <i class="material-icons">&#xE8B6;</i>
-                            <input type="text" class="form-control" placeholder="Search&hellip;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div th:if="${size}==0">
-                        <h1>No Class</h1>
-            </div>
-            <table class="table table-striped table-hover table-bordered" th:if="${size>0}">
-                <thead>
-                <tr >
-                    <th>ID</th>
-                    <th>Name <i class="fa fa-sort"></i></th>
-                    <th>Date</th>
-                    <th>Price <i class="fa fa-sort"></i></th>
-=======
 
                     <div class="col-sm-4">
                         <form th:action="@{/list-class/search}" method="get" >
@@ -282,7 +176,7 @@
                                 <i class="material-icons">&#xE8B6;</i>
                                 <input th:value="${keyword}" name="keyword" id="keyword" type="text"
                                        class="form-control" placeholder="Search&hellip;">
-<!--                                <input type="submit" placeholder="submit">-->
+                                <!--                                <input type="submit" placeholder="submit">-->
                             </div>
                         </form>
                     </div>
@@ -309,22 +203,10 @@
                     <th>Description</th>
                     <th>Date Created</th>
                     <th>Price</th>
->>>>>>> backend
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                <tr th:each="c : ${list}">
-                    <td th:text="${c.id}"></td>
-                    <td th:text="${c.name}"></td>
-                    <td th:text="${c.price}"></td>
-                    <td th:text="${c.date}"></td>
-                    <td>
-                        <a th:href="@{/add-class}" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                        <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                        <a th:href="@{'/delete/' + ${c.id}}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-=======
                 <tr th:each="c : ${list}" >
                     <td th:text="${c.id}"></td>
                     <td th:text="${c.name}"></td>
@@ -355,24 +237,12 @@
                             </button>
 
                         </a>
->>>>>>> backend
                     </td>
                 </tr>
 
                 </tbody>
             </table>
             <div class="clearfix">
-<<<<<<< HEAD
-                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
-=======
                 <ul class="pagination">
                     <!--                    <li th:if="${currentPage != 0}" class="page-item disabled">-->
                     <!--                        <a th:href="@{'/page/'+${currentPage} -1  }">-->
@@ -385,22 +255,13 @@
                     <!--                    <li th:if = "${currentPage + 1 != totalPages}" class="page-item">-->
                     <!--                        <a th:href="@{'/page/' + ${currentPage + 1}}" class="page-link"><i class="fa fa-angle-double-right"></i></a>-->
                     <!--                    </li>-->
->>>>>>> backend
                 </ul>
             </div>
         </div>
     </div>
-<<<<<<< HEAD
-</div>
-</body>
-</html>
-
-</html>
-=======
 
 </div>
 </body>
 
 </html>
 
->>>>>>> backend

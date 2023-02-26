@@ -33,5 +33,8 @@ public class ScheduleController {
         return scheduleService.getByClassId(id);
     }
 
-   
+    @GetMapping("list-class")
+    public List<ClassDTO> getClasses() {
+        return classService.findAll();
+    }
 }

@@ -1,10 +1,6 @@
 package fivemonkey.com.fitnessbackend.entities;
 
-<<<<<<< HEAD
-=======
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
->>>>>>> backend
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,12 +26,7 @@ public class Clazz {
     @Column(name = "name")
     private String name;
 
-<<<<<<< HEAD
-    @Column(name = "slot")
-    private int slot;
 
-=======
->>>>>>> backend
     @Column(name = "duration")
     private int duration;
 
@@ -52,37 +43,26 @@ public class Clazz {
     @Column(name = "status", nullable = false)
     private boolean status;
 
-<<<<<<< HEAD
-    //service-class relationship
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "service_id", referencedColumnName = "service_id")
-=======
+
     @Column(name = "image")
     private String img;
     //service-class relationship
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id", referencedColumnName = "service_id")
     @JsonIgnore
->>>>>>> backend
+
     private Services services;
 
     //trainer-class relationship
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "trainer_email", referencedColumnName = "trainer_email")
-<<<<<<< HEAD
-=======
+
     @JsonIgnore
->>>>>>> backend
+
     private Trainer trainer;
 
     //class-session relationship
     @OneToMany(mappedBy = "aClass")
-<<<<<<< HEAD
-    private List<Session> sessions;
-
-
-    private String img;
-=======
     @JsonIgnore
     private List<Session> sessions;
 
@@ -102,5 +82,5 @@ public class Clazz {
 //                ", sessions=" + sessions +
 //                '}';
 //    }
->>>>>>> backend
+
 }

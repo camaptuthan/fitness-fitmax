@@ -1,6 +1,7 @@
 package fivemonkey.com.fitnessbackend.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fivemonkey.com.fitnessbackend.entities.Services;
 import fivemonkey.com.fitnessbackend.entities.Trainer;
 import lombok.*;
@@ -22,13 +23,14 @@ public class ClassDTO {
     private Float price;
 
 
+    @JsonIgnore
     private Services services;
     private String img;
 
 
     private boolean status;
     private String des, duration;
-
+    @JsonIgnore
     private Trainer trainer;
 
 
