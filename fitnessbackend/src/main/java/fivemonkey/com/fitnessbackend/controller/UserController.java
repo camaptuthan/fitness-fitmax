@@ -2,7 +2,8 @@ package fivemonkey.com.fitnessbackend.controller;
 
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/user")
@@ -20,4 +21,9 @@ public class UserController {
 //    public void registerUser(@RequestParam(name = "email") String email, @RequestParam(name = "password") String password){
 //         userService.registerUser(new User(email, password));
 //    }
+
+    @GetMapping("/profile")
+    public String getProfile() {
+        return "myprofile";
+    }
 }
