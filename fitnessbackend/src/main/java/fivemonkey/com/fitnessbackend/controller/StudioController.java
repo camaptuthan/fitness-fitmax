@@ -19,12 +19,13 @@ public class StudioController {
         studioService.insertStudio(studio);
     }
     @GetMapping("/studios/{id}")
-    public String deleteStudio(@PathVariable Long id) {
+    public String deleteStudio(@PathVariable String id) {
         studioService.deleteStudioById(id);
         return "redirect:/studios";
     }
     @GetMapping("/statusstudios/{id}/{status}")
-    public String updateStatus(@PathVariable Long id, @PathVariable boolean status) {
+    public String updateStatus(@PathVariable
+                                String id, @PathVariable boolean status) {
         Studio studio = studioService.getStudioById(id);
         if(status = false){
             studio.setStatus(true);
@@ -36,7 +37,7 @@ public class StudioController {
         return "redirect:/studios";
     }
     @PostMapping("/studios/{id}")
-    public String updateStudio(@PathVariable Long id,
+    public String updateStudio(@PathVariable String id,
                                 @ModelAttribute("studio") Studio studio,
                                 Model model) {
         // get studio from database by id
@@ -55,7 +56,7 @@ public class StudioController {
     }
 
     @GetMapping("/studios/edit/{id}")
-    public String editStudioForm(@PathVariable Long id, Model model) {
+    public String editStudioForm(@PathVariable String id, Model model) {
         model.addAttribute("studio", studioService.getStudioById(id));
         return "management/StudioManagement/updatestudio";
     }

@@ -8,14 +8,14 @@ import java.util.List;
 public interface IStudioService {
 
     void insertStudio(Studio studio);
-    void deleteStudioById(Long id);
+    void deleteStudioById(String id);
     List<Studio> findStudio(String studioCity);
 
-    Studio getStudioById(Long id);
+    Studio getStudioById(String id);
 
     void updateStudio(Studio existingStudio);
 
-    Studio updateStatus(long id, boolean status, Studio studio);
+    Studio updateStatus(String id, boolean status, Studio studio);
 
     List<Studio> getAllStudios();
     Studio saveStudio(Studio studio);

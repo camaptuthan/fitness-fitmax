@@ -10,6 +10,6 @@ import java.util.List;
 public interface ScheduleService {
     List<ScheduleDTO> getAll();
 
-    ClassDTO getByClassId(Long id);
+    ClassDTO getByClassId(String id);
 
 }

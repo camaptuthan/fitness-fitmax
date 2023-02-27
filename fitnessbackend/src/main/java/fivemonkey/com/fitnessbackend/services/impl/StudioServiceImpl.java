@@ -20,7 +20,7 @@ public class StudioServiceImpl implements IStudioService {
         studio.setDate(new Date());
         studioRepository.save(studio);
     }
-    public void deleteStudioById(Long id) {
+    public void deleteStudioById(String id) {
         studioRepository.deleteById(id);
     }
 
@@ -32,14 +32,14 @@ public class StudioServiceImpl implements IStudioService {
         return studioRepository.findStudiosByStudioCity(studioCity);
     }
 
-    public Studio getStudioById(Long id) {
+    public Studio getStudioById(String id) {
         return studioRepository.findById(id).get();
     }
     public void updateStudio(Studio existingStudio) {
     }
 
     @Override
-    public Studio updateStatus(long id, boolean status, Studio studio) {
+    public Studio updateStatus(String id, boolean status, Studio studio) {
         if (status = true){
             studio.setStatus(false);
         }

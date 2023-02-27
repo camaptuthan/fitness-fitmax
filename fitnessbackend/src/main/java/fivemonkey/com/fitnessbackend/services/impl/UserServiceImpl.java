@@ -32,10 +32,10 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         Role r= new Role();
-        r.setId(6L);
+         r.setId("1");
         user.setRole(r);
         Studio s= new Studio();
-        s.setId(1L);
+        s.setId("1");
         user.setStudio(s);
         user.setDate(new Date());
         userRepository.save(user);
