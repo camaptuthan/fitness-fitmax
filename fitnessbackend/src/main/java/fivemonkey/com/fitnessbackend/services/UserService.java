@@ -10,6 +10,9 @@ import java.util.List;
 public interface UserService {
 
     void registerUser(String email,String password,String phone,String firstName,String lastName);
-    public List<Object> isUserPresent(UserDTO user);
+    List<Object> isUserPresent(UserDTO user);
+
+    User login(UserDTO userDTO);
+
 
 }

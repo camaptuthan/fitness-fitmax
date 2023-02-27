@@ -3,6 +3,7 @@ package fivemonkey.com.fitnessbackend.repository;
 import fivemonkey.com.fitnessbackend.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -13,4 +14,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     Optional<User> findByEmail(String email);
     @Query("SELECT u FROM User u WHERE u.phone=?1")
     Optional<User> findByMobile(String phone);
+
+
+    @Query(value = "From User   WHERE email=?1 AND password=?2")
+    Optional<User> findByEmailAndPassword(String email,  String password);
 }

@@ -41,4 +41,15 @@ public class HomeController {
     }
 
 
+    @GetMapping("/dashboard")
+    public String dashboard(){
+        return "management/dashboard/index";
+    }
+
+    @GetMapping("/admin-service")
+    public String serviceAdmin(){
+        return "management/dashboard/service";
+    }
+
+
 }

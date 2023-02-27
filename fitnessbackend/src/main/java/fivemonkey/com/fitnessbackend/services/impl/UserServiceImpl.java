@@ -6,6 +6,7 @@ import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.repository.UserRepository;
 import fivemonkey.com.fitnessbackend.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,8 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
+    @Autowired
+    ModelMapper modelMapper;
     @Autowired
     UserRepository userRepository;
     @Override
@@ -60,6 +63,11 @@ public class UserServiceImpl implements UserService {
 //        }
         System.out.println("existingUserEmail.isPresent() - "+existingUserEmail.isPresent());
         return Arrays.asList(userExists, message);
+    }
+
+    @Override
+    public User login(UserDTO userDTO) {
+        return userRepository.findByEmailAndPassword(userDTO.getEmail(),userDTO.getPassword()).orElse(null);
     }
 
 
