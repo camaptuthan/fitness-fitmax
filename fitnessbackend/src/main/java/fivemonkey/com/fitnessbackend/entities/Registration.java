@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
 
@@ -16,9 +17,10 @@ import java.util.Date;
 public class Registration {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "registration_generator")
+    @GenericGenerator(name = "registration_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.RegistrationIdentifier")
     @Column(name = "registration_id")
-    private Long id;
+    private String id;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "registration_date")
