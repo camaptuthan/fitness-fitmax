@@ -96,20 +96,32 @@ public class UserController {
         ra.addFlashAttribute("fail","Fail");
     }
         return "redirect:/listusers";
+
+
+    }
+
+    @GetMapping("/search")
+    public String search(Model model){
+    String email = "ha";
+    List<User> userList = userService.findAllUserNameContaining(email);
+    model.addAttribute("list",userList);
+    return "management/usermanagement/userlist";
+
+
     }
 //@GetMapping("/search")
 //    public String search(Model model, @RequestParam(name = "email",required = false) String email){
-//    List<UserDTO> userList = null;
+//    List<User> userList = null;
 //    if (StringUtils.hasText(email)){
 //        userList = userService.findAllUserNameContaining(email);}
 //    else{
-//        userList = userService.findAll();
+//        userList = userService.findAllUser();
 //        }
 //    model.addAttribute("list",userList);
-//    return "/search";
-//
-//
-//    }
+//    return "management/usermanagement/userlist";
 
 
-}
+    }
+
+
+

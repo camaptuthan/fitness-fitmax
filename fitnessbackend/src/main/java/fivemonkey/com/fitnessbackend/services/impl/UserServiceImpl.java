@@ -97,6 +97,19 @@ public class UserServiceImpl implements UserService {
         return userDTO;
     }
 
+
+
+    @Override
+    public List<User> findAllUser() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> findAllUserNameContaining(String email) {
+        return userRepository.findAll();
+    }
+
+
 //    @Override
 //    public List<UserDTO> findAllUserNameContaining(String email) {
 //        ModelMapper mapper = new ModelMapper();

@@ -18,6 +18,7 @@ public interface UserService {
     void enableById(String email);
 
     UserDTO getClassById(String email);
-//    List<UserDTO> findAllUserNameContaining(String email);
+    List<User> findAllUser();
+    List<User> findAllUserNameContaining(String email);
 
 }
