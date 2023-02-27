@@ -53,12 +53,12 @@ public class User {
     private boolean status;
 
     //role-user relationship
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
 
     //studio-user relationship
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "studio_id", referencedColumnName = "studio_id")
     private Studio studio;
 
@@ -85,4 +85,26 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Trainer trainer;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", date=" + date +
+                ", status=" + status +
+                ", role=" + role +
+                ", studio=" + studio +
+                ", blogs=" + blogs +
+                ", manager=" + manager +
+                ", assistant=" + assistant +
+                ", trainee=" + trainee +
+                ", trainer=" + trainer +
+                '}';
+    }
 }

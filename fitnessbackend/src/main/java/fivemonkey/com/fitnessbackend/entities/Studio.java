@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -19,12 +17,11 @@ import java.util.List;
 public class Studio {
 
     @Id
-    @GeneratedValue(generator = "studio_generator")
-    @GenericGenerator(name = "studio_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.StudioIdentifier")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "studio_id")
-    private String id;
+    private Long id;
 
-    @Column(name = "studio_name")
+    @Column(name = "name")
     private String name;
 
     @Column(name = "city")
@@ -59,20 +56,20 @@ public class Studio {
     @JoinColumn(name = "manager_email", referencedColumnName = "manager_email", unique = true)
     private Manager manager;
 
-//    @Override
-//    public String toString() {
-//        return "Studio{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", city='" + city + '\'' +
-//                ", district='" + district + '\'' +
-//                ", contact='" + contact + '\'' +
-//                ", date=" + date +
-//                ", des='" + des + '\'' +
-//                ", status=" + status +
-//                ", users=" + users +
-//                ", services=" + services +
-//                ", manager=" + manager +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "Studio{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", city='" + city + '\'' +
+                ", district='" + district + '\'' +
+                ", contact='" + contact + '\'' +
+                ", date=" + date +
+                ", des='" + des + '\'' +
+                ", status=" + status +
+                ", users=" + users +
+                ", services=" + services +
+                ", manager=" + manager +
+                '}';
+    }
 }
