@@ -2,6 +2,7 @@ package fivemonkey.com.fitnessbackend.entities;
 
 import javax.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
 
@@ -14,11 +15,12 @@ import java.util.Date;
 public class PersonalTraining {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "personal_training_generator")
+    @GenericGenerator(name = "personal_training_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.PersonalTrainingIdentifier")
     @Column(name = "personaltraining_id")
-    private Long id;
+    private String id;
 
-    @Column(name = "name")
+    @Column(name = "personaltraining_name")
     private String name;
 
     @Column(name = "slot")

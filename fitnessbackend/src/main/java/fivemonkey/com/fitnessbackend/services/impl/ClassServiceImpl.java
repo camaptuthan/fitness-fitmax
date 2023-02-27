@@ -69,26 +69,32 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public void disableClass(Long id) {
+
+    public void disableClass(String id) {
         Clazz clazz = classRepository.getById(id);
+
         clazz.setStatus(false);
         classRepository.save(clazz);
     }
 
 
     @Override
-    public void enableById(Long id) {
+
+    public void enableById(String id) {
         Clazz clazz = classRepository.getById(id);
+
         clazz.setStatus(true);
         classRepository.save(clazz);
     }
 
     // map dto
     @Override
-    public ClassDTO getClassById(Long id) {
+
+    public ClassDTO getClassById(String id) {
         Clazz clazz = classRepository.getById(id);
         ClassDTO classDTO = new ClassDTO();
         classDTO = modelMapper.map(clazz, ClassDTO.class);
+
         return classDTO;
     }
 
@@ -102,16 +108,15 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public List<ClassDTO> searchByName(String keyword) {
 
-        List<ClassDTO> classDTOList= new ArrayList<>();
+        List<ClassDTO> classDTOList = new ArrayList<>();
         List<Clazz> list = classRepository.searchClassByKeyword(keyword);
-        for (Clazz c : list)
-        {
-            ClassDTO classDTO= new ClassDTO();
-            modelMapper.map(c,ClassDTO.class);
+        for (Clazz c : list) {
+            ClassDTO classDTO = new ClassDTO();
+            modelMapper.map(c, ClassDTO.class);
             classDTOList.add(classDTO);
         }
         if (keyword != null) {
-                 return classDTOList;
+            return classDTOList;
         }
 
         return classDTOList;

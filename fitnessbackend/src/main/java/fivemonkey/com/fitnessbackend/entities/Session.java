@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,14 +15,19 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name = "session", schema = "dbo", uniqueConstraints = {@UniqueConstraint(columnNames = {"happened_date","schedule_id"})})
+
+@Table(name = "session", schema = "dbo",  uniqueConstraints = {@UniqueConstraint(columnNames = {"happened_date","schedule_id"})})
 
 public class Session {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "session_generator")
+    @GenericGenerator(name = "session_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.SessionIdentifier")
     @Column(name = "session_id")
-    private Long id;
+    private String id;
+
+    @Column(name = "session_name")
+    private String name;
 
     @Column(name = "description", columnDefinition = "text")
     private String description;
@@ -30,8 +36,12 @@ public class Session {
     @Column(name = "happened_date")
     private Date happenedDate;
 
+
+    @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
     private Date createdDate;
+
+
 
     //class-session relationship
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -41,9 +51,9 @@ public class Session {
 
     //session-schedule relationship
 
-
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "schedule_id")
+    @JoinColumn(name = "schedule_id", referencedColumnName = "schedule_id")
+
     @JsonIgnore
     private Schedule schedule;
 
@@ -57,4 +67,5 @@ public class Session {
 
                 '}';
     }
+
 }

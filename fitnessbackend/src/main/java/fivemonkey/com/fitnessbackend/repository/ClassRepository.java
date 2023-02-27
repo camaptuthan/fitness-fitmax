@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ClassRepository extends JpaRepository<Clazz,Long> {
+public interface ClassRepository extends JpaRepository<Clazz,String> {
 
     //paging
     @Query("select c from Clazz c")

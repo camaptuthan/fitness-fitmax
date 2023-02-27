@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 public class ClassDTO {
-     private Long id;
+     private String id;
      private String name;
      private Date date;
 
