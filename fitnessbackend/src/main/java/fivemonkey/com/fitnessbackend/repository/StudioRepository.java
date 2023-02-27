@@ -16,4 +16,6 @@ public interface StudioRepository extends JpaRepository<Studio, Long> {
     @Query(value = "Select * from fitmax.studio where city = 'Hanoi'", nativeQuery = true)
     public List<Studio> findStudiosByStudioCity(@Param("city") String studioCity);
 
+    @Query(value = "Select * from fitmax.studio where city = 'Hanoi'", nativeQuery = true)
+    public void updateStatus(@Param("city") String studioCity);
 }

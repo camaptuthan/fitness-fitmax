@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +16,6 @@ import java.util.List;
 @Entity
 @Table(name = "studio", schema = "dbo")
 public class Studio {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "studio_id")
