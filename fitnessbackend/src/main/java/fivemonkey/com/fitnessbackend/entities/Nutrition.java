@@ -22,10 +22,10 @@ public class Nutrition {
     @Id
     @GeneratedValue(generator = "nutrition_generator")
     @GenericGenerator(name = "nutrition_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.NutritionIdentifier")
-    @Column(name = "class_id")
+    @Column(name = "nutrition_id")
     private String id;
 
-    @Column(name = "name")
+    @Column(name = "nutrition_name")
     private String name;
 
     @Column(name = "description", columnDefinition = "text")

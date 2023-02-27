@@ -27,11 +27,8 @@ public class Clazz {
     @Column(name = "class_id")
     private String id;
 
-    @Column(name = "name")
+    @Column(name = "class_name")
     private String name;
-
-    @Column(name = "slot")
-    private int slot;
 
     @Column(name = "duration")
     private int duration;

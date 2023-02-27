@@ -25,7 +25,7 @@ public class Services {
     @Column(name = "service_id")
     private String id;
 
-    @Column(name = "name")
+    @Column(name = "service_name")
     private String name;
 
     @Column(name = "status", nullable = false)

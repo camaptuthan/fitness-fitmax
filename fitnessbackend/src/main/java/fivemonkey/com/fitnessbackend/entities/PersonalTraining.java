@@ -20,7 +20,7 @@ public class PersonalTraining {
     @Column(name = "personaltraining_id")
     private String id;
 
-    @Column(name = "name")
+    @Column(name = "personaltraining_name")
     private String name;
 
     @Column(name = "slot")

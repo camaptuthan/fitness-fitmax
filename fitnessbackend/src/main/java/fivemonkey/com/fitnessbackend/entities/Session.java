@@ -15,7 +15,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name = "session", schema = "dbo")
+@Table(name = "session", schema = "dbo",  uniqueConstraints = {@UniqueConstraint(columnNames = {"happened_date","schedule_id"})})
 public class Session {
 
     @Id
@@ -24,7 +24,7 @@ public class Session {
     @Column(name = "session_id")
     private String id;
 
-    @Column(name = "name")
+    @Column(name = "session_name")
     private String name;
 
     @Column(name = "description", columnDefinition = "text")

@@ -25,7 +25,7 @@ public class Position {
     @Column(name = "position_id")
     private String id;
 
-    @Column(name = "name")
+    @Column(name = "position_name")
     private String name;
 
     @Column(name = "description", columnDefinition = "text")

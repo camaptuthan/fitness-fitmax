@@ -24,7 +24,7 @@ public class Exercise {
     @GenericGenerator(name = "exercise_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.ExerciseIdentifier")
     @Column(name = "exercise_id")
     private String id;
-    @Column(name = "name")
+    @Column(name = "exercise_name")
     private String name;
 
     @Column(name = "description", columnDefinition = "text")
