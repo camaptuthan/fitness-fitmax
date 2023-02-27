@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 
 import javax.persistence.*;
@@ -19,11 +20,12 @@ import java.util.List;
 public class Nutrition {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "nutrition_generator")
+    @GenericGenerator(name = "nutrition_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.NutritionIdentifier")
     @Column(name = "nutrition_id")
-    private Long id;
+    private String id;
 
-    @Column(name = "name")
+    @Column(name = "nutrition_name")
     private String name;
 
     @Column(name = "description", columnDefinition = "text")

@@ -3,6 +3,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,13 +13,14 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "trackingdetail", schema = "dbo")
+@Table(name = "tracking_detail", schema = "dbo")
 public class TrackingDetail {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "trackingdetail_generator")
+    @GenericGenerator(name = "trackingdetail_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.TrackingDetailIdentifier")
     @Column(name = "trackingdetail_id")
-    private Long id;
+    private String id;
 
     @Column(name = "height")
     private Double height;

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.*;
 
 @NoArgsConstructor
@@ -16,9 +18,10 @@ import java.util.*;
 public class Blog {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "blog_generator")
+    @GenericGenerator(name = "blog_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.BlogIdentifier")
     @Column(name = "blog_id")
-    private Long id;
+    private String id;
 
     @Column(name = "title")
     private String title;
