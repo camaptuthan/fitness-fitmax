@@ -24,7 +24,7 @@ public interface ClassService {
     Page<Clazz> pageClass(int pageNo,int pageSize);
 
 
-    List<ClassDTO> searchByName(String keyword);
+    List<Clazz> searchByName(String keyword);
 
 
 

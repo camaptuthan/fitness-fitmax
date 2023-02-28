@@ -50,6 +50,6 @@ public class UserController {
 
         //check object
 
-        return "/trainer";
+        return "redirect:/dashboard";
     }
 }
