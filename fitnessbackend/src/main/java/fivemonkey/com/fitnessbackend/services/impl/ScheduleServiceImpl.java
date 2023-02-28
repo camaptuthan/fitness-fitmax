@@ -36,7 +36,6 @@ public class ScheduleServiceImpl implements ScheduleService {
             ScheduleDTO scheduleDTO = modelMapper.map(schedule, ScheduleDTO.class);
             scheduleDTO.setStartTime(getTime(schedule.getStartTime()));
             scheduleDTO.setEndTime(getTime(schedule.getEndTime()));
-
             List<SessionDTO> sessionDTOs = new ArrayList<>();
             if (schedule.getSessions().size() > 0) {
                 schedule.getSessions().forEach(session -> {
@@ -54,7 +53,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     //get schedule information by provided classId
     @Override
-    public ClassDTO getByClassId(Long id) {
+    public ClassDTO getByClassId(String id) {
 
         List<ScheduleDTO> scheduleDTOS = new ArrayList<>();
 
@@ -67,7 +66,7 @@ public class ScheduleServiceImpl implements ScheduleService {
             List<SessionDTO> sessionDTOs = new ArrayList<>();
             if (schedule.getSessions().size() > 0) {
                 schedule.getSessions().forEach(session -> {
-                    if (session.getAClass().getId() == id) {
+                    if (session.getAClass().getId().equals(id)) {
                         SessionDTO sessionDTO = modelMapper.map(session, SessionDTO.class);
                         sessionDTO.setWeekDay("" + getWeekday(session.getHappenedDate()));
                         sessionDTOs.add(sessionDTO);

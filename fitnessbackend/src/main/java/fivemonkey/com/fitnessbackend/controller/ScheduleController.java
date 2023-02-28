@@ -31,12 +31,12 @@ public class ScheduleController {
     }
 
     @GetMapping("/{id}")
-    public ClassDTO getScheduleByClassId(@PathVariable("id") Long id) {
+    public ClassDTO getScheduleByClassId(@PathVariable("id") String id) {
         return scheduleService.getByClassId(id);
     }
-
-    @GetMapping("/list-class")
-    public List<Clazz> getClasses() {
-        return classService.findAll();
-    }
+//
+//    @GetMapping("/list-class")
+//    public List<Clazz> getClasses() {
+//        return classService.findAll();
+//    }
 }
