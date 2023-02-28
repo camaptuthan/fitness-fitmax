@@ -6,6 +6,7 @@ import fivemonkey.com.fitnessbackend.entities.Package;
 import fivemonkey.com.fitnessbackend.services.PackageService;
 import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +24,7 @@ public class PackageController {
     //view all packages
     @GetMapping("/packages")
     public String getAllPackages(Model model) {
-        List<Package> packageList = packageServices.getAllPackages();
-        model.addAttribute("packageList", packageList);
-        return "management/PackageManagement/package-list";
+        return findPaginated(1, model);
     }
 
     //add new package
@@ -105,4 +104,14 @@ public class PackageController {
         return "redirect:/package/packages";
     }
 
+    @GetMapping("/page/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
+        int pageSize = 5;
+        Page<Package> packages = packageServices.findPaginated(pageNo, pageSize);
+        List<Package> packageList = packages.getContent();
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", packages.getTotalPages());
+        model.addAttribute("packageList", packageList);
+        return "management/PackageManagement/package-list";
+    }
 }

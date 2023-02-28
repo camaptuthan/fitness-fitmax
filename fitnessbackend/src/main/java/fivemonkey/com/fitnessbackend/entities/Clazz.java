@@ -55,11 +55,6 @@ public class Clazz {
     @JsonIgnore
     private Services services;
 
-    //trainer-class relationship
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "trainer_email", referencedColumnName = "trainer_email")
-    @JsonIgnore
-    private Trainer trainer;
 
     //class-session relationship
     @OneToMany(mappedBy = "aClass")
