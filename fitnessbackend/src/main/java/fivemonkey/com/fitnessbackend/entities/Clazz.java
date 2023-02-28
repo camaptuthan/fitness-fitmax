@@ -56,26 +56,10 @@ public class Clazz {
     private Services services;
 
 
-
     //class-session relationship
     @OneToMany(mappedBy = "aClass")
     @JsonIgnore
     private List<Session> sessions;
 
-//    @Override
-//    public String toString() {
-//        return "Clazz{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", duration=" + duration +
-//                ", price=" + price +
-//                ", des='" + des + '\'' +
-//                ", date=" + date +
-//                ", status=" + status +
-//                ", img='" + img + '\'' +
-//                ", services=" + services +
-//                ", trainer=" + trainer +
-//                ", sessions=" + sessions +
-//                '}';
-//    }
+
 }

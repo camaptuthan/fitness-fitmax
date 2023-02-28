@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 public class ScheduleDTO {
-    private Long id;
+    private String id;
 
     private String startTime;
 
