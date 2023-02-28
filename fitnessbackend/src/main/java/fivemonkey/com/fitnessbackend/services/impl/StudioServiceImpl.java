@@ -4,6 +4,9 @@ import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.repository.StudioRepository;
 import fivemonkey.com.fitnessbackend.services.IStudioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
@@ -28,18 +31,23 @@ public class StudioServiceImpl implements IStudioService {
         return studioRepository.findStudio(studioCity);
     }
 
+    @Override
+    public Studio getStudioById(String id) {
+        return studioRepository.findById(id).get();
+    }
+
     public List<Studio> findStudioCity(@Param("city") String studioCity) {
         return studioRepository.findStudiosByStudioCity(studioCity);
     }
 
-    public Studio getStudioById(String id) {
-        return studioRepository.findById(id).get();
-    }
+//    public Studio getStudioById(Long id) {
+//        return studioRepository.findById(id).get();
+//    }
     public void updateStudio(Studio existingStudio) {
     }
 
     @Override
-    public Studio updateStatus(String id, boolean status, Studio studio) {
+    public Studio updateStatus(long id, boolean status, Studio studio) {
         if (status = true){
             studio.setStatus(false);
         }
@@ -60,5 +68,32 @@ public class StudioServiceImpl implements IStudioService {
         studio.setDate(new Date(System.currentTimeMillis()));
         System.out.println(studio.getDate());
         return studioRepository.save(studio);
+    }
+    @Override
+    public Page<Studio> getStudioByPage(int currentPage, String searchInput) {
+        Pageable pageable = PageRequest.of(currentPage - 1, 6);
+            if (searchInput == "") {
+                return studioRepository.findAll(pageable);
+            } else {
+                return studioRepository.findStudioByNameContaining(searchInput, pageable);
+            }
+    }
+    @Override
+    public Page<Studio> getALlByPage(int currentPage, String searchInput, String categoryId) {
+        Pageable pageable = PageRequest.of(currentPage - 1,6);
+        if(categoryId=="1"){
+            if(searchInput==""){
+                return studioRepository.findAll(pageable);
+            }
+            else{
+                return studioRepository.findStudioByNameContaining(searchInput,pageable);
+            }
+        }
+        else if (searchInput==""){
+            return studioRepository.findStudioByCityOrderByIdDesc(categoryId,pageable);
+        }
+        else
+            //return studioRepository.findStudioByCategoryIdAndTitleContaining(categoryId,searchInput,pageable);
+            return studioRepository.findAll(pageable);
     }
 }
