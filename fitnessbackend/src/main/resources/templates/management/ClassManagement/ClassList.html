@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script th:src="@{https://code.jquery.com/jquery-3.5.1.min.js}"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
+    <script th:src="@{/js/jquery-2.2.4.min.js}"></script>
+
     <script th:src="@{https://cdn.jsdelivr.net/npm/popper.js/1.16.0/dist/umd/popper.min.js}"></script>
     <script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js}"></script>
     <style>
@@ -154,13 +156,7 @@
             font-size: 95%;
         }
     </style>
-    <script>
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
 
-
-    </script>
 </head>
 <body>
 
@@ -171,15 +167,15 @@
                 <div class="row">
                     <div class="col-sm-8"><h2>Class <b>List</b></h2></div>
 
-                    <div class="col-sm-4">
-                        <form th:action="@{/admin/list-class}" method="get">
-                            <div class="search-box">
-                                <i class="material-icons">&#xE8B6;</i>
-                                <input th:value="${keyword}" name="keyword" id="txtSearch" type="text"
-                                       class="form-control" placeholder="Search&hellip;">
-                            </div>
-                        </form>
-                    </div>
+<!--                    <div class="col-sm-4">-->
+<!--                        <form th:action="@{/admin/list-class}" method="get">-->
+<!--                            <div class="search-box">-->
+<!--                                <i class="material-icons">&#xE8B6;</i>-->
+<!--                                <input th:value="${keyword}" name="keyword" id="txtSearch" type="text"-->
+<!--                                       class="form-control" placeholder="Search&hellip;">-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
                 </div>
             </div>
             <div>
@@ -191,9 +187,6 @@
                     <p style="color: red" th:text="${fail}"></p>
                 </div>
             </div>
-<!--            <div th:if="${size}==0">-->
-<!--                <h1>No Class Found</h1>-->
-<!--            </div>-->
 
             <table class="table table-striped table-hover table-bordered" id="classTable">
                 <thead>
@@ -217,7 +210,8 @@
                     <td th:text="${c.price}"></td>
                     <td>
 
-                        <a th:href="@{'/admin/update-class/' + ${c.id}}" class="edit" title="Edit" data-toggle="tooltip">Edit
+                        <a th:href="@{'/admin/update-class/' + ${c.id}}" class="edit" title="Edit"
+                           data-toggle="tooltip">Edit
                             &nbsp;<i class="material-icons">&#xE254;</i></a>
                         <!--                        <button type="button" class="btn btn-danger">Danger</button>-->
 
@@ -243,66 +237,19 @@
 
                 </tbody>
             </table>
-            <div class="clearfix">
-
-                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a>
-                    </li>
-
-                </ul>
-            </div>
         </div>
     </div>
 
 </div>
-<script th:inline="javascript">
-    let classList = [[${list}]];
-    $('#txtSearch').on('keyup', function () {
-        let value = $(this).val();
-        console.log('value = '+value)
-        let data = filterFunction(value, classList);
-        rebuildTable(data);
-    });
-
-    function filterFunction(value, data) {
-        let filterData = [];
-        for (let i = 0; i < data.length; i++) {
-            value = value.toLowerCase();
-            let name=data[i].name.toLowerCase();
-             let des=data[i].des.toLowerCase();
-            if(name.includes(value)||des.includes(value)){
-                filterData.push(data[i]);
-            }
-        }
-        return filterData;
-    }
-
-    function rebuildTable(data) {
-        let table=document.getElementById('classTable');
-        table.innerHTML='';
-        for (let i=0;i<data.length;i++){
-            let row=
-                <tr>
-                    <td>${data[i].id}</td>
-                    <td>${data[i].name}</td>
-                    <td>${data[i].des}</td>
-                    <td>${data[i].date}</td>
-                    <td>${data[i].price}</td>
-                </tr>
-            table.innerHTML+=row;
-        }
-
-    }
-
-</script>
 </body>
+<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#classTable').DataTable();
 
+        //$('[data-toggle="tooltip"]').tooltip();
+
+    });
+</script>
 </html>
 
