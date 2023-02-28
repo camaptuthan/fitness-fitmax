@@ -39,4 +39,9 @@ public class ScheduleController {
     public List<ClassDTO> getClasses() {
         return classService.findAll();
     }
+//
+//    @GetMapping("/list-class")
+//    public List<Clazz> getClasses() {
+//        return classService.findAll();
+//    }
 }

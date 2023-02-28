@@ -163,6 +163,7 @@
     </script>
 </head>
 <body>
+
 <div class="container-xl">
     <div class="table-responsive">
         <div class="table-wrapper">
@@ -171,19 +172,18 @@
                     <div class="col-sm-8"><h2>Class <b>List</b></h2></div>
 
                     <div class="col-sm-4">
-                        <form th:action="@{/list-class/search}" method="get" >
-                            <div  class="search-box">
+                        <form th:action="@{/admin/list-class}" method="get">
+                            <div class="search-box">
                                 <i class="material-icons">&#xE8B6;</i>
-                                <input th:value="${keyword}" name="keyword" id="keyword" type="text"
+                                <input th:value="${keyword}" name="keyword" id="txtSearch" type="text"
                                        class="form-control" placeholder="Search&hellip;">
-<!--                                <input type="submit" placeholder="submit">-->
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
             <div>
-                <a th:href="@{/add-class}" style="color: blue">Add</a>
+                <a th:href="@{/admin/add-class}" style="color: blue">Add</a>
                 <div th:if="${success}">
                     <p style="color: green" th:text="${success}"></p>
                 </div>
@@ -191,10 +191,11 @@
                     <p style="color: red" th:text="${fail}"></p>
                 </div>
             </div>
-            <div th:if="${size}==0">
-                <h1>No Class</h1>
-            </div>
-            <table class="table table-striped table-hover table-bordered" th:if="${size>0}">
+<!--            <div th:if="${size}==0">-->
+<!--                <h1>No Class Found</h1>-->
+<!--            </div>-->
+
+            <table class="table table-striped table-hover table-bordered" id="classTable">
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -207,7 +208,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="c : ${list}" >
+                <tr th:each="c : ${list}">
                     <td th:text="${c.id}"></td>
                     <td th:text="${c.name}"></td>
                     <!--                    <td th:text="${c.date}"></td>-->
@@ -216,12 +217,12 @@
                     <td th:text="${c.price}"></td>
                     <td>
 
-                        <a th:href="@{'/update-class/' + ${c.id}}" class="edit" title="Edit" data-toggle="tooltip">Edit
+                        <a th:href="@{'/admin/update-class/' + ${c.id}}" class="edit" title="Edit" data-toggle="tooltip">Edit
                             &nbsp;<i class="material-icons">&#xE254;</i></a>
                         <!--                        <button type="button" class="btn btn-danger">Danger</button>-->
 
 
-                        <a th:if="${c.status==true}" th:href="@{'/disable-class/' + ${c.id}}" class="disable"
+                        <a th:if="${c.status==true}" th:href="@{'/admin/disable-class/' + ${c.id}}" class="disable"
                            title="Disable" data-toggle="tooltip">
 
                             <button onclick="return confirm('Are you sure you want to disable class')" type="button"
@@ -229,7 +230,7 @@
                             </button>
 
                         </a>
-                        <a th:if="${c.status==false}" th:href="@{'/enable-class/' + ${c.id}}" class="enable"
+                        <a th:if="${c.status==false}" th:href="@{'/admin/enable-class/' + ${c.id}}" class="enable"
                            title="Enable" data-toggle="tooltip">
 
                             <button onclick="return confirm('Are you sure you want to enable class')" type="button"
@@ -243,24 +244,64 @@
                 </tbody>
             </table>
             <div class="clearfix">
-                <ul class="pagination">
-                    <!--                    <li th:if="${currentPage != 0}" class="page-item disabled">-->
-                    <!--                        <a th:href="@{'/page/'+${currentPage} -1  }">-->
-                    <!--                        <i class="fa fa-angle-double-left"></i></a>-->
-                    <!--                    </li>-->
-                    <!--                    <li th:each="i:${#numbers.sequence(1 , totalPages)}"  th:classappend = "${currentPage == i - 1 ? 'active' : ''}" class="page-item">-->
-                    <!--                        <a th:href="@{'/page/'+ ${i - 1}}" class="page-link"><span th:text="${i}"></span></a>-->
-                    <!--                    </li>-->
 
-                    <!--                    <li th:if = "${currentPage + 1 != totalPages}" class="page-item">-->
-                    <!--                        <a th:href="@{'/page/' + ${currentPage + 1}}" class="page-link"><i class="fa fa-angle-double-right"></i></a>-->
-                    <!--                    </li>-->
+                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+                <ul class="pagination">
+                    <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
+                    <li class="page-item"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                    <li class="page-item"><a href="#" class="page-link">4</a></li>
+                    <li class="page-item"><a href="#" class="page-link">5</a></li>
+                    <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a>
+                    </li>
+
                 </ul>
             </div>
         </div>
     </div>
 
 </div>
+<script th:inline="javascript">
+    let classList = [[${list}]];
+    $('#txtSearch').on('keyup', function () {
+        let value = $(this).val();
+        console.log('value = '+value)
+        let data = filterFunction(value, classList);
+        rebuildTable(data);
+    });
+
+    function filterFunction(value, data) {
+        let filterData = [];
+        for (let i = 0; i < data.length; i++) {
+            value = value.toLowerCase();
+            let name=data[i].name.toLowerCase();
+             let des=data[i].des.toLowerCase();
+            if(name.includes(value)||des.includes(value)){
+                filterData.push(data[i]);
+            }
+        }
+        return filterData;
+    }
+
+    function rebuildTable(data) {
+        let table=document.getElementById('classTable');
+        table.innerHTML='';
+        for (let i=0;i<data.length;i++){
+            let row=
+                <tr>
+                    <td>${data[i].id}</td>
+                    <td>${data[i].name}</td>
+                    <td>${data[i].des}</td>
+                    <td>${data[i].date}</td>
+                    <td>${data[i].price}</td>
+                </tr>
+            table.innerHTML+=row;
+        }
+
+    }
+
+</script>
 </body>
 
 </html>

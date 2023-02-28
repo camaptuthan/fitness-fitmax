@@ -104,20 +104,9 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public List<ClassDTO> searchByName(String keyword) {
-
-        List<ClassDTO> classDTOList = new ArrayList<>();
+    public List<Clazz> searchByName(String keyword) {
         List<Clazz> list = classRepository.searchClassByKeyword(keyword);
-        for (Clazz c : list) {
-            ClassDTO classDTO = new ClassDTO();
-            modelMapper.map(c, ClassDTO.class);
-            classDTOList.add(classDTO);
-        }
-        if (keyword != null) {
-            return classDTOList;
-        }
-
-        return classDTOList;
+        return list;
 
     }
     //search
