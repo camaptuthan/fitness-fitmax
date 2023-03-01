@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
             studio.setId(u.getStudioId());
 
             Role role = new Role();
-            role.setId(u.getRoleId());
+           // role.setId(u.getRoleId());
 
             user.setRole(role);
             user.setStudio(studio);
