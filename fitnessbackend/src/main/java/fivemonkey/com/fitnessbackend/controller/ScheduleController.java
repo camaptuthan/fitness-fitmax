@@ -27,9 +27,7 @@ public class ScheduleController {
 
     @GetMapping("/{user_email}/{service_id}/{year}")
     public ClassDTO getScheduleByClassInformation(@PathVariable("user_email") String email, @PathVariable("service_id") String serviceId, @PathVariable("year") String year, @RequestParam("start") String start, @RequestParam String end) {
-        System.out.println(this + "start: " + start + ", end: " + end);
-
-        return scheduleService.getByInfor(email, serviceId, year,start,end);
+        return scheduleService.getByInfor(email, serviceId, year, start, end);
     }
 
     @GetMapping("list-class")

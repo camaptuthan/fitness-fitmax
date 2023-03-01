@@ -172,7 +172,7 @@
         const week = $("#list-week");
         week.html("");
         for (let month = 0; month <= 11; month++) {
-            let isWeek = new Date();
+            let isWeek = new Date(-1);
             for (let day = 1; day <= 31; day++) {
                 // let start = new Date(year, month, day + 7 * day);
                 // let end = new Date(year, month, day + 7 + 7 * day);
@@ -185,7 +185,6 @@
                 //     console.log(`day: ${dd}, month: ${mm}`)
 
                 if (isWeek.toString() !== start.toString()) {
-                    console.log(isWeek.toString())
                     let startWeek = `${start.getDate()}/${start.getMonth() + 1}`;
                     let endWeek = `${end.getDate()}/${end.getMonth() + 1}`;
                     week.append(`<li value="" class="p-0 m-0" id="day-${startWeek.replace("/", "")}"><a style="display: block;text-align: center" onclick="getWeekRange('${startWeek}','${endWeek}',${week.scrollTop()})">${startWeek} to ${endWeek}</a> </li>`);
