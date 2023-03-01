@@ -22,7 +22,7 @@ public class Role {
     @Column(name = "role_id")
     private String id;
 
-    @Column(name = "name")
+    @Column(name = "role_name")
     private String name;
 
     @Column(name = "description", columnDefinition = "text")

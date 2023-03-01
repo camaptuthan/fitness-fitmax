@@ -43,8 +43,8 @@ public class ClassServiceImpl implements ClassService {
         clazz.setName(c.getName());
         clazz.setPrice(c.getPrice());
         clazz.setDes(c.getDes());
-        clazz.setServices(c.getServices());
-        clazz.setTrainer(c.getTrainer());
+        clazz.setService(c.getService());
+       // clazz.setTrainer(c.getTrainer());
         clazz.setDate(new Date());
         clazz.setStatus(true);
         return classRepository.save(clazz);
@@ -57,8 +57,8 @@ public class ClassServiceImpl implements ClassService {
             clazz.setName(c.getName());
             clazz.setPrice(c.getPrice());
             clazz.setDes(c.getDes());
-            clazz.setServices(c.getServices());
-            clazz.setTrainer(c.getTrainer());
+            clazz.setService(c.getService());
+          //  clazz.setTrainer(c.getTrainer());
             return classRepository.save(clazz);
         } catch (Exception e) {
             e.printStackTrace();

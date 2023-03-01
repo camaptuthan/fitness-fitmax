@@ -24,7 +24,7 @@ public class Session {
     @Column(name = "session_id")
     private String id;
 
-    @Column(name = "name")
+    @Column(name = "session_name")
     private String name;
 
     @Column(name = "description", columnDefinition = "text")
@@ -38,6 +38,11 @@ public class Session {
     @Column(name = "created_date")
     private Date createdDate;
 
+    //trainer-session  relationship
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "trainer_email", referencedColumnName = "trainer_email")
+    @JsonIgnore
+    private Trainer trainer;
 
     //class-session relationship
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

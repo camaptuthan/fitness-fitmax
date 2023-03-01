@@ -25,7 +25,7 @@ public class Nutrition {
     @Column(name = "class_id")
     private String id;
 
-    @Column(name = "name")
+    @Column(name = "nutrition_name")
     private String name;
 
     @Column(name = "description", columnDefinition = "text")

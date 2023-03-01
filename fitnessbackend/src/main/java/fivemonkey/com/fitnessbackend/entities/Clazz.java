@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -27,7 +25,7 @@ public class Clazz {
     @Column(name = "class_id")
     private String id;
 
-    @Column(name = "name")
+    @Column(name = "class_name")
     private String name;
 
     @Column(name = "duration")
@@ -47,16 +45,10 @@ public class Clazz {
     private boolean status;
 
     //service-class relationship
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "service_id", referencedColumnName = "service_id")
-    @JsonIgnore
-    private Services services;
-
-    //trainer-class relationship
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "trainer_email", referencedColumnName = "trainer_email")
-    @JsonIgnore
-    private Trainer trainer;
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId()
+    @JoinColumn(name = "class_id", nullable = false)
+    private Services service;
 
     //class-session relationship
     @OneToMany(mappedBy = "aClass")

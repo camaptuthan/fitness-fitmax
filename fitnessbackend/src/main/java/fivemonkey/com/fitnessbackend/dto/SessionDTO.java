@@ -16,6 +16,7 @@ public class SessionDTO {
     private String name;
     private String classId;
 
+    private String happenedDate;
     @Override
     public String toString() {
         return "SessionDTO{" +

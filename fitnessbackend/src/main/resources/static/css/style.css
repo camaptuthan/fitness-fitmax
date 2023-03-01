@@ -1625,6 +1625,7 @@ footer .social-list li {
 .btn:hover {
     background-color: transparent;
     color: #f23849;
+    border: 1px solid #f23849;
 }
 
 /*--------------------- SOCIAL LIST ---------------------*/

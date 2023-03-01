@@ -25,7 +25,7 @@ public class Services {
     @Column(name = "service_id")
     private String id;
 
-    @Column(name = "name")
+    @Column(name = "service_name")
     private String name;
 
     @Column(name = "status", nullable = false)
@@ -62,12 +62,19 @@ public class Services {
     private List<PersonalTraining> personalTrainings;
 
     //service-class relationship
-    @OneToMany(mappedBy = "services")
-    private List<Clazz> classes;
+//    @OneToMany(mappedBy = "services")
+//    private List<Clazz> classes;
 
+    @OneToOne(mappedBy = "service", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Clazz clazz;
     //assistant-service relationship
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "assistant_email", referencedColumnName = "assistant_email")
     private Assistant assistant;
+
+    public Services(String id){
+        this.id = id;
+    }
 }
 

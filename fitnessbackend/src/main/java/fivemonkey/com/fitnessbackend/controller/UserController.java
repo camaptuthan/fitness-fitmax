@@ -1,6 +1,8 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 
+import fivemonkey.com.fitnessbackend.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +24,7 @@ public class UserController {
 //         userService.registerUser(new User(email, password));
 //    }
 
-    @GetMapping("/profile")
+    @GetMapping("/profile/{id}")
     public String getProfile() {
         return "myprofile";
     }

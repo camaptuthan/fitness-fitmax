@@ -24,7 +24,7 @@ public class ClassDTO {
 
 
     @JsonIgnore
-    private Services services;
+    private Services service;
     private String img;
 
 
