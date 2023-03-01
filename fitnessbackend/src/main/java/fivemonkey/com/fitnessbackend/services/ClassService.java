@@ -15,12 +15,14 @@ public interface ClassService {
 
     Clazz update(ClassDTO c);
 
-    void disableClass(Long id);
 
-    void enableById(Long id);
+     void disableClass(String id);
 
 
-    ClassDTO getClassById(Long id);
+    void enableById(String id);
+
+
+    ClassDTO getClassById(String id);
 
 
     Page<Clazz> pageClass(int pageNo, int pageSize);

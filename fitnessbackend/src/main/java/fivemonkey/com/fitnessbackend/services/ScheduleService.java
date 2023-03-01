@@ -9,6 +9,10 @@ import java.util.List;
 @Service
 public interface ScheduleService {
     List<ScheduleDTO> getAll();
+
     ClassDTO getByInfor(String userEmail, String serviceId, String year, String start, String end);
+
+
+
 
 }

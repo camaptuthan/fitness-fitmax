@@ -61,11 +61,11 @@ public class ClassController {
     //and list service to add
     //get information for class
     @GetMapping("/add-class")
-    public String addClass(Model model){
-        List<Trainer> trainerList=trainerService.getAll();
-        List<Services> list=serviceService.getAll();
-        model.addAttribute("list",list);
-        model.addAttribute("listTrainer",trainerList);
+    public String addClass(Model model) {
+        List<Trainer> trainerList = trainerService.getAll();
+        List<Services> list = serviceService.getAll();
+        model.addAttribute("list", list);
+        model.addAttribute("listTrainer", trainerList);
         model.addAttribute("clazz", new ClassDTO());
         return "management/classmanagement/classadd";
     }
@@ -73,41 +73,42 @@ public class ClassController {
 
     @PostMapping("save-class")
     public String saveClass(@ModelAttribute("clazz") ClassDTO classDTO,
-                            RedirectAttributes attributes){
+                            RedirectAttributes attributes) {
         try {
             classService.save(classDTO);
-            attributes.addFlashAttribute("success","Add successfully");
+            attributes.addFlashAttribute("success", "Add successfully");
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            attributes.addFlashAttribute("fail","Add failed");
+            attributes.addFlashAttribute("fail", "Add failed");
         }
         return "redirect:/list-class";
     }
 
     //enable class
-    @RequestMapping(value="/enable-class/{id}",method = {RequestMethod.PUT,RequestMethod.GET})
-    public String enableClass(@PathVariable("id") Long id,RedirectAttributes redirectAttributes){
-        try{
+    @RequestMapping(value = "/enable-class/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String enableClass(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
+        try {
             classService.enableById(id);
-            redirectAttributes.addFlashAttribute("success","Enable Successfully");
-        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("success", "Enable Successfully");
+        } catch (Exception e) {
             e.printStackTrace();
-            redirectAttributes.addFlashAttribute("fail","Fail to enabled");
+            redirectAttributes.addFlashAttribute("fail", "Fail to enabled");
         }
         return "redirect:/list-class";
+
     }
 
     //disable class
 
-    @RequestMapping(value="/disable-class/{id}",method = {RequestMethod.PUT,RequestMethod.GET})
-    public String disableClass(@PathVariable("id") Long id,RedirectAttributes redirectAttributes){
-        try{
+    @RequestMapping(value = "/disable-class/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String disableClass(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
+        try {
             classService.disableClass(id);
-            redirectAttributes.addFlashAttribute("success","Disabled");
-        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("success", "Disabled");
+        } catch (Exception e) {
             e.printStackTrace();
-            redirectAttributes.addFlashAttribute("fail","Fail to enabled");
+            redirectAttributes.addFlashAttribute("fail", "Fail to enabled");
         }
         return "redirect:/list-class";
     }
@@ -115,49 +116,51 @@ public class ClassController {
 
     //get information of class
     @GetMapping("update-class/{id}")
-    public String getInformtionFormUpdate(@PathVariable("id") Long id,Model model){
-        List<Trainer> trainerList=trainerService.getAll();
-        ClassDTO clazzDTO=classService.getClassById(id);
-        model.addAttribute("clazz",clazzDTO);
-        model.addAttribute("listTrainer",trainerList);
+    public String getInformtionFormUpdate(@PathVariable("id") String id, Model model) {
+        List<Trainer> trainerList = trainerService.getAll();
+        ClassDTO clazzDTO = classService.getClassById(id);
+        model.addAttribute("clazz", clazzDTO);
+        model.addAttribute("listTrainer", trainerList);
 
         return "management/classmanagement/classedit";
     }
 
 
     @PostMapping("/update-class/{id}")
-    public String processUpdate(@PathVariable("id") Long id,@ModelAttribute("clazz") ClassDTO classDTO,RedirectAttributes redirectAttributes){
-        try{
+
+    public String processUpdate(@PathVariable("id") String id, @ModelAttribute("clazz") ClassDTO classDTO, RedirectAttributes redirectAttributes) {
+        try {
             classService.update(classDTO);
-            redirectAttributes.addFlashAttribute("success","Update Successfully");
-        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("success", "Update Successfully");
+        } catch (Exception e) {
             e.printStackTrace();
-            redirectAttributes.addFlashAttribute("fail","Fail");
+            redirectAttributes.addFlashAttribute("fail", "Fail");
         }
+
         return "redirect:/list-class";
     }
 
     //paging class
 
     @GetMapping("page/{pageNo}")
-    public String findPaginated(@PathVariable(value = "pageNo") int pageNo,Model model){
-        int pageSize=5;
-        Page<Clazz> c= classService.pageClass(pageNo,pageSize);
-        List<Clazz> list= c.getContent();
-        model.addAttribute("currentPage",pageNo);
-        model.addAttribute("totalPages",c.getTotalPages());
-        model.addAttribute("list",list);
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
+        int pageSize = 5;
+        Page<Clazz> c = classService.pageClass(pageNo, pageSize);
+        List<Clazz> list = c.getContent();
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", c.getTotalPages());
+        model.addAttribute("list", list);
         return "management/classmanagement/classlist";
 
     }
 
     //search class by name
     @GetMapping("/list-class/search")
-    public String searchByName(Model model,@Param("keyword") String keyword){
-        List<ClassDTO> list= classService.searchByName(keyword);
-        System.out.println("size is"+ list.size());
-        model.addAttribute("list",list);
-        model.addAttribute("keyword",keyword);
+    public String searchByName(Model model, @Param("keyword") String keyword) {
+        List<ClassDTO> list = classService.searchByName(keyword);
+        System.out.println("size is" + list.size());
+        model.addAttribute("list", list);
+        model.addAttribute("keyword", keyword);
         model.addAttribute("size", list.size());
 
         return "management/classmanagement/classlist";
@@ -169,8 +172,6 @@ public class ClassController {
 //    public void delete(@PathVariable Long id){
 //        classRepository.deleteById(id);
 //    }
-
-
 
 
 

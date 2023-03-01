@@ -31,7 +31,6 @@ public class HomeController {
         return "/login";
     }
 
-
     @GetMapping("/register")
     public String register() {
         return "/register";
@@ -40,6 +39,17 @@ public class HomeController {
     @GetMapping("/reset-password")
     public String resetPassword() {
         return "/reset_password";
+    }
+
+
+    @GetMapping("/dashboard")
+    public String dashboard(){
+        return "management/dashboard/index";
+    }
+
+    @GetMapping("/admin-service")
+    public String serviceAdmin(){
+        return "management/dashboard/service";
     }
 
 

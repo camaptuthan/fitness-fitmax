@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+
+  <!-- =================== META =================== -->
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link th:href="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css}" rel="stylesheet" id="bootstrap-css">
+  <script th:src="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js}"></script>
+  <script th:src="@{//code.jquery.com/jquery-1.11.1.min.js}"></script>
+</head>
+
+<!------ Include the above in your HEAD tag ---------->
+
+<form class="form-horizontal" th:action="@{/updateuser/{email} (email=${user.email})}" method="post"  th:object="${user}">
+  <fieldset>
+
+    <!-- Form Name -->
+
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label"  > Form Update Class</label>
+
+    </div>
+
+    <!-- Text input-->
+    <div  class="form-group">
+      <label class="col-md-4 control-label" >Role</label>
+      <tr>
+        <td><select name="roleId"  th:object="${user}">
+          <option th:each="role, itemStat : ${listRole}" th:text="${role.getName()}" th:value="${role.getId()}" th:selected="${role.getId()== user.roleId}"> </option>
+        </select>
+        </td>
+      </tr>
+    </div>
+
+
+    <div class="form-group">
+      <label class="col-md-4 control-label" >Studio</label>
+      <div class="col-md-4">
+
+
+          <tr>
+            <td><select name ="studioId"  th:object="${user}">
+              <option th:each="studio, itemStat : ${listStudio}" th:text="${studio.getName()}" th:value="${studio.getId()}" th:selected="${studio.getId()== user.studioId}"> </option>
+            </select>
+            </td>
+          </tr>
+
+      </div>
+
+
+
+    <!-- Button -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="singlebutton"></label>
+      <div class="col-md-4">
+        <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Update</button>
+        <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Cancel</button>
+      </div>
+    </div>
+
+
+
+          </div>
+    <script type="text/javascript">
+      function cancelForm(){
+        window.location = "[[@{/listusers}]]";
+      }
+    </script>
+  </fieldset>
+</form>
+
+
+</html>

@@ -16,6 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 public class ClassDTO {
+
     private String id;
     private String name;
     private Date date;
@@ -26,6 +27,8 @@ public class ClassDTO {
     @JsonIgnore
     private Services service;
     private String img;
+
+     private int slot;
 
 
     private boolean status;

@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
+import org.hibernate.annotations.GenericGenerator;
+
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +35,13 @@ public class Schedule {
     @Column(name = "end_time")
     private Date endTime;
 
-    @OneToMany(mappedBy = "schedule",fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "created_date")
+    private Date createdDate;
+
+
+    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Session> sessions;
 
 }
