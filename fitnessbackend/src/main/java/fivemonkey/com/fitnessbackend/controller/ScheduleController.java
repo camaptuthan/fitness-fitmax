@@ -34,4 +34,5 @@ public class ScheduleController {
     public List<ClassDTO> getClasses() {
         return classService.findAll();
     }
+
 }
