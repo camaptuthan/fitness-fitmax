@@ -1,74 +1,124 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
+import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
+import fivemonkey.com.fitnessbackend.entities.Clazz;
 import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
+import fivemonkey.com.fitnessbackend.repository.RoleRepository;
+import fivemonkey.com.fitnessbackend.repository.StudioRepository;
 import fivemonkey.com.fitnessbackend.repository.UserRepository;
 import fivemonkey.com.fitnessbackend.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 @Service
 public class UserServiceImpl implements UserService {
-
-    @Autowired
-    ModelMapper modelMapper;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    RoleRepository roleRepository;
+    @Autowired
+    StudioRepository studioRepository;
+
+
     @Override
-    public void registerUser(String email,String password,String phone,String firstName,String lastName) {
-        User user= new User();
-        user.setPassword(password);
-        user.setEmail(email);
-        user.setPhone(phone);
+    public List<UserDTO> findAll() {
+        ModelMapper mapper = new ModelMapper();
+        List<UserDTO>  userDTOList = new ArrayList<>();
+        List<User> userList = userRepository.findAll();
+        for(User u : userList){
+            UserDTO userDTO = mapper.map(u, UserDTO.class);
+            userDTOList.add(userDTO);
+        }
+        return userDTOList;
+    }
+
+//    @Override
+//    public List<User> findAllUser() {
+//        return userRepository.findAll();
+//    }
+
+
+    @Override
+    public User save(UserDTO u) {
+        User user = new User();
         user.setStatus(true);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        Role r= new Role();
-         r.setId("1");
-        user.setRole(r);
-        Studio s= new Studio();
-        s.setId("1");
-        user.setStudio(s);
-        user.setDate(new Date());
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User update(UserDTO u) {
+        try{
+            User user = userRepository.getById(u.getEmail());
+           Studio studio = new Studio();
+            studio.setId(u.getStudioId());
+
+            Role role = new Role();
+           // role.setId(u.getRoleId());
+
+            user.setRole(role);
+            user.setStudio(studio);
+            System.out.println("=================================="+ user);
+
+
+            return userRepository.save(user);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void disableUser(String email) {
+        User user = userRepository.getById(email);
+        user.setStatus(false);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void enableById(String email) {
+        User user = userRepository.getById(email);
+        user.setStatus(true);
         userRepository.save(user);
 
     }
 
-
-    //check email exist ,phone may be optional
     @Override
-    public List<Object> isUserPresent(UserDTO user) {
-        boolean userExists = false;
-        String message = null;
-        Optional<User> existingUserEmail = userRepository.findByEmail(user.getEmail());
-        if(existingUserEmail.isPresent()){
-            userExists = true;
-            message = "Email Already Present!";
-        }
-//        Optional<User> existingUserMobile = userRepository.findByMobile(user.getPhone());
-//        if(existingUserMobile.isPresent()){
-//            userExists = true;
-//            message = "Mobile Number Already Present!";
-//        }
-//        if (existingUserEmail.isPresent() && existingUserMobile.isPresent()) {
-//            message = "Email and Mobile Number Both Already Present!";
-//        }
-        System.out.println("existingUserEmail.isPresent() - "+existingUserEmail.isPresent());
-        return Arrays.asList(userExists, message);
-    }
-
-    @Override
-    public User login(UserDTO userDTO) {
-        return userRepository.findByEmailAndPassword(userDTO.getEmail(),userDTO.getPassword()).orElse(null);
+    public UserDTO getClassById(String email) {
+        User user = userRepository.getById(email);
+        UserDTO userDTO = new UserDTO();
+        ModelMapper mapper = new ModelMapper();
+        userDTO = mapper.map(user, UserDTO.class);
+        return userDTO;
     }
 
 
+
+    @Override
+    public List<User> findAllUser() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> findAllUserNameContaining(String email) {
+        return userRepository.findAll();
+    }
+
+
+//    @Override
+//    public List<UserDTO> findAllUserNameContaining(String email) {
+//        ModelMapper mapper = new ModelMapper();
+//        List<UserDTO>  userDTOList = new ArrayList<>();
+//        List<User> userList = userRepository.findAllUserNameContaining(email);
+//        for(User u : userList){
+//            UserDTO userDTO = mapper.map(u, UserDTO.class);
+//            userDTOList.add(userDTO);
+//        }
+//        return userDTOList;
+//    }
 }

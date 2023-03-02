@@ -26,7 +26,9 @@ public class ClassDTO {
 
      private boolean status;
      private String des,duration;
+     private Trainer trainer;
 
+     private int slot;
      private List<ScheduleDTO> scheduleDTO;
 
      @Override

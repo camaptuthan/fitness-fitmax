@@ -44,7 +44,7 @@ public class StudioController {
                                Model model) {
         // get studio from database by id
         Studio existingStudio = studioService.getStudioById(id);
-        existingStudio.setId(id);
+        //existingStudio.setId(id);
         existingStudio.setName(studio.getName());
         existingStudio.setCity(studio.getCity());
         existingStudio.setDistrict(studio.getDistrict());
@@ -135,7 +135,7 @@ public String viewCourse(
     }
 
 
-    //list studio in main
+//    list studio in main
     @GetMapping("/homepage/studio")
     public String listStudiosHomepage(Model model) {
         model.addAttribute("studios", studioService.getAllStudios());

@@ -33,9 +33,8 @@
         <div  class="form-group">
             <label class="col-md-4 control-label" for="name">NAME</label>
             <div class="col-md-4">
-                <input id="name"  th:field="${clazz.name}" name="name"  placeholder="Name" class="form-control input-md"
+                <input id="name"  th:value="${clazz.name}" name="name"  placeholder="Name" class="form-control input-md"
                        required  type="text"/>
-                <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="${clazz.name}"></div>
             </div>
         </div>
         <!-- Select Basic -->
