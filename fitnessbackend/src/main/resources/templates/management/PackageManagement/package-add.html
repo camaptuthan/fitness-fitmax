@@ -30,9 +30,9 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="name">Name</label>
             <div class="col-md-4">
-                <input id="name" name="name" th:value="${packagenew.name}" placeholder="Name"
-                       class="form-control input-md"
-                       required="" type="text">
+                <input id="name" name="name" th:field="*{name}" th:value="${packagenew.name}" placeholder="Name"
+                       class="form-control input-md" type="text">
+                <div class="alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
             </div>
         </div>
 
@@ -41,36 +41,26 @@
             <label class="col-md-4 control-label" for="des">Description</label>
             <div class="col-md-4">
                 <input id="des" name="des" th:value="${packagenew.des}" placeholder=" Description"
-                       class="form-control input-md"
-                       required="" type="text">
+                       class="form-control input-md" type="text">
             </div>
         </div>
         <!-- Text input-->
         <div class="form-group">
             <label class="col-md-4 control-label" for="price">Price</label>
             <div class="col-md-4">
-                <input id="price" th:value="${packagenew.price}" name="price" placeholder="Price"
-                       class="form-control input-md" required=""
-                       type="number">
+                <input id="price" th:field="*{price}" th:value="${packagenew.price}" name="price" placeholder="Price"
+                       class="form-control input-md" type="text">
+                <div class="alert-warning" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-4 control-label" for="duration">Duration</label>
             <div class="col-md-4">
-                <input id="duration" th:value="${packagenew.duration}" name="duration" placeholder="Duration"
-                       class="form-control input-md" required=""
-                       type="number">
+                <input id="duration" th:field="*{duration}" th:value="${packagenew.duration}" name="duration" placeholder="Duration"
+                       class="form-control input-md" type="text">
+                <div class="alert-warning" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></div>
             </div>
         </div>
-<!--        <div class="form-group">-->
-<!--            <label class="col-md-4 control-label" for="duration">Status</label>-->
-<!--            <div class="col-md-4">-->
-<!--                <input id="status" th:value="${packagenew.status}" name="status" placeholder="Status"-->
-<!--                       class="form-control input-md" required=""-->
-<!--                       type="number">-->
-<!--            </div>-->
-<!--        </div>-->
-        <!-- Button -->
         <div class="form-group">
             <label class="col-md-4 control-label" for="singlebutton"></label>
             <div class="col-md-4">

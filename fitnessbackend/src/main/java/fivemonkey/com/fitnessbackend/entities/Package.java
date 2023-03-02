@@ -7,6 +7,9 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -23,12 +26,15 @@ public class Package {
     @Column(name = "package_id")
     private String id;
 
+    @NotEmpty(message = "{Size.Field.Name}")
     @Column(name = "package_name")
     private String name;
 
+    @Min(value = 1, message = "{Size.Field.Duration}")
     @Column(name = "duration")
     private int duration;
 
+    @Min(value = 1, message = "{Size.Field.Price}")
     @Column(name = "price")
     private Float price;
 

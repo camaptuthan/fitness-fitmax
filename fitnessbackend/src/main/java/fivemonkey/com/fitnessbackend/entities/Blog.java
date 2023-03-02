@@ -50,4 +50,7 @@ public class Blog {
     )
     private List<Category> categoryList;
 
+
+    @OneToMany(mappedBy = "blog")
+    private List<Image> images;
 }

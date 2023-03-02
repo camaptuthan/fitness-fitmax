@@ -1,10 +1,24 @@
 package fivemonkey.com.fitnessbackend.dto;
 
-public class PackageDTO {
+import lombok.NoArgsConstructor;
 
+import javax.validation.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+public class PackageDTO {
     private String id;
+
+    @NotEmpty(message = "{Size.Field.Name}")
     private String name;
+
+
+    @Min(value = 1, message = "{Size.Field.Duration}")
     private int duration;
+
+    @Min(value = 1, message = "{Size.Field.Price}")
     private Float price;
     private String des;
     private boolean status;

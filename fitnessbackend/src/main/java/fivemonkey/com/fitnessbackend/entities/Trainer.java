@@ -34,9 +34,9 @@ public class Trainer {
     @OneToMany(mappedBy = "trainer")
     private List<PersonalTraining> personalTrainings;
 
-    //trainer-class relationship
+    //trainer-session relationship
     @OneToMany(mappedBy = "trainer")
-    private List<Clazz> classes;
+    private List<Session> sessions;
 
     //trainer-position relationship
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
