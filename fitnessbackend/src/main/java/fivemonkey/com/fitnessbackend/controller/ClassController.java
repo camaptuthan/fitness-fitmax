@@ -13,9 +13,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.naming.Binding;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -52,21 +56,19 @@ public class ClassController {
     //get information for class
     @GetMapping("/add-class")
     public String addClass(Model model) {
-        List<Trainer> trainerList = trainerService.getAll();
         List<Services> list = serviceService.getAll();
         model.addAttribute("list", list);
-        model.addAttribute("listTrainer", trainerList);
         model.addAttribute("clazz", new ClassDTO());
         return "management/classmanagement/classadd";
     }
 
 
     @PostMapping("/save-class")
-    public String saveClass(@ModelAttribute("clazz") ClassDTO classDTO,
+    public String saveClass( @ModelAttribute("clazz") @Valid ClassDTO classDTO, BindingResult result,
                             RedirectAttributes attributes) {
         try {
-            classService.save(classDTO);
-            attributes.addFlashAttribute("success", "Add successfully");
+                classService.save(classDTO);
+                attributes.addFlashAttribute("success", "Add successfully");
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -2,15 +2,14 @@ package fivemonkey.com.fitnessbackend.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import org.hibernate.annotations.GenericGenerator;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +30,8 @@ public class Clazz {
     @Column(name = "class_name")
     private String name;
 
+
+    @NotNull(message = "Not null")
     @Column(name = "duration")
     private int duration;
 
@@ -61,20 +62,5 @@ public class Clazz {
     @JsonIgnore
     private List<Session> sessions;
 
-//    @Override
-//    public String toString() {
-//        return "Clazz{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", duration=" + duration +
-//                ", price=" + price +
-//                ", des='" + des + '\'' +
-//                ", date=" + date +
-//                ", status=" + status +
-//                ", img='" + img + '\'' +
-//                ", services=" + services +
-//                ", trainer=" + trainer +
-//                ", sessions=" + sessions +
-//                '}';
-//    }
+
 }

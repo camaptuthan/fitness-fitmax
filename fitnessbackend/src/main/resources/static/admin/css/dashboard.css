@@ -12,19 +12,16 @@
 	font-weight: 400;
 
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ff8814+0,db4b24+100 */
-	background: #ff8814; /* Old browsers */
-	background: -moz-linear-gradient(left, #ff8814 0%, #db4b24 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(left, #ff8814 0%,#db4b24 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to right, #ff8814 0%,#db4b24 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff8814', endColorstr='#db4b24',GradientType=1 ); /* IE6-9 */
 
 	-webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.2);
 	-moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.2);
 	box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.2);
 
-	-webkit-transition: top 300ms cubic-bezier(0.215, 0.610, 0.355, 1.000); 
-	-moz-transition: top 300ms cubic-bezier(0.215, 0.610, 0.355, 1.000); 
-	-o-transition: top 300ms cubic-bezier(0.215, 0.610, 0.355, 1.000); 
+	-webkit-transition: top 300ms cubic-bezier(0.215, 0.610, 0.355, 1.000);
+	-moz-transition: top 300ms cubic-bezier(0.215, 0.610, 0.355, 1.000);
+	-o-transition: top 300ms cubic-bezier(0.215, 0.610, 0.355, 1.000);
 	transition: top 300ms cubic-bezier(0.215, 0.610, 0.355, 1.000); /* easeOutCubic */
 }
 .ttr-header a{

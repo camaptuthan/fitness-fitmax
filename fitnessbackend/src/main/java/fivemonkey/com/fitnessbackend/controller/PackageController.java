@@ -37,6 +37,7 @@ public class PackageController {
     //save new package
     @PostMapping("/save-package")
     public String savePackage(@ModelAttribute("packagenew") @Valid PackageDTO packageDTO, BindingResult result, RedirectAttributes redirectAttributes){
+
         try{
             if(result.hasErrors()){
                 redirectAttributes.addFlashAttribute("fail","Add fail!");

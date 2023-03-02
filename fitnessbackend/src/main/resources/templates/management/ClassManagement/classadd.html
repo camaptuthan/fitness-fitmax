@@ -10,43 +10,49 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link th:href="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css}" rel="stylesheet"
-          id="bootstrap-css">
+    <link th:href="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css}" rel="stylesheet" id="bootstrap-css">
     <script th:src="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js}"></script>
     <script th:src="@{//code.jquery.com/jquery-1.11.1.min.js}"></script>
 </head>
 
 <!------ Include the above in your HEAD tag ---------->
 
-<form class="form-horizontal" th:action="@{/package/update-package/{id} (id=${package.id})}" method="post"
-      th:object="${package}">
+<form class="form-horizontal"   th:action="@{/admin/save-class}"   th:object="${clazz}" method="post">
     <fieldset>
 
         <!-- Form Name -->
 
+
         <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-4 control-label">Update Package</label>
+            <label class="col-md-4 control-label"  > Form Add Class</label>
 
         </div>
 
         <!-- Text input-->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="name">Name</label>
+        <div  class="form-group">
+            <label class="col-md-4 control-label" for="name">NAME</label>
             <div class="col-md-4">
-                <input id="name" name="name" th:field="*{name}" th:value="${package.name}" placeholder=" Name"
-                       class="form-control input-md" type="text">
-                <div class="alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-
+                <input id="name"  th:value="${clazz.name}" name="name"  placeholder="Name" class="form-control input-md"
+                       required  type="text"/>
             </div>
         </div>
-
+        <!-- Select Basic -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="service"> Service Type</label>
+            <div class="col-md-4">
+                <select id="service"  name="services" class="form-control">
+                    <option th:each="list:${list}" th:value="${list.id}"  th:text="${list.name}"  >
+                    </option>
+                </select>
+            </div>
+        </div>
 
         <div class="form-group">
             <label class="col-md-4 control-label" for="des">Description</label>
             <div class="col-md-4">
-                <input id="des" name="des" th:value="${package.des}" placeholder=" Description"
-                       class="form-control input-md" type="text">
+                <input required id="des"  name="des" th:value="${clazz.des}" placeholder=" Description" class="form-control input-md"
+                        type="text">
 
             </div>
 
@@ -55,21 +61,19 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="price">Price</label>
             <div class="col-md-4">
-                <input id="price" th:field="*{price}" th:value="${package.price}" name="price" placeholder="Price"
-                       class="form-control input-md" type="number">
-                <div class="alert-warning" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+                <input required id="price"  th:value="${clazz.price}" name="price" placeholder="Price" class="form-control input-md"
+                        type="number">
+
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-4 control-label" for="duration">Duration</label>
             <div class="col-md-4">
-                <input id="duration" th:field="*{duration}" th:value="${package.duration}" name="duration"
-                       placeholder="Duration"
-                       class="form-control input-md" type="number">
-                <div class="alert-warning" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></div>
+                <input required id="duration" th:value="${clazz.duration}" name="duration" placeholder="Duration" class="form-control input-md"
+                       type="text">
+
             </div>
         </div>
-        <!-- Text input-->
 
         <div class="form-group">
             <label class="col-md-4 control-label" for="filebutton">Img</label>
@@ -82,9 +86,21 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="singlebutton"></label>
             <div class="col-md-4">
-                <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Update</button>
+                <button   type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Save</button>
+
             </div>
+
         </div>
+
     </fieldset>
 </form>
+<script>
+
+
+</script>
+
+
 </html>
+
+
+

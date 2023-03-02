@@ -18,7 +18,7 @@ public interface ClassRepository extends JpaRepository<Clazz,String> {
     Page<Clazz> pageClass(Pageable pageable);
 
 
-    @Query("select c from Clazz  c where CONCAT(c.name,'',c.des) like %?1% ")
+    @Query("select c from Clazz  c where CONCAT(c.name,'',c.des,'',c.price) like %?1% ")
     List<Clazz> searchClassByKeyword( String keyword);
 
 

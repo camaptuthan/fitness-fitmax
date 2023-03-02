@@ -1,17 +1,15 @@
 package fivemonkey.com.fitnessbackend.dto;
 
-import lombok.NoArgsConstructor;
-
-import javax.validation.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 public class PackageDTO {
     private String id;
 
     @NotEmpty(message = "{Size.Field.Name}")
+    @NotNull(message = "LastName can not be null!!")
+    @NotEmpty(message = "LastName can not be empty!!")
     private String name;
 
 
