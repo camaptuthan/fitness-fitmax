@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -48,7 +49,11 @@ public class Package {
     private boolean status;
 
     //service-package relationship
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "service_id", referencedColumnName = "service_id")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_id", referencedColumnName = "service_id", unique = true)
     private Services services;
+
+    //package-image relationship
+    @OneToMany(mappedBy = "aPackage")
+    private List<Image> images;
 }

@@ -29,4 +29,24 @@ public class Image {
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "blog_id", referencedColumnName = "blog_id")
     private Blog blog;
+
+    //studio-image relationship
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "studio_id", referencedColumnName = "studio_id")
+    private Studio studio;
+
+    //package-image relationship
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "package_id", referencedColumnName = "package_id")
+    private Package aPackage;
+
+    //class-image relationship
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "class_id", referencedColumnName = "class_id")
+    private Clazz clazz;
+
+    //personalTraining relationship
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "personaltraining_id", referencedColumnName = "personaltraining_id")
+    private PersonalTraining personalTraining;
 }

@@ -55,7 +55,11 @@ public class Studio {
     private List<Services> services;
 
     //studio-manager relationship
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_email", referencedColumnName = "manager_email", unique = true)
     private Manager manager;
+
+    //studio-image relationship
+    @OneToMany(mappedBy = "studio")
+    private List<Image> images;
 }

@@ -48,12 +48,9 @@ public class Clazz {
     @Column(name = "status", nullable = false)
     private boolean status;
 
-    @Column(name = "image")
-    private String img;
     //service-class relationship
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "service_id", referencedColumnName = "service_id")
-    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_id", referencedColumnName = "service_id", unique = true)
     private Services services;
 
 
@@ -62,5 +59,7 @@ public class Clazz {
     @JsonIgnore
     private List<Session> sessions;
 
-
+    //class-image relationship
+    @OneToMany(mappedBy = "clazz")
+    private List<Image> images;
 }
