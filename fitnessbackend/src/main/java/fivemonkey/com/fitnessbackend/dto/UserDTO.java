@@ -21,11 +21,11 @@ public class UserDTO {
     private Date date;
     private boolean status;
 
-    private Long roleId;
+    private String roleId;
     private String roleName;
     private String studioName;
 
-    private  Long studioId;
+    private  String studioId;
 
     @Override
     public String toString() {

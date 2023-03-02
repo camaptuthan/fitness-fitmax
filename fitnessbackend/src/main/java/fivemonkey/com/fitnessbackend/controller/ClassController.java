@@ -1,19 +1,9 @@
 package fivemonkey.com.fitnessbackend.controller;
 
-
-import fivemonkey.com.fitnessbackend.entities.Clazz;
-import fivemonkey.com.fitnessbackend.repository.ClassRepository;
-import fivemonkey.com.fitnessbackend.services.ClassService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
 import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.entities.Clazz;
 import fivemonkey.com.fitnessbackend.entities.Services;
 import fivemonkey.com.fitnessbackend.entities.Trainer;
-import fivemonkey.com.fitnessbackend.repository.ClassRepository;
 import fivemonkey.com.fitnessbackend.services.ClassService;
 import fivemonkey.com.fitnessbackend.services.ServiceService;
 import fivemonkey.com.fitnessbackend.services.TrainerService;
@@ -22,37 +12,33 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin")
 public class ClassController {
+    @Autowired
+    TrainerService trainerService;
+    @Autowired
+    ServiceService serviceService;
     @Autowired
     private ClassService classService;
 
-
-    @Autowired
-    ClassRepository classRepository;
-
-
-
-    @Autowired
-    TrainerService trainerService;
-
-
-    @Autowired
-    ServiceService serviceService;
-
-
     @GetMapping("/list-class")
-    public String classes(Model model) {
+    public String classes(Model model, @Param("keyword") String keyword) {
         List<ClassDTO> classDTOList = classService.findAll();
+        if (keyword == null) {
+            model.addAttribute("list", classDTOList);
+        } else {
 
-        model.addAttribute("list", classDTOList);
-        model.addAttribute("size", classDTOList.size());
+            model.addAttribute("list", classService.searchByName(keyword));
+        }
+        model.addAttribute("size", classService.searchByName(keyword).size());
         return "management/classmanagement/classlist";
     }
 
@@ -62,17 +48,15 @@ public class ClassController {
     //get information for class
     @GetMapping("/add-class")
     public String addClass(Model model) {
-        List<Trainer> trainerList = trainerService.getAll();
         List<Services> list = serviceService.getAll();
         model.addAttribute("list", list);
-        model.addAttribute("listTrainer", trainerList);
         model.addAttribute("clazz", new ClassDTO());
         return "management/classmanagement/classadd";
     }
 
 
-    @PostMapping("save-class")
-    public String saveClass(@ModelAttribute("clazz") ClassDTO classDTO,
+    @PostMapping("/save-class")
+    public String saveClass(@ModelAttribute("clazz") @Valid ClassDTO classDTO, BindingResult result,
                             RedirectAttributes attributes) {
         try {
             classService.save(classDTO);
@@ -82,7 +66,7 @@ public class ClassController {
             e.printStackTrace();
             attributes.addFlashAttribute("fail", "Add failed");
         }
-        return "redirect:/list-class";
+        return "redirect:/admin/list-class";
     }
 
     //enable class
@@ -95,7 +79,7 @@ public class ClassController {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("fail", "Fail to enabled");
         }
-        return "redirect:/list-class";
+        return "redirect:/admin/list-class";
 
     }
 
@@ -110,12 +94,12 @@ public class ClassController {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("fail", "Fail to enabled");
         }
-        return "redirect:/list-class";
+        return "redirect:/admin/list-class";
     }
 
 
     //get information of class
-    @GetMapping("update-class/{id}")
+    @GetMapping("/update-class/{id}")
     public String getInformtionFormUpdate(@PathVariable("id") String id, Model model) {
         List<Trainer> trainerList = trainerService.getAll();
         ClassDTO clazzDTO = classService.getClassById(id);
@@ -137,7 +121,7 @@ public class ClassController {
             redirectAttributes.addFlashAttribute("fail", "Fail");
         }
 
-        return "redirect:/list-class";
+        return "redirect:/admin/list-class";
     }
 
     //paging class
@@ -153,27 +137,6 @@ public class ClassController {
         return "management/classmanagement/classlist";
 
     }
-
-    //search class by name
-    @GetMapping("/list-class/search")
-    public String searchByName(Model model, @Param("keyword") String keyword) {
-        List<ClassDTO> list = classService.searchByName(keyword);
-        System.out.println("size is" + list.size());
-        model.addAttribute("list", list);
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("size", list.size());
-
-        return "management/classmanagement/classlist";
-    }
-
-
-
-//    @DeleteMapping("/delete/{id}")
-//    public void delete(@PathVariable Long id){
-//        classRepository.deleteById(id);
-//    }
-
-
 
 
 }

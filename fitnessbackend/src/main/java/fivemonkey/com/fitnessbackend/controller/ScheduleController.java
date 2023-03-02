@@ -30,10 +30,12 @@ public class ScheduleController {
         return scheduleService.getByInfor(email, serviceId, year, start, end);
     }
 
+
     @GetMapping("list-class")
     public List<ClassDTO> getClasses() {
         return classService.findAll();
     }
+
 
 
 //

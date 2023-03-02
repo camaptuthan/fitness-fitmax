@@ -54,16 +54,15 @@ public class Services {
     private List<Registration> registrations;
 
     //service-package relationship
-    @OneToMany(mappedBy = "services")
-    private List<Package> packages;
+    @OneToOne(mappedBy = "services")
+    private Package aPackage;
 
     //service-personalTraining relationship
-    @OneToMany(mappedBy = "services")
-    private List<PersonalTraining> personalTrainings;
+    @OneToOne(mappedBy = "services")
+    private PersonalTraining personalTraining;
 
     //service-class relationship
-//    @OneToMany(mappedBy = "services")
-//    private List<Clazz> classes;
+
 
     @OneToOne(mappedBy = "service", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
@@ -72,9 +71,14 @@ public class Services {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "assistant_email", referencedColumnName = "assistant_email")
     private Assistant assistant;
+    //service-serviceDetail relationship
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_detail_id", referencedColumnName = "service_detail_id")
+    private ServiceDetail serviceDetail;
 
-    public Services(String id){
+    public Services(String id) {
         this.id = id;
     }
+
 }
 

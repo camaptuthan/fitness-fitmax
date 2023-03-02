@@ -25,7 +25,9 @@ public class UserController {
     @Autowired
     StudioService studioService;
     @Autowired
+
     private UserService userService;
+    //login
 
     @GetMapping("/listusers")
     public String listUser(Model model) {
@@ -118,6 +120,11 @@ public class UserController {
 //    model.addAttribute("list",userList);
 //    return "management/usermanagement/userlist";
 
+
+    @GetMapping("/test-html")
+    public String testHTML() {
+        return "management/usermanagement/user-profile";
+    }
 
 }
 

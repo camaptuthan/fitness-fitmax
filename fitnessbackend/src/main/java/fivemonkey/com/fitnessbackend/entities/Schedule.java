@@ -41,6 +41,7 @@ public class Schedule {
     private Date createdDate;
 
 
+
     @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Session> sessions;
 

@@ -6,9 +6,11 @@ import fivemonkey.com.fitnessbackend.entities.Services;
 import fivemonkey.com.fitnessbackend.entities.Trainer;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
-
 
 @Data
 @AllArgsConstructor
@@ -22,6 +24,7 @@ public class ClassDTO {
     private Date date;
 
     private Float price;
+
 
 
     @JsonIgnore
@@ -49,6 +52,7 @@ public class ClassDTO {
                 ", img='" + img + '\'' +
                 '}';
     }
+
 
 
 }

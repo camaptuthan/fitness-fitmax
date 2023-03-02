@@ -7,7 +7,10 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,12 +26,15 @@ public class Package {
     @Column(name = "package_id")
     private String id;
 
+    @NotEmpty(message = "{Size.Field.Name}")
     @Column(name = "package_name")
     private String name;
 
+    @Min(value = 1, message = "{Size.Field.Duration}")
     @Column(name = "duration")
     private int duration;
 
+    @Min(value = 1, message = "{Size.Field.Price}")
     @Column(name = "price")
     private Float price;
 
@@ -43,7 +49,11 @@ public class Package {
     private boolean status;
 
     //service-package relationship
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "service_id", referencedColumnName = "service_id")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_id", referencedColumnName = "service_id", unique = true)
     private Services services;
+
+    //package-image relationship
+    @OneToMany(mappedBy = "aPackage")
+    private List<Image> images;
 }

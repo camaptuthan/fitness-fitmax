@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import org.hibernate.annotations.GenericGenerator;
-
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +29,8 @@ public class Clazz {
     @Column(name = "class_name")
     private String name;
 
+
+    @NotNull(message = "Not null")
     @Column(name = "duration")
     private int duration;
 
@@ -48,10 +48,12 @@ public class Clazz {
     private boolean status;
 
     //service-class relationship
+
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId()
     @JoinColumn(name = "class_id", nullable = false)
     private Services service;
+
 
     //class-session relationship
     @OneToMany(mappedBy = "aClass")
@@ -59,5 +61,8 @@ public class Clazz {
     private List<Session> sessions;
 
 
-    private String img;
+    //class-image relationship
+    @OneToMany(mappedBy = "clazz")
+    private List<Image> images;
+
 }

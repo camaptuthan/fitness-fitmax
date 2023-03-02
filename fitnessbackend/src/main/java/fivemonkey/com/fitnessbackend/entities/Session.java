@@ -40,12 +40,13 @@ public class Session {
     private Date createdDate;
 
 
-    //trainer-session  relationship
+
+    //trainer-session relationship
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "trainer_email", referencedColumnName = "trainer_email")
     @JsonIgnore
     private Trainer trainer;
-
 
 
     //class-session relationship
