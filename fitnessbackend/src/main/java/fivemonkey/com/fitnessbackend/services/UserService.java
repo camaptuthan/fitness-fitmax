@@ -20,5 +20,6 @@ public interface UserService {
     UserDTO getClassById(String email);
     List<User> findAllUser();
     List<User> findAllUserNameContaining(String email);
+    void registerUser(String email,String password,String phone,String firstName,String lastName);
 
 }

@@ -123,8 +123,31 @@ IStudioService studioService;
     }
 
 
+//        @RequestMapping(value = "/register", method = RequestMethod.POST)
+//        public String registerUser(@ModelAttribute("user") UserDTO user, RedirectAttributes attributes,Model model) {
+//            List<Object> userPresentObj = userService.isUserPresent(user);
+//            if((Boolean) userPresentObj.get(0)){
+//                model.addAttribute("successMessage", userPresentObj.get(1));
+//                return "/register";
+//                String phone =user.getPhone();
+//                if((Boolean) userPresentObj.get(0)|| !phone.matches("^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$")){
+//                    attributes.addFlashAttribute("fail", userPresentObj.get(1));
+//                    attributes.addFlashAttribute("regexPhone", "Phone Must Be Matches (+84) 35 539-0605;");
+//                    return "redirect:/register";
+//                }
+//
+//                userService.registerUser(user.getEmail(),user.getPassword(),user.getPhone());
+//                model.addAttribute("message","Register Successfully");
+//                return "/login";
+//                userService.registerUser(user.getEmail(),user.getPassword(),phone,user.getFirstName(),user.getLastName());
+//                attributes.addFlashAttribute("message","Register Successfully");
+//                return "redirect:/register";
+//            }
 
-    }
+
+
+
+        }
 
 
 

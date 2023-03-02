@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
@@ -109,6 +110,24 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    public void registerUser(String email,String password,String phone,String firstName,String lastName) {
+        User user= new User();
+        user.setPassword(password);
+        user.setEmail(email);
+        user.setPhone(phone);
+        user.setStatus(true);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        Role r= new Role();
+        r.setId("6");
+        user.setRole(r);
+        Studio s= new Studio();
+        s.setId("1");
+        user.setStudio(s);
+        user.setDate(new Date());
+        userRepository.save(user);
+
+    }
 
 //    @Override
 //    public List<UserDTO> findAllUserNameContaining(String email) {
