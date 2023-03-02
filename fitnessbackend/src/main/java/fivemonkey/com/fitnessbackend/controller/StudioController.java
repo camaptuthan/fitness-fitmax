@@ -1,7 +1,7 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.entities.Studio;
-import fivemonkey.com.fitnessbackend.services.IStudioService;
+import fivemonkey.com.fitnessbackend.services.StudioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,7 +15,7 @@ import java.util.List;
 @Controller
 public class StudioController {
     @Autowired
-    private IStudioService studioService;
+    private StudioService studioService;
 
     @PostMapping("/insertstudios")
     public void insertStudio(@RequestBody(required = false) Studio studio) {

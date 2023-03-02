@@ -2,7 +2,7 @@ package fivemonkey.com.fitnessbackend.services.impl;
 
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.repository.StudioRepository;
-import fivemonkey.com.fitnessbackend.services.IStudioService;
+import fivemonkey.com.fitnessbackend.services.StudioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class StudioServiceImpl implements IStudioService {
+public class StudioServiceImpl implements StudioService {
    @Autowired
     private StudioRepository studioRepository;
 
