@@ -17,7 +17,7 @@
 
 <!------ Include the above in your HEAD tag ---------->
 
-<form class="form-horizontal" th:action="@{/admin/save-class}" method="post"  th:object="${clazz}">
+<form class="form-horizontal" th:action="@{/admin/update-class/{id} (id=${clazz.id})}" method="post"  th:object="${clazz}">
     <fieldset>
 
         <!-- Form Name -->
@@ -25,7 +25,7 @@
 
         <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-4 control-label"  > Form Add Class</label>
+            <label class="col-md-4 control-label"  > Form Update Class</label>
 
         </div>
 
@@ -33,29 +33,17 @@
         <div  class="form-group">
             <label class="col-md-4 control-label" for="name">NAME</label>
             <div class="col-md-4">
-                <input id="name"  name="name"  th:value="${clazz.name}"  placeholder=" NAME" class="form-control input-md"
+                <input id="name"  name="name"   th:value="${clazz.name}"  placeholder=" NAME" class="form-control input-md"
                        required="" type="text">
 
             </div>
         </div>
 
 
-        <!-- Select Basic -->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="service"> Service Type</label>
-            <div class="col-md-4">
-                <select id="service"  name="services" class="form-control">
-                    <option th:each="list:${list}" th:value="${list.id}"  th:text="${list.name}"  >
-
-                    </option>
-                </select>
-            </div>
-        </div>
-
         <div class="form-group">
             <label class="col-md-4 control-label" for="des">Description</label>
             <div class="col-md-4">
-                <input id="des" name="des" th:value="${clazz.des}" placeholder=" Description" class="form-control input-md"
+                <input id="des" name="des" th:value="${clazz.des}" placeholder=" NAME" class="form-control input-md"
                        required="" type="text">
 
             </div>
@@ -84,10 +72,10 @@
 
 
 <!--        <div class="form-group">-->
-<!--            <label class="col-md-4 control-label" for="email"> Trainer</label>-->
+<!--            <label class="col-md-4 control-label" for="trainer"> Trainer</label>-->
 <!--            <div class="col-md-4">-->
-<!--                <select  id="email" name="email" class="form-control">-->
-<!--                    <option th:each="c:${listTrainer}" th:value="${c.email}"  th:text="${c.email}"  >-->
+<!--                <select  id="trainer" name="trainer" class="form-control">-->
+<!--                    <option th:each="c:${listTrainer}"   th:text="${c.email}"  >-->
 
 <!--                    </option>-->
 <!--                </select>-->
@@ -105,7 +93,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="singlebutton"></label>
             <div class="col-md-4">
-                <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Save</button>
+                <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Update</button>
             </div>
         </div>
 

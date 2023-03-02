@@ -159,7 +159,6 @@
 
 </head>
 <body>
-
 <div class="container-xl">
     <div class="table-responsive">
         <div class="table-wrapper">
@@ -188,7 +187,7 @@
                 </div>
             </div>
 
-            <table class="table table-striped table-hover table-bordered" id="classTable">
+            <table  class="table table-striped table-hover table-bordered" id="classTable">
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -208,6 +207,7 @@
                     <td th:text="${c.des}"></td>
                     <td th:text="${c.date}"></td>
                     <td th:text="${c.price}"></td>
+
                     <td>
 
                         <a th:href="@{'/admin/update-class/' + ${c.id}}" class="edit" title="Edit"

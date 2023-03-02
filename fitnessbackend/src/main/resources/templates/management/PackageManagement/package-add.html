@@ -30,9 +30,10 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="name">Name</label>
             <div class="col-md-4">
-                <input id="name" name="name" th:value="${packagenew.name}" placeholder="Name"
+                <input  id="name" name="name"   th:value="${packagenew.name}" placeholder="Name"
                        class="form-control input-md"
-                       required="" type="text">
+                        type="text">
+
             </div>
         </div>
 
@@ -42,7 +43,7 @@
             <div class="col-md-4">
                 <input id="des" name="des" th:value="${packagenew.des}" placeholder=" Description"
                        class="form-control input-md"
-                       required="" type="text">
+                        type="text">
             </div>
         </div>
         <!-- Text input-->
@@ -50,7 +51,7 @@
             <label class="col-md-4 control-label" for="price">Price</label>
             <div class="col-md-4">
                 <input id="price" th:value="${packagenew.price}" name="price" placeholder="Price"
-                       class="form-control input-md" required=""
+                       class="form-control input-md" r
                        type="number">
             </div>
         </div>
@@ -58,7 +59,7 @@
             <label class="col-md-4 control-label" for="duration">Duration</label>
             <div class="col-md-4">
                 <input id="duration" th:value="${packagenew.duration}" name="duration" placeholder="Duration"
-                       class="form-control input-md" required=""
+                       class="form-control input-md"
                        type="number">
             </div>
         </div>

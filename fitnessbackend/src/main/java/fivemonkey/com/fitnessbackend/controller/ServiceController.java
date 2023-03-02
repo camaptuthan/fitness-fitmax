@@ -21,8 +21,10 @@ public class ServiceController {
              List<Services> list=serviceService.getAll();
              System.out.println(list.size());
              model.addAttribute("list",list);
+
              return "/index";
        }
+
 
     @GetMapping("/admin-service/page")
     public String getAllServiceAdminPage(Model model){

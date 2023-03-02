@@ -133,4 +133,12 @@ public String viewCourse(
         studioService.saveStudio(studio);
         return "redirect:/studios";
     }
+
+
+    //list studio in main
+    @GetMapping("/homepage/studio")
+    public String listStudiosHomepage(Model model) {
+        model.addAttribute("studios", studioService.getAllStudios());
+        return "/studio";
+    }
 }
