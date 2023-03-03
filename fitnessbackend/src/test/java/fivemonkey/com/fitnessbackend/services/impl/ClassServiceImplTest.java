@@ -44,19 +44,33 @@ class ClassServiceImplTest {
 
     }
 
+    // test case save 1 successfully
     @Test
     void save() {
         Clazz c = new Clazz();
-        c.setName("a");
-        c.setDes("B");
-        c.setPrice(123.1F);
-        c.setDate( new Date());
+        c.setName("yoga");
+        c.setDes("a");
+        c.setPrice(100F);
         Clazz clazzData=classRepository.save(c);
         Assertions.assertThat(clazzData).isNotNull();
-//        Assertions.assertThat(clazzData.getPrice()).isGreaterThan(120.1F);
+        Assertions.assertThat(clazzData.getPrice()).isGreaterThan(90F);
         Assertions.assertThat(clazzData.getName()).isNotNull();
 
     }
+    // test case save 2 successfully
+    @Test
+    void save2() {
+        Clazz c = new Clazz();
+        c.setName("erobic");
+        c.setDes("b");
+        c.setPrice(0F);
+        Clazz clazzData=classRepository.save(c);
+        Assertions.assertThat(clazzData).isNotNull();
+        Assertions.assertThat(clazzData.getName()).isNotNull();
+
+    }
+
+
 
     @Test
     void update() {

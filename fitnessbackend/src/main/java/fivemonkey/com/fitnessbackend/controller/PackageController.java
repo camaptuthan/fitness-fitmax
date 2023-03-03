@@ -1,14 +1,13 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.dto.PackageDTO;
-
 import fivemonkey.com.fitnessbackend.entities.Package;
 import fivemonkey.com.fitnessbackend.services.PackageService;
-import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -25,9 +24,7 @@ public class PackageController {
     //view all packages
     @GetMapping("/packages")
     public String getAllPackages(Model model) {
-        List<Package> packageList = packageServices.getAllPackages();
-        model.addAttribute("packageList", packageList);
-        return "management/PackageManagement/package-list";
+        return findPaginated(1, model);
     }
 
     //add new package
@@ -39,11 +36,16 @@ public class PackageController {
 
     //save new package
     @PostMapping("/save-package")
-    public String savePackage( @ModelAttribute("packagenew") PackageDTO packageDTO, RedirectAttributes redirectAttributes
-                             ){
+    public String savePackage(@ModelAttribute("packagenew") @Valid PackageDTO packageDTO, BindingResult result, RedirectAttributes redirectAttributes){
+
         try{
-            packageServices.save(packageDTO);
-            redirectAttributes.addFlashAttribute("success","Add successful!");
+            if(result.hasErrors()){
+                redirectAttributes.addFlashAttribute("fail","Add fail!");
+                return "management/PackageManagement/package-add";
+            }else {
+                packageServices.save(packageDTO);
+                redirectAttributes.addFlashAttribute("success","Add successful!");
+            }
         }catch (Exception e){
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("fail","Add fail!");
@@ -97,10 +99,17 @@ public class PackageController {
 
     //edit package
     @PostMapping("/update-package/{id}")
-    public String processUpdate(@PathVariable("id") String id,@ModelAttribute("package") PackageDTO packageDTO,RedirectAttributes redirectAttributes){
+    public String processUpdate(@PathVariable("id") String id, @ModelAttribute("package") @Valid PackageDTO packageDTO, BindingResult result
+            ,RedirectAttributes redirectAttributes){
         try{
-            packageServices.update(packageDTO);
-            redirectAttributes.addFlashAttribute("success","Update Successfully");
+            if(result.hasErrors()){
+                redirectAttributes.addFlashAttribute("fail","Fail");
+                return "management/PackageManagement/package-edit";
+            }
+            else{
+                packageServices.update(packageDTO);
+                redirectAttributes.addFlashAttribute("success","Update Successfully");
+            }
         }catch (Exception e){
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("fail","Fail");
@@ -108,4 +117,14 @@ public class PackageController {
         return "redirect:/package/packages";
     }
 
+    @GetMapping("/page/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
+        int pageSize = 5;
+        Page<Package> packages = packageServices.findPaginated(pageNo, pageSize);
+        List<Package> packageList = packages.getContent();
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", packages.getTotalPages());
+        model.addAttribute("packageList", packageList);
+        return "management/PackageManagement/package-list";
+    }
 }

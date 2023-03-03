@@ -22,4 +22,5 @@ public interface UserService {
     List<User> findAllUserNameContaining(String email);
     void registerUser(String email,String password,String phone,String firstName,String lastName);
 
+    List<Object> isUserPresent(UserDTO user);
 }

@@ -51,7 +51,7 @@ public class PackageServiceImpl implements PackageService {
     @Override
     public Package update(PackageDTO p) {
         try{
-            Package aPackage =packageRepository.getById(p.getId());
+            Package aPackage = packageRepository.getById(p.getId());
             aPackage.setName(p.getName());
             aPackage.setDuration(p.getDuration());
             aPackage.setPrice(p.getPrice());

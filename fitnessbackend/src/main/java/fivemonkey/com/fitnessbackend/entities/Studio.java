@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -17,11 +19,12 @@ import java.util.List;
 public class Studio {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "studio_generator")
+    @GenericGenerator(name = "studio_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.StudioIdentifier")
     @Column(name = "studio_id")
     private String id;
 
-    @Column(name = "name")
+    @Column(name = "studio_name")
     private String name;
 
     @Column(name = "city")
@@ -52,9 +55,13 @@ public class Studio {
     private List<Services> services;
 
     //studio-manager relationship
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_email", referencedColumnName = "manager_email", unique = true)
     private Manager manager;
 
+
+    //studio-image relationship
+    @OneToMany(mappedBy = "studio")
+    private List<Image> images;
 
 }

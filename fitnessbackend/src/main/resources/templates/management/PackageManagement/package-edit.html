@@ -34,9 +34,9 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="name">Name</label>
             <div class="col-md-4">
-                <input id="name" name="name"  th:value="${package.name}" placeholder=" Name"
-                       class="form-control input-md"
-                       required="" type="text">
+                <input id="name" name="name" th:field="*{name}" th:value="${package.name}" placeholder=" Name"
+                       class="form-control input-md" type="text">
+                <div class="alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
 
             </div>
         </div>
@@ -46,8 +46,7 @@
             <label class="col-md-4 control-label" for="des">Description</label>
             <div class="col-md-4">
                 <input id="des" name="des" th:value="${package.des}" placeholder=" Description"
-                       class="form-control input-md"
-                       required="" type="text">
+                       class="form-control input-md" type="text">
 
             </div>
 
@@ -56,19 +55,18 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="price">Price</label>
             <div class="col-md-4">
-                <input id="price" th:value="${package.price}" name="price" placeholder="Price"
-                       class="form-control input-md" required=""
-                       type="number">
-
+                <input id="price" th:field="*{price}" th:value="${package.price}" name="price" placeholder="Price"
+                       class="form-control input-md" type="number">
+                <div class="alert-warning" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-4 control-label" for="duration">Duration</label>
             <div class="col-md-4">
-                <input id="duration" th:value="${package.duration}" name="duration" placeholder="Duration"
-                       class="form-control input-md" required=""
-                       type="number">
-
+                <input id="duration" th:field="*{duration}" th:value="${package.duration}" name="duration"
+                       placeholder="Duration"
+                       class="form-control input-md" type="number">
+                <div class="alert-warning" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></div>
             </div>
         </div>
         <!-- Text input-->

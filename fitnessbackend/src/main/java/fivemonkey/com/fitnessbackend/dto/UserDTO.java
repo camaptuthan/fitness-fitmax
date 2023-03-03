@@ -26,22 +26,7 @@ public class UserDTO {
     private String studioName;
 
     private  String studioId;
+    private String phone;
 
-    @Override
-    public String toString() {
-        return "UserDTO{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", date=" + date +
-                ", status=" + status +
-                ", roleId=" + roleId +
-                ", roleName='" + roleName + '\'' +
-                ", studioName='" + studioName + '\'' +
-                ", studioId=" + studioId +
-                '}';
-    }
+
 }

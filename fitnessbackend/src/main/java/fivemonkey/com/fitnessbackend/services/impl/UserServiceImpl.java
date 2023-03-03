@@ -14,9 +14,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -30,9 +29,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> findAll() {
         ModelMapper mapper = new ModelMapper();
-        List<UserDTO>  userDTOList = new ArrayList<>();
+        List<UserDTO> userDTOList = new ArrayList<>();
         List<User> userList = userRepository.findAll();
-        for(User u : userList){
+        for (User u : userList) {
             UserDTO userDTO = mapper.map(u, UserDTO.class);
             userDTOList.add(userDTO);
         }
@@ -54,21 +53,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(UserDTO u) {
-        try{
+        try {
             User user = userRepository.getById(u.getEmail());
-           Studio studio = new Studio();
+            Studio studio = new Studio();
             studio.setId(u.getStudioId());
 
             Role role = new Role();
-           // role.setId(u.getRoleId());
+            // role.setId(u.getRoleId());
 
             user.setRole(role);
             user.setStudio(studio);
-            System.out.println("=================================="+ user);
+            System.out.println("==================================" + user);
 
 
             return userRepository.save(user);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -99,7 +98,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
     @Override
     public List<User> findAllUser() {
         return userRepository.findAll();
@@ -110,19 +108,19 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    public void registerUser(String email,String password,String phone,String firstName,String lastName) {
-        User user= new User();
+    public void registerUser(String email, String password, String phone, String firstName, String lastName) {
+        User user = new User();
         user.setPassword(password);
         user.setEmail(email);
         user.setPhone(phone);
         user.setStatus(true);
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        Role r= new Role();
-        r.setId("6");
+        Role r = new Role();
+        r.setId("ROLE0006");
         user.setRole(r);
-        Studio s= new Studio();
-        s.setId("1");
+        Studio s = new Studio();
+        s.setId("STU0001");
         user.setStudio(s);
         user.setDate(new Date());
         userRepository.save(user);
@@ -140,4 +138,28 @@ public class UserServiceImpl implements UserService {
 //        }
 //        return userDTOList;
 //    }
+
+
+    //check email exist ,phone may be optional
+    @Override
+    public List<Object> isUserPresent(UserDTO user) {
+        boolean userExists = false;
+        String message = null;
+        Optional<User> existingUserEmail = userRepository.findByEmail(user.getEmail());
+        if (existingUserEmail.isPresent()) {
+            userExists = true;
+            message = "Email Already Present!";
+        }
+//        Optional<User> existingUserMobile = userRepository.findByMobile(user.getPhone());
+//        if(existingUserMobile.isPresent()){
+//            userExists = true;
+//            message = "Mobile Number Already Present!";
+//        }
+//        if (existingUserEmail.isPresent() && existingUserMobile.isPresent()) {
+//            message = "Email and Mobile Number Both Already Present!";
+//        }
+        System.out.println("existingUserEmail.isPresent() - " + existingUserEmail.isPresent());
+        return Arrays.asList(userExists, message);
+
+    }
 }

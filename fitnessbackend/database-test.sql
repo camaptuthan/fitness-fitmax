@@ -43,25 +43,57 @@ update studio set manager_email = 'parkhunjk@gmail.com' where studio_id = 'STU00
 insert into assistant(assistant_email) values ('davidpham95aka201@gmail.com');
 
 /*select * from service;*/
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0001','Tap luyen toan than',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0002','Tap luyen the luc',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0003','Tap luyen tay',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0004','Tap luyen chan',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0001','Full Body Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0002','Full Body Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0003','Full Body Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0004','Full Body Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0005','Full Body Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0006','Physical Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0007','Physical Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0008','Physical Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0009','Physical Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0010','Physical Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0011','Hand Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0012','Hand Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0013','Hand Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0014','Hand Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0015','Hand Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0016','Leg Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0017','Leg Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0018','Leg Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0019','Leg Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
+insert into service(service_id,service_name,status,assistant_email,studio_id,created_date) values ('SER0020','Leg Workout',1,'davidpham95aka201@gmail.com','STU0001',CURDATE());
 
 /*select * from category;*/
-insert into category(category_id,description,category_name) values ('CATE0001','Tap tay','');
-insert into category(category_id,description,category_name) values ('CATE0002','Tap chan','');
-insert into category(category_id,description,category_name) values ('CATE0003','Tap toan than','');
-insert into category(category_id,description,category_name) values ('CATE0004','Tap the luc','');
-insert into category(category_id,description,category_name) values ('CATE0005','Quang cao','');
-insert into category(category_id,description,category_name) values ('CATE0006','Tap luyen','');
-insert into category(category_id,description,category_name) values ('CATE0007','An uong','');
+insert into category(category_id,description,category_name) values ('CATE0001','Hand','');
+insert into category(category_id,description,category_name) values ('CATE0002','Leg','');
+insert into category(category_id,description,category_name) values ('CATE0003','Full Body','');
+insert into category(category_id,description,category_name) values ('CATE0004','Physical','');
+insert into category(category_id,description,category_name) values ('CATE0005','Advertisement','');
+insert into category(category_id,description,category_name) values ('CATE0006','Exercise','');
+insert into category(category_id,description,category_name) values ('CATE0007','Nutrition','');
 
 /*select * from service_category;*/
-insert into service_category(service_id,category_id) values ('SER0004','CATE0002');
 insert into service_category(service_id,category_id) values ('SER0001','CATE0003');
-insert into service_category(service_id,category_id) values ('SER0003','CATE0001');
-insert into service_category(service_id,category_id) values ('SER0002','CATE0004');
+insert into service_category(service_id,category_id) values ('SER0002','CATE0003');
+insert into service_category(service_id,category_id) values ('SER0003','CATE0003');
+insert into service_category(service_id,category_id) values ('SER0004','CATE0003');
+insert into service_category(service_id,category_id) values ('SER0005','CATE0003');
+insert into service_category(service_id,category_id) values ('SER0006','CATE0004');
+insert into service_category(service_id,category_id) values ('SER0007','CATE0004');
+insert into service_category(service_id,category_id) values ('SER0008','CATE0004');
+insert into service_category(service_id,category_id) values ('SER0009','CATE0004');
+insert into service_category(service_id,category_id) values ('SER0010','CATE0004');
+insert into service_category(service_id,category_id) values ('SER0011','CATE0001');
+insert into service_category(service_id,category_id) values ('SER0012','CATE0001');
+insert into service_category(service_id,category_id) values ('SER0013','CATE0001');
+insert into service_category(service_id,category_id) values ('SER0014','CATE0001');
+insert into service_category(service_id,category_id) values ('SER0015','CATE0001');
+insert into service_category(service_id,category_id) values ('SER0016','CATE0002');
+insert into service_category(service_id,category_id) values ('SER0017','CATE0002');
+insert into service_category(service_id,category_id) values ('SER0018','CATE0002');
+insert into service_category(service_id,category_id) values ('SER0019','CATE0002');
+insert into service_category(service_id,category_id) values ('SER0020','CATE0002');
 
 /*select * from blog;*/
 insert into blog(blog_id,title,writer_email,description,status,created_date) values ('BLO0001','Quang cao 1','davidpham95aka201@gmail.com','',1,CURDATE());
@@ -88,15 +120,15 @@ insert into registration(registration_id,user_email,service_id,status,registrati
 insert into trainer(trainer_email,status) values ('ducnvhe141646@fpt.edu.vn',1);
 
 /*select * from class;*/
-insert into class(class_id,description,duration,class_name,price,status,service_id,created_date) values ('CL0001','Tap Yoga trong vong 6 thang',6,'Tap Yoga',500,1,'SER0001',CURDATE());
-insert into class(class_id,description,duration,class_name,price,status,service_id,created_date) values ('CL0002','Tap Yoga trong vong 12 thang',12,'Tap Yoga',950,1,'SER0001',CURDATE());
-insert into class(class_id,description,duration,class_name,price,status,service_id,created_date) values ('CL0003','Tap KickBoxing trong vong 3 thang',3,'Tap KickBoxing',350,1,'SER0004',CURDATE());
-insert into class(class_id,description,duration,class_name,price,status,service_id,created_date) values ('CL0004','Tap KickBoxing trong vong 6 thang',6,'Tap KickBoxing',100,1,'SER0004',CURDATE());
+insert into class(class_id,description,duration,class_name,price,status,service_id,created_date) values ('CL0001','Practice Yoga for 6 months',6,'Yoga 1',500,1,'SER0001',CURDATE());
+insert into class(class_id,description,duration,class_name,price,status,service_id,created_date) values ('CL0002','Practice Yoga for 12 months',12,'Yoga 2',950,1,'SER0002',CURDATE());
+insert into class(class_id,description,duration,class_name,price,status,service_id,created_date) values ('CL0003','Practice KickBoxing for 3 months',3,'KickBoxing 1',350,1,'SER0016',CURDATE());
+insert into class(class_id,description,duration,class_name,price,status,service_id,created_date) values ('CL0004','Practice KickBoxing for 6 months',6,'KickBoxing 2',100,1,'SER0017',CURDATE());
 
 /*select * from package;*/
-insert into package(package_id,package_name,description,duration,price,status,service_id,created_date) values ('PKG0001','Tap tu do','Tap tu do trong vong 3 thang',3,150,1,'SER0001',CURDATE());
-insert into package(package_id,package_name,description,duration,price,status,service_id,created_date) values ('PKG0002','Tap tu do','Tap tu do trong vong 6 thang',6,270,1,'SER0001',CURDATE());
-insert into package(package_id,package_name,description,duration,price,status,service_id,created_date) values ('PKG0003','Tap tu do','Tap tu do trong vong 12 thang',12,500,1,'SER0001',CURDATE());
+insert into package(package_id,package_name,description,duration,price,status,service_id,created_date) values ('PKG0001','Basic Workout','Basic Workout in 3 months',3,150,1,'SER0003',CURDATE());
+insert into package(package_id,package_name,description,duration,price,status,service_id,created_date) values ('PKG0002','Basic Workout','Basic Workout in 6 months',6,270,1,'SER0004',CURDATE());
+insert into package(package_id,package_name,description,duration,price,status,service_id,created_date) values ('PKG0003','Basic Workout','Basic Workout in 12 months',12,500,1,'SER0005',CURDATE());
 
 /*select * from schedule;*/
 insert into schedule(schedule_id,start_time,end_time) values ('SCHE0001','05:00:00','07:00:00');
@@ -144,7 +176,7 @@ insert into session(session_id,session_name,created_date,happened_date,class_id,
 insert into session(session_id,session_name,created_date,happened_date,class_id,schedule_id,trainer_email) values ('SES0000033','Power Yoga',CURDATE(),'2023-03-02','CL0001','SCHE0008','ducnvhe141646@fpt.edu.vn');
 insert into session(session_id,session_name,created_date,happened_date,class_id,schedule_id,trainer_email) values ('SES0000034','Hip Opening',CURDATE(),'2023-03-03','CL0001','SCHE0008','ducnvhe141646@fpt.edu.vn');
 
-
+/*select * from image*/
 
 
 
