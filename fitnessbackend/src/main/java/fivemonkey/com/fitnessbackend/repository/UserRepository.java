@@ -2,6 +2,7 @@ package fivemonkey.com.fitnessbackend.repository;
 
 import fivemonkey.com.fitnessbackend.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -16,5 +17,11 @@ public interface UserRepository extends JpaRepository<User, String> {
     Optional<User> findByMobile(String phone);
 
     @Query("SELECT u FROM User u where u.email LIKE %?1%")
-  List<User> findAllUserNameContaining(String email);
+    List<User> findAllUserNameContaining(String email);
+
+
+    @Query("select u from User u where u.verificationCode=?1")
+    User findByVerificationCode(String code);
+
+
 }

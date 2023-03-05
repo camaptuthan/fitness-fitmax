@@ -86,6 +86,10 @@ public class User {
     @PrimaryKeyJoinColumn
     private Trainer trainer;
 
+
+    @Column(name="verification_code",updatable = false)
+    private String verificationCode;
+
     @Override
     public String toString() {
         return "User{" +

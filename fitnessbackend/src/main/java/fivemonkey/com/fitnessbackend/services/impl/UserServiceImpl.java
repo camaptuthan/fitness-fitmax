@@ -1,8 +1,6 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
-import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
-import fivemonkey.com.fitnessbackend.entities.Clazz;
 import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
@@ -10,20 +8,38 @@ import fivemonkey.com.fitnessbackend.repository.RoleRepository;
 import fivemonkey.com.fitnessbackend.repository.StudioRepository;
 import fivemonkey.com.fitnessbackend.repository.UserRepository;
 import fivemonkey.com.fitnessbackend.services.UserService;
+import net.bytebuddy.utility.RandomString;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMailMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     @Autowired
     UserRepository userRepository;
     @Autowired
     RoleRepository roleRepository;
     @Autowired
     StudioRepository studioRepository;
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Autowired
+    ModelMapper modelMapper;
+
 
 
     @Override
@@ -108,14 +124,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    public void registerUser(String email, String password, String phone, String firstName, String lastName) {
-        User user = new User();
-        user.setPassword(password);
-        user.setEmail(email);
-        user.setPhone(phone);
-        user.setStatus(true);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
+    @Override
+    public void registerUser(User user) {
         Role r = new Role();
         r.setId("ROLE0006");
         user.setRole(r);
@@ -123,8 +133,11 @@ public class UserServiceImpl implements UserService {
         s.setId("STU0001");
         user.setStudio(s);
         user.setDate(new Date());
+        user.setStatus(false);
+        //set random ver code
+        String randomVerificationCode= RandomString.make(64);
+        user.setVerificationCode(randomVerificationCode);
         userRepository.save(user);
-
     }
 
 //    @Override
@@ -142,7 +155,7 @@ public class UserServiceImpl implements UserService {
 
     //check email exist ,phone may be optional
     @Override
-    public List<Object> isUserPresent(UserDTO user) {
+    public List<Object> isUserPresent(User user) {
         boolean userExists = false;
         String message = null;
         Optional<User> existingUserEmail = userRepository.findByEmail(user.getEmail());
@@ -162,4 +175,48 @@ public class UserServiceImpl implements UserService {
         return Arrays.asList(userExists, message);
 
     }
+    @Override
+    public void sendVerificationEmail(User user,String siteUrl) throws MessagingException, UnsupportedEncodingException {
+        String toAddress = user.getEmail();
+        String fromAddress = "ducnvhe141646@fpt.edu.vn";
+        String senderName = "Fitness Service Management System";
+        String subject = "Please verify your registration";
+        String verifyURL = siteUrl + "/verify?code=" + user.getVerificationCode();
+        String content = "Dear "+user.getFirstName()+""+user.getLastName()+",<br>"
+                + "Please click the link below to verify your registration:<br>"
+                + "<h3><a href=\""+verifyURL+"\" >VERIFY</a></h3>"
+                + "Thank you,<br>"
+                + "From FSM.";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+        helper.setText(content, true);
+        mailSender.send(message);
+
+
+    }
+    // ma hoa password
+    private void setPasswordEncoder(User u){
+        BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
+        String encodedPassword=passwordEncoder.encode(u.getPassword());
+        u.setPassword(encodedPassword);
+    }
+
+    @Override
+    public boolean verify(String code){
+        User u=userRepository.findByVerificationCode(code);
+        System.out.println("Verify code is :"+u.getVerificationCode());
+        if(u==null){
+               return false;
+        }else{
+                u.setStatus(true);
+                u.setVerificationCode(null);
+                userRepository.save(u);
+                return true;
+        }
+    }
+
 }

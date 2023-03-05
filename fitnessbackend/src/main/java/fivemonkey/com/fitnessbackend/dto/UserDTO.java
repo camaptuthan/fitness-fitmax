@@ -26,7 +26,9 @@ public class UserDTO {
     private String studioName;
 
     private  String studioId;
-    private String phone;
+    private String phone,vericode;
+
+
 
 
 }

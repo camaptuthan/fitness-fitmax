@@ -1,7 +1,7 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 
-import fivemonkey.com.fitnessbackend.dto.ClassDTO;
+import fivemonkey.com.fitnessbackend.configuration.Utility;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
@@ -9,14 +9,17 @@ import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.services.IStudioService;
 import fivemonkey.com.fitnessbackend.services.RoleService;
 import fivemonkey.com.fitnessbackend.services.UserService;
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Controller
@@ -31,6 +34,8 @@ public class UserController {
     @Autowired
     IStudioService studioService;
     //login
+
+
 
     @GetMapping("/listusers")
     public String listUser(Model model) {
@@ -114,28 +119,35 @@ public class UserController {
 
 
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
-    public String registerUser(@ModelAttribute("user") UserDTO user, RedirectAttributes attributes,Model model) {
+    public String registerUser(@ModelAttribute("user") User user, RedirectAttributes attributes, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         List<Object> userPresentObj = userService.isUserPresent(user);
             String phone =user.getPhone();
+            String siteUrl= Utility.getSiteURL(request);
             if((Boolean) userPresentObj.get(0)|| !phone.matches("^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$")){
                 attributes.addFlashAttribute("fail", userPresentObj.get(1));
                 attributes.addFlashAttribute("regexPhone", "Phone Must Be Matches (+84) 35 539-0605;");
                 return "redirect:/register";
             }
-
-            userService.registerUser(user.getEmail(),user.getPassword(),phone,user.getFirstName(),user.getLastName());
-            attributes.addFlashAttribute("message","Register Successfully");
-            return "redirect:/register";
+            userService.registerUser(user);
+            userService.sendVerificationEmail(user,siteUrl);
+            attributes.addFlashAttribute("message","You have to registered as a member.");
+            attributes.addFlashAttribute("message2","Please check your email verify account ");
+            return "redirect:/login";
         }
+
+        //handle verify
+       @GetMapping("/verify")
+    public String verifyAccount(@Param("code") String code, Model model){
+        boolean verified=userService.verify(code);
+         String title=verified ? "Verification Success":"Verification Failed";
+         model.addAttribute("title",title);
+         return "/register";
+       }
+
+
 
 
 }
-
-
-//
-//            @GetMapping("/test-html")
-//            public String testHTML() {
-//                return "management/usermanagement/user-profile";
 
 
 
