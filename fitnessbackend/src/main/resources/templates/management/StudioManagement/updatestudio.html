@@ -2,13 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Student Management System</title>
+    <title>Studio Management</title>
     <link crossorigin="anonymous"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           rel="stylesheet">
 </head>
 <body>
+
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
     <!-- Toggler/collapsibe Button -->
     <button class="navbar-toggler" data-target="#collapsibleNavbar" data-toggle="collapse" type="button">
@@ -22,7 +23,7 @@
         <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
             <h1 class="text-center"> Create New Studio </h1>
             <div class="card-body">
-                <form method="POST" th:action="@{/studios (id=${studio.id})}" th:object="${studio}">
+                <form method="POST" name="updatestudio" th:action="@{/studioupdate/{id} (id=${studio.id})}" th:object="${studio}">
                     <div class="form-group">
                         <label> Studio Name </label>
                         <input
@@ -31,6 +32,7 @@
                                 placeholder="Enter Studio Name"
                                 th:field="*{name}"
                                 type="text"
+                                required=""
                         />
                     </div>
 
@@ -42,6 +44,7 @@
                                 placeholder="Enter Student Last Name"
                                 th:field="*{city}"
                                 type="text"
+                                required=""
                         />
                     </div>
 
@@ -53,6 +56,7 @@
                                 placeholder="Enter studio district"
                                 th:field="*{district}"
                                 type="text"
+                                required=""
                         />
                     </div>
                     <div class="form-group">
@@ -60,10 +64,16 @@
                         <input
                                 class="form-control"
                                 name="contact"
-                                placeholder="Enter contact"
+                                placeholder="Mobile Number (10 digits only)"
                                 th:field="*{contact}"
-                                type="text"
-                        />
+                                type="tel" id="phone"
+                                pattern="[0]{1}[0-9]{9}"
+                                required
+                                oninvalid="this.setCustomValidity('Enter Phone number')"
+                                oninput="this.setCustomValidity('')">
+
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('contact')}" th:errors="*{contact}" />
+
                     </div>
 
                     <div class="form-group">
@@ -72,10 +82,10 @@
                                 class="form-control"
                                 hidden="true"
                                 name="id"
-                                placeholder="Enter contact"
+                                placeholder="Enter id"
                                 th:field="*{id}"
-                                type="text"
-                        />
+                                type="text" />
+
                     </div>
                     <!--						<div class ="form-group">-->
 
@@ -134,13 +144,14 @@
 
                     </div>
                     <div class="box-footer">
-                        <button class="btn btn-primary" type="submit">
+                        <button class="btn btn-primary" type="submit" onclick="phonenumber(document.updatestudio.contact)">
                             Submit
                         </button>
                     </div>
                 </form>
 
             </div>
+
         </div>
     </div>
 </div>

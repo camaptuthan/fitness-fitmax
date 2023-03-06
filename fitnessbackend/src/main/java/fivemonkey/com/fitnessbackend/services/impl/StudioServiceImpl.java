@@ -1,8 +1,11 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
+import fivemonkey.com.fitnessbackend.dto.ClassDTO;
+import fivemonkey.com.fitnessbackend.dto.StudioDTO;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.repository.StudioRepository;
 import fivemonkey.com.fitnessbackend.services.IStudioService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +21,8 @@ import java.util.Optional;
 public class StudioServiceImpl implements IStudioService {
    @Autowired
     private StudioRepository studioRepository;
-
+    @Autowired
+    ModelMapper modelMapper;
     public void insertStudio(Studio studio) {
         studio.setDate(new Date());
         studioRepository.save(studio);
@@ -27,23 +31,37 @@ public class StudioServiceImpl implements IStudioService {
         studioRepository.deleteById(id);
     }
 
-    public List<Studio> findStudio(String studioCity) {
-        return studioRepository.findStudio(studioCity);
-    }
+//    public List<Studio> findStudio(String studioCity) {
+//        return studioRepository.findStudio(studioCity);
+//    }
 
     @Override
     public Studio getStudioById(String id) {
         return studioRepository.findById(id).get();
     }
+    @Override
+    public StudioDTO getStudioByIdd(String id) {
+        Studio studio = studioRepository.findById(id).get();
 
-    public List<Studio> findStudioCity(@Param("city") String studioCity) {
-        return studioRepository.findStudiosByStudioCity(studioCity);
+        StudioDTO studioDTO = new StudioDTO();
+        studioDTO = modelMapper.map(studio, StudioDTO.class);
+
+        return studioDTO;
     }
-
-//    public Studio getStudioById(Long id) {
-//        return studioRepository.findById(id).get();
-//    }
-    public void updateStudio(Studio existingStudio) {
+    public Studio updateStudio(Studio existingStudio) {
+        try{
+            Studio st = studioRepository.getById(existingStudio.getId());
+            st.setName(existingStudio.getName());
+            st.setCity(existingStudio.getCity());
+            st.setDistrict(existingStudio.getDistrict());
+            st.setContact(existingStudio.getContact());
+            st.setDes(existingStudio.getDes());
+            st.setStatus(existingStudio.isStatus());
+            studioRepository.save(st);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -65,8 +83,8 @@ public class StudioServiceImpl implements IStudioService {
 
     @Override
     public Studio saveStudio(Studio studio) {
-        studio.setDate(new Date(System.currentTimeMillis()));
-        System.out.println(studio.getDate());
+//        studio.setDate(new Date(System.currentTimeMillis()));
+//        System.out.println(studio.getDate());
         return studioRepository.save(studio);
     }
     @Override

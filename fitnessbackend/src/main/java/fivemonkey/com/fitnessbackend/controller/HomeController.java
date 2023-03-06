@@ -49,8 +49,18 @@ public class HomeController {
     public String serviceAdmin(){
         return "management/dashboard/service";
     }
-
-
+    @GetMapping("/managestudio")
+    public String studioAdmin(){
+        return "management/StudioManagement/manage_studio";
+    }
+    @GetMapping("/sd")
+    public String studioAdmind(){
+        return "management/StudioManagement/add_studio";
+    }
+    @GetMapping("/sds")
+    public String studioAdmindd(){
+        return "management/StudioManagement/addstudio";
+    }
 
 
 }

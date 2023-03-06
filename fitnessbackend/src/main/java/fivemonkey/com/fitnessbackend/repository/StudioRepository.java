@@ -12,8 +12,8 @@ import java.util.List;
 
 @Repository
 public interface StudioRepository extends JpaRepository<Studio, String> {
-    @Query(value = "Select * from fitmax.studio where city =:city", nativeQuery = true)
-    public List<Studio> findStudio(@Param("city") String studioCity);
+//    @Query(value = "Select * from fitmax.studio where city =:city", nativeQuery = true)
+//    public List<Studio> findStudio(@Param("city") String studioCity);
 
     @Query(value = "Select * from fitmax.studio where city = 'Hanoi'", nativeQuery = true)
     public List<Studio> findStudiosByStudioCity(@Param("city") String studioCity);
