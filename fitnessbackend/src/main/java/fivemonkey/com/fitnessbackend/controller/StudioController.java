@@ -17,7 +17,7 @@ import java.util.List;
 @Controller
 public class StudioController {
     @Autowired
-    private IStudioService studioService;
+    private StudioService studioService;
 
     @Autowired
     private StudioManagerService studioManagerService;

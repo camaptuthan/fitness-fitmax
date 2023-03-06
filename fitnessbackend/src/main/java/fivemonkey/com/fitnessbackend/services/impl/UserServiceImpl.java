@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
         try{
             User user = userRepository.getById(u.getEmail());
            Studio studio = new Studio();
-            studio.setId(u.getStudioId());
+           // studio.setId(u.getStudioId());
 
             Role role = new Role();
            // role.setId(u.getRoleId());

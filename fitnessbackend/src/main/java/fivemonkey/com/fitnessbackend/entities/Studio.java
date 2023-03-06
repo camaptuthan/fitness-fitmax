@@ -59,7 +59,28 @@ public class Studio {
     @JoinColumn(name = "manager_email", referencedColumnName = "manager_email", unique = true)
     private Manager manager;
 
+
+
+    @Override
+    public String toString() {
+        return "Studio{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", city='" + city + '\'' +
+                ", district='" + district + '\'' +
+                ", contact='" + contact + '\'' +
+                ", date=" + date +
+                ", des='" + des + '\'' +
+                ", status=" + status +
+                ", users=" + users +
+                ", services=" + services +
+                ", manager=" + manager +
+                '}';
+    }
+
+
     //studio-image relationship
     @OneToMany(mappedBy = "studio")
     private List<Image> images;
+
 }

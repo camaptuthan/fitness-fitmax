@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-public interface IStudioService {
+public interface StudioService {
 
     void insertStudio(Studio studio);
     void deleteStudioById(String id);

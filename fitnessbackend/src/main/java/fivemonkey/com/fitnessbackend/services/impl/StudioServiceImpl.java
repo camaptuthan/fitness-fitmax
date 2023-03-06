@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class StudioServiceImpl implements IStudioService {
+public class StudioServiceImpl implements StudioService {
    @Autowired
     private StudioRepository studioRepository;
     @Autowired

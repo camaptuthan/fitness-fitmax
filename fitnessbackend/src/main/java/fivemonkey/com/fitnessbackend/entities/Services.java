@@ -62,17 +62,23 @@ public class Services {
     private PersonalTraining personalTraining;
 
     //service-class relationship
-    @OneToOne(mappedBy = "services")
-    private Clazz clazz;
 
+
+    @OneToOne(mappedBy = "service", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Clazz clazz;
     //assistant-service relationship
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "assistant_email", referencedColumnName = "assistant_email")
     private Assistant assistant;
-
     //service-serviceDetail relationship
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "service_detail_id", referencedColumnName = "service_detail_id")
     private ServiceDetail serviceDetail;
+
+    public Services(String id) {
+        this.id = id;
+    }
+
 }
 

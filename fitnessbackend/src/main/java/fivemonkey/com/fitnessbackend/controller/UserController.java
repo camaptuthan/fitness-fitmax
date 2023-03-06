@@ -1,35 +1,32 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 
-import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
-import fivemonkey.com.fitnessbackend.services.IStudioService;
 import fivemonkey.com.fitnessbackend.services.RoleService;
+import fivemonkey.com.fitnessbackend.services.StudioService;
 import fivemonkey.com.fitnessbackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
+
 @Controller
 
 public class UserController {
     @Autowired
-    private UserService userService;
-
-    @Autowired
     RoleService roleService;
-
     @Autowired
-    IStudioService studioService;
+    StudioService studioService;
+    @Autowired
+
+    private UserService userService;
     //login
 
     @GetMapping("/listusers")
@@ -38,6 +35,7 @@ public class UserController {
         model.addAttribute("list", userDTOList);
         model.addAttribute("size", userDTOList.size());
         return "management/usermanagement/userlist";
+
     }
 
     @PostMapping("/saveuser")
@@ -111,9 +109,20 @@ public class UserController {
 
 
     }
+//@GetMapping("/search")
+//    public String search(Model model, @RequestParam(name = "email",required = false) String email){
+//    List<User> userList = null;
+//    if (StringUtils.hasText(email)){
+//        userList = userService.findAllUserNameContaining(email);}
+//    else{
+//        userList = userService.findAllUser();
+//        }
+//    model.addAttribute("list",userList);
+//    return "management/usermanagement/userlist";
+
 
     @GetMapping("/test-html")
-    public String testHTML(){
+    public String testHTML() {
         return "management/usermanagement/user-profile";
     }
 
