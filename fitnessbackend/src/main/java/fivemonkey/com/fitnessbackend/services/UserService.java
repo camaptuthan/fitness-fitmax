@@ -21,9 +21,7 @@ public interface UserService {
 
     void enableById(String email);
 
-
     UserDTO getUserById(String email);
-
 
     List<User> findAllUser(String keyword);
 
@@ -33,12 +31,10 @@ public interface UserService {
 
     void updateUser(UserDTO userDTO);
 
-
     List<Object> isUserPresent(User user);
 
     void sendVerificationEmail(User u, String siteUrl) throws MessagingException, UnsupportedEncodingException;
 
     boolean verify(String code);
-
 
 }
