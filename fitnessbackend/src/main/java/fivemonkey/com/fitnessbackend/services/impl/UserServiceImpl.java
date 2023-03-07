@@ -1,8 +1,6 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
-import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
-import fivemonkey.com.fitnessbackend.entities.Clazz;
 import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
@@ -38,10 +36,7 @@ public class UserServiceImpl implements UserService {
         return userDTOList;
     }
 
-//    @Override
-//    public List<User> findAllUser() {
-//        return userRepository.findAll();
-//    }
+
 
 
     @Override
@@ -55,11 +50,11 @@ public class UserServiceImpl implements UserService {
     public User update(UserDTO u) {
         try{
             User user = userRepository.getById(u.getEmail());
-           Studio studio = new Studio();
+            Studio studio = new Studio();
             studio.setId(u.getStudioId());
 
             Role role = new Role();
-           // role.setId(u.getRoleId());
+            role.setId(u.getRoleId());
 
             user.setRole(role);
             user.setStudio(studio);
@@ -89,7 +84,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getClassById(String email) {
+    public UserDTO getUserById(String email) {
         User user = userRepository.getById(email);
         UserDTO userDTO = new UserDTO();
         ModelMapper mapper = new ModelMapper();
@@ -100,7 +95,10 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<User> findAllUser() {
+    public List<User> findAllUser(String keyword) {
+        if (keyword != null){
+            return userRepository.findAllUser(keyword);
+        }
         return userRepository.findAll();
     }
 
@@ -109,16 +107,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    @Override
+    public void updateUser(UserDTO userDTO) {
 
-//    @Override
-//    public List<UserDTO> findAllUserNameContaining(String email) {
-//        ModelMapper mapper = new ModelMapper();
-//        List<UserDTO>  userDTOList = new ArrayList<>();
-//        List<User> userList = userRepository.findAllUserNameContaining(email);
-//        for(User u : userList){
-//            UserDTO userDTO = mapper.map(u, UserDTO.class);
-//            userDTOList.add(userDTO);
-//        }
-//        return userDTOList;
-//    }
-}
+        User user1  = userRepository.getById(userDTO.getEmail());
+        user1.setAvatar(userDTO.getAvatar());
+        userRepository.save(user1);
+
+    }}
+
+

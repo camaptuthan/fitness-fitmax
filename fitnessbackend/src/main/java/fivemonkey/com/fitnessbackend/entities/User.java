@@ -86,25 +86,5 @@ public class User {
     @PrimaryKeyJoinColumn
     private Trainer trainer;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", date=" + date +
-                ", status=" + status +
-                ", role=" + role +
-                ", studio=" + studio +
-                ", blogs=" + blogs +
-                ", manager=" + manager +
-                ", assistant=" + assistant +
-                ", trainee=" + trainee +
-                ", trainer=" + trainer +
-                '}';
-    }
+
 }

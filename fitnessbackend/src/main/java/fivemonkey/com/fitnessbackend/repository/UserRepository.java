@@ -9,6 +9,12 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
-    @Query("SELECT u FROM User u where u.email LIKE %?1%")
-  List<User> findAllUserNameContaining(String email);
+
+    @Query("Select u from User u where u.email like %?1%" +
+            "or u.address like %?1%" +
+            "or u.role.name like %?1%" +
+            "or u.studio.name like %?1%" +
+            "or u.firstName like %?1%" +
+            "or u.lastName like %?1%" )
+    public List<User> findAllUser(String keyword);
 }

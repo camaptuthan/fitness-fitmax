@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Service
 public class StudioServiceImpl implements IStudioService {
-   @Autowired
+    @Autowired
     private StudioRepository studioRepository;
 
     public void insertStudio(Studio studio) {
@@ -40,7 +40,7 @@ public class StudioServiceImpl implements IStudioService {
         return studioRepository.findStudiosByStudioCity(studioCity);
     }
 
-//    public Studio getStudioById(Long id) {
+    //    public Studio getStudioById(Long id) {
 //        return studioRepository.findById(id).get();
 //    }
     public void updateStudio(Studio existingStudio) {
@@ -72,12 +72,23 @@ public class StudioServiceImpl implements IStudioService {
     @Override
     public Page<Studio> getStudioByPage(int currentPage, String searchInput) {
         Pageable pageable = PageRequest.of(currentPage - 1, 6);
-            if (searchInput == "") {
-                return studioRepository.findAll(pageable);
-            } else {
-                return studioRepository.findStudioByNameContaining(searchInput, pageable);
-            }
+        if (searchInput == "") {
+            return studioRepository.findAll(pageable);
+        } else {
+            return studioRepository.findStudioByNameContaining(searchInput, pageable);
+        }
     }
+
+    @Override
+    public List<Studio> getAll() {
+        return studioRepository.findAll();
+    }
+
+    @Override
+    public Studio save(Studio studio) {
+        return studioRepository.save(studio);
+    }
+
     @Override
     public Page<Studio> getALlByPage(int currentPage, String searchInput, String categoryId) {
         Pageable pageable = PageRequest.of(currentPage - 1,6);
