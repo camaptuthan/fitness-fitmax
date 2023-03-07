@@ -26,17 +26,12 @@ public class ClassDTO {
     private Float price;
 
 
-
-    @JsonIgnore
     private Services service;
     private String img;
 
-     private int slot;
-
-
     private boolean status;
-    private String des, duration;
-    @JsonIgnore
+    private String des;
+    private String duration;
     private Trainer trainer;
 
 
@@ -52,7 +47,6 @@ public class ClassDTO {
                 ", img='" + img + '\'' +
                 '}';
     }
-
 
 
 }

@@ -29,6 +29,7 @@ public class ClassController {
     @Autowired
     private ClassService classService;
 
+
     @GetMapping("/list-class")
     public String classes(Model model, @Param("keyword") String keyword) {
         List<ClassDTO> classDTOList = classService.findAll();
@@ -72,14 +73,9 @@ public class ClassController {
     //enable class
     @RequestMapping(value = "/enable-class/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
     public String enableClass(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
-        try {
             classService.enableById(id);
             redirectAttributes.addFlashAttribute("success", "Enable Successfully");
-        } catch (Exception e) {
-            e.printStackTrace();
-            redirectAttributes.addFlashAttribute("fail", "Fail to enabled");
-        }
-        return "redirect:/admin/list-class";
+            return "redirect:/admin/list-class";
 
     }
 
@@ -87,14 +83,9 @@ public class ClassController {
 
     @RequestMapping(value = "/disable-class/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
     public String disableClass(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
-        try {
             classService.disableClass(id);
             redirectAttributes.addFlashAttribute("success", "Disabled");
-        } catch (Exception e) {
-            e.printStackTrace();
-            redirectAttributes.addFlashAttribute("fail", "Fail to enabled");
-        }
-        return "redirect:/admin/list-class";
+            return "redirect:/admin/list-class";
     }
 
 
