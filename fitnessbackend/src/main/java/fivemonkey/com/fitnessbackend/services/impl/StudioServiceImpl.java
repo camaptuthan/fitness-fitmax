@@ -66,12 +66,7 @@ public class StudioServiceImpl implements StudioService {
 
     @Override
     public Studio updateStatus(long id, boolean status, Studio studio) {
-        if (status = true){
-            studio.setStatus(false);
-        }
-        else {
-            studio.setStatus(true);
-        }
+        studio.setStatus(!(status = true));
         studioRepository.save(studio);
         return studio;
     }

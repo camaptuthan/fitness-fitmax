@@ -4,8 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.List;
 
@@ -20,16 +23,23 @@ public class User {
 
     @Id
     @Column(name = "email")
+    @NotEmpty(message = "This field can not empty")
+    @Email(message = "Enter a valid email address")
     private String email;
     @Column(name = "password")
+    @NotEmpty(message = "This field can not empty")
+    @Length(min = 8,message = "Password must be at least 8 characters")
     private String password;
     @Column(name = "first_name")
+    @NotEmpty(message = "This field can not empty")
     private String firstName;
     @Column(name = "last_name")
+    @NotEmpty(message = "This field can not empty")
     private String lastName;
     @Column(name = "address")
     private String address;
     @Column(name = "phone")
+    @NotEmpty(message = "This field can not empty")
     private String phone;
     @Column(name = "avatar")
     private String avatar;
@@ -67,4 +77,29 @@ public class User {
     private Trainer trainer;
 
 
+
+    @Column(name="verification_code",updatable = false)
+    private String verificationCode;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", date=" + date +
+                ", status=" + status +
+                ", role=" + role +
+                ", studio=" + studio +
+                ", blogs=" + blogs +
+                ", manager=" + manager +
+                ", assistant=" + assistant +
+                ", trainee=" + trainee +
+                ", trainer=" + trainer +
+                '}';
+    }
 }

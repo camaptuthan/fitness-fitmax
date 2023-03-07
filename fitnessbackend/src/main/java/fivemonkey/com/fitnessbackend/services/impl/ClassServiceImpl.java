@@ -76,7 +76,6 @@ public class ClassServiceImpl implements ClassService {
     public void disableClass(String id) {
         Clazz clazz = classRepository.getById(id);
 
-
         clazz.setStatus(false);
         classRepository.save(clazz);
     }
@@ -86,7 +85,6 @@ public class ClassServiceImpl implements ClassService {
 
     public void enableById(String id) {
         Clazz clazz = classRepository.getById(id);
-
         clazz.setStatus(true);
         classRepository.save(clazz);
     }
@@ -97,9 +95,7 @@ public class ClassServiceImpl implements ClassService {
 
     public ClassDTO getClassById(String id) {
         Clazz clazz = classRepository.getById(id);
-        ClassDTO classDTO = new ClassDTO();
-        classDTO = modelMapper.map(clazz, ClassDTO.class);
-
+        ClassDTO classDTO  = modelMapper.map(clazz, ClassDTO.class);
         return classDTO;
     }
 
