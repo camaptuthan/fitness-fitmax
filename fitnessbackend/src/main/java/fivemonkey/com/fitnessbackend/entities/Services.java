@@ -71,14 +71,10 @@ public class Services {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "assistant_email", referencedColumnName = "assistant_email")
     private Assistant assistant;
-    //service-serviceDetail relationship
+
+    //service-serviceType relationship
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "service_detail_id", referencedColumnName = "service_detail_id")
-    private ServiceDetail serviceDetail;
-
-    public Services(String id) {
-        this.id = id;
-    }
-
+    @JoinColumn(name = "service_type_id", referencedColumnName = "service_type_id")
+    private ServiceType serviceType;
 }
 

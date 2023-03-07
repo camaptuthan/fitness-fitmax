@@ -27,6 +27,9 @@ public class Studio {
     @Column(name = "studio_name")
     private String name;
 
+    @Column(name = "image", columnDefinition = "mediumblob")
+    private byte[] image;
+
     @Column(name = "city")
     private String city;
 
@@ -58,29 +61,5 @@ public class Studio {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_email", referencedColumnName = "manager_email", unique = true)
     private Manager manager;
-
-
-
-    @Override
-    public String toString() {
-        return "Studio{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", city='" + city + '\'' +
-                ", district='" + district + '\'' +
-                ", contact='" + contact + '\'' +
-                ", date=" + date +
-                ", des='" + des + '\'' +
-                ", status=" + status +
-                ", users=" + users +
-                ", services=" + services +
-                ", manager=" + manager +
-                '}';
-    }
-
-
-    //studio-image relationship
-    @OneToMany(mappedBy = "studio")
-    private List<Image> images;
 
 }
