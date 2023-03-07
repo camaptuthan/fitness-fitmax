@@ -14,11 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
@@ -117,9 +119,11 @@ public class UserController {
 
     }
 
-
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
-    public String registerUser(@ModelAttribute("user") User user, RedirectAttributes attributes, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
+    public String registerUser(@Valid  @ModelAttribute("userDTO") User user, RedirectAttributes attributes, HttpServletRequest request, BindingResult bindingResult) throws MessagingException, UnsupportedEncodingException {
+        if(bindingResult.hasErrors()){
+            return "register";
+        }
         List<Object> userPresentObj = userService.isUserPresent(user);
             String phone =user.getPhone();
             String siteUrl= Utility.getSiteURL(request);
@@ -132,7 +136,7 @@ public class UserController {
             userService.sendVerificationEmail(user,siteUrl);
             attributes.addFlashAttribute("message","You have to registered as a member.");
             attributes.addFlashAttribute("message2","Please check your email verify account ");
-            return "redirect:/login";
+            return "redirect:/register";
         }
 
         //handle verify

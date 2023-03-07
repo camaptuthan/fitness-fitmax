@@ -25,7 +25,8 @@ public class ClassDTO {
      private String img;
 
      private boolean status;
-     private String des,duration;
+     private String des;
+     private String duration;
      private Trainer trainer;
 
      private int slot;

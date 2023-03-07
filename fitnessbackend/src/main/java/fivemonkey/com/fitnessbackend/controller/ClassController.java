@@ -4,7 +4,6 @@ import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.entities.Clazz;
 import fivemonkey.com.fitnessbackend.entities.Services;
 import fivemonkey.com.fitnessbackend.entities.Trainer;
-import fivemonkey.com.fitnessbackend.repository.ClassRepository;
 import fivemonkey.com.fitnessbackend.services.ClassService;
 import fivemonkey.com.fitnessbackend.services.ServiceService;
 import fivemonkey.com.fitnessbackend.services.TrainerService;
@@ -14,11 +13,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.naming.Binding;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -30,11 +26,11 @@ public class ClassController {
 
 
     @Autowired
-    TrainerService trainerService;
+    private TrainerService trainerService;
 
 
     @Autowired
-    ServiceService serviceService;
+    private ServiceService serviceService;
 
 
     @GetMapping("/list-class")
@@ -80,14 +76,9 @@ public class ClassController {
     //enable class
     @RequestMapping(value = "/enable-class/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
     public String enableClass(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
-        try {
             classService.enableById(id);
             redirectAttributes.addFlashAttribute("success", "Enable Successfully");
-        } catch (Exception e) {
-            e.printStackTrace();
-            redirectAttributes.addFlashAttribute("fail", "Fail to enabled");
-        }
-        return "redirect:/admin/list-class";
+            return "redirect:/admin/list-class";
 
     }
 
@@ -95,14 +86,9 @@ public class ClassController {
 
     @RequestMapping(value = "/disable-class/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
     public String disableClass(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
-        try {
             classService.disableClass(id);
             redirectAttributes.addFlashAttribute("success", "Disabled");
-        } catch (Exception e) {
-            e.printStackTrace();
-            redirectAttributes.addFlashAttribute("fail", "Fail to enabled");
-        }
-        return "redirect:/admin/list-class";
+            return "redirect:/admin/list-class";
     }
 
 

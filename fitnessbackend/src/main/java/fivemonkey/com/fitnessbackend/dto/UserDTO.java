@@ -4,6 +4,7 @@ import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
@@ -12,9 +13,13 @@ import java.util.Date;
 @Getter
 @Setter
 public class UserDTO {
+    @NotNull(message = "Required not null")
     private String email;
+    @NotNull(message = "Required not null")
     private String password;
+    @NotNull(message = "Required not null")
     private String firstName;
+    @NotNull(message = "Required not null")
     private String lastName;
     private String address;
     private String avatar;
@@ -26,7 +31,10 @@ public class UserDTO {
     private String studioName;
 
     private  String studioId;
-    private String phone,vericode;
+    private String phone;
+    private String vericode;
+
+
 
 
 

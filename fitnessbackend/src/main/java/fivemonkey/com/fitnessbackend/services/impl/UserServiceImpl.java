@@ -126,6 +126,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerUser(User user) {
+        BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
         Role r = new Role();
         r.setId("ROLE0006");
         user.setRole(r);
