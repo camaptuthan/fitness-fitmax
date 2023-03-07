@@ -54,36 +54,25 @@ public class Services {
     private List<Registration> registrations;
 
     //service-package relationship
-    @OneToMany(mappedBy = "services")
-    private List<Package> packages;
+    @OneToOne(mappedBy = "services")
+    private Package aPackage;
 
     //service-personalTraining relationship
-    @OneToMany(mappedBy = "services")
-    private List<PersonalTraining> personalTrainings;
+    @OneToOne(mappedBy = "services")
+    private PersonalTraining personalTraining;
 
     //service-class relationship
-    @OneToMany(mappedBy = "services")
-    private List<Clazz> classes;
+    @OneToOne(mappedBy = "services")
+    private Clazz clazz;
 
     //assistant-service relationship
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "assistant_email", referencedColumnName = "assistant_email")
     private Assistant assistant;
 
-//    @Override
-//    public String toString() {
-//        return "Services{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", status=" + status +
-//                ", studio=" + studio +
-//                ", categoryList=" + categoryList +
-//                ", registrations=" + registrations +
-//                ", packages=" + packages +
-//                ", personalTrainings=" + personalTrainings +
-//                ", classes=" + classes +
-//                ", assistant=" + assistant +
-//                '}';
-//    }
+    //service-serviceType relationship
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_type_id", referencedColumnName = "service_type_id")
+    private ServiceType serviceType;
 }
 

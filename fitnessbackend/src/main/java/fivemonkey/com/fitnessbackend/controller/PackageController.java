@@ -91,7 +91,6 @@ public class PackageController {
     @GetMapping("/update-package/{id}")
     public String getDetail(@PathVariable("id") String id,Model model){
         PackageDTO packageDTO=packageServices.getPackageById(id);
-        System.out.println("name package: "+packageDTO.getName());
         model.addAttribute("package",packageDTO);
         return "management/PackageManagement/package-edit";
     }

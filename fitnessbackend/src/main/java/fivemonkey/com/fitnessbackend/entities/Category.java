@@ -29,8 +29,11 @@ public class Category {
     @Column(name = "description", columnDefinition = "text")
     private String des;
 
+    @Column(name = "type")
+    private String type;
+
     //blog-category relationship
-    @ManyToMany(mappedBy = "categoryList", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Blog> blogs;
 
     //service-category relationship

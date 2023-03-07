@@ -11,9 +11,13 @@ import fivemonkey.com.fitnessbackend.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -27,16 +31,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> findAll() {
         ModelMapper mapper = new ModelMapper();
-        List<UserDTO>  userDTOList = new ArrayList<>();
+        List<UserDTO> userDTOList = new ArrayList<>();
         List<User> userList = userRepository.findAll();
-        for(User u : userList){
+        for (User u : userList) {
             UserDTO userDTO = mapper.map(u, UserDTO.class);
             userDTOList.add(userDTO);
         }
         return userDTOList;
     }
-
-
 
 
     @Override
@@ -48,21 +50,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(UserDTO u) {
-        try{
+        try {
             User user = userRepository.getById(u.getEmail());
             Studio studio = new Studio();
             studio.setId(u.getStudioId());
 
             Role role = new Role();
+
             role.setId(u.getRoleId());
+
 
             user.setRole(role);
             user.setStudio(studio);
-            System.out.println("=================================="+ user);
+            System.out.println("==================================" + user);
 
 
             return userRepository.save(user);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -93,10 +97,9 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
     @Override
     public List<User> findAllUser(String keyword) {
-        if (keyword != null){
+        if (keyword != null) {
             return userRepository.findAllUser(keyword);
         }
         return userRepository.findAll();
@@ -110,10 +113,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(UserDTO userDTO) {
 
-        User user1  = userRepository.getById(userDTO.getEmail());
+        User user1 = userRepository.getById(userDTO.getEmail());
         user1.setAvatar(userDTO.getAvatar());
         userRepository.save(user1);
 
-    }}
+    }
+}
 
 

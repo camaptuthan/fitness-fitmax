@@ -32,6 +32,9 @@ public class Blog {
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
     private Date date;
+ q
+    @Column(name = "image", columnDefinition = "mediumblob")
+    private byte[] image;
 
     @Column(name = "status", nullable = false)
     private boolean status;
@@ -42,15 +45,8 @@ public class Blog {
     private User user;
 
     //blog-category relationship
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "blog_category",
-            joinColumns = {@JoinColumn(name = "blog_id")},
-            inverseJoinColumns = {@JoinColumn(name = "category_id")}
-    )
-    private List<Category> categoryList;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", referencedColumnName = "category_id")
+    private Category category;
 
-
-    @OneToMany(mappedBy = "blog")
-    private List<Image> images;
 }

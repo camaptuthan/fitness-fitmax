@@ -91,6 +91,7 @@ public class UserController {
         List<Role> roleList = roleService.getAll();
         List<Studio> studioList = studioService.getAllStudios();
         UserDTO userDTO = userService.getUserById(email);
+
         model.addAttribute("user", userDTO);
         model.addAttribute("listRole", roleList);
         model.addAttribute("listStudio", studioList);
@@ -138,12 +139,11 @@ public class UserController {
         //save user
 
 
-
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         fireBaseUtils.uploadFile(multipartFile, fileName);
        String url = FireBaseConstant.FILE_URL.toString();
 //        claimDocument.setFileUrl(String.format(FireBaseConstant.FILE_URL, fileName));
-        userDTO.setAvatar(String.format(FireBaseConstant.FILE_URL, fileName));
+        userDTO.setAvatar(String.format(FireBaseConstant.FILE_URL, fileName).getBytes());
 
 
 //        String uploadDir = "./src/main/resources/static/avatar/" + userDTO.getEmail();
@@ -169,8 +169,6 @@ public class UserController {
 
         return "redirect:/listusers";
     }
-
-
 
 
 
