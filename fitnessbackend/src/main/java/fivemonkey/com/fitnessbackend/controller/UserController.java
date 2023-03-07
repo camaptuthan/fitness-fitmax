@@ -36,7 +36,7 @@ public class UserController {
     @Autowired
     RoleService roleService;
     @Autowired
-    IStudioService studioService;
+    StudioService studioService;
     @Autowired
     private UserService userService;
 
