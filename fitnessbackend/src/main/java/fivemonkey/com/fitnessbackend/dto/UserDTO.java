@@ -5,6 +5,7 @@ import fivemonkey.com.fitnessbackend.entities.Studio;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +18,8 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String address;
-    private String avatar;
+    private String phone;
+    private byte[] avatar;
     private Date date;
     private boolean status;
 
@@ -25,7 +27,7 @@ public class UserDTO {
     private String roleName;
     private String studioName;
 
-    private  String studioId;
+    private String studioId;
 
     @Override
     public String toString() {
@@ -35,13 +37,14 @@ public class UserDTO {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", date=" + date +
                 ", status=" + status +
-                ", roleId=" + roleId +
+                ", roleId='" + roleId + '\'' +
                 ", roleName='" + roleName + '\'' +
                 ", studioName='" + studioName + '\'' +
-                ", studioId=" + studioId +
+                ", studioId='" + studioId + '\'' +
                 '}';
     }
 }

@@ -1,7 +1,6 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 
-import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
@@ -12,8 +11,6 @@ import fivemonkey.com.fitnessbackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -76,7 +73,7 @@ public class UserController {
         return "redirect:/listusers";
     }
 
-    @RequestMapping("updateuser/{email}")
+    @GetMapping("updateuser/{email}")
     public String getInformationUser(@PathVariable("email") String email, Model model) {
         List<Role> roleList = roleService.getAll();
         List<Studio> studioList = studioService.getAllStudios();
@@ -112,11 +109,31 @@ public class UserController {
 
     }
 
-    @GetMapping("/test-html")
-    public String testHTML(){
-        return "management/usermanagement/user-profile";
-    }
-
+//    //personal profile
+//    @GetMapping("/personalprofile/{email}")
+//    public String getPersonalProfile(@PathVariable("email") String email, Model model) {
+//        UserDTO userDTO = userService.getClassById(email);
+//        model.addAttribute("userprofile", userDTO);
+//        return "management/usermanagement/userProfile";
+//    }
+//
+//    @PostMapping("/personalprofile/{email}")
+//    public String updatePersonalProfile(@PathVariable("email") String email, @Valid @ModelAttribute("userprofile") UserDTO userDTO,
+//        @RequestParam("image") MultipartFile multipartFile, BindingResult result, RedirectAttributes redirectAttributes) {
+//        try {
+//            if (result.hasErrors()) {
+//                redirectAttributes.addFlashAttribute("fail", "Fail");
+//                return "management/usermanagement/userProfile";
+//            }else{
+//                userService.updateAvatar(multipartFile, userDTO);
+//                redirectAttributes.addFlashAttribute("success", "Update Successfully");
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            redirectAttributes.addFlashAttribute("fail", "Fail");
+//        }
+//        return "management/usermanagement/userProfile";
+//    }
 }
 
 

@@ -70,9 +70,9 @@ public class Services {
     @JoinColumn(name = "assistant_email", referencedColumnName = "assistant_email")
     private Assistant assistant;
 
-    //service-serviceDetail relationship
+    //service-serviceType relationship
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "service_detail_id", referencedColumnName = "service_detail_id")
-    private ServiceDetail serviceDetail;
+    @JoinColumn(name = "service_type_id", referencedColumnName = "service_type_id")
+    private ServiceType serviceType;
 }
 

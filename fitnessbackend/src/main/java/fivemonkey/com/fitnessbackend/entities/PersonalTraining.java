@@ -24,6 +24,9 @@ public class PersonalTraining {
     @Column(name = "personaltraining_name")
     private String name;
 
+    @Column(name = "image", columnDefinition = "mediumblob")
+    private byte[] image;
+
     @Column(name = "slot")
     private int slot;
 
@@ -54,7 +57,4 @@ public class PersonalTraining {
     @JoinColumn(name = "trainer_email", referencedColumnName = "trainer_email")
     private Trainer trainer;
 
-    //personalTraining relationship
-    @OneToMany(mappedBy = "personalTraining")
-    private List<Image> images;
 }

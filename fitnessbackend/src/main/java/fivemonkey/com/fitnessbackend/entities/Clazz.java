@@ -30,6 +30,8 @@ public class Clazz {
     @Column(name = "class_name")
     private String name;
 
+    @Column(name = "image", columnDefinition = "mediumblob")
+    private byte[] image;
 
     @NotNull(message = "Not null")
     @Column(name = "duration")
@@ -59,7 +61,4 @@ public class Clazz {
     @JsonIgnore
     private List<Session> sessions;
 
-    //class-image relationship
-    @OneToMany(mappedBy = "clazz")
-    private List<Image> images;
 }

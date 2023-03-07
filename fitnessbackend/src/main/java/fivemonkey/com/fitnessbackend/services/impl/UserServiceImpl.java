@@ -13,9 +13,13 @@ import fivemonkey.com.fitnessbackend.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -29,9 +33,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> findAll() {
         ModelMapper mapper = new ModelMapper();
-        List<UserDTO>  userDTOList = new ArrayList<>();
+        List<UserDTO> userDTOList = new ArrayList<>();
         List<User> userList = userRepository.findAll();
-        for(User u : userList){
+        for (User u : userList) {
             UserDTO userDTO = mapper.map(u, UserDTO.class);
             userDTOList.add(userDTO);
         }
@@ -53,21 +57,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(UserDTO u) {
-        try{
+        try {
             User user = userRepository.getById(u.getEmail());
-           Studio studio = new Studio();
+            Studio studio = new Studio();
             studio.setId(u.getStudioId());
 
             Role role = new Role();
-           // role.setId(u.getRoleId());
+            // role.setId(u.getRoleId());
 
             user.setRole(role);
             user.setStudio(studio);
-            System.out.println("=================================="+ user);
+            System.out.println("==================================" + user);
 
 
             return userRepository.save(user);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -96,7 +100,6 @@ public class UserServiceImpl implements UserService {
         userDTO = mapper.map(user, UserDTO.class);
         return userDTO;
     }
-
 
 
     @Override
