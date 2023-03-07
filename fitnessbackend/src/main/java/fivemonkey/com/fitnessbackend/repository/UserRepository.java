@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
-<<<<<<< HEAD
 
     @Query("Select u from User u where u.email like %?1%" +
             "or u.address like %?1%" +
@@ -19,8 +18,7 @@ public interface UserRepository extends JpaRepository<User, String> {
             "or u.studio.name like %?1%" +
             "or u.firstName like %?1%" +
             "or u.lastName like %?1%" )
-    public List<User> findAllUser(String keyword);
-=======
+    List<User> findAllUser(String keyword);
     @Query("SELECT u FROM User u WHERE u.email=?1")
     Optional<User> findByEmail(String email);
     @Query("SELECT u FROM User u WHERE u.phone=?1")
@@ -34,5 +32,4 @@ public interface UserRepository extends JpaRepository<User, String> {
     User findByVerificationCode(String code);
 
 
->>>>>>> ducnv_testing
 }

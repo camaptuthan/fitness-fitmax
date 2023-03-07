@@ -4,7 +4,7 @@ import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.StudioDTO;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.repository.StudioRepository;
-import fivemonkey.com.fitnessbackend.services.IStudioService;
+import fivemonkey.com.fitnessbackend.services.StudioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -66,12 +66,7 @@ public class StudioServiceImpl implements StudioService {
 
     @Override
     public Studio updateStatus(long id, boolean status, Studio studio) {
-        if (status = true){
-            studio.setStatus(false);
-        }
-        else {
-            studio.setStatus(true);
-        }
+        studio.setStatus(!(status = true));
         studioRepository.save(studio);
         return studio;
     }
