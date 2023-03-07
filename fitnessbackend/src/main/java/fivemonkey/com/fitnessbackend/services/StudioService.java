@@ -1,5 +1,6 @@
 package fivemonkey.com.fitnessbackend.services;
 
+import fivemonkey.com.fitnessbackend.dto.StudioDTO;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,11 +13,11 @@ public interface StudioService {
 
     void insertStudio(Studio studio);
     void deleteStudioById(String id);
-    List<Studio> findStudio(String studioCity);
+//    List<Studio> findStudio(String studioCity);
 
     Studio getStudioById(String id);
-
-    void updateStudio(Studio existingStudio);
+    StudioDTO getStudioByIdd(String id);
+    Studio updateStudio(Studio existingStudio);
 
     Studio updateStatus(long id, boolean status, Studio studio);
 

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
+
+</head>
+<!-- Mirrored from educhamp.themetrades.com/demo/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Feb 2019 13:08:15 GMT -->
+<th:block th:insert="/fragments/admin_fragment/head"></th:block>
+<body class="ttr-opened-sidebar ttr-pinned-sidebar">
+<th:block th:insert="/fragments/admin_fragment/sidebar_fragment"></th:block>
+<!-- Left sidebar menu end -->
+
+<!--Main container start -->
+<main class="ttr-wrapper">
+  <div class="container-fluid">
+    <div class="db-breadcrumb">
+      <h4 class="breadcrumb-title">Studio</h4>
+      <ul class="db-breadcrumb-list">
+        <li><a href="#"><i class="fa fa-home"></i>Home</a></li>
+        <li>Studio</li>
+      </ul>
+    </div>
+
+    <div class="row">
+      <!-- Your Profile Views Chart -->
+
+
+          <div class="add form-group-lg" >
+            <form method="POST" th:action="@{/studios}" th:object="${studio}" >
+
+                <label class="col-form-label">Manager Email </label>
+                <div class="form-group col-20">
+                      <input name="mEmail" class="form-control" type="email" required="" value="" >
+                </div>
+
+              <div class="form-group col-50">
+                <label class="col-form-label">Studio Management </label>
+                <div>
+                  <input name="title" class="form-control" type="text" required="" value="" >
+                </div>
+              </div>
+
+              <div class="form-group col-50 ">
+                <label class="col-form-label">Status</label>
+                <div>
+                  <input name="status" type="radio" value="1"
+                  checked
+                  >
+                  Active
+                  &nbsp;
+                  <input name="status" type="radio" value="0">
+                  Inactive
+                </div>
+              </div>
+
+              <div class="form-group col-50">
+                <label class="col-form-label">Contact: <span style="color: red">(*)</span> </label>
+                <div>
+                  <input name="contact" class="form-control" type="phone" required="" value="">
+                </div>
+              </div>
+
+
+              <div class="form-group col-50">
+                <label class="col-form-label">Description</label>
+                <div>
+                  <textarea name="ass_body" class="form-control"></textarea>
+                </div>
+              </div>
+
+              <div class="col-50">
+                <a href="studios.html"><button type="button" class="btn-secondry"><i class="fa fa-undo" aria-hidden="true"></i> Go back</button></a>
+                  <button type="submit" class="btn">Add new</button>
+              </div>
+
+            </form>
+
+          </div>
+
+          <div class="widget-inner">
+
+
+            <div id="pagination"></div>
+          </div>
+        </div>
+
+
+  </div>
+  </div>
+</main>
+<div class="ttr-overlay"></div>
+
+<!-- External JavaScripts -->
+<th:block th:insert="/fragments/admin_fragment/script"></th:block>
+</body>
+<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('#studio_table').DataTable({
+      dom: 'rtip',
+      columnDefs: [],
+      pageLength: '6',
+      pagingType:'full_numbers',
+    });
+  });
+</script>
+</html>
