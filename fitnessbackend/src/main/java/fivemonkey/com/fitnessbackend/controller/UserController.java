@@ -6,9 +6,8 @@ import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
-import fivemonkey.com.fitnessbackend.services.IStudioService;
 import fivemonkey.com.fitnessbackend.services.RoleService;
-
+import fivemonkey.com.fitnessbackend.services.StudioService;
 import fivemonkey.com.fitnessbackend.services.UserService;
 import fivemonkey.com.fitnessbackend.utils.FireBaseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,6 +129,17 @@ public class UserController {
 
         return "pro";
     }
+//@GetMapping("/search")
+//    public String search(Model model, @RequestParam(name = "email",required = false) String email){
+//    List<User> userList = null;
+//    if (StringUtils.hasText(email)){
+//        userList = userService.findAllUserNameContaining(email);}
+//    else{
+//        userList = userService.findAllUser();
+//        }
+//    model.addAttribute("list",userList);
+//    return "management/usermanagement/userlist";
+
 
     @PostMapping("/avatauser/{email}")
     public String userUpdate(@RequestParam("fileImage") MultipartFile multipartFile,

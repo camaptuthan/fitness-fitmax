@@ -15,9 +15,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-
 @Table(name = "session", schema = "dbo",  uniqueConstraints = {@UniqueConstraint(columnNames = {"happened_date","schedule_id"})})
-
 public class Session {
 
     @Id
@@ -42,11 +40,14 @@ public class Session {
     private Date createdDate;
 
 
+
     //trainer-session relationship
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "trainer_email", referencedColumnName = "trainer_email")
     @JsonIgnore
     private Trainer trainer;
+
 
     //class-session relationship
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -56,9 +57,9 @@ public class Session {
 
     //session-schedule relationship
 
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id", referencedColumnName = "schedule_id")
-
     @JsonIgnore
     private Schedule schedule;
 

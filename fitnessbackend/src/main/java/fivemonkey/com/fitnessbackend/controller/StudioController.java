@@ -1,7 +1,9 @@
 package fivemonkey.com.fitnessbackend.controller;
 
+import fivemonkey.com.fitnessbackend.entities.Manager;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.services.IStudioService;
+import fivemonkey.com.fitnessbackend.services.StudioManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -9,19 +11,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 public class StudioController {
     @Autowired
-    private IStudioService studioService;
+    private StudioService studioService;
+
+    @Autowired
+    private StudioManagerService studioManagerService;
 
     @PostMapping("/insertstudios")
     public void insertStudio(@RequestBody(required = false) Studio studio) {
         studioService.insertStudio(studio);
     }
-
+    @GetMapping("/st")
+    public String trainer(){
+        return "management/StudioManagement/add_studio";
+    }
     @GetMapping("/studios/{id}")
     public String deleteStudio(@PathVariable String id) {
         studioService.deleteStudioById(id);
@@ -44,7 +52,7 @@ public class StudioController {
                                Model model) {
         // get studio from database by id
         Studio existingStudio = studioService.getStudioById(id);
-        //existingStudio.setId(id);
+        existingStudio.setId(id);
         existingStudio.setName(studio.getName());
         existingStudio.setCity(studio.getCity());
         existingStudio.setDistrict(studio.getDistrict());
@@ -60,11 +68,6 @@ public class StudioController {
     public String editStudioForm(@PathVariable String id, Model model) {
         model.addAttribute("studio", studioService.getStudioById(id));
         return "management/StudioManagement/updatestudio";
-    }
-
-    @GetMapping("/findstudios")
-    public List<Studio> findStudios(@RequestParam(name = "city") String studioCity) {
-        return studioService.findStudio(studioCity);
     }
 
     @GetMapping("/studios")
@@ -122,16 +125,19 @@ public String viewCourse(
     }
     @GetMapping("/studios/new")
     public String createStudioForm(Model model) {
-        // create student object to hold student form data
+        List<Manager> mlist = studioManagerService.getAvailableManager();
         Studio studio = new Studio();
+        model.addAttribute("list", mlist);
         model.addAttribute("studio", studio);
         return "management/StudioManagement/addstudio";
     }
 
     @PostMapping("/studios")
-    public String saveStudio(@ModelAttribute("studio") Studio studio) {
-        studioService.saveStudio(studio);
-        return "redirect:/studios";
+    public String saveStudio( @ModelAttribute("studio") Studio studio) {
+            studio.setStatus(true);
+            studioService.saveStudio(studio);
+            return "redirect:/studios";
+
     }
 
 

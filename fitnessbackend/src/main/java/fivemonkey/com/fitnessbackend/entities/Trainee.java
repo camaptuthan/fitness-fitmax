@@ -1,8 +1,10 @@
 package fivemonkey.com.fitnessbackend.entities;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -37,4 +39,8 @@ public class Trainee {
     //trainee-registration relationship
     @OneToMany(mappedBy = "trainee")
     private List<Registration> registrations;
+
+    public Trainee(String email) {
+        this.email = email;
+    }
 }

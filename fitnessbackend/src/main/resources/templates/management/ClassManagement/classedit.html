@@ -10,14 +10,16 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link th:href="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css}" rel="stylesheet" id="bootstrap-css">
+    <link th:href="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css}" rel="stylesheet"
+          id="bootstrap-css">
     <script th:src="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js}"></script>
     <script th:src="@{//code.jquery.com/jquery-1.11.1.min.js}"></script>
 </head>
 
 <!------ Include the above in your HEAD tag ---------->
 
-<form class="form-horizontal" th:action="@{/admin/update-class/{id} (id=${clazz.id})}" method="post"  th:object="${clazz}">
+<form class="form-horizontal" th:action="@{/admin/update-class/{id} (id=${clazz.id})}" method="post"
+      th:object="${clazz}">
     <fieldset>
 
         <!-- Form Name -->
@@ -25,15 +27,15 @@
 
         <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-4 control-label"  > Form Update Class</label>
+            <label class="col-md-4 control-label"> Form Update Class</label>
 
         </div>
 
         <!-- Text input-->
-        <div  class="form-group">
+        <div class="form-group">
             <label class="col-md-4 control-label" for="name">NAME</label>
             <div class="col-md-4">
-                <input id="name"  name="name"   th:value="${clazz.name}"  placeholder=" NAME" class="form-control input-md"
+                <input id="name" name="name" th:value="${clazz.name}" placeholder=" NAME" class="form-control input-md"
                        required="" type="text">
 
             </div>
@@ -53,7 +55,8 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="price">Price</label>
             <div class="col-md-4">
-                <input id="price" th:value="${clazz.price}" name="price" placeholder="Price" class="form-control input-md" required=""
+                <input id="price" th:value="${clazz.price}" name="price" placeholder="Price"
+                       class="form-control input-md" required=""
                        type="number">
 
             </div>
@@ -61,7 +64,8 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="duration">Duration</label>
             <div class="col-md-4">
-                <input id="duration" th:value="${clazz.duration}" name="duration" placeholder="Duration" class="form-control input-md" required=""
+                <input id="duration" th:value="${clazz.duration}" name="duration" placeholder="Duration"
+                       class="form-control input-md" required=""
                        type="number">
 
             </div>
@@ -71,16 +75,16 @@
         <!-- Text input-->
 
 
-<!--        <div class="form-group">-->
-<!--            <label class="col-md-4 control-label" for="trainer"> Trainer</label>-->
-<!--            <div class="col-md-4">-->
-<!--                <select  id="trainer" name="trainer" class="form-control">-->
-<!--                    <option th:each="c:${listTrainer}"   th:text="${c.email}"  >-->
+        <!--        <div class="form-group">-->
+        <!--            <label class="col-md-4 control-label" for="trainer"> Trainer</label>-->
+        <!--            <div class="col-md-4">-->
+        <!--                <select  id="trainer" name="trainer" class="form-control">-->
+        <!--                    <option th:each="c:${listTrainer}"   th:text="${c.email}"  >-->
 
-<!--                    </option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--        </div>-->
+        <!--                    </option>-->
+        <!--                </select>-->
+        <!--            </div>-->
+        <!--        </div>-->
 
         <div class="form-group">
             <label class="col-md-4 control-label" for="filebutton">Img</label>
@@ -96,8 +100,6 @@
                 <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Update</button>
             </div>
         </div>
-
-
 
 
     </fieldset>

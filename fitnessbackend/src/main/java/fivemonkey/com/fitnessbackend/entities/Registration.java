@@ -42,4 +42,16 @@ public class Registration {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_email", referencedColumnName = "trainee_email")
     private Trainee trainee;
+
+    @Override
+    public String toString() {
+        return "Registration{" +
+                "id='" + id + '\'' +
+                ", date=" + date +
+                ", startDate=" + startDate +
+                ", status=" + status +
+                ", service_id=" + services.getId() +
+                ", trainee_email=" + trainee.getEmail() +
+                '}';
+    }
 }
