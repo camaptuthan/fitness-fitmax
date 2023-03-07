@@ -32,7 +32,7 @@ public class Blog {
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
     private Date date;
- q
+
     @Column(name = "image", columnDefinition = "mediumblob")
     private byte[] image;
 

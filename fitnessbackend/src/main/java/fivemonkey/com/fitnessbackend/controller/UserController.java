@@ -143,7 +143,7 @@ public class UserController {
         fireBaseUtils.uploadFile(multipartFile, fileName);
        String url = FireBaseConstant.FILE_URL.toString();
 //        claimDocument.setFileUrl(String.format(FireBaseConstant.FILE_URL, fileName));
-        userDTO.setAvatar(String.format(FireBaseConstant.FILE_URL, fileName).getBytes());
+        userDTO.setAvatar(String.format(FireBaseConstant.FILE_URL, fileName));
 
 
 //        String uploadDir = "./src/main/resources/static/avatar/" + userDTO.getEmail();

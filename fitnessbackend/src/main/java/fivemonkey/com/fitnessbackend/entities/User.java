@@ -42,8 +42,8 @@ public class User {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "avatar", columnDefinition = "mediumblob")
-    private byte[] avatar;
+    @Column(name = "avatar")
+    private String avatar;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")

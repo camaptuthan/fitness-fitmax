@@ -35,6 +35,6 @@ public class BlogController {
         List<Category> categoryList = categoryService.findAllCategories();
         model.addAttribute("catelist", categoryList);
         model.addAttribute("newblog", new BlogDTO());
-
+        return null;
     }
 }

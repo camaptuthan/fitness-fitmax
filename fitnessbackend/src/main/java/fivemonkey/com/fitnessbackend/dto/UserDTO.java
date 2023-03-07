@@ -19,7 +19,7 @@ public class UserDTO {
     private String lastName;
     private String address;
     private String phone;
-    private byte[] avatar;
+    private String avatar;
     private Date date;
     private boolean status;
 
