@@ -1493,6 +1493,7 @@ footer .social-list li {
         margin-right: 23px;
     }
 
+<<<<<<< HEAD
     .footer-fitness .footer-item-link,
     .footer-fitness .footer-item-logo {
         flex: 0 0 40%;
@@ -1593,6 +1594,11 @@ footer .social-list li {
         margin-bottom: 0;
     }
 }
+=======
+
+  .footer-item-logo p {
+    max-width: 100%; }
+>>>>>>> ducnv_testing
 
 /*--------------------------- CONTENT STYLE ---------------------------*/
 /*-------------------- LOGO --------------------*/

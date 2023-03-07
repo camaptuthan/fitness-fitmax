@@ -110,6 +110,7 @@
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate-validator.version}</version>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -138,8 +139,6 @@
             <artifactId>firebase-admin</artifactId>
             <version>8.1.0</version>
         </dependency>
-
-
 
 
     </dependencies>

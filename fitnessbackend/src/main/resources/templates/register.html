@@ -6,7 +6,7 @@
 <div class="page-wraper">
     <div id="loading-icon-bx"></div>
     <div class="account-form">
-        <div class="account-head" style="background-image:url(/admin/images/about);">
+        <div class="account-head"  >
             <a href="index.html"><img  alt=""></a>
         </div>
         <div class="account-form-inner">
@@ -15,12 +15,13 @@
                     <h2 class="title-head">Sign Up <span>Now</span></h2>
                     <p>Login Your Account <a href="/login">Click here</a></p>
                 </div>
-                <form class="contact-bx" th:action="@{/user/register}" th:object="${user}" method="post">
+                <form class="contact-bx" th:action="@{/user/register}"  method="post" th:object="${userDTO}">
                     <div class="row placeani">
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <div class="input-group">
-                                    <input placeholder="First Name" name="firstName"  type="text" required="" class="form-control">
+                                    <input   placeholder="First Name" name="firstName"  type="text" required="" class="form-control">
+
                                 </div>
                             </div>
                         </div>
@@ -35,7 +36,7 @@
                             <div class="form-group">
                                 <div class="input-group">
 
-                                    <input placeholder="Phone" name="phone"  type="text" required="" class="form-control">
+                                    <input  placeholder="Phone" name="phone"  type="text" required="" class="form-control" >
                                     <h6 style="color: red" th:text="${regexPhone}"></h6>
                                 </div>
                             </div>
@@ -53,26 +54,26 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <label>Your Password</label>
-                                    <input  name="password" type="password" class="form-control" required="">
+                                    <input  name="password" type="password" class="form-control"  required="">
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-12 m-b30">
-
-
-                            <h6 style="color: green" th:text="${message}"></h6>
+                            <h6 style="color: green" th:text="${message}"></h6></br>
+                            <h6 style="color: green" th:text="${message2}"></h6>
+                            <h6 style="color: green" th:text="${title}"></h6>
                             <button name="submit" type="submit" value="Submit" class="btn button-md">Sign Up</button>
 
 
                         </div>
 
-                        <div   class="col-lg-12">
+<!--                        <div   class="col-lg-12">-->
 
-                            <div class="d-flex">
-                                <a class="btn flex-fill m-r5 facebook" href="#"><i class="fa fa-facebook"></i>Facebook</a>
-                                <a class="btn flex-fill m-l5 google-plus" href="#"><i class="fa fa-google-plus"></i>Google Plus</a>
-                            </div>
-                        </div>
+<!--                            <div class="d-flex">-->
+<!--                                <a class="btn flex-fill m-r5 facebook" href="#"><i class="fa fa-facebook"></i>Facebook</a>-->
+<!--                                <a class="btn flex-fill m-l5 google-plus" href="#"><i class="fa fa-google-plus"></i>Google Plus</a>-->
+<!--                            </div>-->
+<!--                        </div>-->
                     </div>
                 </form>
             </div>
@@ -82,5 +83,7 @@
 <!-- External JavaScripts -->
 <div th:include="fragments/admin_fragment/script.html"></div>
 </body>
+
+
 
 </html>
