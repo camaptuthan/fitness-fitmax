@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" />
   <script th:src="@{https://code.jquery.com/jquery-3.5.1.min.js}"></script>
   <script th:src="@{https://cdn.jsdelivr.net/npm/popper.js/1.16.0/dist/umd/popper.min.js}"></script>
   <script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js}"></script>
@@ -35,27 +36,27 @@
       margin: 8px 0 0;
       font-size: 22px;
     }
-    .search-box {
-      position: relative;
-      float: right;
-    }
-    .search-box input {
-      height: 34px;
-      border-radius: 20px;
-      padding-left: 35px;
-      border-color: #ddd;
-      box-shadow: none;
-    }
-    .search-box input:focus {
-      border-color: #3FBAE4;
-    }
-    .search-box i {
-      color: #a0a5b1;
-      position: absolute;
-      font-size: 19px;
-      top: 8px;
-      left: 10px;
-    }
+    /*.search-box {*/
+    /*  position: relative;*/
+    /*  float: right;*/
+    /*}*/
+    /*.search-box input {*/
+    /*  height: 34px;*/
+    /*  border-radius: 20px;*/
+    /*  padding-left: 35px;*/
+    /*  border-color: #ddd;*/
+    /*  box-shadow: none;*/
+    /*}*/
+    /*.search-box input:focus {*/
+    /*  border-color: #3FBAE4;*/
+    /*}*/
+    /*.search-box i {*/
+    /*  color: #a0a5b1;*/
+    /*  position: absolute;*/
+    /*  font-size: 19px;*/
+    /*  top: 8px;*/
+    /*  left: 10px;*/
+    /*}*/
     table.table tr th, table.table tr td {
       border-color: #e9e9e9;
     }
@@ -128,6 +129,7 @@
       font-size: 95%;
     }
   </style>
+
   <script>
     $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip();
@@ -140,23 +142,9 @@
     <div class="table-wrapper">
       <div class="table-title">
         <div class="row">
-          <div class="col-sm-8"><h2>User <b>List</b></h2></div>
-<!-- -search-->
-          <form class="form-horizontal" th:action="@{/search}" method="post">
-            <fieldset>
-          <div class="col-sm-4">
-            <div class="search-box">
-              <i class="material-icons">&#xE8B6;</i>
-
-
-              <input name="${email}" class="form-control" placeholder="Search&hellip;">
-              <button>Search</button>
-              </a>
-            </div>
-          </div>
-            </fieldset>
-          </form>
+          <div class="col-sm-8" style="text-align: center"><h1>User <b>List</b></h1></div>
         </div>
+
       </div>
       <div>
         <div th:if="${success}">
@@ -170,12 +158,24 @@
       <div th:if="${size}==0">
         <h1>No User</h1>
       </div>
-      <table class="table table-striped table-hover table-bordered" th:if="${size>0}">
-        <thead class="thead-dark">
+      <div>&nbsp</div>
 
+      <div>
+        <form th:action="@{/search}">
+          Filter: <input type="text" name="keyword" />
+          &nbsp
+          <input type="submit" value="Search"/>
+          &nbsp
+          <input type="button" value="Clear"/>
+        </form>
+      </div>
+      <div>&nbsp</div>
+      <div>
+      <table id="user_list" class="table table-striped table-hover table-bordered" th:if="${size>0}">
+        <thead class="thead-dark">
+        <th>Avata</th>
         <th>Email</th>
         <th>Adress</th>
-        <th>Avata</th>
         <th>Full Name</th>
         <th>Status</th>
         <th>Role</th>
@@ -185,89 +185,52 @@
         <tbody>
         <th:block th:each="user : ${list}">
           <tr>
+            <td style="width:70% ; height: 70%"><img style="width: 70%; height: 70%" th:src="${user.avatar}"/></td>
             <td>[[${user.email}]]</td>
             <td>[[${user.address}]]</td>
-            <td>[[${user.avatar}]]</td>
             <td>[[${user.firstName}+${user.lastName}]]</td>
             <td>[[${user.status}]]</td>
             <td>[[${user.roleName}]]</td>
             <td>[[${user.studioName}]]</td>
             <td>
 
-            <a th:href="@{'/updateuser/' + ${user.email}}" class="edit" title="Edit" data-toggle="tooltip">Update &nbsp;<i class="material-icons">&#xE254;</i></a>
-            <!--                        <button type="button" class="btn btn-danger">Danger</button>-->
+              <a th:href="@{'/updateuser/' + ${user.email}}" class="edit" title="Edit" data-toggle="tooltip">Update &nbsp;</a><a th:href="@{'/avatauser/' + ${user.email}}"><i class="material-icons">&#xE254; </i></a>
+              <!--                        <button type="button" class="btn btn-danger">Danger</button>-->
 
 
-            <a th:if="${user.status==true}"  th:href="@{'/disableuser/' + ${user.email}}" class="disable" title="Disable" data-toggle="tooltip" >
+              <a th:if="${user.status==true}"  th:href="@{'/disableuser/' + ${user.email}}" class="disable" title="Disable" data-toggle="tooltip" >
 
-              <button type="button" class="btn btn-danger">Disable</button>
+                <button onclick="return confirm('Are you sure you want to disable class')" type="button"
+                        class="btn btn-danger">Disable
+                </button>
 
-            </a>
-            <a  th:if="${user.status==false}"  th:href="@{'/enableuser/' + ${user.email}}" class="enable" title="Enable" data-toggle="tooltip" >
+              </a>
+              <a  th:if="${user.status==false}"  th:href="@{'/enableuser/' + ${user.email}}" class="enable" title="Enable" data-toggle="tooltip" >
 
-              <button type="button" class="btn btn-warning">Enable</button>
+                <button onclick="return confirm('Are you sure you want to enable class')" type="button"
+                        class="btn btn-warning">Enable
+                </button>
 
-            </a>
-          </td>
+              </a>
+            </td>
           </tr>
 
         </th:block>
 
         </tbody>
-<!--        <thead>-->
-<!--        <tr >-->
-<!--          <th>Email</th>-->
-<!--          <th>Address</th>-->
-<!--          <th>Studio</th>-->
-<!--          <th>Role</th>-->
-<!--          <th>Status</th>-->
-<!--&lt;!&ndash;          <th>xxxxx</th>&ndash;&gt;-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--        <tr th:each="u : ${list}">-->
-<!--          <td th:text="${u.email}"></td>-->
-<!--          <td th:text="${u.address}"></td>-->
-<!--          <td th:text="${u.studio.id}"></td>-->
-<!--          <td th:text="${u.role.id}"></td>-->
-<!--          <td th:text="${u.status}"></td>-->
-<!--&lt;!&ndash;          <td>&ndash;&gt;-->
 
-<!--&lt;!&ndash;            <a th:href="@{'/update-class/' + ${c.id}}" class="edit" title="Edit" data-toggle="tooltip">Edit &nbsp;<i class="material-icons">&#xE254;</i></a>&ndash;&gt;-->
-<!--&lt;!&ndash;            &lt;!&ndash;                        <button type="button" class="btn btn-danger">Danger</button>&ndash;&gt;&ndash;&gt;-->
-
-
-<!--&lt;!&ndash;            <a th:if="${c.status==true}"  th:href="@{'/disable-class/' + ${c.id}}" class="disable" title="Disable" data-toggle="tooltip" >&ndash;&gt;-->
-
-<!--&lt;!&ndash;              <button type="button" class="btn btn-danger">Disable</button>&ndash;&gt;-->
-
-<!--&lt;!&ndash;            </a>&ndash;&gt;-->
-<!--&lt;!&ndash;            <a  th:if="${c.status==false}"  th:href="@{'/enable-class/' + ${c.id}}" class="enable" title="Enable" data-toggle="tooltip" >&ndash;&gt;-->
-
-<!--&lt;!&ndash;              <button type="button" class="btn btn-warning">Enable</button>&ndash;&gt;-->
-
-<!--&lt;!&ndash;            </a>&ndash;&gt;-->
-<!--&lt;!&ndash;          </td>&ndash;&gt;-->
-<!--        </tr>-->
-
-<!--        </tbody>-->
       </table>
-      <div class="clearfix">
-        <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-        <ul class="pagination">
-          <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-          <li class="page-item"><a href="#" class="page-link">1</a></li>
-          <li class="page-item"><a href="#" class="page-link">2</a></li>
-          <li class="page-item active"><a href="#" class="page-link">3</a></li>
-          <li class="page-item"><a href="#" class="page-link">4</a></li>
-          <li class="page-item"><a href="#" class="page-link">5</a></li>
-          <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
-        </ul>
+      </div>
       </div>
     </div>
   </div>
-</div>
+
 </body>
+<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js" ></script>
+<script >
+  $(document).ready( function () {
+    $('#user_list').DataTable();
+  } );
+</script>
 </html>
 
-</html>

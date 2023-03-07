@@ -23,9 +23,8 @@ public interface StudioService {
 
     List<Studio> getAllStudios();
     Studio saveStudio(Studio studio);
-//
-//    List<Studio> findStudioCity(@Param("city") String studioCity);
-
     Page<Studio> getALlByPage(int currentPage, String searchInput, String categoryId);
     Page<Studio> getStudioByPage(int currentPage, String searchInput);
+    List<Studio> getAll();
+    Studio save(Studio studio);
 }

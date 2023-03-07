@@ -14,18 +14,21 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "service_detail", schema = "dbo")
-public class ServiceDetail {
+@Table(name = "service_type", schema = "dbo")
+public class ServiceType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "service_detail_id")
+    @Column(name = "service_type_id")
     private Long id;
 
     @Column(name = "description", columnDefinition = "text")
-    private String des;
+    private String type;
+
+    @Column(name = "image", columnDefinition = "mediumblob")
+    private byte[] image;
 
     //service-serviceDetail relationship
-    @OneToMany(mappedBy = "serviceDetail")
+    @OneToMany(mappedBy = "serviceType")
     private List<Services> services;
 }
