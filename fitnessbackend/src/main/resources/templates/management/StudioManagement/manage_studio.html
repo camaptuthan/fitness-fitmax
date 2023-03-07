@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:insert="/fragments/admin_fragment/head"></th:block>
+
+
+<body class="ttr-opened-sidebar ttr-pinned-sidebar">
+
+<!-- header start -->
+<th:block th:insert="/fragments/admin_fragment/header"></th:block>
+<!-- header end -->
+<!-- Left sidebar menu start -->
+<th:block th:insert="/fragments/admin_fragment/sidebar_fragment"></th:block>
+<!-- Left sidebar menu end -->
+
+<!--Main container start -->
+<main class="ttr-wrapper">
+    <div class="container-fluid">
+        <div class="db-breadcrumb">
+            <h4 class="breadcrumb-title">Studio</h4>
+            <ul class="db-breadcrumb-list">
+                <li><a href="#"><i class="fa fa-home"></i>Home</a></li>
+                <li>Studio</li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <!-- Your Profile Views Chart -->
+            <div class="col-lg-12 m-b30">
+                <div class="widget-box">
+
+                    <div class="wc-title row">
+                        <h4>Assignment List</h4>
+                        <div class="btn btn-success btn-outline-primary ml-auto mr-3 row col-2"><a href="detail">
+                            <i class="fa fa-plus-circle" style="font-size:18px"></i>
+                            <spam clas="mb-5">Add new studio</spam></a>
+                        </div>
+
+                    </div>
+
+                    <div class="container-fluid row ml-5 mt-5">
+                        <div class="col-lg-12 col-12 col-md-12 col-sm-12 row">
+
+                            <form class="col-12 row" action="list" method="GET" id="filter">
+
+                                <div class="form-group row col-4 ">
+
+                                    <div class="col-sm-8">
+                                        <select class="form-control" name="subject" onchange="document.getElementById('filter').submit();">
+
+                                            <option value="-1"></option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row col-4 ml-0">
+
+                                    <div class="col-sm-9">
+                                        <select class="form-control" name="status" onchange="document.getElementById('filter').submit();">
+
+                                            <option value="-1" > selected </c:if>>All Status</option>
+                                            <option value="1" > selected </c:if>>Active</option>
+<!--                                            <option value="0" <c:if test="${status == 0}"> selected </c:if>>Inactive</option>-->
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="search-box col-lg-3 col-3 col-md-3 col-sm-3 d-inline">
+                                    <i class="fa fa-search ml-3"></i>
+                                    <input type="text" class="form-control" placeholder="Search&hellip;" name="search">
+<!--                                    <c:if test="${search != null}">-->
+<!--                                        value ="${search}"-->
+<!--                                    </c:if>-->
+
+                                </div>
+
+                                <div class="search-box col-lg-1 col-1 col-md-1 col-sm-1">
+                                    <input class="btn pl-3 pr-3" type="submit" value="Search">
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="widget-inner">
+
+                        <table class="table table-hover table-bordered sortable">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Subject</th>
+                                <th>Title</th>
+                                <th>Body</th>
+                                <th>Weight</th>
+                                <th>Body</th>
+                                <th>Weight</th>
+                                <th class="sorttable_nosort">Status</th>
+                                <th colspan="2" class="sorttable_nosort" style="text-align: center">Action</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+<tr th:each="studio: ${studios}">
+    <td th:text="${studio.id}"></td>
+    <td th:text="${studio.name}"></td>
+    <td th:text="${studio.city}"></td>
+    <td th:text="${studio.district}"></td>
+    <td th:text="${studio.des}"></td>
+    <td th:text="${studio.contact}"></td>
+    <span th:if="${studio.status == true}">
+                        <td>Active</td>
+                    </span>
+    <span th:if="${studio.status == false}">
+                    <td>Inactive</td>
+                    </span>
+    <td>
+        <a class="view" data-toggle="tooltip" href="" title="View"><i
+                class="material-icons">&#xE417;</i></a>
+        <a class="edit" data-toggle="tooltip" th:href="@{/studios/edit/{id} (id=${studio.id})}"
+           title="Edit"><i class="material-icons">&#xE254;</i></a>
+        <a class="active" th:if="${studio.status == true}" data-toggle="tooltip" th:href="@{/statusstudios/{id}/{status} (status=${studio.status}, id=${studio.id} )}" onclick="return confirm('Are you sure you want to change this Studio status?')"><i class="material-icons">toggle_on</i></a>
+        <a class="active" th:if="${studio.status == false}" data-toggle="tooltip"  th:href="@{/statusstudios/{id}/{status} (status=${studio.status}, id=${studio.id} )}" onclick="return confirm('Are you sure you want to change this Studio status?')"><i class="material-icons">toggle_off</i></a>
+        <a class="delete" onclick="return confirm('Are you sure you want to delete this Studio?')"
+           data-toggle="tooltip" th:href="@{/studios/{id}(id=${studio.id})}" title="Delete"><i
+                class="material-icons">&#xE872;</i> </a>
+    </td>
+</tr>
+                            </tbody>
+                        </table>
+
+
+                        <div id="pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        </div>
+    </div>
+</main>
+<div class="ttr-overlay"></div>
+
+<!-- External JavaScripts -->
+<th:block th:insert="/fragments/admin_fragment/script"></th:block>
+</body>
+
+<!-- Mirrored from educhamp.themetrades.com/demo/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Feb 2019 13:09:05 GMT -->
+</html>

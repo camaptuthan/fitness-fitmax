@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 public class FitnessbackendApplication {
     public static void main(
             String[] args) {
-
         SpringApplication.run(FitnessbackendApplication.class, args);
     }
 
