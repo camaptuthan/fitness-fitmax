@@ -49,7 +49,7 @@ public class User {
     @Column(name = "status", nullable = false)
     private boolean status;
     //role-user relationship
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
     //studio-user relationship
@@ -78,6 +78,8 @@ public class User {
 
     @Column(name="verification_code",updatable = false)
     private String verificationCode;
+
+
 
     @Override
     public String toString() {

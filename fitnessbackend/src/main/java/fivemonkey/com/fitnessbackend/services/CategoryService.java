@@ -16,4 +16,6 @@ public interface CategoryService {
     public Category save(CategoryDTO c);
 
     public Category update(CategoryDTO c);
+
+    List<Category> findAllCategoriesByType(String type);
 }

@@ -7,12 +7,14 @@ import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
+import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.services.RoleService;
 import fivemonkey.com.fitnessbackend.services.StudioService;
 import fivemonkey.com.fitnessbackend.services.UserService;
 import fivemonkey.com.fitnessbackend.utils.FireBaseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -30,7 +32,7 @@ import java.util.List;
 
 
 @Controller
-
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private FireBaseUtils fireBaseUtils;
@@ -62,7 +64,8 @@ public class UserController {
 
     }
 
-    @PostMapping("/saveuser")
+
+    @PostMapping("/management/saveuser")
     public String saveUser(@ModelAttribute("user") UserDTO userDTO, RedirectAttributes ra) {
         try {
             userService.save(userDTO);
@@ -71,10 +74,10 @@ public class UserController {
             e.printStackTrace();
             ra.addFlashAttribute("fail", "Update failed");
         }
-        return "redirect:/listusers";
+        return "redirect:/user/management/listusers";
     }
 
-    @RequestMapping(value = "/enableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
+    @RequestMapping(value = "/management/enableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
     public String enableUser(@PathVariable("email") String email, RedirectAttributes ra) {
         try {
             userService.enableById(email);
@@ -83,10 +86,10 @@ public class UserController {
             e.printStackTrace();
             ra.addFlashAttribute("fail", "Enable failed");
         }
-        return "redirect:/listusers";
+        return "redirect:/user/management/listusers";
     }
 
-    @RequestMapping(value = "/disableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
+    @RequestMapping(value = "/management/disableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
     public String disableUser(@PathVariable("email") String email, RedirectAttributes ra) {
         try {
             userService.disableUser(email);
@@ -95,10 +98,10 @@ public class UserController {
             e.printStackTrace();
             ra.addFlashAttribute("fail", "disable failed");
         }
-        return "redirect:/listusers";
+        return "redirect:/user/management/listusers";
     }
 
-    @RequestMapping("updateuser/{email}")
+    @RequestMapping("/management/updateuser/{email}")
     public String getInformationUser(@PathVariable("email") String email, Model model) {
         List<Role> roleList = roleService.getAll();
         List<Studio> studioList = studioService.getAllStudios();
@@ -110,7 +113,7 @@ public class UserController {
         return "management/usermanagement/userupdate";
     }
 
-    @PostMapping("/updateuser/{email}")
+    @PostMapping("/management/updateuser/{email}")
     public String userUpdate(@PathVariable("email") String email, @ModelAttribute("user") UserDTO userDTO, RedirectAttributes ra) {
         try {
             userService.update(userDTO);
@@ -120,11 +123,10 @@ public class UserController {
             e.printStackTrace();
             ra.addFlashAttribute("fail", "Fail");
         }
-        return "redirect:/listusers";
+        return "redirect:/user/management/listusers";
 
 
     }
-
 
     @RequestMapping("/search")
     public String search(Model model, @Param("keyword") String keyword) {
@@ -163,8 +165,10 @@ public class UserController {
 
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         fireBaseUtils.uploadFile(multipartFile, fileName);
-
         String url = FireBaseConstant.FILE_URL.toString();
+//        claimDocument.setFileUrl(String.format(FireBaseConstant.FILE_URL, fileName));
+        userDTO.setAvatar(String.format(FireBaseConstant.FILE_URL, fileName));
+
 //        claimDocument.setFileUrl(String.format(FireBaseConstant.FILE_URL, fileName));
 
         userDTO.setAvatar(String.format(FireBaseConstant.FILE_URL, fileName));
@@ -197,7 +201,6 @@ public class UserController {
     }
 
 
-
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
     public String registerUser(@Valid @ModelAttribute("userDTO") User user, RedirectAttributes attributes, HttpServletRequest request, BindingResult bindingResult) throws MessagingException, UnsupportedEncodingException {
         if (bindingResult.hasErrors()) {
@@ -228,6 +231,11 @@ public class UserController {
     }
 
 
+    @GetMapping("/myprofile")
+    public String myProfile(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+        model.addAttribute("user", userDetail.getUser());
+        return "/myprofile";
+    }
 }
 
 
