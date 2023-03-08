@@ -1,36 +1,27 @@
 package fivemonkey.com.fitnessbackend.controller;
 
+import fivemonkey.com.fitnessbackend.entities.Services;
+import fivemonkey.com.fitnessbackend.services.ServiceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @Controller
 public class HomeController {
+    @Autowired
+    ServiceService serviceService;
 
-    @GetMapping("/trainer")
-    public String trainer() {
-        return "/trainer";
+    @GetMapping("/")
+    public String getAllService(Model model) {
+        List<Services> list = serviceService.getAll();
+        System.out.println(list.size());
+        model.addAttribute("list", list);
+
+        return "/index";
     }
-
-    @GetMapping("/program")
-    public String program() {
-        return "/program";
-    }
-
-    @GetMapping("/service")
-    public String service() {
-        return "/service";
-    }
-
-    @GetMapping("/blog")
-    public String blog() {
-        return "/blog";
-    }
-
-    @GetMapping("/blog-writer")
-    public String blogWriter() {
-        return "/blog_writer";
-    }
-
 
     @GetMapping("/register")
     public String register() {
@@ -42,30 +33,9 @@ public class HomeController {
         return "/reset_password";
     }
 
-
     @GetMapping("/dashboard")
     public String dashboard() {
         return "management/dashboard/index";
-    }
-
-    @GetMapping("/admin-service")
-    public String serviceAdmin() {
-        return "management/dashboard/service";
-    }
-
-    @GetMapping("/managestudio")
-    public String studioAdmin() {
-        return "management/StudioManagement/manage_studio";
-    }
-
-    @GetMapping("/sd")
-    public String studioAdmind() {
-        return "management/StudioManagement/add_studio";
-    }
-
-    @GetMapping("/sds")
-    public String studioAdmindd() {
-        return "management/StudioManagement/addstudio";
     }
 
 

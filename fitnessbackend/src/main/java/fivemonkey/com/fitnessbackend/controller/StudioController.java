@@ -15,13 +15,27 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@RequestMapping("/studio")
 public class StudioController {
     @Autowired
     private StudioService studioService;
 
     @Autowired
     private StudioManagerService studioManagerService;
+    @GetMapping("/managestudio")
+    public String studioAdmin() {
+        return "management/StudioManagement/manage_studio";
+    }
 
+    @GetMapping("/sd")
+    public String studioAdmind() {
+        return "management/StudioManagement/add_studio";
+    }
+
+    @GetMapping("/sds")
+    public String studioAdmindd() {
+        return "management/StudioManagement/addstudio";
+    }
     @PostMapping("/insertstudios")
     public void insertStudio(@RequestBody(required = false) Studio studio) {
         studioService.insertStudio(studio);

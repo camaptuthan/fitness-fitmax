@@ -7,11 +7,11 @@ import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
+import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.services.RoleService;
 import fivemonkey.com.fitnessbackend.services.StudioService;
 import fivemonkey.com.fitnessbackend.services.UserService;
-import fivemonkey.com.fitnessbackend.utils.FireBaseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,30 +34,31 @@ import java.util.List;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    @Autowired
-    private FireBaseUtils fireBaseUtils;
-    @Autowired
-    private RoleService roleService;
+
     @Autowired
     StudioService studioService;
+    @Autowired
+    private ImageUploader imageUploader;
+    @Autowired
+    private RoleService roleService;
     @Autowired
     private UserService userService;
 
 
-    @GetMapping("/listusers")
-    public String listUser(Model model, @Param("keyword") String keyword ) {
+    @GetMapping("/management/listusers")
+    public String listUser(Model model, @Param("keyword") String keyword) {
         List<UserDTO> userDTOList = userService.findAll();
         List<UserDTO> userDTOList1 = userService.findAllUser(keyword);
         List<Role> roleList = roleService.getAll();
-        if(keyword == null || "---All---".equals(keyword)){
+        if (keyword == null || "---All---".equals(keyword)) {
             model.addAttribute("listRole", roleList);
             model.addAttribute("list", userDTOList);
             model.addAttribute("size", userDTOList.size());
         } else {
             model.addAttribute("listRole", roleList);
-            model.addAttribute("list",userDTOList1);
-            model.addAttribute("keyword",keyword);
-            model.addAttribute("size",userDTOList1.size());
+            model.addAttribute("list", userDTOList1);
+            model.addAttribute("keyword", keyword);
+            model.addAttribute("size", userDTOList1.size());
 
         }
         return "management/UserManagement/UserList";
@@ -136,13 +137,10 @@ public class UserController {
         return "management/usermanagement/userlist";
     }
 
-    @RequestMapping("/avatauser/{email}")
+    @RequestMapping("/management/avatauser/{email}")
     public String getInformationUserPro5(@PathVariable("email") String email, Model model) {
-        List<Role> roleList = roleService.getAll();
-        List<Studio> studioList = studioService.getAll();
         UserDTO userDTO = userService.getUserById(email);
         model.addAttribute("user", userDTO);
-
         return "management/usermanagement/userProfile";
     }
 //@GetMapping("/search")
@@ -163,15 +161,12 @@ public class UserController {
                              @ModelAttribute("user") UserDTO userDTO,
                              Model model) throws IOException {
 
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        fireBaseUtils.uploadFile(multipartFile, fileName);
-        String url = FireBaseConstant.FILE_URL.toString();
-//        claimDocument.setFileUrl(String.format(FireBaseConstant.FILE_URL, fileName));
-        userDTO.setAvatar(String.format(FireBaseConstant.FILE_URL, fileName));
 
 //        claimDocument.setFileUrl(String.format(FireBaseConstant.FILE_URL, fileName));
 
-        userDTO.setAvatar(String.format(FireBaseConstant.FILE_URL, fileName));
+//        claimDocument.setFileUrl(String.format(FireBaseConstant.FILE_URL, fileName));
+
+        userDTO.setAvatar(imageUploader.upload(multipartFile));
         userService.updateUser(userDTO);
 
 //        String uploadDir = "./src/main/resources/static/avatar/" + userDTO.getEmail();
@@ -193,7 +188,6 @@ public class UserController {
 //        userService.updateUser(userDTO);
 //        System.out.println("-0jodjf==================================================siodhfoisd=======" + userDTO);
 
-        userService.updateUser(userDTO);
         System.out.println("-0jodjf==================================================siodhfoisd=======" + userDTO);
 
 
@@ -201,7 +195,7 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "/user/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String registerUser(@Valid @ModelAttribute("userDTO") User user, RedirectAttributes attributes, HttpServletRequest request, BindingResult bindingResult) throws MessagingException, UnsupportedEncodingException {
         if (bindingResult.hasErrors()) {
             return "register";

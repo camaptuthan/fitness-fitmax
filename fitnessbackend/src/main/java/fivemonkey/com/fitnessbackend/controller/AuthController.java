@@ -40,7 +40,6 @@ public class AuthController {
         System.out.println(loginDTO.getUsername());
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return "redirect:/";
     }

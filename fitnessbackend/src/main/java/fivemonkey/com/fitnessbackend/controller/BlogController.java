@@ -22,6 +22,16 @@ public class BlogController {
     @Autowired
     private CategoryService categoryService;
 
+    @GetMapping()
+    public String blog() {
+        return "/blog";
+    }
+
+    @GetMapping("/writer")
+    public String blogWriter() {
+        return "/blog_writer";
+    }
+
     @GetMapping("/listblogs")
     public String getAllBlogs(Model model) {
         List<BlogDTO> list = blogService.findAllBlogs();
@@ -37,4 +47,6 @@ public class BlogController {
         model.addAttribute("newblog", new BlogDTO());
         return null;
     }
+
+
 }
