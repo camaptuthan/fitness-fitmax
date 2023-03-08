@@ -26,6 +26,7 @@ public class ClassDTO {
     private Float price;
 
 
+    private Services service;
     private String img;
 
     private boolean status;

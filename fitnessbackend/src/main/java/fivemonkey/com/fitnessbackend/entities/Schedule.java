@@ -41,8 +41,7 @@ public class Schedule {
     private Date createdDate;
 
 
-
-    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Session> sessions;
 
 }

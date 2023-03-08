@@ -31,15 +31,15 @@ public class Trainer {
     private boolean status;
 
     //trainer-personalTraining relationship
-    @OneToMany(mappedBy = "trainer")
+    @OneToMany(mappedBy = "trainer", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<PersonalTraining> personalTrainings;
 
     //trainer-session relationship
-    @OneToMany(mappedBy = "trainer")
+    @OneToMany(mappedBy = "trainer",cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
     private List<Session> sessions;
 
     //trainer-position relationship
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(
             name = "trainer_position",
             joinColumns = {@JoinColumn(name = "trainer_email")},
@@ -48,11 +48,11 @@ public class Trainer {
     private List<Position> positions;
 
     //trainer-tracking relationship
-    @OneToMany(mappedBy = "trainer")
+    @OneToMany(mappedBy = "trainer",cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Tracking> trackings;
 
     //trainer-user relationship
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "trainer_email")
     private User user;

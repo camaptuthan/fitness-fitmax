@@ -30,7 +30,7 @@ public class Role {
     private String des;
 
     //role-user relationship
-    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "role", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<User> users;
 
     @Override

@@ -27,6 +27,9 @@ public class Exercise {
     @Column(name = "exercise_name")
     private String name;
 
+    @Column(name = "image")
+    private String image;
+
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
@@ -37,6 +40,6 @@ public class Exercise {
     private int set;
 
     //trackingDetail-exercise relationship
-    @ManyToMany(mappedBy = "exercises", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "exercises", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<TrackingDetail> trackingDetails;
 }
