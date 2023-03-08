@@ -8,14 +8,26 @@ insert into role(role_id,role_name,description) values ('ROLE0003','Assistant','
 insert into role(role_id,role_name,description) values ('ROLE0004','Trainer','');
 insert into role(role_id,role_name,description) values ('ROLE0005','Trainee','');
 
-/*select * from studio;*/
-insert into studio(studio_id,city,contact,district,studio_name,status,created_date) values ('STU0001','Ha Noi','','Ba Dinh','Gym A',1,CURDATE());
-insert into studio(studio_id,city,contact,district,studio_name,status,created_date) values ('STU0002','HCM','','Thu Duc','Gym B',1,CURDATE());
-insert into studio(studio_id,city,contact,district,studio_name,status,created_date) values ('STU0003','Da Nang','','Son Tra','Gym C',1,CURDATE());
-insert into studio(studio_id,city,contact,district,studio_name,status,created_date) values ('STU0004','Ha Noi','','Hai Ba Trung','Gym D',1,CURDATE());
-insert into studio(studio_id,city,contact,district,studio_name,status,created_date) values ('STU0005','Ha Noi','','Cau Giay','Gym E',1,CURDATE());
+/*select * from city;*/
+insert into city(city_name) values ('Ha Noi');
+insert into city(city_name) values ('Ho Chi Minh');
+insert into city(city_name) values ('Da Nang');
 
-/*select * from user;*/
+/*select * from district;*/
+insert into district(district_name,road,city_id) values ('Hai Ba Trung','458 Minh Khai',1);
+insert into district(district_name,road,city_id) values ('Dong Da','88 Lang Ha',1);
+insert into district(district_name,road,city_id) values ('Thanh Xuan','72A Nguyen Trai',1);
+insert into district(district_name,road,city_id) values ('Thanh Khe','271 Nguyen Van Linh',3);
+insert into district(district_name,road,city_id) values ('Thu Duc','216 Vo Van Ngan',2);
+
+/*select * from studio;*/
+insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU0001',1,'','Gym A',1,CURDATE());
+insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU0002',2,'','Gym B',1,CURDATE());
+insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU0003',3,'','Gym C',1,CURDATE());
+insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU0004',4,'','Gym D',1,CURDATE());
+insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU0005',5,'','Gym E',1,CURDATE());
+
+/*select * from user; */
 insert into user(email,password,first_name,last_name,role_id,status,created_date) values ('fivemonkeys.co@gmail.com','123456','Monkey','Five','ROLE0001',1,CURDATE());
 insert into user(email,password,first_name,last_name,role_id,studio_id,status,created_date) values ('hungha19156@gmail.com','hungha1915','Ha','Pham','ROLE0002','STU0001',1,CURDATE());
 insert into user(email,password,first_name,last_name,role_id,studio_id,status,created_date) values ('tuanduong144@gmail.com','123456','Tuan','Duong','ROLE0002','STU0002',1,CURDATE());
