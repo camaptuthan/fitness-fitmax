@@ -29,6 +29,6 @@ public class ServiceType {
     private String image;
 
     //service-serviceDetail relationship
-    @OneToMany(mappedBy = "serviceType")
+    @OneToMany(mappedBy = "serviceType", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Services> services;
 }

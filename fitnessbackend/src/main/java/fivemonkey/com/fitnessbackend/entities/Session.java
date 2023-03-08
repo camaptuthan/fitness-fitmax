@@ -43,14 +43,14 @@ public class Session {
 
     //trainer-session relationship
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "trainer_email", referencedColumnName = "trainer_email")
     @JsonIgnore
     private Trainer trainer;
 
 
     //class-session relationship
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "class_id", referencedColumnName = "class_id")
     @JsonIgnore
     private Clazz aClass;
@@ -58,7 +58,7 @@ public class Session {
     //session-schedule relationship
 
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id", referencedColumnName = "schedule_id")
     @JsonIgnore
     private Schedule schedule;

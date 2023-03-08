@@ -33,10 +33,10 @@ public class Category {
     private String type;
 
     //blog-category relationship
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Blog> blogs;
 
     //service-category relationship
-    @ManyToMany(mappedBy = "categoryList", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Services> services;
 }

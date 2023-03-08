@@ -50,13 +50,13 @@ public class Clazz {
     private boolean status;
 
     //service-class relationship
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "service_id", referencedColumnName = "service_id", nullable = false, unique = true)
     private Services service;
 
 
     //class-session relationship
-    @OneToMany(mappedBy = "aClass")
+    @OneToMany(mappedBy = "aClass", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonIgnore
     private List<Session> sessions;
 

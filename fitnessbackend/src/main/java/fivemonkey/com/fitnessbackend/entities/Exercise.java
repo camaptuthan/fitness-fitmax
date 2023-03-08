@@ -40,6 +40,6 @@ public class Exercise {
     private int set;
 
     //trackingDetail-exercise relationship
-    @ManyToMany(mappedBy = "exercises", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "exercises", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<TrackingDetail> trackingDetails;
 }

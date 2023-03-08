@@ -18,11 +18,11 @@ public class Assistant {
     private String email;
 
     //assistant-service relationship
-    @OneToMany(mappedBy = "assistant")
+    @OneToMany(mappedBy = "assistant",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Services> services;
 
     //assistant-user relationship
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "assistant_email")
     private User user;

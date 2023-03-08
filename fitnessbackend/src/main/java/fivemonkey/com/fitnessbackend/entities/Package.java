@@ -52,7 +52,7 @@ public class Package {
     private boolean status;
 
     //service-package relationship
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id", referencedColumnName = "service_id", unique = true)
     private Services services;
 
