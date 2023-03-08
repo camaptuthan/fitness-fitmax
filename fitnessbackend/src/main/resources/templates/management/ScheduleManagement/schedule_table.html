@@ -79,7 +79,8 @@
         $.get(`http://localhost:8080/api/v1/schedule/${id}/${year}?start=${start}&end=${end}`, function (result) {
             const code = result.code;
             const data = result.data;
-            if (true) {
+            console.log(result);
+            if (code === 200) {
                 $(`#training-schedule #list-class`).children().removeClass("menu-active");
                 $(`#training-schedule #list-class #${id}`).addClass("menu-active");
 

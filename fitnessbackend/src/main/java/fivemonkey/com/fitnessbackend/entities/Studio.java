@@ -33,8 +33,6 @@ public class Studio {
     @Column(name = "city")
     private String city;
 
-    @Column(name = "district")
-    private String district;
 
     @Column(name = "contact")
     private String contact;
