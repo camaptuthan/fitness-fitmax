@@ -36,18 +36,14 @@ public class Services {
     private Date date;
 
     //studio-service relationship
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "studio_id", referencedColumnName = "studio_id")
     private Studio studio;
 
     //service-category relationship
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "service_category",
-            joinColumns = {@JoinColumn(name = "service_id")},
-            inverseJoinColumns = {@JoinColumn(name = "category_id")}
-    )
-    private List<Category> categoryList;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", referencedColumnName = "category_id")
+    private Category category;
 
     //registration-service relationship
     @OneToMany(mappedBy = "services")
@@ -62,16 +58,16 @@ public class Services {
     private PersonalTraining personalTraining;
 
     //service-class relationship
-    @OneToOne(mappedBy = "services")
+    @OneToOne(mappedBy = "service")
     private Clazz clazz;
 
     //assistant-service relationship
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "assistant_email", referencedColumnName = "assistant_email")
     private Assistant assistant;
 
     //service-serviceType relationship
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "service_type_id", referencedColumnName = "service_type_id")
     private ServiceType serviceType;
 }

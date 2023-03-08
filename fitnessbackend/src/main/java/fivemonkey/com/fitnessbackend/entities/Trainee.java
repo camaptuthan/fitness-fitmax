@@ -1,8 +1,10 @@
 package fivemonkey.com.fitnessbackend.entities;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -35,6 +37,10 @@ public class Trainee {
     private User user;
 
     //trainee-registration relationship
-    @OneToMany(mappedBy = "trainee")
+    @OneToMany(mappedBy = "trainee",cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Registration> registrations;
+
+    public Trainee(String email) {
+        this.email = email;
+    }
 }

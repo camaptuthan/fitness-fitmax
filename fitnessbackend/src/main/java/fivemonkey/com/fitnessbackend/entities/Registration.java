@@ -34,12 +34,24 @@ public class Registration {
     private boolean status;
 
     //registration-service relationship
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "service_id", referencedColumnName = "service_id")
     private Services services;
 
     //trainee-registration relationship
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "user_email", referencedColumnName = "trainee_email")
     private Trainee trainee;
+
+    @Override
+    public String toString() {
+        return "Registration{" +
+                "id='" + id + '\'' +
+                ", date=" + date +
+                ", startDate=" + startDate +
+                ", status=" + status +
+                ", service_id=" + services.getId() +
+                ", trainee_email=" + trainee.getEmail() +
+                '}';
+    }
 }

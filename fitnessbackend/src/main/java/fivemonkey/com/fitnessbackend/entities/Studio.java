@@ -27,8 +27,8 @@ public class Studio {
     @Column(name = "studio_name")
     private String name;
 
-    @Column(name = "image", columnDefinition = "mediumblob")
-    private byte[] image;
+    @Column(name = "image")
+    private String image;
 
     @Column(name = "city")
     private String city;
@@ -50,16 +50,17 @@ public class Studio {
     private boolean status;
 
     //studio-user relationship
-    @OneToMany(mappedBy = "studio")
+    @OneToMany(mappedBy = "studio", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<User> users;
 
     //studio-service relationship
-    @OneToMany(mappedBy = "studio")
+    @OneToMany(mappedBy = "studio", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Services> services;
 
     //studio-manager relationship
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_email", referencedColumnName = "manager_email", unique = true)
     private Manager manager;
+
 
 }

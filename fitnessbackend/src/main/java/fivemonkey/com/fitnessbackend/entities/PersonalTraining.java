@@ -24,8 +24,8 @@ public class PersonalTraining {
     @Column(name = "personaltraining_name")
     private String name;
 
-    @Column(name = "image", columnDefinition = "mediumblob")
-    private byte[] image;
+    @Column(name = "image")
+    private String image;
 
     @Column(name = "slot")
     private int slot;
@@ -48,12 +48,12 @@ public class PersonalTraining {
     private boolean status;
 
     //service-personalTraining relationship
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id", referencedColumnName = "service_id", unique = true)
     private Services services;
 
     //trainer-personalTraining relationship
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "trainer_email", referencedColumnName = "trainer_email")
     private Trainer trainer;
 

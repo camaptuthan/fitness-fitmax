@@ -29,16 +29,16 @@ public class Tracking {
     private Date created_date;
 
     //trainer-tracking relationship
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "trainer_email", referencedColumnName = "trainer_email")
     private Trainer trainer;
 
     //trainee-tracking relationship
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "trainee_email", referencedColumnName = "trainee_email")
     private Trainee trainee;
 
     //tracking-trackingDetail relationship
-    @OneToMany(mappedBy = "tracking")
+    @OneToMany(mappedBy = "tracking",cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<TrackingDetail> trackingDetails;
 }

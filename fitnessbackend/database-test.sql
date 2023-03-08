@@ -83,28 +83,6 @@ insert into category(category_id,description,category_name,type) values ('CATE00
 insert into category(category_id,description,category_name,type) values ('CATE0006','Exercise','','blog');
 insert into category(category_id,description,category_name,type) values ('CATE0007','Nutrition','','blog');
 
-/*select * from service_category;*/
-insert into service_category(service_id,category_id) values ('SER0001','CATE0003');
-insert into service_category(service_id,category_id) values ('SER0002','CATE0003');
-insert into service_category(service_id,category_id) values ('SER0003','CATE0003');
-insert into service_category(service_id,category_id) values ('SER0004','CATE0003');
-insert into service_category(service_id,category_id) values ('SER0005','CATE0003');
-insert into service_category(service_id,category_id) values ('SER0006','CATE0004');
-insert into service_category(service_id,category_id) values ('SER0007','CATE0004');
-insert into service_category(service_id,category_id) values ('SER0008','CATE0004');
-insert into service_category(service_id,category_id) values ('SER0009','CATE0004');
-insert into service_category(service_id,category_id) values ('SER0010','CATE0004');
-insert into service_category(service_id,category_id) values ('SER0011','CATE0001');
-insert into service_category(service_id,category_id) values ('SER0012','CATE0001');
-insert into service_category(service_id,category_id) values ('SER0013','CATE0001');
-insert into service_category(service_id,category_id) values ('SER0014','CATE0001');
-insert into service_category(service_id,category_id) values ('SER0015','CATE0001');
-insert into service_category(service_id,category_id) values ('SER0016','CATE0002');
-insert into service_category(service_id,category_id) values ('SER0017','CATE0002');
-insert into service_category(service_id,category_id) values ('SER0018','CATE0002');
-insert into service_category(service_id,category_id) values ('SER0019','CATE0002');
-insert into service_category(service_id,category_id) values ('SER0020','CATE0002');
-
 /*select * from blog;*/
 insert into blog(blog_id,title,writer_email,description,status,created_date,category_id) values ('BLO0001','Advertise 1','davidpham95aka201@gmail.com','Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque. Ultricies tristique nulla aliquet enim tortor. Ultricies tristique nulla aliquet enim tortor. Arcu bibendum at varius vel pharetra vel turpis nunc eget. Et leo duis ut diam quam nulla. Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque.',1,CURDATE(),'CATE0005');
 insert into blog(blog_id,title,writer_email,description,status,created_date,category_id) values ('BLO0002','Advertise 2','davidpham95aka201@gmail.com','Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque. Ultricies tristique nulla aliquet enim tortor. Ultricies tristique nulla aliquet enim tortor. Arcu bibendum at varius vel pharetra vel turpis nunc eget. Et leo duis ut diam quam nulla. Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque.',1,CURDATE(),'CATE0005');

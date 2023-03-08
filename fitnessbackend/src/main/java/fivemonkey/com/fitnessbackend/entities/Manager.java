@@ -1,6 +1,7 @@
 package fivemonkey.com.fitnessbackend.entities;
 
 import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ public class Manager {
     private Studio studio;
 
     //manager-user relationship
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "manager_email")
     private User user;

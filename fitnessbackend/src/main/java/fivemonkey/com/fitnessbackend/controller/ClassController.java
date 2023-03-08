@@ -4,7 +4,6 @@ import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.entities.Clazz;
 import fivemonkey.com.fitnessbackend.entities.Services;
 import fivemonkey.com.fitnessbackend.entities.Trainer;
-import fivemonkey.com.fitnessbackend.repository.ClassRepository;
 import fivemonkey.com.fitnessbackend.services.ClassService;
 import fivemonkey.com.fitnessbackend.services.ServiceService;
 import fivemonkey.com.fitnessbackend.services.TrainerService;
@@ -14,11 +13,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.naming.Binding;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -26,27 +23,23 @@ import java.util.List;
 @RequestMapping("/admin")
 public class ClassController {
     @Autowired
+    TrainerService trainerService;
+    @Autowired
+    ServiceService serviceService;
+    @Autowired
     private ClassService classService;
 
 
-    @Autowired
-    TrainerService trainerService;
-
-
-    @Autowired
-    ServiceService serviceService;
-
-
     @GetMapping("/list-class")
-    public String classes(Model model,@Param("keyword") String keyword) {
+    public String classes(Model model, @Param("keyword") String keyword) {
         List<ClassDTO> classDTOList = classService.findAll();
-        if(keyword==null){
+        if (keyword == null) {
             model.addAttribute("list", classDTOList);
-        }else{
+        } else {
 
-            model.addAttribute("list",classService.searchByName(keyword));
+            model.addAttribute("list", classService.searchByName(keyword));
         }
-        model.addAttribute("size",classService.searchByName(keyword).size());
+        model.addAttribute("size", classService.searchByName(keyword).size());
         return "management/classmanagement/classlist";
     }
 
@@ -64,11 +57,11 @@ public class ClassController {
 
 
     @PostMapping("/save-class")
-    public String saveClass( @ModelAttribute("clazz") @Valid ClassDTO classDTO, BindingResult result,
+    public String saveClass(@ModelAttribute("clazz") @Valid ClassDTO classDTO, BindingResult result,
                             RedirectAttributes attributes) {
         try {
-                classService.save(classDTO);
-                attributes.addFlashAttribute("success", "Add successfully");
+            classService.save(classDTO);
+            attributes.addFlashAttribute("success", "Add successfully");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,14 +73,9 @@ public class ClassController {
     //enable class
     @RequestMapping(value = "/enable-class/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
     public String enableClass(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
-        try {
             classService.enableById(id);
             redirectAttributes.addFlashAttribute("success", "Enable Successfully");
-        } catch (Exception e) {
-            e.printStackTrace();
-            redirectAttributes.addFlashAttribute("fail", "Fail to enabled");
-        }
-        return "redirect:/admin/list-class";
+            return "redirect:/admin/list-class";
 
     }
 
@@ -95,14 +83,9 @@ public class ClassController {
 
     @RequestMapping(value = "/disable-class/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
     public String disableClass(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
-        try {
             classService.disableClass(id);
             redirectAttributes.addFlashAttribute("success", "Disabled");
-        } catch (Exception e) {
-            e.printStackTrace();
-            redirectAttributes.addFlashAttribute("fail", "Fail to enabled");
-        }
-        return "redirect:/admin/list-class";
+            return "redirect:/admin/list-class";
     }
 
 
@@ -145,8 +128,6 @@ public class ClassController {
         return "management/classmanagement/classlist";
 
     }
-
-
 
 
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -34,17 +35,13 @@ public class Schedule {
     @Column(name = "end_time")
     private Date endTime;
 
-    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "created_date")
+    private Date createdDate;
+
+
+    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Session> sessions;
 
-//    @Override
-//    public String toString() {
-//        return "Schedule{" +
-//                "id=" + id +
-//                ", startTime=" + startTime +
-//                ", endTime=" + endTime +
-//                ", createdDate=" + createdDate +
-//                ", sessions=" + sessions +
-//                '}';
-//    }
 }

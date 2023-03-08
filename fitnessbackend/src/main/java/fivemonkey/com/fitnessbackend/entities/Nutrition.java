@@ -28,6 +28,9 @@ public class Nutrition {
     @Column(name = "nutrition_name")
     private String name;
 
+    @Column(name = "image")
+    private String image;
+
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
@@ -38,6 +41,6 @@ public class Nutrition {
     private int quantity;
 
     //trackingDetail-nutrition relationship
-    @ManyToMany(mappedBy = "nutritionList", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "nutritionList", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<TrackingDetail> trackingDetails;
 }
