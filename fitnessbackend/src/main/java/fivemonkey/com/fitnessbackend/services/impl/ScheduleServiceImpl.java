@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -61,23 +60,21 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     //get schedule information by provided classId
     @Override
-    public ClassDTO getByInfor(String email, String serviceId, String year, String start, String end) {
-
+    public ClassDTO getByInfor(String email, String serviceId, Date startTime, Date endTime) {
+        ClassDTO classDTO;
 
         List<Registration> myRegistrations = registrationRepository.getRegistrationByTrainee(new Trainee(email));
 
-        if (myRegistrations == null || myRegistrations.size() == 0) {
+        if (myRegistrations.isEmpty()) {
             return null;
         }
         //get class information
-        ClassDTO classDTO = modelMapper.map(classRepository.findById(serviceId).get(), ClassDTO.class);
+        classDTO = modelMapper.map(classRepository.findById(serviceId).get(), ClassDTO.class);
 
 
         //get schedule of given class
         List<ScheduleDTO> scheduleDTOS = new ArrayList<>();
-        Date startTime = formatTime(year, start);
-        Date endTime = formatTime(year, end);
-        scheduleRepository.findAll().forEach(schedule -> {
+         scheduleRepository.findAll().forEach(schedule -> {
 
             ScheduleDTO scheduleDTO = modelMapper.map(schedule, ScheduleDTO.class);
             scheduleDTO.setStartTime(getTime(schedule.getStartTime()));
@@ -87,18 +84,16 @@ public class ScheduleServiceImpl implements ScheduleService {
             if (schedule.getSessions().size() > 0) {
                 schedule.getSessions().forEach(session -> {
                     if (session.getAClass().getId().equals(serviceId)
-                            && session.getHappenedDate().toString().contains(year)
-                    ) {
-                        if (session.getHappenedDate().after(startTime)
-                                && session.getHappenedDate().before(endTime)
-                                || session.getHappenedDate().compareTo(startTime) == 0
-                                || session.getHappenedDate().compareTo(endTime) == 0
-                        ) {
-                            SessionDTO sessionDTO = modelMapper.map(session, SessionDTO.class);
-                            sessionDTO.setHappenedDate(session.getHappenedDate().toString());
-                            sessionDTO.setWeekDay("" + getWeekday(session.getHappenedDate()));
-                            sessionDTOs.add(sessionDTO);
-                        }
+                            && session.getHappenedDate().after(startTime)
+                            && session.getHappenedDate().before(endTime)
+                            || session.getHappenedDate().compareTo(startTime) == 0
+                            || session.getHappenedDate().compareTo(endTime) == 0) {
+
+                        SessionDTO sessionDTO = modelMapper.map(session, SessionDTO.class);
+                        sessionDTO.setHappenedDate(session.getHappenedDate().toString());
+                        sessionDTO.setWeekDay("" + getWeekday(session.getHappenedDate()));
+                        sessionDTOs.add(sessionDTO);
+
                     }
                 });
             }
@@ -106,25 +101,14 @@ public class ScheduleServiceImpl implements ScheduleService {
             scheduleDTO.setSessionDTOs(sessionDTOs);
             scheduleDTOS.add(scheduleDTO);
         });
-
-        classDTO.setScheduleDTO(scheduleDTOS);
+         classDTO.setScheduleDTO(scheduleDTOS);
         return classDTO;
     }
 
-    private Date formatTime(String year, String date) {
-        Date output = null;
-        // SimpleDateFormat class Object
-        SimpleDateFormat dtobj = new SimpleDateFormat("dd/MM/yyyy");
-        // Dates
-        // Parsing dates in Date datatype
-        try {
-            output = dtobj.parse(date + "/" + year);
-        } catch (ParseException pe) {
-            System.out.println(pe.getMessage());
-        }
-
-        return output;
-
+    //getting time from specify date
+    private String getTime(Date date) {
+        SimpleDateFormat localDateFormat = new SimpleDateFormat("HH:mm");
+        return localDateFormat.format(date);
     }
 
     //getting weekday from specify date
@@ -143,9 +127,4 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     //getting time from specify date
-    private String getTime(Date date) {
-        SimpleDateFormat localDateFormat = new SimpleDateFormat("HH:mm");
-        String time = localDateFormat.format(date);
-        return time;
-    }
 }

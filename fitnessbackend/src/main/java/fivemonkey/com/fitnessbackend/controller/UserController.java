@@ -7,6 +7,7 @@ import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
+import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.services.RoleService;
 import fivemonkey.com.fitnessbackend.services.StudioService;
 import fivemonkey.com.fitnessbackend.services.UserService;
@@ -30,7 +31,7 @@ import java.util.List;
 
 
 @Controller
-
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     FireBaseUtils fireBaseUtils;
@@ -43,8 +44,10 @@ public class UserController {
 
 
 
-    @GetMapping("/listusers")
-    public String listUser(Model model) {
+    @GetMapping("/management/listusers")
+    public String listUser(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+        User user = userDetail.getUser();
+        System.out.println("Current user: " + user.getEmail());
         List<UserDTO> userDTOList = userService.findAll();
         model.addAttribute("list", userDTOList);
         model.addAttribute("size", userDTOList.size());
@@ -52,7 +55,7 @@ public class UserController {
 
     }
 
-    @PostMapping("/saveuser")
+    @PostMapping("/management/saveuser")
     public String saveUser(@ModelAttribute("user") UserDTO userDTO, RedirectAttributes ra) {
         try {
             userService.save(userDTO);
@@ -61,10 +64,10 @@ public class UserController {
             e.printStackTrace();
             ra.addFlashAttribute("fail", "Update failed");
         }
-        return "redirect:/listusers";
+        return "redirect:/user/management/listusers";
     }
 
-    @RequestMapping(value = "/enableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
+    @RequestMapping(value = "/management/enableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
     public String enableUser(@PathVariable("email") String email, RedirectAttributes ra) {
         try {
             userService.enableById(email);
@@ -73,10 +76,10 @@ public class UserController {
             e.printStackTrace();
             ra.addFlashAttribute("fail", "Enable failed");
         }
-        return "redirect:/listusers";
+        return "redirect:/user/management/listusers";
     }
 
-    @RequestMapping(value = "/disableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
+    @RequestMapping(value = "/management/disableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
     public String disableUser(@PathVariable("email") String email, RedirectAttributes ra) {
         try {
             userService.disableUser(email);
@@ -85,10 +88,10 @@ public class UserController {
             e.printStackTrace();
             ra.addFlashAttribute("fail", "disable failed");
         }
-        return "redirect:/listusers";
+        return "redirect:/user/management/listusers";
     }
 
-    @RequestMapping("updateuser/{email}")
+    @RequestMapping("/management/updateuser/{email}")
     public String getInformationUser(@PathVariable("email") String email, Model model) {
         List<Role> roleList = roleService.getAll();
         List<Studio> studioList = studioService.getAllStudios();
@@ -100,7 +103,7 @@ public class UserController {
         return "management/usermanagement/userupdate";
     }
 
-    @PostMapping("/updateuser/{email}")
+    @PostMapping("/management/updateuser/{email}")
     public String userUpdate(@PathVariable("email") String email, @ModelAttribute("user") UserDTO userDTO, RedirectAttributes ra) {
         try {
             userService.update(userDTO);
@@ -110,7 +113,7 @@ public class UserController {
             e.printStackTrace();
             ra.addFlashAttribute("fail", "Fail");
         }
-        return "redirect:/listusers";
+        return "redirect:/user/management/listusers";
 
 
     }

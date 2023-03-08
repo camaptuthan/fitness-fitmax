@@ -49,15 +49,15 @@ public class User {
     @Column(name = "status", nullable = false)
     private boolean status;
     //role-user relationship
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
     //studio-user relationship
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "studio_id", referencedColumnName = "studio_id")
     private Studio studio;
     //user-blog relationship
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Blog> blogs;
     //user-manager relationship
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
