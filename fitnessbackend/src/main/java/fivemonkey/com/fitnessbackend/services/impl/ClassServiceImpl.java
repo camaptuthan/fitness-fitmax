@@ -43,8 +43,8 @@ public class ClassServiceImpl implements ClassService {
         clazz.setName(c.getName());
         clazz.setPrice(c.getPrice());
         clazz.setDes(c.getDes());
-        clazz.setService(c.getService());
-       // clazz.setTrainer(c.getTrainer());
+        //clazz.setService(c.getService());
+        // clazz.setTrainer(c.getTrainer());
         clazz.setDate(new Date());
         clazz.setStatus(true);
         return classRepository.save(clazz);
@@ -57,8 +57,8 @@ public class ClassServiceImpl implements ClassService {
             clazz.setName(c.getName());
             clazz.setPrice(c.getPrice());
             clazz.setDes(c.getDes());
-            clazz.setService(c.getService());
-          //  clazz.setTrainer(c.getTrainer());
+            // clazz.setService(c.getService());
+            //  clazz.setTrainer(c.getTrainer());
             return classRepository.save(clazz);
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,7 +67,6 @@ public class ClassServiceImpl implements ClassService {
 
         return null;
     }
-
 
 
     @Override
@@ -95,7 +94,7 @@ public class ClassServiceImpl implements ClassService {
 
     public ClassDTO getClassById(String id) {
         Clazz clazz = classRepository.getById(id);
-        ClassDTO classDTO  = modelMapper.map(clazz, ClassDTO.class);
+        ClassDTO classDTO = modelMapper.map(clazz, ClassDTO.class);
         return classDTO;
     }
 

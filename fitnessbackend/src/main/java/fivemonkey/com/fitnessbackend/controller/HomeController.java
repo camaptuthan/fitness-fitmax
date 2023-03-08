@@ -1,6 +1,5 @@
 package fivemonkey.com.fitnessbackend.controller;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -27,6 +26,11 @@ public class HomeController {
         return "/blog";
     }
 
+    @GetMapping("/blog-writer")
+    public String blogWriter() {
+        return "/blog_writer";
+    }
+
 
     @GetMapping("/register")
     public String register() {
@@ -48,16 +52,19 @@ public class HomeController {
     public String serviceAdmin() {
         return "management/dashboard/service";
     }
+
     @GetMapping("/managestudio")
-    public String studioAdmin(){
+    public String studioAdmin() {
         return "management/StudioManagement/manage_studio";
     }
+
     @GetMapping("/sd")
-    public String studioAdmind(){
+    public String studioAdmind() {
         return "management/StudioManagement/add_studio";
     }
+
     @GetMapping("/sds")
-    public String studioAdmindd(){
+    public String studioAdmindd() {
         return "management/StudioManagement/addstudio";
     }
 

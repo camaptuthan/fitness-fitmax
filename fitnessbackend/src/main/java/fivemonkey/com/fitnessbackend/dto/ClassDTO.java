@@ -26,14 +26,12 @@ public class ClassDTO {
     private Float price;
 
 
-    private Services service;
     private String img;
 
     private boolean status;
     private String des;
     private String duration;
     private Trainer trainer;
-
 
     private List<ScheduleDTO> scheduleDTO;
 

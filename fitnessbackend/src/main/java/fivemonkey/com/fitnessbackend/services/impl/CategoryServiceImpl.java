@@ -52,4 +52,9 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return null;
     }
+
+    @Override
+    public List<Category> findAllCategoriesByType(String type) {
+        return categoryRepository.findAllByType(type);
+    }
 }
