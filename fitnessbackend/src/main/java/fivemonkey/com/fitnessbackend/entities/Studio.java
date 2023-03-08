@@ -27,6 +27,9 @@ public class Studio {
     @Column(name = "studio_name")
     private String name;
 
+    @Column(name = "image", columnDefinition = "mediumblob")
+    private byte[] image;
+
     @Column(name = "city")
     private String city;
 
@@ -59,7 +62,5 @@ public class Studio {
     @JoinColumn(name = "manager_email", referencedColumnName = "manager_email", unique = true)
     private Manager manager;
 
-    //studio-image relationship
-    @OneToMany(mappedBy = "studio")
-    private List<Image> images;
+
 }

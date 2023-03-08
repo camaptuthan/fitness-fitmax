@@ -1,15 +1,14 @@
 package fivemonkey.com.fitnessbackend.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +29,8 @@ public class Clazz {
     @Column(name = "class_name")
     private String name;
 
+    @Column(name = "image", columnDefinition = "mediumblob")
+    private byte[] image;
 
     @NotNull(message = "Not null")
     @Column(name = "duration")
@@ -49,9 +50,11 @@ public class Clazz {
     private boolean status;
 
     //service-class relationship
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "service_id", referencedColumnName = "service_id", unique = true)
-    private Services services;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId()
+    @JoinColumn(name = "class_id", nullable = false)
+    private Services service;
 
 
     //class-session relationship
@@ -59,7 +62,4 @@ public class Clazz {
     @JsonIgnore
     private List<Session> sessions;
 
-    //class-image relationship
-    @OneToMany(mappedBy = "clazz")
-    private List<Image> images;
 }

@@ -1,67 +1,61 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+<head>
+    <title>Login </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<th:block th:insert="fragments/admin_fragment/head"></th:block>
-<body id="bg">
-<div class="page-wraper">
-    <div id="loading-icon-bx"></div>
-    <div class="account-form">
-        <div class="account-head" style="background-image:url(/admin/images/about);">
-            <a href="index.html"><img alt=""></a>
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" th:href="@{/css/stylelogin.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="img js-fullheight"  >
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">
+                <h2 class="heading-section"><img th:src="@{/img/logo.svg}" alt="logo"></h2>
+            </div>
         </div>
-        <div class="account-form-inner">
-            <div class="account-container">
-                <div class="heading-bx left">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="login-wrap p-0">
+                    <h3 class="mb-4 text-center">Have an account?</h3>
+                    <form action="#" class="signin-form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input id="password-field" type="password" class="form-control" placeholder="Password" required>
+                            <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
+                        </div>
+                        <div class="form-group d-md-flex">
+                            <div class="w-50">
+                                <label class="checkbox-wrap checkbox-primary">Remember Me
+                                    <input type="checkbox" checked>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="w-50 text-md-right">
+                                <a href="/reset-password" style="color: #fff">Forgot Password</a>
+                            </div>
+                        </div>
+                    </form>
+                    <p   class="w-100 text-center">&mdash; <a href="/register">Register</a>  &mdash;</p>
 
-                    <h2 class="title-head">Login to your <span>Account</span></h2>
-                    <p>Don't have an account? <a href="/register">Create one here</a></p>
                 </div>
-                <form class="contact-bx" th:action="@{/user/login}"  th:object="${user}" method="post">
-                    <div class="row placeani">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <label>Email</label>
-                                    <input name="email" type="text" required="" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <label>Your Password</label>
-                                    <input name="password" type="password" class="form-control" required="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group form-forget">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
-                                    <label class="custom-control-label" for="customControlAutosizing">Remember me</label>
-                                </div>
-                                <a href="forget-password.html" class="ml-auto">Forgot Password?</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 m-b30">
-                            <h6 style="color: red" th:text="${fail}"></h6>
-                            <button name="submit" type="submit" value="Submit" class="btn button-md">Login</button>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="d-flex">
-                                <a class="btn flex-fill m-r5 facebook" href="#"><i class="fa fa-facebook"></i>Facebook</a>
-                                <a class="btn flex-fill m-l5 google-plus" href="#"><i class="fa fa-google-plus"></i>Google Plus</a>
-                            </div>
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
-</div>
-<!-- External JavaScripts -->
-<th:block th:insert="fragments/admin_fragment/script"></th:block>
+</section>
 </body>
-
 </html>
+
+

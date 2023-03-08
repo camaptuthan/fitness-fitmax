@@ -4,8 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.List;
 
@@ -15,76 +18,68 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "[user]",schema = "dbo")
+@Table(name = "[user]", schema = "dbo")
 public class User {
-
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
 
     @Id
     @Column(name = "email")
+    @NotEmpty(message = "This field can not empty")
+    @Email(message = "Enter a valid email address")
     private String email;
-
     @Column(name = "password")
+    @NotEmpty(message = "This field can not empty")
+    @Length(min = 8,message = "Password must be at least 8 characters")
     private String password;
-
     @Column(name = "first_name")
+    @NotEmpty(message = "This field can not empty")
     private String firstName;
-
     @Column(name = "last_name")
+    @NotEmpty(message = "This field can not empty")
     private String lastName;
-
     @Column(name = "address")
     private String address;
-
     @Column(name = "phone")
+    @NotEmpty(message = "This field can not empty")
     private String phone;
-
     @Column(name = "avatar")
     private String avatar;
-
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
     private Date date;
-
     @Column(name = "status", nullable = false)
     private boolean status;
-
     //role-user relationship
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
-
     //studio-user relationship
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "studio_id", referencedColumnName = "studio_id")
     private Studio studio;
-
     //user-blog relationship
     @OneToMany(mappedBy = "user")
     private List<Blog> blogs;
-
     //user-manager relationship
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Manager manager;
-
     //assistant-user relationship
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Assistant assistant;
-
     //trainee-user relationship
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Trainee trainee;
-
     //trainer-user relationship
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Trainer trainer;
+
+
+
+    @Column(name="verification_code",updatable = false)
+    private String verificationCode;
 
     @Override
     public String toString() {

@@ -4,7 +4,7 @@ import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.StudioDTO;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.repository.StudioRepository;
-import fivemonkey.com.fitnessbackend.services.IStudioService;
+import fivemonkey.com.fitnessbackend.services.StudioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class StudioServiceImpl implements IStudioService {
+public class StudioServiceImpl implements StudioService {
    @Autowired
     private StudioRepository studioRepository;
     @Autowired
@@ -66,12 +66,7 @@ public class StudioServiceImpl implements IStudioService {
 
     @Override
     public Studio updateStatus(long id, boolean status, Studio studio) {
-        if (status = true){
-            studio.setStatus(false);
-        }
-        else {
-            studio.setStatus(true);
-        }
+        studio.setStatus(!(status = true));
         studioRepository.save(studio);
         return studio;
     }
@@ -90,12 +85,23 @@ public class StudioServiceImpl implements IStudioService {
     @Override
     public Page<Studio> getStudioByPage(int currentPage, String searchInput) {
         Pageable pageable = PageRequest.of(currentPage - 1, 6);
-            if (searchInput == "") {
-                return studioRepository.findAll(pageable);
-            } else {
-                return studioRepository.findStudioByNameContaining(searchInput, pageable);
-            }
+        if (searchInput == "") {
+            return studioRepository.findAll(pageable);
+        } else {
+            return studioRepository.findStudioByNameContaining(searchInput, pageable);
+        }
     }
+
+    @Override
+    public List<Studio> getAll() {
+        return studioRepository.findAll();
+    }
+
+    @Override
+    public Studio save(Studio studio) {
+        return studioRepository.save(studio);
+    }
+
     @Override
     public Page<Studio> getALlByPage(int currentPage, String searchInput, String categoryId) {
         Pageable pageable = PageRequest.of(currentPage - 1,6);

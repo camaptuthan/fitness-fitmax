@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "fitness-fitmax-01",
+  "private_key_id": "f55766e464e20aa66154bb45dc29fd2d4374c48c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDF/qYBBWTY54LD\nCdZPi/ASb6YPNiRNiQm/cFWl91ggJaS9u0Nuu0LvXxnQoRxrDUqcnKZZ2kZrPFZ/\nmy5vwy9xOrbv4+8PoPU/OmkJvJDeUA6V6aDVKkZOtPu50khZsx6wYAHUfxqsyoz+\nMmpmwex4EUD/A2Y+/iJm2sFFQzcBRwdwlm76jrnAM7a+uPCftthAFFMeCBGKr1oa\n0+H3TV50zXVAI0XsLW5CXRDDaf7iFGTmmw5QvccVfz91QQhSdaPdcMHgAun/XjYs\nCnpsNqD30p+FaaVcOkTGEzlSooPrmRqBxJbhHHKpb8wRKGpr0UFORUkN3U4F6woo\nlKXYfbX5AgMBAAECggEAGNtiNG0crtWL11ggEX8ITgw5zR2XO6u5b1EXU52EsQ6A\nyvgcXGXCnsIx/70GUBNMW3KYON4cKqDZ3C3bi9j1lxHPvzi+vdfPildXMgt8JYjn\n996rnC9xQbbbhoX1ottHvk1jVW36p5hLUKt8K7fra9yArDNdTgnCQGb0zjEE0hJD\n8Z7x2KJ3WZbmv83eNdwm4kXL1H5o6ljLaVxD2b1gQDqHY50hpSxgdtF9TmEwdV5L\nCTgNd2+cmohUSusudyP29BTHPwu+w7Ewh6WZlyY/rpkcN5pd8ql0v9tiASf4xUng\nTyKmsDXRYqAFOJ7VfqicNrc6CYPV7YN0UovFbhL+bQKBgQDrMpAvzbj0Ws4hds36\n9rSJbhJeL4ny1MPgyyuak0rM6Z3wozUuQYk+5sfEfA7mtqbX4y9wsw/RCB4mKt2B\nYLFatQdtnCZmjZuNDsxcWWpzofZjh/+aqIN7rhCYkvJO6l5Z5QEGELOxEhSfpRiZ\nBPcfZRtrDiGSBYt1vB7qneUHTQKBgQDXgbmBLHeuomFxMpXan2Qnjnn2Cu5t91K5\n5ETWy8LYzrvQ7obFBodad9wUNQuWShFO1Mr/klYB/uHU3tfh4Zjo3Z8Hptv7jhNl\nJHz78O9Lc3DZb8+Q35aJ1C9X5sK+4R10j6KNG6ijdXnHdbqTtdUOmiCkSEe0Fmvj\n+5MYnYDLXQKBgQCby76fK9Lcaloo6J3BJDKq5nLcWPk0FaQ6/9o+ZlsiKY4pnLLZ\nlSfots6VZOgqA8u5LhB6wuIzQQFXnwVjcj2JLGljPhBh1mO3qJnOgpx1RFAF1kyG\nkiGmh8MOjihcBfvB6GQpNF8TaDqpFZ+ZnSRlc4AaBh5Or8WVk6uXFkhj8QKBgAPj\n3JRfWB234qhncFsM64LnSH5PfjRP9ZdTboauEOtW9/7yf05JKuJQLZHTz0y8M4nH\nv45Tduf8UNlF2IHET71MWtWJhokI7IKz4OmvVLJ49/2EzitgTdhZEy20BanqaFy1\nRwrjB+1DbppSHrcR3jGwSIyOnXS7vuDTprkYBr4lAoGANQme0J+FQ5/cdg8PBTc3\nxPuY73jAxg9Lhyjs/evgP0juvROOUqtNRd3ZLs9tbQ/C0hLXCc5gCOlWpT5wDaTK\nyw+9ULka/TRz3ABBWdgCIrAFPcyMUyVcOO5FIzphnAqmZt58HOvyCfb7FCzZCc+c\nYjpXcNmsEU8oJ9TcriWHsLQ=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-6gebp@fitness-fitmax-01.iam.gserviceaccount.com",
+  "client_id": "110499071928890897608",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-6gebp%40fitness-fitmax-01.iam.gserviceaccount.com"
+}
