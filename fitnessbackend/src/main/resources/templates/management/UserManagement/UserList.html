@@ -161,12 +161,23 @@
       <div>&nbsp</div>
 
       <div>
-        <form th:action="@{/search}">
-          Filter: <input type="text" name="keyword" />
+        <form  th:action="@{/listusers}" >
+          Filter: <input type="text" name="keyword" th:value="${keyword}" required />
           &nbsp
-          <input type="submit" value="Search"/>
+          <input id="btn-submit" type="submit" value="Search"/>
           &nbsp
-          <input type="button" value="Clear"/>
+          <input type="button" value="Clear" onclick="clearFilter()"/>
+          &nbsp
+
+        </form>
+      </div>
+      <div>&nbsp</div>
+      <div>
+        <form id="searchFilter" th:action="@{/listusers}" >
+          Role: <select name="keyword" style="width:30%" onchange="submitForm()">
+          <option>---All---</option>
+          <option  th:each="role : ${listRole}" th:text="${role.name}" th:value="${role.name}" th:selected="${role.name==keyword}"></option>
+        </select>
         </form>
       </div>
       <div>&nbsp</div>
@@ -229,7 +240,19 @@
 <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js" ></script>
 <script >
   $(document).ready( function () {
-    $('#user_list').DataTable();
+    $('#user_list').DataTable({
+      searching: false,
+            }
+    );
+
   } );
+</script>
+<script type="text/javascript">
+  function clearFilter(){
+    window.location="[[@{/listusers}]]";
+  }
+  function submitForm(){
+    document.getElementById("searchFilter").submit();
+  }
 </script>
 </html>

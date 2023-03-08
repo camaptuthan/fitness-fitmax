@@ -37,7 +37,7 @@ public class Trainee {
     private User user;
 
     //trainee-registration relationship
-    @OneToMany(mappedBy = "trainee")
+    @OneToMany(mappedBy = "trainee",cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Registration> registrations;
 
     public Trainee(String email) {

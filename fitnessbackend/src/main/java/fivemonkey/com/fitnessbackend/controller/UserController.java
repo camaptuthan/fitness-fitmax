@@ -35,25 +35,35 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    FireBaseUtils fireBaseUtils;
+    private FireBaseUtils fireBaseUtils;
     @Autowired
-    RoleService roleService;
+    private RoleService roleService;
     @Autowired
     StudioService studioService;
     @Autowired
     private UserService userService;
 
 
-    @GetMapping("/management/listusers")
-    public String listUser(@AuthenticationPrincipal UserDetail userDetail, Model model) {
-        User user = userDetail.getUser();
-        System.out.println("Current user: " + user.getEmail());
+    @GetMapping("/listusers")
+    public String listUser(Model model, @Param("keyword") String keyword ) {
         List<UserDTO> userDTOList = userService.findAll();
-        model.addAttribute("list", userDTOList);
-        model.addAttribute("size", userDTOList.size());
-        return "management/usermanagement/userlist";
+        List<UserDTO> userDTOList1 = userService.findAllUser(keyword);
+        List<Role> roleList = roleService.getAll();
+        if(keyword == null || "---All---".equals(keyword)){
+            model.addAttribute("listRole", roleList);
+            model.addAttribute("list", userDTOList);
+            model.addAttribute("size", userDTOList.size());
+        } else {
+            model.addAttribute("listRole", roleList);
+            model.addAttribute("list",userDTOList1);
+            model.addAttribute("keyword",keyword);
+            model.addAttribute("size",userDTOList1.size());
+
+        }
+        return "management/UserManagement/UserList";
 
     }
+
 
     @PostMapping("/management/saveuser")
     public String saveUser(@ModelAttribute("user") UserDTO userDTO, RedirectAttributes ra) {
@@ -120,7 +130,7 @@ public class UserController {
 
     @RequestMapping("/search")
     public String search(Model model, @Param("keyword") String keyword) {
-        List<User> userList = userService.findAllUser(keyword);
+        List<UserDTO> userList = userService.findAllUser(keyword);
         System.out.println("=====================hjkd==============mai========" + userList);
         model.addAttribute("list", userList);
         return "management/usermanagement/userlist";
@@ -133,7 +143,7 @@ public class UserController {
         UserDTO userDTO = userService.getUserById(email);
         model.addAttribute("user", userDTO);
 
-        return "pro";
+        return "management/usermanagement/userProfile";
     }
 //@GetMapping("/search")
 //    public String search(Model model, @RequestParam(name = "email",required = false) String email){
@@ -152,8 +162,6 @@ public class UserController {
 
                              @ModelAttribute("user") UserDTO userDTO,
                              Model model) throws IOException {
-        //save user
-
 
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         fireBaseUtils.uploadFile(multipartFile, fileName);
@@ -161,6 +169,10 @@ public class UserController {
 //        claimDocument.setFileUrl(String.format(FireBaseConstant.FILE_URL, fileName));
         userDTO.setAvatar(String.format(FireBaseConstant.FILE_URL, fileName));
 
+//        claimDocument.setFileUrl(String.format(FireBaseConstant.FILE_URL, fileName));
+
+        userDTO.setAvatar(String.format(FireBaseConstant.FILE_URL, fileName));
+        userService.updateUser(userDTO);
 
 //        String uploadDir = "./src/main/resources/static/avatar/" + userDTO.getEmail();
 //
@@ -177,6 +189,9 @@ public class UserController {
 //            throw new IOException("Could not save uploaded file: " + fileName);
 //        }
 
+//
+//        userService.updateUser(userDTO);
+//        System.out.println("-0jodjf==================================================siodhfoisd=======" + userDTO);
 
         userService.updateUser(userDTO);
         System.out.println("-0jodjf==================================================siodhfoisd=======" + userDTO);

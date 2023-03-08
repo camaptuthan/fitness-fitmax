@@ -30,8 +30,8 @@ public class Package {
     @Column(name = "package_name")
     private String name;
 
-    @Column(name = "image", columnDefinition = "mediumblob")
-    private byte[] image;
+    @Column(name = "image")
+    private String image;
 
     @Min(value = 1, message = "{Size.Field.Duration}")
     @Column(name = "duration")
@@ -52,7 +52,7 @@ public class Package {
     private boolean status;
 
     //service-package relationship
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id", referencedColumnName = "service_id", unique = true)
     private Services services;
 
