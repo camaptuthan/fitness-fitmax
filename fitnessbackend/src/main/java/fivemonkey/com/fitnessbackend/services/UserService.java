@@ -25,7 +25,7 @@ public interface UserService {
     UserDTO getUserById(String email);
 
 
-    List<User> findAllUser(String keyword);
+    List<UserDTO> findAllUser(String keyword);
 
     List<User> findAllUserNameContaining(String email);
 

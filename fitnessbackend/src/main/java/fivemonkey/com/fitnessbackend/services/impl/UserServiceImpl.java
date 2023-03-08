@@ -90,19 +90,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUserById(String email) {
         User user = userRepository.getById(email);
-        UserDTO userDTO = new UserDTO();
         ModelMapper mapper = new ModelMapper();
-        userDTO = mapper.map(user, UserDTO.class);
+        UserDTO userDTO = mapper.map(user, UserDTO.class);
         return userDTO;
     }
 
 
     @Override
-    public List<User> findAllUser(String keyword) {
-        if (keyword != null) {
-            return userRepository.findAllUser(keyword);
+    public List<UserDTO> findAllUser(String keyword) {
+        ModelMapper mapper = new ModelMapper();
+        List<UserDTO> userDTOList1 = new ArrayList<>();
+        List<User> userList = userRepository.findAllUser(keyword);
+        for (User u : userList) {
+            UserDTO userDTO = mapper.map(u, UserDTO.class);
+            userDTOList1.add(userDTO);
         }
-        return userRepository.findAll();
+        return userDTOList1;
     }
 
     @Override

@@ -2,10 +2,11 @@ package fivemonkey.com.fitnessbackend.controller;
 
 
 import fivemonkey.com.fitnessbackend.constant.FireBaseConstant;
+
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
-import fivemonkey.com.fitnessbackend.entities.User;
+
 import fivemonkey.com.fitnessbackend.services.IStudioService;
 import fivemonkey.com.fitnessbackend.services.RoleService;
 
@@ -33,20 +34,31 @@ import java.util.List;
 
 public class UserController {
     @Autowired
-    FireBaseUtils fireBaseUtils;
+    private FireBaseUtils fireBaseUtils;
     @Autowired
-    RoleService roleService;
+    private RoleService roleService;
     @Autowired
-    IStudioService studioService;
+    private IStudioService studioService;
     @Autowired
     private UserService userService;
 
     @GetMapping("/listusers")
-    public String listUser(Model model) {
+    public String listUser(Model model, @Param("keyword") String keyword ) {
         List<UserDTO> userDTOList = userService.findAll();
-        model.addAttribute("list", userDTOList);
-        model.addAttribute("size", userDTOList.size());
-        return "management/usermanagement/userlist";
+        List<UserDTO> userDTOList1 = userService.findAllUser(keyword);
+        List<Role> roleList = roleService.getAll();
+        if(keyword == null || "---All---".equals(keyword)){
+            model.addAttribute("listRole", roleList);
+            model.addAttribute("list", userDTOList);
+            model.addAttribute("size", userDTOList.size());
+        } else {
+            model.addAttribute("listRole", roleList);
+            model.addAttribute("list",userDTOList1);
+            model.addAttribute("keyword",keyword);
+            model.addAttribute("size",userDTOList1.size());
+
+        }
+        return "management/UserManagement/UserList";
 
     }
 
@@ -113,22 +125,16 @@ public class UserController {
 
     }
 
-    @RequestMapping ("/search")
-    public String search(Model model, @Param("keyword") String keyword) {
-        List<User> userList = userService.findAllUser(keyword);
-        System.out.println("=====================hjkd==============mai========"+userList);
-        model.addAttribute("list", userList);
-        return "management/usermanagement/userlist";
-    }
+
 
     @RequestMapping("/avatauser/{email}")
-    public String getInformationUserPro5(@PathVariable("email") String email, Model model){
+    public String getInformationUserPro5(@PathVariable("email") String email, Model model) {
         List<Role> roleList = roleService.getAll();
         List<Studio> studioList = studioService.getAll();
         UserDTO userDTO = userService.getUserById(email);
         model.addAttribute("user", userDTO);
 
-        return "pro";
+        return "management/usermanagement/userProfile";
     }
 
     @PostMapping("/avatauser/{email}")
@@ -136,15 +142,11 @@ public class UserController {
 
                              @ModelAttribute("user") UserDTO userDTO,
                              Model model) throws IOException {
-        //save user
-
 
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         fireBaseUtils.uploadFile(multipartFile, fileName);
-       String url = FireBaseConstant.FILE_URL.toString();
-//        claimDocument.setFileUrl(String.format(FireBaseConstant.FILE_URL, fileName));
         userDTO.setAvatar(String.format(FireBaseConstant.FILE_URL, fileName));
-
+        userService.updateUser(userDTO);
 
 //        String uploadDir = "./src/main/resources/static/avatar/" + userDTO.getEmail();
 //
@@ -161,15 +163,13 @@ public class UserController {
 //            throw new IOException("Could not save uploaded file: " + fileName);
 //        }
 
-
-        userService.updateUser(userDTO);
-        System.out.println("-0jodjf==================================================siodhfoisd======="+userDTO);
-
+//
+//        userService.updateUser(userDTO);
+//        System.out.println("-0jodjf==================================================siodhfoisd=======" + userDTO);
 
 
         return "redirect:/listusers";
     }
-
 
 
 }
