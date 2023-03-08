@@ -3,12 +3,14 @@ package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.configuration.Utility;
 import fivemonkey.com.fitnessbackend.constant.FireBaseConstant;
+import fivemonkey.com.fitnessbackend.dto.RegistrationDTO;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
+import fivemonkey.com.fitnessbackend.services.RegistrationService;
 import fivemonkey.com.fitnessbackend.services.RoleService;
 import fivemonkey.com.fitnessbackend.services.StudioService;
 import fivemonkey.com.fitnessbackend.services.UserService;
@@ -44,6 +46,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RegistrationService  registrationService;
 
     @GetMapping("/management/listusers")
     public String listUser(Model model, @Param("keyword") String keyword) {
@@ -227,9 +231,12 @@ public class UserController {
 
     @GetMapping("/myprofile")
     public String myProfile(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+        model.addAttribute("registrations", registrationService.getRegistrationByUserEmail(userDetail.getUser().getEmail()));
         model.addAttribute("user", userDetail.getUser());
         return "/myprofile";
     }
+
+
 }
 
 
