@@ -39,7 +39,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img th:src="*{avatar}" alt="Admin"
+                            <img th:src="*{avatar != null ? avatar : 'https://bootdey.com/img/Content/avatar/avatar7.png'}" alt="Admin"
                                  class="rounded-circle" style="border: 1px solid rgba(242, 56, 73, .25)" width="150" src="">
                             <div class="mt-3">
                                 <h4 th:utext="*{lastName + ' '+ firstName}"></h4>

@@ -106,6 +106,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login").permitAll();
         http.rememberMe()
                 .key("uniqueAndSecret")
+                .tokenRepository(persistentTokenRepository())
                 //.tokenRepository(persistentTokenRepository())
                 .tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
     }
