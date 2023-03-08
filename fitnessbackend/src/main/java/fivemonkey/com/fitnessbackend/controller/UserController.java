@@ -210,8 +210,6 @@ public class UserController {
         model.addAttribute("title", title);
         return "/register";
     }
-
-
 }
 
 
