@@ -21,7 +21,7 @@ public class BlogDTO {
 
     private String title;
 
-    private byte[] image;
+    private String image;
 
     private String des;
 
@@ -38,12 +38,12 @@ public class BlogDTO {
         return "BlogDTO{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
-                ", image=" + Arrays.toString(image) +
+                ", image='" + image + '\'' +
                 ", des='" + des + '\'' +
                 ", created_date=" + created_date +
                 ", status=" + status +
                 ", category=" + category +
-                ", writer_email='" + writer_email + '\'' +
+                ", writer_email=" + writer_email +
                 '}';
     }
 }

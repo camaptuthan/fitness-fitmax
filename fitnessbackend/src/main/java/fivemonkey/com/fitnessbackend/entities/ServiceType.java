@@ -25,8 +25,8 @@ public class ServiceType {
     @Column(name = "description", columnDefinition = "text")
     private String type;
 
-    @Column(name = "image", columnDefinition = "mediumblob")
-    private byte[] image;
+    @Column(name = "image")
+    private String image;
 
     //service-serviceDetail relationship
     @OneToMany(mappedBy = "serviceType")

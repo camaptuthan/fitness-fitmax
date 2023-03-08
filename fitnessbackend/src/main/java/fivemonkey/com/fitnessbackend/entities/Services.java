@@ -62,11 +62,9 @@ public class Services {
     private PersonalTraining personalTraining;
 
     //service-class relationship
-
-
-    @OneToOne(mappedBy = "service", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "service")
     private Clazz clazz;
+
     //assistant-service relationship
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "assistant_email", referencedColumnName = "assistant_email")

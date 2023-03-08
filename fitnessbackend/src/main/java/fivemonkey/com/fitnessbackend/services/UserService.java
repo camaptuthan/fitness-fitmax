@@ -40,7 +40,5 @@ public interface UserService {
 
     boolean verify(String code);
 
-    void updateUser(UserDTO userDTO);
-
 
 }

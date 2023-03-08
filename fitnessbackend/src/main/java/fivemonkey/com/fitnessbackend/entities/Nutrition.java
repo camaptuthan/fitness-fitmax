@@ -28,6 +28,9 @@ public class Nutrition {
     @Column(name = "nutrition_name")
     private String name;
 
+    @Column(name = "image")
+    private String image;
+
     @Column(name = "description", columnDefinition = "text")
     private String description;
 

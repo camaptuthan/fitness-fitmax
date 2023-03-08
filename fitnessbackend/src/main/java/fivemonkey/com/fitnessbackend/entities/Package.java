@@ -30,8 +30,8 @@ public class Package {
     @Column(name = "package_name")
     private String name;
 
-    @Column(name = "image", columnDefinition = "mediumblob")
-    private byte[] image;
+    @Column(name = "image")
+    private String image;
 
     @Min(value = 1, message = "{Size.Field.Duration}")
     @Column(name = "duration")

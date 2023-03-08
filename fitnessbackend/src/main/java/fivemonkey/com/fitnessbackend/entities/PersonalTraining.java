@@ -24,8 +24,8 @@ public class PersonalTraining {
     @Column(name = "personaltraining_name")
     private String name;
 
-    @Column(name = "image", columnDefinition = "mediumblob")
-    private byte[] image;
+    @Column(name = "image")
+    private String image;
 
     @Column(name = "slot")
     private int slot;

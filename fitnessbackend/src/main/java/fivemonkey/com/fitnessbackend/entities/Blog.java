@@ -33,8 +33,8 @@ public class Blog {
     @Column(name = "created_date")
     private Date date;
 
-    @Column(name = "image", columnDefinition = "mediumblob")
-    private byte[] image;
+    @Column(name = "image")
+    private String image;
 
     @Column(name = "status", nullable = false)
     private boolean status;

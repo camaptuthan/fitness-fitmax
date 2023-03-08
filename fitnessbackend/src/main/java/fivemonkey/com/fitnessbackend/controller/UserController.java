@@ -42,7 +42,6 @@ public class UserController {
     private UserService userService;
 
 
-
     @GetMapping("/listusers")
     public String listUser(Model model) {
         List<UserDTO> userDTOList = userService.findAll();
@@ -115,16 +114,16 @@ public class UserController {
 
     }
 
-    @RequestMapping ("/search")
+    @RequestMapping("/search")
     public String search(Model model, @Param("keyword") String keyword) {
         List<User> userList = userService.findAllUser(keyword);
-        System.out.println("=====================hjkd==============mai========"+userList);
+        System.out.println("=====================hjkd==============mai========" + userList);
         model.addAttribute("list", userList);
         return "management/usermanagement/userlist";
     }
 
     @RequestMapping("/avatauser/{email}")
-    public String getInformationUserPro5(@PathVariable("email") String email, Model model){
+    public String getInformationUserPro5(@PathVariable("email") String email, Model model) {
         List<Role> roleList = roleService.getAll();
         List<Studio> studioList = studioService.getAll();
         UserDTO userDTO = userService.getUserById(email);
@@ -154,7 +153,7 @@ public class UserController {
 
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         fireBaseUtils.uploadFile(multipartFile, fileName);
-       String url = FireBaseConstant.FILE_URL.toString();
+        String url = FireBaseConstant.FILE_URL.toString();
 //        claimDocument.setFileUrl(String.format(FireBaseConstant.FILE_URL, fileName));
         userDTO.setAvatar(String.format(FireBaseConstant.FILE_URL, fileName));
 
@@ -176,8 +175,7 @@ public class UserController {
 
 
         userService.updateUser(userDTO);
-        System.out.println("-0jodjf==================================================siodhfoisd======="+userDTO);
-
+        System.out.println("-0jodjf==================================================siodhfoisd=======" + userDTO);
 
 
         return "redirect:/listusers";
@@ -185,35 +183,33 @@ public class UserController {
 
 
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
-    public String registerUser(@Valid  @ModelAttribute("userDTO") User user, RedirectAttributes attributes, HttpServletRequest request, BindingResult bindingResult) throws MessagingException, UnsupportedEncodingException {
-        if(bindingResult.hasErrors()){
+    public String registerUser(@Valid @ModelAttribute("userDTO") User user, RedirectAttributes attributes, HttpServletRequest request, BindingResult bindingResult) throws MessagingException, UnsupportedEncodingException {
+        if (bindingResult.hasErrors()) {
             return "register";
         }
         List<Object> userPresentObj = userService.isUserPresent(user);
-            String phone =user.getPhone();
-            String siteUrl= Utility.getSiteURL(request);
-            if((Boolean) userPresentObj.get(0)|| !phone.matches("^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$")){
-                attributes.addFlashAttribute("fail", userPresentObj.get(1));
-                attributes.addFlashAttribute("regexPhone", "Phone Must Be Matches (+84) 35 539-0605;");
-                return "redirect:/register";
-            }
-            userService.registerUser(user);
-            userService.sendVerificationEmail(user,siteUrl);
-            attributes.addFlashAttribute("message","You have to registered as a member.");
-            attributes.addFlashAttribute("message2","Please check your email verify account ");
+        String phone = user.getPhone();
+        String siteUrl = Utility.getSiteURL(request);
+        if ((Boolean) userPresentObj.get(0) || !phone.matches("^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$")) {
+            attributes.addFlashAttribute("fail", userPresentObj.get(1));
+            attributes.addFlashAttribute("regexPhone", "Phone Must Be Matches (+84) 35 539-0605;");
             return "redirect:/register";
         }
+        userService.registerUser(user);
+        userService.sendVerificationEmail(user, siteUrl);
+        attributes.addFlashAttribute("message", "You have to registered as a member.");
+        attributes.addFlashAttribute("message2", "Please check your email verify account ");
+        return "redirect:/register";
+    }
 
-        //handle verify
-       @GetMapping("/verify")
-    public String verifyAccount(@Param("code") String code, Model model){
-        boolean verified=userService.verify(code);
-         String title=verified ? "Verification Success":"Verification Failed";
-         model.addAttribute("title",title);
-         return "/register";
-       }
-
-
+    //handle verify
+    @GetMapping("/verify")
+    public String verifyAccount(@Param("code") String code, Model model) {
+        boolean verified = userService.verify(code);
+        String title = verified ? "Verification Success" : "Verification Failed";
+        model.addAttribute("title", title);
+        return "/register";
+    }
 
 
 }
