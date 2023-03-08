@@ -662,7 +662,7 @@ header:after {
 }
 
 .header-right .search-form {
-    margin-right: 38px;
+    margin-right: -10px;
     position: relative;
     display: flex;
     justify-content: flex-end;
@@ -889,7 +889,7 @@ header:after {
     }
 
     .header-right .search-form {
-        margin-right: 30px;
+        margin-right: -10px;
     }
 
     .header-right .search-form__field:focus {

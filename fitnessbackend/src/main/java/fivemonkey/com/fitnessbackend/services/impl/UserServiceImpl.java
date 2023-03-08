@@ -23,6 +23,9 @@ import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -103,7 +106,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUserById(String email) {
         User user = userRepository.getById(email);
-        UserDTO userDTO = new UserDTO();
+        UserDTO userDTO;
         ModelMapper mapper = new ModelMapper();
         userDTO = mapper.map(user, UserDTO.class);
         return userDTO;
