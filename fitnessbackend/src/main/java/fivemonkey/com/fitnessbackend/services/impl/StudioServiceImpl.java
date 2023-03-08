@@ -52,8 +52,6 @@ public class StudioServiceImpl implements StudioService {
         try{
             Studio st = studioRepository.getById(existingStudio.getId());
             st.setName(existingStudio.getName());
-            st.setCity(existingStudio.getCity());
-            st.setDistrict(existingStudio.getDistrict());
             st.setContact(existingStudio.getContact());
             st.setDes(existingStudio.getDes());
             st.setStatus(existingStudio.isStatus());
@@ -114,7 +112,8 @@ public class StudioServiceImpl implements StudioService {
             }
         }
         else if (searchInput==""){
-            return studioRepository.findStudioByCityOrderByIdDesc(categoryId,pageable);
+//            return studioRepository.findStudioByCityOrderByIdDesc(categoryId,pageable);
+            return studioRepository.findAll(pageable);
         }
         else
             //return studioRepository.findStudioByCategoryIdAndTitleContaining(categoryId,searchInput,pageable);
