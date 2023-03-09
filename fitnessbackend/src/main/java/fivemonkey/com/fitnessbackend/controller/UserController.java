@@ -143,16 +143,6 @@ public class UserController {
 
         return "management/usermanagement/userProfile";
     }
-//@GetMapping("/search")
-//    public String search(Model model, @RequestParam(name = "email",required = false) String email){
-//    List<User> userList = null;
-//    if (StringUtils.hasText(email)){
-//        userList = userService.findAllUserNameContaining(email);}
-//    else{
-//        userList = userService.findAllUser();
-//        }
-//    model.addAttribute("list",userList);
-//    return "management/usermanagement/userlist";
 
 
     @PostMapping("/avatauser/{email}")
@@ -165,8 +155,6 @@ public class UserController {
         fireBaseUtils.uploadFile(multipartFile, fileName);
 
         String url = FireBaseConstant.FILE_URL.toString();
-//        claimDocument.setFileUrl(String.format(FireBaseConstant.FILE_URL, fileName));
-
         userDTO.setAvatar(String.format(FireBaseConstant.FILE_URL, fileName));
         userService.updateUser(userDTO);
 
@@ -227,7 +215,7 @@ public class UserController {
         return "/register";
     }
 
-
+    
 }
 
 

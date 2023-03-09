@@ -29,9 +29,6 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query("SELECT u FROM User u where u.email LIKE %?1%")
     List<User> findAllUserNameContaining(String email);
 
-
     @Query("select u from User u where u.verificationCode=?1")
     User findByVerificationCode(String code);
-
-
 }
