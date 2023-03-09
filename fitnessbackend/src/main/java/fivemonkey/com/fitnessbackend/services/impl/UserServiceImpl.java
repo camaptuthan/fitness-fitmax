@@ -23,6 +23,8 @@ import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
+ 
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -42,15 +44,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> findAll() {
-        ModelMapper mapper = new ModelMapper();
-        List<UserDTO> userDTOList = new ArrayList<>();
+        // Find all user from mapper
         List<User> userList = userRepository.findAll();
+        List<UserDTO> userDTOList = new ArrayList<>();
         for (User u : userList) {
-            UserDTO userDTO = mapper.map(u, UserDTO.class);
+            UserDTO userDTO = modelMapper.map(u, UserDTO.class);
             userDTOList.add(userDTO);
         }
         return userDTOList;
     }
+
 
 
     @Override

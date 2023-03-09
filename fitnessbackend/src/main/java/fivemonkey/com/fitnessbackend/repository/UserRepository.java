@@ -18,8 +18,7 @@ public interface UserRepository extends JpaRepository<User, String> {
             "or u.role.name like %?1%" +
             "or u.studio.name like %?1%" +
             "or u.firstName like %?1%" +
-            "or u.lastName like %?1%")
-
+            "or u.lastName like %?1%" )
     List<User> findAllUser(String keyword);
     @Query("SELECT u FROM User u WHERE u.email=?1")
     Optional<User> findByEmail(String email);

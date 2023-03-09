@@ -33,8 +33,6 @@ public class Studio {
     @Column(name = "city")
     private String city;
 
-    @Column(name = "district")
-    private String district;
 
     @Column(name = "contact")
     private String contact;
@@ -62,5 +60,8 @@ public class Studio {
     @JoinColumn(name = "manager_email", referencedColumnName = "manager_email", unique = true)
     private Manager manager;
 
-
+    //studio-district relationship
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "district_id", referencedColumnName = "district_id", unique = true)
+    private District district;
 }

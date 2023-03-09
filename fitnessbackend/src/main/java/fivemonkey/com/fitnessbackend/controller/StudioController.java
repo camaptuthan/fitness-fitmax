@@ -54,8 +54,6 @@ public class StudioController {
         Studio existingStudio = studioService.getStudioById(id);
         existingStudio.setId(id);
         existingStudio.setName(studio.getName());
-        existingStudio.setCity(studio.getCity());
-        existingStudio.setDistrict(studio.getDistrict());
         existingStudio.setContact(studio.getContact());
         existingStudio.setDes(studio.getDes());
         existingStudio.setStatus(studio.isStatus());

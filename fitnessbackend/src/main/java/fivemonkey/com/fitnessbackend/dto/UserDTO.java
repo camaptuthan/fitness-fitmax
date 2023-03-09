@@ -1,7 +1,5 @@
 package fivemonkey.com.fitnessbackend.dto;
 
-import fivemonkey.com.fitnessbackend.entities.Role;
-import fivemonkey.com.fitnessbackend.entities.Studio;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
