@@ -25,27 +25,34 @@ public class ClassDTO {
 
     private Float price;
 
-
-    private Services service;
+    private String servicesId;
+    private String servicesName;
     private String img;
 
     private boolean status;
     private String des;
     private String duration;
-    private Trainer trainer;
+
+    private String trainerId;
 
     private List<ScheduleDTO> scheduleDTO;
+
 
     @Override
     public String toString() {
         return "ClassDTO{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", date=" + date +
                 ", price=" + price +
+                ", servicesId='" + servicesId + '\'' +
+                ", servicesName='" + servicesName + '\'' +
                 ", img='" + img + '\'' +
+                ", status=" + status +
+                ", des='" + des + '\'' +
+                ", duration='" + duration + '\'' +
+                ", trainerId='" + trainerId + '\'' +
+                ", scheduleDTO=" + scheduleDTO +
                 '}';
     }
-
-
 }

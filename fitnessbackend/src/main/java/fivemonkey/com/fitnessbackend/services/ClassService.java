@@ -30,5 +30,5 @@ public interface ClassService {
 
     List<Clazz> searchByName(String keyword);
 
-
+    List<ClassDTO> getRegistrationClassByUserEmail(String userEmail);
 }

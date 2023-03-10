@@ -22,7 +22,9 @@ public class ModelMapperConfiguration <S,T>{
     public List<T> mapList(List<S> source, Class<T> targetClass) {
         List<T> target = new ArrayList<T>();
         for (S element : source) {
-            target.add(getModelMapper().map(element, targetClass));
+            T t = getModelMapper().map(element, targetClass);
+            System.out.println(t.toString());
+            target.add(t);
         }
         return target;
     }
