@@ -1,12 +1,13 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 
-import fivemonkey.com.fitnessbackend.api.response.ApiResponse;
 import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.ScheduleDTO;
+import fivemonkey.com.fitnessbackend.dto.SessionDTO;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.services.ClassService;
 import fivemonkey.com.fitnessbackend.services.ScheduleService;
+import fivemonkey.com.fitnessbackend.services.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -26,31 +27,33 @@ public class ScheduleController {
     @Autowired
     private ClassService classService;
 
+    @Autowired
+    private SessionService sessionService;
+
     @GetMapping("")
-    public List<ScheduleDTO> getSchedules() {
-        return scheduleService.getAll();
+    public List<ScheduleDTO> getSchedules(@RequestParam("start") String start,
+                                          @RequestParam("end") String end) {
+        return scheduleService.getAll(formatTime(start), formatTime(end));
     }
 
-    @GetMapping("/{service_id}/{year}")
-    public ApiResponse<ClassDTO> getScheduleByClassInformation(@AuthenticationPrincipal UserDetail userDetail,
-                                                               @PathVariable("service_id") String serviceId,
-                                                               @PathVariable("year") String year,
-                                                               @RequestParam("start") String start,
-                                                               @RequestParam String end) {
-        ApiResponse<ClassDTO> response = new ApiResponse<>();
-        UserDetail user = (UserDetail) userDetail;
-        response.setData(scheduleService.getByInfor(userDetail.getUser().getEmail(), serviceId, formatTime(year, start), formatTime(year, end)));
-        return response;
+
+    @GetMapping("/session/{schedule_id}")
+    public List<SessionDTO> getSessionByScheduleId(@PathVariable("schedule_id") String scheduleId,
+                                                   @RequestParam("start") String start,
+                                                   @RequestParam("end") String end
+    ) {
+        return sessionService.getSessionByScheduleIdBetweenTimes(scheduleId, formatTime(start), formatTime(end));
     }
 
-    private Date formatTime(String year, String date) {
+     
+    private Date formatTime(String time) {
         Date output = null;
         // SimpleDateFormat class Object
         SimpleDateFormat dtobj = new SimpleDateFormat("dd/MM/yyyy");
         // Dates
         // Parsing dates in Date datatype
         try {
-            output = dtobj.parse(date + "/" + year);
+            output = dtobj.parse(time);
         } catch (ParseException pe) {
             System.out.println(pe.getMessage());
         }
@@ -61,7 +64,7 @@ public class ScheduleController {
 
     @GetMapping("/registered-class")
     public List<ClassDTO> getClasses(@AuthenticationPrincipal UserDetail userDetail) {
-        return classService.findAll();
+        return classService.getRegistrationClassByUserEmail(userDetail.getUser().getEmail());
     }
 
 

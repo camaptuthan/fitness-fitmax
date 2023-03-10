@@ -58,7 +58,7 @@ public class Services {
     private PersonalTraining personalTraining;
 
     //service-class relationship
-    @OneToOne(mappedBy = "service")
+    @OneToOne(mappedBy = "services")
     private Clazz clazz;
 
     //assistant-service relationship

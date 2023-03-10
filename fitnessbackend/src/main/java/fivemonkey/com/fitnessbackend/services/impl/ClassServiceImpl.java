@@ -1,9 +1,13 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
+import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.ClassDTO;
+import fivemonkey.com.fitnessbackend.dto.RegistrationDTO;
 import fivemonkey.com.fitnessbackend.entities.Clazz;
+import fivemonkey.com.fitnessbackend.entities.Registration;
 import fivemonkey.com.fitnessbackend.repository.ClassRepository;
 import fivemonkey.com.fitnessbackend.services.ClassService;
+import fivemonkey.com.fitnessbackend.services.RegistrationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +26,12 @@ public class ClassServiceImpl implements ClassService {
 
     @Autowired
     ModelMapper modelMapper;
+
+    @Autowired
+    private ModelMapperConfiguration<Clazz,ClassDTO> modelMapperConfiguration;
+
+    @Autowired
+    private RegistrationService registrationService;
 
     //mapper class to class dto
     @Override
@@ -109,6 +119,20 @@ public class ClassServiceImpl implements ClassService {
     public List<Clazz> searchByName(String keyword) {
         List<Clazz> list = classRepository.searchClassByKeyword(keyword);
         return list;
+    }
+
+    @Override
+    public List<ClassDTO> getRegistrationClassByUserEmail(String userEmail) {
+        List<Clazz> clazzList = new ArrayList<>();
+        List<RegistrationDTO> myRegistrationList = registrationService.getRegistrationByUserEmail(userEmail);
+        for (RegistrationDTO registrationDTO : myRegistrationList) {
+            Clazz clazz = classRepository.getClazzByService(registrationDTO.getServicesId());
+            clazzList.add(clazz);
+        }
+        if (clazzList.isEmpty()) {
+            throw new NullPointerException();
+        }
+        return modelMapperConfiguration.mapList(clazzList, ClassDTO.class);
     }
     //search
 

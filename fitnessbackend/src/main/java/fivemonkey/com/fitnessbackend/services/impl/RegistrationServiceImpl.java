@@ -17,7 +17,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     private RegistrationRepository registrationRepository;
 
     @Autowired
-    private ModelMapperConfiguration modelMapper;
+    private ModelMapperConfiguration<Registration, RegistrationDTO> modelMapper;
 
     @Override
     public List<RegistrationDTO> getRegistrationByUserEmail(String userEmail) {
