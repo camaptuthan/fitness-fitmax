@@ -24,7 +24,7 @@ public class Manager {
     private Studio studio;
 
     //manager-user relationship
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @MapsId
     @JoinColumn(name = "manager_email")
     private User user;

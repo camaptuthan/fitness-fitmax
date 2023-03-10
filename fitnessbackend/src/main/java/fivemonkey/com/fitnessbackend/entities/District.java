@@ -33,6 +33,6 @@ public class District {
     private City city;
 
     //studio-city relationship
-    @OneToOne(mappedBy = "district", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(mappedBy = "district", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Studio studios;
 }

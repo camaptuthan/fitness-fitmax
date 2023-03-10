@@ -48,7 +48,7 @@ public class PersonalTraining {
     private boolean status;
 
     //service-personalTraining relationship
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "service_id", referencedColumnName = "service_id", unique = true)
     private Services services;
 

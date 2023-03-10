@@ -1,10 +1,21 @@
 package fivemonkey.com.fitnessbackend.controller;
 
+import fivemonkey.com.fitnessbackend.entities.ServiceType;
+import fivemonkey.com.fitnessbackend.services.ServiceTypeService;
+import jdk.dynalink.linker.LinkerServices;
+import org.dom4j.rule.Mode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @Controller
 public class HomeController {
+
+    @Autowired
+    private ServiceTypeService serviceTypeService;
 
     @GetMapping("/trainer")
     public String trainer() {
@@ -21,16 +32,22 @@ public class HomeController {
         return "/service";
     }
 
-    @GetMapping("/blog")
-    public String blog() {
-        return "/blog";
-    }
+//    @GetMapping("/bloglist")
+//    public String blog() {
+//        return "management/BlogManagement/blog-list";
+//    }
+//
+//    @GetMapping("/blogadd")
+//    public String blogWriter() {
+//        return "management/BlogManagement/blog-add";
+//    }
 
-    @GetMapping("/blog-writer")
-    public String blogWriter() {
-        return "/blog_writer";
+    @GetMapping("")
+    public String getAllServiceType(Model model) {
+        List<ServiceType> serviceTypes = serviceTypeService.getAll();
+        model.addAttribute("serviceTypes", serviceTypes);
+        return "/index";
     }
-
 
     @GetMapping("/register")
     public String register() {

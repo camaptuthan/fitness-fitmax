@@ -67,7 +67,7 @@ public class TrackingDetail {
     private List<Nutrition> nutritionList;
 
     //trackingDetail-session relationship
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "schedule_id", referencedColumnName = "schedule_id", unique = true)
     private Schedule schedule;
 }

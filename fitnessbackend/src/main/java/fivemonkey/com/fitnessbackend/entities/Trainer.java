@@ -52,7 +52,7 @@ public class Trainer {
     private List<Tracking> trackings;
 
     //trainer-user relationship
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @MapsId
     @JoinColumn(name = "trainer_email")
     private User user;

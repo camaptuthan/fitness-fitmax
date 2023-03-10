@@ -22,7 +22,7 @@
     <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
       <h1 class="text-center"> Update User </h1>
       <div class="card-body">
-        <form id ="updateform1" th:action="@{/updateuser/{email} (email=${user.email})}" method="POST"  th:object="${user}">
+        <form id ="updateform1" th:action="@{/user/management/updateuser/{email} (email=${user.email})}" method="POST"  th:object="${user}">
           <fieldset>
             <div class="form-group">
               <label class="col-md-3 control-label" >Email</label>

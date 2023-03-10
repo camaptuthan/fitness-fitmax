@@ -44,20 +44,20 @@ public class UserController {
     private UserService userService;
 
 
-    @GetMapping("/listusers")
-    public String listUser(Model model, @Param("keyword") String keyword ) {
+    @GetMapping("/management/listusers")
+    public String listUser(Model model, @Param("keyword") String keyword) {
         List<UserDTO> userDTOList = userService.findAll();
         List<UserDTO> userDTOList1 = userService.findAllUser(keyword);
         List<Role> roleList = roleService.getAll();
-        if(keyword == null || "---All---".equals(keyword)){
+        if (keyword == null || "---All---".equals(keyword)) {
             model.addAttribute("listRole", roleList);
             model.addAttribute("list", userDTOList);
             model.addAttribute("size", userDTOList.size());
         } else {
             model.addAttribute("listRole", roleList);
-            model.addAttribute("list",userDTOList1);
-            model.addAttribute("keyword",keyword);
-            model.addAttribute("size",userDTOList1.size());
+            model.addAttribute("list", userDTOList1);
+            model.addAttribute("keyword", keyword);
+            model.addAttribute("size", userDTOList1.size());
 
         }
         return "management/UserManagement/UserList";
@@ -136,14 +136,14 @@ public class UserController {
         return "management/usermanagement/userlist";
     }
 
-    @RequestMapping("/avatauser/{email}")
+    @RequestMapping("/management/avataruser/{email}")
     public String getInformationUserPro5(@PathVariable("email") String email, Model model) {
         List<Role> roleList = roleService.getAll();
         List<Studio> studioList = studioService.getAll();
         UserDTO userDTO = userService.getUserById(email);
         model.addAttribute("user", userDTO);
 
-        return "management/usermanagement/userProfile";
+        return "pro";
     }
 //@GetMapping("/search")
 //    public String search(Model model, @RequestParam(name = "email",required = false) String email){
@@ -157,7 +157,7 @@ public class UserController {
 //    return "management/usermanagement/userlist";
 
 
-    @PostMapping("/avatauser/{email}")
+    @PostMapping("/management/avataruser/{email}")
     public String userUpdate(@RequestParam("fileImage") MultipartFile multipartFile,
 
                              @ModelAttribute("user") UserDTO userDTO,
@@ -165,39 +165,9 @@ public class UserController {
 
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         fireBaseUtils.uploadFile(multipartFile, fileName);
-        String url = FireBaseConstant.FILE_URL.toString();
-//        claimDocument.setFileUrl(String.format(FireBaseConstant.FILE_URL, fileName));
-        userDTO.setAvatar(String.format(FireBaseConstant.FILE_URL, fileName));
-
-//        claimDocument.setFileUrl(String.format(FireBaseConstant.FILE_URL, fileName));
-
         userDTO.setAvatar(String.format(FireBaseConstant.FILE_URL, fileName));
         userService.updateUser(userDTO);
-
-//        String uploadDir = "./src/main/resources/static/avatar/" + userDTO.getEmail();
-//
-//        Path uploadPath = Paths.get(uploadDir);
-
-//        if(!Files.exists(uploadPath)) {
-//            Files.createDirectories(uploadPath);
-//        }
-//
-//        try (InputStream inputStream = multipartFile.getInputStream()) {
-//            Path filePath = uploadPath.resolve(fileName);
-//            Files.copy(inputStream, filePath , StandardCopyOption.REPLACE_EXISTING);
-//        } catch (IOException e) {
-//            throw new IOException("Could not save uploaded file: " + fileName);
-//        }
-
-//
-//        userService.updateUser(userDTO);
-//        System.out.println("-0jodjf==================================================siodhfoisd=======" + userDTO);
-
-        userService.updateUser(userDTO);
-        System.out.println("-0jodjf==================================================siodhfoisd=======" + userDTO);
-
-
-        return "redirect:/listusers";
+        return "redirect:/user/management/listusers";
     }
 
 

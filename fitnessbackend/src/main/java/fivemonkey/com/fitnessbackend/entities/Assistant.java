@@ -22,7 +22,7 @@ public class Assistant {
     private List<Services> services;
 
     //assistant-user relationship
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @MapsId
     @JoinColumn(name = "assistant_email")
     private User user;

@@ -187,16 +187,16 @@
             <td>[[${user.studioName}]]</td>
             <td>
 
-              <a th:href="@{'/updateuser/' + ${user.email}}" class="edit" title="Edit" data-toggle="tooltip">Update &nbsp;<i class="material-icons">&#xE254;</i></a>
+              <a th:href="@{'/user/management/updateuser/' + ${user.email}}" class="edit" title="Edit" data-toggle="tooltip">Update &nbsp;<i class="material-icons">&#xE254;</i></a>
               <!--                        <button type="button" class="btn btn-danger">Danger</button>-->
 
 
-              <a th:if="${user.status==true}"  th:href="@{'/disableuser/' + ${user.email}}" class="disable" title="Disable" data-toggle="tooltip" >
+              <a th:if="${user.status==true}"  th:href="@{'/user/management/disableuser/' + ${user.email}}" class="disable" title="Disable" data-toggle="tooltip" >
 
                 <button type="button" class="btn btn-danger">Disable</button>
 
               </a>
-              <a  th:if="${user.status==false}"  th:href="@{'/enableuser/' + ${user.email}}" class="enable" title="Enable" data-toggle="tooltip" >
+              <a  th:if="${user.status==false}"  th:href="@{'/user/management/enableuser/' + ${user.email}}" class="enable" title="Enable" data-toggle="tooltip" >
 
                 <button type="button" class="btn btn-warning">Enable</button>
 

@@ -39,6 +39,6 @@ public class Tracking {
     private Trainee trainee;
 
     //tracking-trackingDetail relationship
-    @OneToMany(mappedBy = "tracking",cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tracking",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<TrackingDetail> trackingDetails;
 }
