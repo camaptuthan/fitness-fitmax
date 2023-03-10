@@ -26,10 +26,11 @@ public class HomeController {
         return "/blog";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "/login";
+    @GetMapping("/blog-writer")
+    public String blogWriter() {
+        return "/blog_writer";
     }
+
 
     @GetMapping("/register")
     public String register() {
@@ -43,24 +44,27 @@ public class HomeController {
 
 
     @GetMapping("/dashboard")
-    public String dashboard(){
+    public String dashboard() {
         return "management/dashboard/index";
     }
 
     @GetMapping("/admin-service")
-    public String serviceAdmin(){
+    public String serviceAdmin() {
         return "management/dashboard/service";
     }
+
     @GetMapping("/managestudio")
-    public String studioAdmin(){
+    public String studioAdmin() {
         return "management/StudioManagement/manage_studio";
     }
+
     @GetMapping("/sd")
-    public String studioAdmind(){
+    public String studioAdmind() {
         return "management/StudioManagement/add_studio";
     }
+
     @GetMapping("/sds")
-    public String studioAdmindd(){
+    public String studioAdmindd() {
         return "management/StudioManagement/addstudio";
     }
 

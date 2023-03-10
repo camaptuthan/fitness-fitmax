@@ -29,8 +29,8 @@ public class Clazz {
     @Column(name = "class_name")
     private String name;
 
-    @Column(name = "image", columnDefinition = "mediumblob")
-    private byte[] image;
+    @Column(name = "image")
+    private String image;
 
     @NotNull(message = "Not null")
     @Column(name = "duration")
@@ -50,15 +50,13 @@ public class Clazz {
     private boolean status;
 
     //service-class relationship
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId()
-    @JoinColumn(name = "class_id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "service_id", referencedColumnName = "service_id", nullable = false, unique = true)
     private Services service;
 
 
     //class-session relationship
-    @OneToMany(mappedBy = "aClass")
+    @OneToMany(mappedBy = "aClass", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonIgnore
     private List<Session> sessions;
 

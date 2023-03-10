@@ -21,7 +21,7 @@ public class PackageDTO {
     @NotEmpty(message = "LastName can not be empty!!")
     private String name;
 
-    private byte[] image;
+    private String image;
 
     @Min(value = 1, message = "{Size.Field.Duration}")
     private int duration;

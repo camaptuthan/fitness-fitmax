@@ -7,12 +7,14 @@ import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
+import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.services.RoleService;
 import fivemonkey.com.fitnessbackend.services.StudioService;
 import fivemonkey.com.fitnessbackend.services.UserService;
 import fivemonkey.com.fitnessbackend.utils.FireBaseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -30,29 +32,40 @@ import java.util.List;
 
 
 @Controller
-
+@RequestMapping("/user")
 public class UserController {
     @Autowired
-    FireBaseUtils fireBaseUtils;
+    private FireBaseUtils fireBaseUtils;
     @Autowired
-    RoleService roleService;
+    private RoleService roleService;
     @Autowired
     StudioService studioService;
     @Autowired
     private UserService userService;
 
 
-
     @GetMapping("/listusers")
-    public String listUser(Model model) {
+    public String listUser(Model model, @Param("keyword") String keyword ) {
         List<UserDTO> userDTOList = userService.findAll();
-        model.addAttribute("list", userDTOList);
-        model.addAttribute("size", userDTOList.size());
-        return "management/usermanagement/userlist";
+        List<UserDTO> userDTOList1 = userService.findAllUser(keyword);
+        List<Role> roleList = roleService.getAll();
+        if(keyword == null || "---All---".equals(keyword)){
+            model.addAttribute("listRole", roleList);
+            model.addAttribute("list", userDTOList);
+            model.addAttribute("size", userDTOList.size());
+        } else {
+            model.addAttribute("listRole", roleList);
+            model.addAttribute("list",userDTOList1);
+            model.addAttribute("keyword",keyword);
+            model.addAttribute("size",userDTOList1.size());
+
+        }
+        return "management/UserManagement/UserList";
 
     }
 
-    @PostMapping("/saveuser")
+
+    @PostMapping("/management/saveuser")
     public String saveUser(@ModelAttribute("user") UserDTO userDTO, RedirectAttributes ra) {
         try {
             userService.save(userDTO);
@@ -61,10 +74,10 @@ public class UserController {
             e.printStackTrace();
             ra.addFlashAttribute("fail", "Update failed");
         }
-        return "redirect:/listusers";
+        return "redirect:/user/management/listusers";
     }
 
-    @RequestMapping(value = "/enableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
+    @RequestMapping(value = "/management/enableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
     public String enableUser(@PathVariable("email") String email, RedirectAttributes ra) {
         try {
             userService.enableById(email);
@@ -73,10 +86,10 @@ public class UserController {
             e.printStackTrace();
             ra.addFlashAttribute("fail", "Enable failed");
         }
-        return "redirect:/listusers";
+        return "redirect:/user/management/listusers";
     }
 
-    @RequestMapping(value = "/disableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
+    @RequestMapping(value = "/management/disableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
     public String disableUser(@PathVariable("email") String email, RedirectAttributes ra) {
         try {
             userService.disableUser(email);
@@ -85,10 +98,10 @@ public class UserController {
             e.printStackTrace();
             ra.addFlashAttribute("fail", "disable failed");
         }
-        return "redirect:/listusers";
+        return "redirect:/user/management/listusers";
     }
 
-    @RequestMapping("updateuser/{email}")
+    @RequestMapping("/management/updateuser/{email}")
     public String getInformationUser(@PathVariable("email") String email, Model model) {
         List<Role> roleList = roleService.getAll();
         List<Studio> studioList = studioService.getAllStudios();
@@ -100,7 +113,7 @@ public class UserController {
         return "management/usermanagement/userupdate";
     }
 
-    @PostMapping("/updateuser/{email}")
+    @PostMapping("/management/updateuser/{email}")
     public String userUpdate(@PathVariable("email") String email, @ModelAttribute("user") UserDTO userDTO, RedirectAttributes ra) {
         try {
             userService.update(userDTO);
@@ -110,38 +123,28 @@ public class UserController {
             e.printStackTrace();
             ra.addFlashAttribute("fail", "Fail");
         }
-        return "redirect:/listusers";
+        return "redirect:/user/management/listusers";
 
 
     }
 
-    @RequestMapping ("/search")
+    @RequestMapping("/search")
     public String search(Model model, @Param("keyword") String keyword) {
-        List<User> userList = userService.findAllUser(keyword);
-        System.out.println("=====================hjkd==============mai========"+userList);
+        List<UserDTO> userList = userService.findAllUser(keyword);
+        System.out.println("=====================hjkd==============mai========" + userList);
         model.addAttribute("list", userList);
         return "management/usermanagement/userlist";
     }
 
     @RequestMapping("/avatauser/{email}")
-    public String getInformationUserPro5(@PathVariable("email") String email, Model model){
+    public String getInformationUserPro5(@PathVariable("email") String email, Model model) {
         List<Role> roleList = roleService.getAll();
         List<Studio> studioList = studioService.getAll();
         UserDTO userDTO = userService.getUserById(email);
         model.addAttribute("user", userDTO);
 
-        return "pro";
+        return "management/usermanagement/userProfile";
     }
-//@GetMapping("/search")
-//    public String search(Model model, @RequestParam(name = "email",required = false) String email){
-//    List<User> userList = null;
-//    if (StringUtils.hasText(email)){
-//        userList = userService.findAllUserNameContaining(email);}
-//    else{
-//        userList = userService.findAllUser();
-//        }
-//    model.addAttribute("list",userList);
-//    return "management/usermanagement/userlist";
 
 
     @PostMapping("/avatauser/{email}")
@@ -149,15 +152,13 @@ public class UserController {
 
                              @ModelAttribute("user") UserDTO userDTO,
                              Model model) throws IOException {
-        //save user
-
 
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         fireBaseUtils.uploadFile(multipartFile, fileName);
-       String url = FireBaseConstant.FILE_URL.toString();
-//        claimDocument.setFileUrl(String.format(FireBaseConstant.FILE_URL, fileName));
-        userDTO.setAvatar(String.format(FireBaseConstant.FILE_URL, fileName));
+        String url = FireBaseConstant.FILE_URL.toString();
 
+        userDTO.setAvatar(String.format(FireBaseConstant.FILE_URL, fileName));
+        userService.updateUser(userDTO);
 
 //        String uploadDir = "./src/main/resources/static/avatar/" + userDTO.getEmail();
 //
@@ -174,10 +175,12 @@ public class UserController {
 //            throw new IOException("Could not save uploaded file: " + fileName);
 //        }
 
+//
+//        userService.updateUser(userDTO);
+//        System.out.println("-0jodjf==================================================siodhfoisd=======" + userDTO);
 
         userService.updateUser(userDTO);
-        System.out.println("-0jodjf==================================================siodhfoisd======="+userDTO);
-
+        System.out.println("-0jodjf==================================================siodhfoisd=======" + userDTO);
 
 
         return "redirect:/listusers";
@@ -185,37 +188,41 @@ public class UserController {
 
 
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
-    public String registerUser(@Valid  @ModelAttribute("userDTO") User user, RedirectAttributes attributes, HttpServletRequest request, BindingResult bindingResult) throws MessagingException, UnsupportedEncodingException {
-        if(bindingResult.hasErrors()){
+    public String registerUser(@Valid @ModelAttribute("userDTO") User user, RedirectAttributes attributes, HttpServletRequest request, BindingResult bindingResult) throws MessagingException, UnsupportedEncodingException {
+        if (bindingResult.hasErrors()) {
             return "register";
         }
         List<Object> userPresentObj = userService.isUserPresent(user);
-            String phone =user.getPhone();
-            String siteUrl= Utility.getSiteURL(request);
-            if((Boolean) userPresentObj.get(0)|| !phone.matches("^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$")){
-                attributes.addFlashAttribute("fail", userPresentObj.get(1));
-                attributes.addFlashAttribute("regexPhone", "Phone Must Be Matches (+84) 35 539-0605;");
-                return "redirect:/register";
-            }
-            userService.registerUser(user);
-            userService.sendVerificationEmail(user,siteUrl);
-            attributes.addFlashAttribute("message","You have to registered as a member.");
-            attributes.addFlashAttribute("message2","Please check your email verify account ");
+        String phone = user.getPhone();
+        String siteUrl = Utility.getSiteURL(request);
+        if ((Boolean) userPresentObj.get(0) || !phone.matches("^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$")) {
+            attributes.addFlashAttribute("fail", userPresentObj.get(1));
+            attributes.addFlashAttribute("regexPhone", "Phone Must Be Matches (+84) 35 539-0605;");
             return "redirect:/register";
         }
+        userService.registerUser(user);
+        userService.sendVerificationEmail(user, siteUrl);
+        attributes.addFlashAttribute("message", "You have to registered as a member.");
+        attributes.addFlashAttribute("message2", "Please check your email verify account ");
+        return "redirect:/register";
+    }
 
-        //handle verify
-       @GetMapping("/verify")
-    public String verifyAccount(@Param("code") String code, Model model){
-        boolean verified=userService.verify(code);
-         String title=verified ? "Verification Success":"Verification Failed";
-         model.addAttribute("title",title);
-         return "/register";
-       }
+    //handle verify
+    @GetMapping("/verify")
+    public String verifyAccount(@Param("code") String code, Model model) {
+        boolean verified = userService.verify(code);
+        String title = verified ? "Verification Success" : "Verification Failed";
+        model.addAttribute("title", title);
+        return "/register";
+    }
 
 
 
-
+    @GetMapping("/myprofile")
+    public String myProfile(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+        model.addAttribute("user", userDetail.getUser());
+        return "/myprofile";
+    }
 }
 
 

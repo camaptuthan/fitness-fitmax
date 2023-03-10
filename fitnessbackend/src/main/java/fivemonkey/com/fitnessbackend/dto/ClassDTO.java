@@ -34,7 +34,6 @@ public class ClassDTO {
     private String duration;
     private Trainer trainer;
 
-
     private List<ScheduleDTO> scheduleDTO;
 
     @Override

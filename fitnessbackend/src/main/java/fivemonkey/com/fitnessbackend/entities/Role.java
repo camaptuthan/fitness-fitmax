@@ -1,4 +1,5 @@
 package fivemonkey.com.fitnessbackend.entities;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +30,7 @@ public class Role {
     private String des;
 
     //role-user relationship
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<User> users;
 
     @Override

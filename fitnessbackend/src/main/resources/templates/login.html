@@ -13,7 +13,7 @@
     <link rel="stylesheet" th:href="@{/css/stylelogin.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body class="img js-fullheight"  >
+<body class="img js-fullheight">
 <section class="ftco-section">
     <div class="container">
         <div class="row justify-content-center">
@@ -25,12 +25,14 @@
             <div class="col-md-6 col-lg-4">
                 <div class="login-wrap p-0">
                     <h3 class="mb-4 text-center">Have an account?</h3>
-                    <form action="#" class="signin-form">
+                    <form action="#" th:action="@{/login}" method="post" class="signin-form" th:object="${loginDto}">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Email" required>
+                            <input type="text" class="form-control" placeholder="Email" name="email" required
+                                   th:field="*{username}">
                         </div>
                         <div class="form-group">
-                            <input id="password-field" type="password" class="form-control" placeholder="Password" required>
+                            <input id="password-field" type="password" class="form-control" placeholder="Password"
+                                   name="password" th:field="*{password}" required>
                             <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                         </div>
                         <div class="form-group">
@@ -39,7 +41,7 @@
                         <div class="form-group d-md-flex">
                             <div class="w-50">
                                 <label class="checkbox-wrap checkbox-primary">Remember Me
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" name="remember-me" checked>
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
@@ -48,7 +50,7 @@
                             </div>
                         </div>
                     </form>
-                    <p   class="w-100 text-center">&mdash; <a href="/register">Register</a>  &mdash;</p>
+                    <p class="w-100 text-center">&mdash; <a href="/register">Register</a> &mdash;</p>
 
                 </div>
             </div>
@@ -57,5 +59,4 @@
 </section>
 </body>
 </html>
-
 
