@@ -2,7 +2,6 @@ package fivemonkey.com.fitnessbackend.controller;
 
 
 import fivemonkey.com.fitnessbackend.configuration.Utility;
-import fivemonkey.com.fitnessbackend.constant.FireBaseConstant;
 import fivemonkey.com.fitnessbackend.dto.RegistrationDTO;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.Role;
@@ -19,7 +18,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,7 +45,7 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private RegistrationService  registrationService;
+    private RegistrationService registrationService;
 
     @GetMapping("/management/listusers")
     public String listUser(Model model, @Param("keyword") String keyword) {
@@ -229,11 +227,15 @@ public class UserController {
     }
 
 
-    @GetMapping("/myprofile")
+    @GetMapping("/profile")
     public String myProfile(@AuthenticationPrincipal UserDetail userDetail, Model model) {
-        model.addAttribute("registrations", registrationService.getRegistrationByUserEmail(userDetail.getUser().getEmail()));
         model.addAttribute("user", userDetail.getUser());
-        return "/myprofile";
+        return "user/profile";
+    }
+    @ResponseBody
+    @GetMapping("/profile/registration")
+    public List<RegistrationDTO> registration(@AuthenticationPrincipal UserDetail userDetail) {
+        return registrationService.getRegistrationByUserEmail(userDetail.getUser().getEmail());
     }
 
 
