@@ -41,7 +41,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         List<Schedule> schedules = scheduleRepository.findAll();
         List<ScheduleDTO> scheduleDTOS = new ArrayList<>();
         schedules.forEach(schedule -> {
-            ScheduleDTO scheduleDTO = modelMapperConfiguration.getModelMapper().map(schedule, ScheduleDTO.class);
+            ScheduleDTO scheduleDTO = modelMapperConfiguration.map(schedule, ScheduleDTO.class);
             scheduleDTO.setStartTime(getTime(schedule.getStartTime()));
             scheduleDTO.setEndTime(getTime(schedule.getEndTime()));
             scheduleDTO.setHaveSessions(!sessionService.getSessionByScheduleIdBetweenTimes(schedule.getId(), startTime, endTime).isEmpty());

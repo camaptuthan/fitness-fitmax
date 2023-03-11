@@ -10,7 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "service_type", schema = "dbo")
 public class ServiceType {

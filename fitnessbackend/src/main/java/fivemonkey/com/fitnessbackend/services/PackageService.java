@@ -31,4 +31,7 @@ public interface PackageService {
     Page<Package> findPaginated(int pageNo, int pageSize);
 
     public List<Package> searchPackage(String key);
+
+
+    PackageDTO getPackageByServiceId(String serviceId);
 }

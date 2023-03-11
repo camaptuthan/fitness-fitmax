@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "package", schema = "dbo")
 public class Package {

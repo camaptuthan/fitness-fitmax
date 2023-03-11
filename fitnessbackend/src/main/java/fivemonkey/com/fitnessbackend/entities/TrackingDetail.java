@@ -9,7 +9,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "trackingdetail", schema = "dbo")
 public class TrackingDetail {

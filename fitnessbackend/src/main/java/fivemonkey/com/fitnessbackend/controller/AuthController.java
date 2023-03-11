@@ -37,7 +37,6 @@ public class AuthController {
 
     @PostMapping
     public String signIn(@ModelAttribute("loginDto") LoginDTO loginDTO) {
-        System.out.println(loginDTO.getUsername());
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);

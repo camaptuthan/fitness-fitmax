@@ -9,7 +9,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "city", schema = "dbo")
 public class City {

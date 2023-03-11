@@ -16,7 +16,7 @@ public interface ClassService {
     Clazz update(ClassDTO c);
 
 
-     void disableClass(String id);
+    void disableClass(String id);
 
 
     void enableById(String id);
@@ -30,5 +30,6 @@ public interface ClassService {
 
     List<Clazz> searchByName(String keyword);
 
-    List<ClassDTO> getRegistrationClassByUserEmail(String userEmail);
+
+    ClassDTO getByServiceId(String id);
 }

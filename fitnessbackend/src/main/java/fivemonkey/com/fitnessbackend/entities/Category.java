@@ -11,7 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@ToString
 @Table(name = "category", schema = "dbo")
 public class Category {
 

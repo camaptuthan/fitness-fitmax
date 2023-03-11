@@ -9,7 +9,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "trainee", schema = "dbo")
 public class Trainee {
@@ -25,17 +24,17 @@ public class Trainee {
     private Double weight;
 
     //trainee-tracking relationship
-    @OneToMany(mappedBy = "trainee")
+    @OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY)
     private List<Tracking> trackings;
 
     //trainee-user relationship
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "trainee_email")
     private User user;
 
     //trainee-registration relationship
-    @OneToMany(mappedBy = "trainee",cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "trainee", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Registration> registrations;
 
     public Trainee(String email) {

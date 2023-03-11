@@ -1,6 +1,9 @@
 package fivemonkey.com.fitnessbackend.entities;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -14,7 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "[user]", schema = "dbo")
 public class User {
@@ -76,6 +78,5 @@ public class User {
 
     @Column(name = "verification_code", updatable = false)
     private String verificationCode;
-
 
 }

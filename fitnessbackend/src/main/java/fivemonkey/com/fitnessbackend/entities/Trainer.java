@@ -10,7 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "trainer", schema = "dbo")
 public class Trainer {

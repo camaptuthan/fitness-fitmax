@@ -61,7 +61,6 @@ public class UserController {
             model.addAttribute("list", userDTOList1);
             model.addAttribute("keyword", keyword);
             model.addAttribute("size", userDTOList1.size());
-
         }
         return "management/UserManagement/UserList";
 

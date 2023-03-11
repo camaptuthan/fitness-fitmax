@@ -11,7 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "personal_training", schema = "dbo")
 public class PersonalTraining {

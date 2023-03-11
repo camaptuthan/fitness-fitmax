@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "manager", schema = "dbo")
 public class Manager {

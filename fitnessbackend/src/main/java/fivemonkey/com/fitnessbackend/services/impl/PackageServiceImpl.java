@@ -1,5 +1,6 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
+import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.PackageDTO;
 import fivemonkey.com.fitnessbackend.entities.Package;
 import fivemonkey.com.fitnessbackend.repository.PackageRepository;
@@ -19,6 +20,9 @@ public class PackageServiceImpl implements PackageService {
     @Autowired
     private PackageRepository packageRepository;
 
+    @Autowired
+    private ModelMapperConfiguration<Package, PackageDTO> modelMapperConfiguration;
+
     //get all packages
     @Override
     public List<Package> getAllPackages() {
@@ -28,17 +32,17 @@ public class PackageServiceImpl implements PackageService {
     //get package by id
     @Override
     public PackageDTO getPackageById(String id) {
-        Package p= packageRepository.getById(id);
-        PackageDTO packageDTO= new PackageDTO();
-        ModelMapper mapper= new ModelMapper();
-        packageDTO=mapper.map(p,PackageDTO.class);
+        Package p = packageRepository.getById(id);
+        PackageDTO packageDTO = new PackageDTO();
+        ModelMapper mapper = new ModelMapper();
+        packageDTO = mapper.map(p, PackageDTO.class);
         return packageDTO;
     }
 
     //add new package
     @Override
     public Package save(PackageDTO p) {
-        Package aPackage =new Package();
+        Package aPackage = new Package();
         aPackage.setName(p.getName());
         aPackage.setDuration(p.getDuration());
         aPackage.setPrice(p.getPrice());
@@ -50,14 +54,14 @@ public class PackageServiceImpl implements PackageService {
     //update
     @Override
     public Package update(PackageDTO p) {
-        try{
+        try {
             Package aPackage = packageRepository.getById(p.getId());
             aPackage.setName(p.getName());
             aPackage.setDuration(p.getDuration());
             aPackage.setPrice(p.getPrice());
             aPackage.setDes(p.getDes());
             return packageRepository.save(aPackage);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -81,12 +85,17 @@ public class PackageServiceImpl implements PackageService {
 
     @Override
     public Page<Package> findPaginated(int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo -1, pageSize);
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return packageRepository.findAll(pageable);
     }
 
     @Override
     public List<Package> searchPackage(String key) {
         return null;
+    }
+
+    @Override
+    public PackageDTO getPackageByServiceId(String serviceId) {
+        return modelMapperConfiguration.map(packageRepository.getPackageByServicesId(serviceId), PackageDTO.class);
     }
 }

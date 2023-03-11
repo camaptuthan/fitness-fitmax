@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "class", schema = "dbo")
 public class Clazz {

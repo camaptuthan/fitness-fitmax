@@ -10,7 +10,6 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "registration", schema = "dbo")
 public class Registration {

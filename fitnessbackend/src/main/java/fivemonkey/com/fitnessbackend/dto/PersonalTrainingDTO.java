@@ -2,21 +2,24 @@ package fivemonkey.com.fitnessbackend.dto;
 
 import lombok.*;
 
-import java.util.Date;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class RegistrationDTO {
+public class PersonalTrainingDTO {
     private String id;
+    private String name;
+    private String image;
+    private int slot;
+    private Float price;
+    private int duration;
+    private String des;
     private String date;
-    private Date startDate;
     private boolean status;
     private String servicesId;
     private String servicesName;
+    private String trainerEmail;
+    private String trainerName;
 
-    private String itemId;
-    private String itemName;
 }

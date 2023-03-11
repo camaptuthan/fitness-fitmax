@@ -3,9 +3,6 @@ package fivemonkey.com.fitnessbackend.entities;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
-import org.hibernate.annotations.GenericGenerator;
-
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +12,6 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@ToString
 @Table(name = "schedule", schema = "dbo")
 public class Schedule {
 

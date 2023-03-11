@@ -12,7 +12,6 @@ import java.util.*;
 @Getter
 @Setter
 @Entity
-@ToString
 @Table(name = "blog", schema = "dbo")
 public class Blog {
 

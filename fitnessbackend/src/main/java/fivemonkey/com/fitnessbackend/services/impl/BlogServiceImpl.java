@@ -1,5 +1,6 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
+import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.BlogDTO;
 import fivemonkey.com.fitnessbackend.entities.Blog;
 import fivemonkey.com.fitnessbackend.repository.BlogRepository;
@@ -19,7 +20,7 @@ public class BlogServiceImpl implements BlogService {
     private BlogRepository blogRepository;
 
     @Autowired
-    ModelMapper modelMapper;
+    private ModelMapperConfiguration<Blog, BlogDTO> modelMapper;
 
     //get all blogs
     @Override

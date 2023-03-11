@@ -12,4 +12,6 @@ public interface PackageRepository extends JpaRepository<Package, String> {
 
     @Query("select p from Package p where concat(p.name,'',p.des,'',p.price) like %?1%")
     List<Package> searchPackage(String key);
+
+    Package getPackageByServicesId(String serviceId);
 }

@@ -9,7 +9,6 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@ToString
 @Table(name = "assistant", schema = "dbo")
 public class Assistant {
 

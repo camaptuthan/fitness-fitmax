@@ -11,7 +11,6 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "session", schema = "dbo",  uniqueConstraints = {@UniqueConstraint(columnNames = {"happened_date","schedule_id"})})
 public class Session {
