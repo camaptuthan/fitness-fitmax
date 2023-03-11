@@ -1,10 +1,7 @@
 package fivemonkey.com.fitnessbackend.dto;
 
 import fivemonkey.com.fitnessbackend.entities.Blog;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -12,6 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class CategoryDTO {
 
     private String id;

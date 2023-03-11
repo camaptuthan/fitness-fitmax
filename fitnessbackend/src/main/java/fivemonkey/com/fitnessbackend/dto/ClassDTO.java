@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class ClassDTO {
 
     private String id;
@@ -37,22 +38,4 @@ public class ClassDTO {
 
     private List<ScheduleDTO> scheduleDTO;
 
-
-    @Override
-    public String toString() {
-        return "ClassDTO{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", date=" + date +
-                ", price=" + price +
-                ", servicesId='" + servicesId + '\'' +
-                ", servicesName='" + servicesName + '\'' +
-                ", img='" + img + '\'' +
-                ", status=" + status +
-                ", des='" + des + '\'' +
-                ", duration='" + duration + '\'' +
-                ", trainerId='" + trainerId + '\'' +
-                ", scheduleDTO=" + scheduleDTO +
-                '}';
-    }
 }

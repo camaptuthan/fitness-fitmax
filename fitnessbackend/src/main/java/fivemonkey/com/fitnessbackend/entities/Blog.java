@@ -1,10 +1,8 @@
 package fivemonkey.com.fitnessbackend.entities;
 
 import javax.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.*;
@@ -14,6 +12,7 @@ import java.util.*;
 @Getter
 @Setter
 @Entity
+@ToString
 @Table(name = "blog", schema = "dbo")
 public class Blog {
 

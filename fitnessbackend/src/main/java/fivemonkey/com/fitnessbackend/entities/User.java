@@ -1,9 +1,6 @@
 package fivemonkey.com.fitnessbackend.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -17,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "[user]", schema = "dbo")
 public class User {
@@ -28,7 +26,7 @@ public class User {
     private String email;
     @Column(name = "password")
     @NotEmpty(message = "This field can not empty")
-    @Length(min = 8,message = "Password must be at least 8 characters")
+    @Length(min = 8, message = "Password must be at least 8 characters")
     private String password;
     @Column(name = "first_name")
     @NotEmpty(message = "This field can not empty")
@@ -76,30 +74,8 @@ public class User {
     @PrimaryKeyJoinColumn
     private Trainer trainer;
 
-    @Column(name="verification_code",updatable = false)
+    @Column(name = "verification_code", updatable = false)
     private String verificationCode;
 
 
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", date=" + date +
-                ", status=" + status +
-                ", role=" + role +
-                ", studio=" + studio +
-                ", blogs=" + blogs +
-                ", manager=" + manager +
-                ", assistant=" + assistant +
-                ", trainee=" + trainee +
-                ", trainer=" + trainer +
-                '}';
-    }
 }

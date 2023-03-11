@@ -235,26 +235,46 @@
                 <div class="tab-pane fade" id="v-pills-registration" role="tabpanel"
                      aria-labelledby="v-pills-profile-tab"
                      tabindex="0">
-                    <table class="table table-bordered table-dark table-hover">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Service Name</th>
-                            <th scope="col">Registration Date</th>
-                            <th scope="col">Status</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <th:block th:each="registration : ${registrations}">
-                            <tr>
-                                <th scope="row" th:text="${registration.id}"></th>
-                                <td th:text="${registration.servicesName}"></td>
-                                <td th:text="${registration.date}"></td>
-                                <td th:text="${registration.isStatus()?'Current':'Gone'}"></td>
-                            </tr>
-                        </th:block>
-                        </tbody>
-                    </table>
+                    <section class="s-training-schedule p-0 pb-5"
+                             style="background-image: url(assets/img/bg-table-1.svg);">
+                        <div class="container">
+                            <div class="training-schedule-cover">
+                                <div class="training-schedule-table">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                        <th>#</th>
+                                        <th>Service Name</th>
+                                        <th>Registration Date</th>
+                                        <th>Status</th>
+                                        </thead>
+                                        <tbody>
+                                        <th:block th:each="registration : ${registrations}">
+                                            <tr>
+                                                <td th:text="${registration.id}">9-00</td>
+                                                <td>
+                                                    <h4>
+                                                        <a href="" th:text="${registration.servicesName}"></a>
+                                                    </h4>
+                                                </td>
+                                                <td>
+                                                    <div class="date" th:text="${registration.date}">9-00 – 11:00</div>
+                                                </td>
+                                                <td>
+                                                    <div class="name text-light"
+                                                         th:text="${registration.isStatus()?'Current':'Expired'}">Mark
+                                                        Klark
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </th:block>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
                 <div class="tab-pane fade" id="v-pills-disabled" role="tabpanel" aria-labelledby="v-pills-disabled-tab"
                      tabindex="0">...
