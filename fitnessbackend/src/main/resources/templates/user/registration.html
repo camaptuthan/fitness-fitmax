@@ -44,7 +44,7 @@
 <script>
     $(document).ready(function () {
         $.ajax({
-            url: "http://localhost:8080/user/profile/registration",
+            url: `${origin_path}/user/profile/registration`,
             type: "GET",
             success: function (data) {
                 console.log(data);
@@ -61,7 +61,7 @@
                             <td>${registration.id}</td>
                             <td>
                                 <h4>
-                                    <a href="">${registration.itemName}</a>
+                                    <a href="${registration.path}">${registration.itemName}</a>
                                 </h4>
                             </td>
                             <td>

@@ -2,6 +2,7 @@ $(window).on("load", (event) => {
     getYear();
 
 })
+const origin_path = window.location.origin;
 // schedule parts
 const scheduleEle = $("#schedule-table");
 const scheduleHeaderEle = $("#schedule-header");
@@ -102,7 +103,8 @@ const getWeekDays = (weekStart, weekEnd) => {
 const getSchedule = () => {
     let start_time = `${startWeekEle[0].innerText}/${currentYearEle[0].innerText}`;
     let end_time = `${endWeekEle[0].innerText}/${currentYearEle[0].innerText}`;
-    const api_path = `http://localhost:8080/api/v1/schedule?start=${start_time}&end=${end_time}`;
+
+    const api_path = `${origin_path}/api/v1/schedule?start=${start_time}&end=${end_time}`;
     $.get(api_path, (result) => {
         scheduleBodyEle.html("");
         const data = result;
@@ -139,8 +141,13 @@ const getSession = () => {
         scheduleEle.children().not(".time-col").html("");
         let start_time = `${startWeekEle[0].innerText}/${currentYearEle[0].innerText}`;
         let end_time = `${endWeekEle[0].innerText}/${currentYearEle[0].innerText}`;
-        let api_path = `http://localhost:8080/api/v1/schedule/session/${schedule_id}?start=${start_time}&end=${end_time}`;
 
+        const classId = $("#class_id").val();
+
+        let api_path;
+        api_path = !classId ? `${origin_path}/api/v1/schedule/session/${schedule_id}?start=${start_time}&end=${end_time}` :
+            `${origin_path}/api/v1/schedule/session/${schedule_id}/${classId}?start=${start_time}&end=${end_time}`;
+        
         if (schedule_exist) {
             $.get(api_path, (result) => {
                 const data = result;
@@ -156,9 +163,10 @@ const getSession = () => {
                         `);
                     sessionEle.children().fadeIn(1000 + index * 250);
                 });
-            }).success(() => {
-                console.log(api_path);
-            });
+            })
+            //     .success(() => {
+            //     console.log(api_path);
+            // });
         }
     });
 }

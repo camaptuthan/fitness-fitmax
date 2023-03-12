@@ -40,6 +40,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
             String itemId = "";
             String itemName = "";
+            String path = "";
 
             RegistrationDTO registrationDTO = modelMapper.map(registration, RegistrationDTO.class);
             String serviceId = registrationDTO.getServicesId();
@@ -48,6 +49,7 @@ public class RegistrationServiceImpl implements RegistrationService {
             if (classDTO != null) {
                 itemId = classDTO.getId();
                 itemName = classDTO.getName();
+                path = "/class/" + itemId;
             } else {
                 PackageDTO packageDTO = packageService.getPackageByServiceId(serviceId);
                 if (packageDTO != null) {
@@ -59,10 +61,10 @@ public class RegistrationServiceImpl implements RegistrationService {
                     itemName = personalTrainingDTO.getName();
                 }
             }
-            
 
             registrationDTO.setItemId(itemId);
             registrationDTO.setItemName(itemName);
+            registrationDTO.setPath(path);
             registrations.add(registrationDTO);
         });
         return registrations;

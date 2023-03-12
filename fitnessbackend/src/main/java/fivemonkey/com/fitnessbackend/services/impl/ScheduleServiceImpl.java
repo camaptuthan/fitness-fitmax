@@ -1,10 +1,7 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
-import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.ScheduleDTO;
-import fivemonkey.com.fitnessbackend.dto.SessionDTO;
-import fivemonkey.com.fitnessbackend.entities.Registration;
 import fivemonkey.com.fitnessbackend.entities.Schedule;
 import fivemonkey.com.fitnessbackend.repository.ClassRepository;
 import fivemonkey.com.fitnessbackend.repository.RegistrationRepository;
@@ -50,17 +47,10 @@ public class ScheduleServiceImpl implements ScheduleService {
         return scheduleDTOS;
     }
 
-
-    //get schedule information by provided classId
-
     //getting time from specify date
     private String getTime(Date date) {
         SimpleDateFormat localDateFormat = new SimpleDateFormat("HH:mm");
         return localDateFormat.format(date);
     }
 
-    //getting weekday from specify date
-
-
-    //getting time from specify date
 }

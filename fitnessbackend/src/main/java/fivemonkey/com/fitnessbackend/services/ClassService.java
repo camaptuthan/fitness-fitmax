@@ -11,6 +11,8 @@ public interface ClassService {
 
     List<ClassDTO> findAll();
 
+    List<ClassDTO> findAllRelatedByClass(Clazz clazz);
+
     Clazz save(ClassDTO c);
 
     Clazz update(ClassDTO c);

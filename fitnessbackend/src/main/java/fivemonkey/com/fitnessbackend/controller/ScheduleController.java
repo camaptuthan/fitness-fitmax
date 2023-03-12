@@ -45,6 +45,14 @@ public class ScheduleController {
         return sessionService.getSessionByScheduleIdBetweenTimes(scheduleId, formatTime(start), formatTime(end));
     }
 
+    @GetMapping("/session/{schedule_id}/{class_id}")
+    public List<SessionDTO> getSessionByScheduleIdAndClassId(@PathVariable("schedule_id") String scheduleId,
+                                                             @PathVariable("class_id") String classId,
+                                                             @RequestParam("start") String start,
+                                                             @RequestParam("end") String end
+    ) {
+        return sessionService.getSessionByScheduleIdAndClassIdBetweenTimes(scheduleId, classId, formatTime(start), formatTime(end));
+    }
      
     private Date formatTime(String time) {
         Date output = null;

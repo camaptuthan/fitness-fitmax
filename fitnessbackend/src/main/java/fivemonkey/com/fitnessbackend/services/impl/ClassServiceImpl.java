@@ -42,6 +42,11 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
+    public List<ClassDTO> findAllRelatedByClass(Clazz clazz) {
+        return null;
+    }
+
+    @Override
     public Clazz save(ClassDTO c) {
         Clazz clazz = new Clazz();
         clazz.setName(c.getName());

@@ -8,5 +8,11 @@ import java.util.List;
 
 @Service
 public interface SessionService {
+
+    //get all sessions by schedule id between start time and end time
     List<SessionDTO> getSessionByScheduleIdBetweenTimes(String scheduleId, Date startTime, Date endTime);
+
+
+    //get all sessions by schedule id and class id between start time and end time
+    List<SessionDTO> getSessionByScheduleIdAndClassIdBetweenTimes(String scheduleId, String classId, Date formatTime, Date formatTime1);
 }

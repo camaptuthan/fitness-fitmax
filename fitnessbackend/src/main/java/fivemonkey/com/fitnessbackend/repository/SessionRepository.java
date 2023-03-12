@@ -16,5 +16,8 @@ public interface SessionRepository extends JpaRepository<Session, String> {
     List<Session> getSessionsBySchedule(String scheduleId);
 
     @Query("select s from Session s where s.schedule.id = ?1 and s.happenedDate between ?2 and ?3")
-    List<Session> getSessionsByScheduleAndHappenedDateBetween(String schedule, Date happenedDate, Date happenedDate2);
+    List<Session> getSessionsByScheduleAndHappenedDateBetween(String schedule, Date startDate, Date endDate);
+
+    @Query("select s from Session s where s.schedule.id = ?1 and s.aClass.id = ?2 and s.happenedDate between ?3 and ?4")
+    List<Session> getSessionsByScheduleAndClassAndHappenedDateBetween(String schedule, String classId, Date startDate, Date endDate);
 }

@@ -9,6 +9,8 @@ import java.util.List;
 @Service
 public interface ScheduleService {
 
+
+    // get all schedules have sessions between start time and end time
     List<ScheduleDTO> getAll(Date startTime, Date endTime);
 
 }

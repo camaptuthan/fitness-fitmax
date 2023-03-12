@@ -19,4 +19,5 @@ public class RegistrationDTO {
 
     private String itemId;
     private String itemName;
+    private String path;
 }
