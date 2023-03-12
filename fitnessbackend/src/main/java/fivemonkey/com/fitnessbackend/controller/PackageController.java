@@ -2,16 +2,11 @@ package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.dto.CategoryDTO;
 import fivemonkey.com.fitnessbackend.dto.PackageDTO;
-import fivemonkey.com.fitnessbackend.dto.ServiceDTO;
-import fivemonkey.com.fitnessbackend.entities.Category;
-import fivemonkey.com.fitnessbackend.entities.Package;
-import fivemonkey.com.fitnessbackend.entities.Services;
+import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
 import fivemonkey.com.fitnessbackend.services.CategoryService;
 import fivemonkey.com.fitnessbackend.services.PackageService;
 import fivemonkey.com.fitnessbackend.services.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -59,7 +54,7 @@ public class PackageController {
     @GetMapping("/packages")
     public String getAllPackages(Model model) {
         List<PackageDTO> packageDTOList1 = packageServices.getAll();
-        List<ServiceDTO> servicesList = serviceService.getAllByPackage();
+        List<ServicesDTO> servicesList = serviceService.getAllByPackage();
         List<CategoryDTO> category = categoryService.findAllCategoriesByType("service");
             model.addAttribute("servicesList", servicesList);
             model.addAttribute("packagelist", packageDTOList1);

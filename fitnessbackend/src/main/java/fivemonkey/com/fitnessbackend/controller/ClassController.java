@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/class")
 public class ClassController {
     @Autowired
     TrainerService trainerService;
@@ -73,9 +76,9 @@ public class ClassController {
     //enable class
     @RequestMapping(value = "/enable-class/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
     public String enableClass(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
-            classService.enableById(id);
-            redirectAttributes.addFlashAttribute("success", "Enable Successfully");
-            return "redirect:/admin/list-class";
+        classService.enableById(id);
+        redirectAttributes.addFlashAttribute("success", "Enable Successfully");
+        return "redirect:/admin/list-class";
 
     }
 
@@ -83,9 +86,9 @@ public class ClassController {
 
     @RequestMapping(value = "/disable-class/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
     public String disableClass(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
-            classService.disableClass(id);
-            redirectAttributes.addFlashAttribute("success", "Disabled");
-            return "redirect:/admin/list-class";
+        classService.disableClass(id);
+        redirectAttributes.addFlashAttribute("success", "Disabled");
+        return "redirect:/admin/list-class";
     }
 
 
@@ -129,5 +132,25 @@ public class ClassController {
 
     }
 
+    @GetMapping("{id}")
+    public String getDetail(@PathVariable("id") String id, Model model) {
+        ClassDTO classDTO = classService.getClassById(id);
+        List<ClassDTO> classDTOList = classService.findAll();
+        Map<String, List<ClassDTO>> classDTOListMap = new HashMap<>();
 
+
+        for (int i = 0; i < (classDTOList.size() / 3) + 1; i++) {
+            List<ClassDTO> valueList = new ArrayList<>();
+            for (int j = 0; j < 3; j++) {
+                if (i * 3 + j < classDTOList.size()) {
+                    valueList.add(classDTOList.get(i * 3 + j));
+                }
+            }
+            classDTOListMap.put("page-"+i+1, valueList);
+        }
+
+        model.addAttribute("related_class", classDTOListMap);
+        model.addAttribute("class", classDTO);
+        return "class/profile";
+    }
 }

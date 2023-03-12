@@ -1,9 +1,8 @@
 package fivemonkey.com.fitnessbackend.services;
 
-import fivemonkey.com.fitnessbackend.dto.ServiceDTO;
+import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
 import fivemonkey.com.fitnessbackend.entities.Services;
 import org.springframework.stereotype.Service;
-
 
 import java.util.List;
 
@@ -12,9 +11,9 @@ public interface ServiceService {
 
    List<Services> getAll();
 
-   List<ServiceDTO> getAllByPackage();
+   List<ServicesDTO> getAllByPackage();
 
-   List<ServiceDTO> getAllByPT();
+   List<ServicesDTO> getAllByPT();
 
-   List<ServiceDTO> getAllByClass();
+   List<ServicesDTO> getAllByClass();
 }

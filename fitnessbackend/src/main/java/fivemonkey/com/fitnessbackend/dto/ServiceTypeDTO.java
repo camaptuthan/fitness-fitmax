@@ -19,5 +19,5 @@ public class ServiceTypeDTO {
 
     private String type;
 
-    private List<ServiceDTO> serviceDTOList;
+    private List<ServicesDTO> serviceDTOList;
 }

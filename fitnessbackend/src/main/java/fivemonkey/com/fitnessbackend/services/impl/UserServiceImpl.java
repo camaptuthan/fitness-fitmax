@@ -1,5 +1,6 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
+import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
@@ -39,7 +40,7 @@ public class UserServiceImpl implements UserService {
     private JavaMailSender mailSender;
 
     @Autowired
-    ModelMapper modelMapper;
+    ModelMapperConfiguration<User, UserDTO> modelMapperConfiguration;
 
 
     @Override
@@ -48,7 +49,7 @@ public class UserServiceImpl implements UserService {
         List<User> userList = userRepository.findAll();
         List<UserDTO> userDTOList = new ArrayList<>();
         for (User u : userList) {
-            UserDTO userDTO = modelMapper.map(u, UserDTO.class);
+            UserDTO userDTO = modelMapperConfiguration.map(u, UserDTO.class);
             userDTOList.add(userDTO);
         }
         return userDTOList;

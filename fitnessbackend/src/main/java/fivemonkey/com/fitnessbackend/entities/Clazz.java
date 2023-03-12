@@ -1,10 +1,7 @@
 package fivemonkey.com.fitnessbackend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -52,12 +49,13 @@ public class Clazz {
     //service-class relationship
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "service_id", referencedColumnName = "service_id", nullable = false, unique = true)
-    private Services service;
+    private Services services;
 
 
     //class-session relationship
     @OneToMany(mappedBy = "aClass", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonIgnore
     private List<Session> sessions;
+
 
 }

@@ -11,12 +11,14 @@ public interface ClassService {
 
     List<ClassDTO> findAll();
 
+    List<ClassDTO> findAllRelatedByClass(Clazz clazz);
+
     Clazz save(ClassDTO c);
 
     Clazz update(ClassDTO c);
 
 
-     void disableClass(String id);
+    void disableClass(String id);
 
 
     void enableById(String id);
@@ -31,4 +33,5 @@ public interface ClassService {
     List<Clazz> searchByName(String keyword);
 
 
+    ClassDTO getByServiceId(String id);
 }

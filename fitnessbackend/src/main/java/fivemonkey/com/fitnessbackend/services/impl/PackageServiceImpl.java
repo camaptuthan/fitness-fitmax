@@ -1,5 +1,6 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
+import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.PackageDTO;
 import fivemonkey.com.fitnessbackend.entities.Package;
 import fivemonkey.com.fitnessbackend.repository.PackageRepository;
@@ -18,9 +19,9 @@ import java.util.List;
 public class PackageServiceImpl implements PackageService {
 
     @Autowired
-    private PackageRepository packageRepository;
+    ModelMapperConfiguration<Package, PackageDTO> modelMapper;
     @Autowired
-    ModelMapper modelMapper;
+    private PackageRepository packageRepository;
 
     @Override
     public List<PackageDTO> getAll() {
@@ -117,4 +118,9 @@ public class PackageServiceImpl implements PackageService {
     public List<Package> searchPackage(String key) {
         return null;
     }
+    @Override
+    public PackageDTO getPackageByServiceId(String serviceId) {
+        return modelMapper.map(packageRepository.getPackageByServicesId(serviceId), PackageDTO.class);
+    }
+
 }

@@ -1,9 +1,6 @@
 package fivemonkey.com.fitnessbackend.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -13,6 +10,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class PackageDTO {
     private String id;
 
@@ -31,7 +29,7 @@ public class PackageDTO {
     private String des;
     private boolean status;
 
-    private ServiceDTO serviceDTO;
+    private ServicesDTO serviceDTO;
 
     public PackageDTO(String name, int duration, Float price, String des, boolean status) {
         this.name = name;
@@ -41,17 +39,5 @@ public class PackageDTO {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "PackageDTO{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", image='" + image + '\'' +
-                ", duration=" + duration +
-                ", price=" + price +
-                ", des='" + des + '\'' +
-                ", status=" + status +
-                ", serviceDTO=" + serviceDTO +
-                '}';
-    }
+
 }

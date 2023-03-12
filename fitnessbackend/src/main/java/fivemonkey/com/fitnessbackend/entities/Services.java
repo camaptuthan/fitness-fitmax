@@ -1,9 +1,6 @@
 package fivemonkey.com.fitnessbackend.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -58,7 +55,7 @@ public class Services {
     private PersonalTraining personalTraining;
 
     //service-class relationship
-    @OneToOne(mappedBy = "service")
+    @OneToOne(mappedBy = "services")
     private Clazz clazz;
 
     //assistant-service relationship

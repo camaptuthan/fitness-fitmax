@@ -2,10 +2,7 @@ package fivemonkey.com.fitnessbackend.dto;
 
 import fivemonkey.com.fitnessbackend.entities.Category;
 import fivemonkey.com.fitnessbackend.entities.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -15,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class BlogDTO {
 
     private String id;
@@ -33,17 +31,5 @@ public class BlogDTO {
 
     private User writer_email;
 
-    @Override
-    public String toString() {
-        return "BlogDTO{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", image='" + image + '\'' +
-                ", des='" + des + '\'' +
-                ", created_date=" + created_date +
-                ", status=" + status +
-                ", category=" + category +
-                ", writer_email=" + writer_email +
-                '}';
-    }
+
 }

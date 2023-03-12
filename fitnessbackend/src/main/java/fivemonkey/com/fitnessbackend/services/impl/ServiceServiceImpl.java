@@ -1,6 +1,7 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
-import fivemonkey.com.fitnessbackend.dto.ServiceDTO;
+import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
+import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
 import fivemonkey.com.fitnessbackend.entities.Services;
 import fivemonkey.com.fitnessbackend.repository.ServiceRepository;
 import fivemonkey.com.fitnessbackend.services.ServiceService;
@@ -17,7 +18,7 @@ public class ServiceServiceImpl implements ServiceService {
     private ServiceRepository serviceRepository;
 
     @Autowired
-    private ModelMapper mapper;
+    private ModelMapperConfiguration<Services, ServicesDTO> mapper;
 
     @Override
     public List<Services> getAll() {
@@ -25,31 +26,31 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
-    public List<ServiceDTO> getAllByPackage() {
-        List<ServiceDTO> list = new ArrayList<>();
+    public List<ServicesDTO> getAllByPackage() {
+        List<ServicesDTO> list = new ArrayList<>();
         List<Services> list1 = serviceRepository.getServicesByPackage();
         for (Services s : list1) {
-            list.add(mapper.map(s, ServiceDTO.class));
+            list.add(mapper.map(s, ServicesDTO.class));
         }
         return list;
     }
 
     @Override
-    public List<ServiceDTO> getAllByPT() {
-        List<ServiceDTO> list = new ArrayList<>();
+    public List<ServicesDTO> getAllByPT() {
+        List<ServicesDTO> list = new ArrayList<>();
         List<Services> list1 = serviceRepository.getServicesByPT();
         for (Services s : list1) {
-            list.add(mapper.map(s, ServiceDTO.class));
+            list.add(mapper.map(s, ServicesDTO.class));
         }
         return list;
     }
 
     @Override
-    public List<ServiceDTO> getAllByClass() {
-        List<ServiceDTO> list = new ArrayList<>();
+    public List<ServicesDTO> getAllByClass() {
+        List<ServicesDTO> list = new ArrayList<>();
         List<Services> list1 = serviceRepository.getServicesByClass();
         for (Services s : list1) {
-            list.add(mapper.map(s, ServiceDTO.class));
+            list.add(mapper.map(s, ServicesDTO.class));
         }
         return list;
     }

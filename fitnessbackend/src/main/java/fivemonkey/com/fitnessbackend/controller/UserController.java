@@ -19,7 +19,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,7 +62,6 @@ public class UserController {
             model.addAttribute("list", userDTOList1);
             model.addAttribute("keyword", keyword);
             model.addAttribute("size", userDTOList1.size());
-
         }
         return "management/UserManagement/UserList";
 
@@ -154,11 +152,6 @@ public class UserController {
 
                              @ModelAttribute("user") UserDTO userDTO,
                              Model model) throws IOException {
-
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        fireBaseUtils.uploadFile(multipartFile, fileName);
-        String url = FireBaseConstant.FILE_URL.toString();
-
         userDTO.setAvatar(imageUploader.upload(multipartFile));
         userService.updateUser(userDTO);
 
@@ -218,12 +211,16 @@ public class UserController {
     }
 
 
-
-    @GetMapping("/myprofile")
+    @GetMapping("/profile")
     public String myProfile(@AuthenticationPrincipal UserDetail userDetail, Model model) {
         model.addAttribute("registrations", registrationService.getRegistrationByUserEmail(userDetail.getUser().getEmail()));
         model.addAttribute("user", userDetail.getUser());
-        return "/myprofile";
+        return "user/profile";
+    }
+    @ResponseBody
+    @GetMapping("/profile/registration")
+    public List<RegistrationDTO> registration(@AuthenticationPrincipal UserDetail userDetail) {
+        return registrationService.getRegistrationByUserEmail(userDetail.getUser().getEmail());
     }
 
 

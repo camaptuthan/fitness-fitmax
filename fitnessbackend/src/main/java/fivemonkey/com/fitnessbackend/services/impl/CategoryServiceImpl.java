@@ -1,5 +1,6 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
+import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.CategoryDTO;
 import fivemonkey.com.fitnessbackend.entities.Category;
 import fivemonkey.com.fitnessbackend.repository.CategoryRepository;
@@ -18,7 +19,7 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private ModelMapper mapper;
+    private ModelMapperConfiguration<Category, CategoryDTO> mapper;
 
     @Override
     public List<Category> findAllCategories() {
@@ -51,7 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
             category.setDes(c.getDes());
             category.setType(c.getType());
             return categoryRepository.save(category);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -61,7 +62,7 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryDTO> findAllCategoriesByType(String type) {
         List<CategoryDTO> list = new ArrayList<>();
         List<Category> list1 = categoryRepository.findAllByType(type);
-        for (Category c : list1){
+        for (Category c : list1) {
             list.add(mapper.map(c, CategoryDTO.class));
         }
         return list;

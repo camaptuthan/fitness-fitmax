@@ -23,4 +23,5 @@ public interface PackageRepository extends JpaRepository<Package, String> {
             "from Package p join p.services s join s.category c " +
             "group by p.id")
     List<Package> getAllInformationOfPackage();
+    Package getPackageByServicesId(String serviceId);
 }
