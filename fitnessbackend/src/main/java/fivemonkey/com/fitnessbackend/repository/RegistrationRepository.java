@@ -16,5 +16,8 @@ public interface RegistrationRepository extends JpaRepository<Registration, Stri
 
     Registration getRegistrationByServicesAndTrainee(Services service, Trainee trainee);
 
-    List<Registration> getRegistrationByTrainee(Trainee trainee);
+   // List<Registration> getRegistrationByTrainee(Trainee trainee);
+
+    @Query(value = "select r from Registration r where r.trainee.email = :email")
+    List<Registration> getRegistrationByTrainee(String email);
 }

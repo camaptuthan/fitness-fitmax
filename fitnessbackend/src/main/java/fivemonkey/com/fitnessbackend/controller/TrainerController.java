@@ -13,12 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/trainers")
+@RequestMapping("/trainer")
 public class TrainerController {
 
     @Autowired
     private TrainerService trainerService;
-
+    @GetMapping("/")
+    public String trainer() {
+        return "/trainer";
+    }
     @GetMapping()
     public List<TrainerDTO> getTrainers(){
         List<TrainerDTO> trainerDTOS = new ArrayList<>();

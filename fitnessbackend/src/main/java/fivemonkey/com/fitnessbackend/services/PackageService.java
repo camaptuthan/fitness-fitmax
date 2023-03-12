@@ -16,7 +16,11 @@ import java.util.List;
 
 public interface PackageService {
 
-    public List<Package> getAllPackages();
+    List<PackageDTO> getAll();
+
+    public List<PackageDTO> getAllPackagesByKeyword(String keyword);
+
+    List<PackageDTO> getAllInforPackage();
 
     public PackageDTO getPackageById(String id);
 
@@ -31,4 +35,5 @@ public interface PackageService {
     Page<Package> findPaginated(int pageNo, int pageSize);
 
     public List<Package> searchPackage(String key);
+    PackageDTO getPackageByServiceId(String serviceId);
 }

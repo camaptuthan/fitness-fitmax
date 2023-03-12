@@ -24,26 +24,21 @@ public class AuthController {
 
     @GetMapping
     public String loginPage(Model model, @RequestParam(required = false) String errorMsg, @RequestParam(required = false, defaultValue = "false") String register) {
+        String path = "redirect:/";
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         model.addAttribute("loginDto", new LoginDTO());
         model.addAttribute("errorMsg", errorMsg);
         model.addAttribute("register", register);
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            return "/login";
+            path = "/login";
         }
-        authentication.getAuthorities().forEach(a -> {
-            System.out.println("role: " + a.getAuthority());
-        });
-        return "redirect:/";
+        return path;
     }
 
     @PostMapping
     public String signIn(@ModelAttribute("loginDto") LoginDTO loginDTO) {
-        System.out.println(loginDTO.getUsername());
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return "redirect:/";
     }

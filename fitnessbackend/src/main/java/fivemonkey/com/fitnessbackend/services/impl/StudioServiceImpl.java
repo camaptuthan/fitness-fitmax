@@ -1,5 +1,6 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
+import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.StudioDTO;
 import fivemonkey.com.fitnessbackend.entities.Studio;
@@ -22,7 +23,7 @@ public class StudioServiceImpl implements StudioService {
    @Autowired
     private StudioRepository studioRepository;
     @Autowired
-    ModelMapper modelMapper;
+    ModelMapperConfiguration<Studio,StudioDTO> modelMapperConfiguration;
     public void insertStudio(Studio studio) {
         studio.setDate(new Date());
         studioRepository.save(studio);
@@ -44,7 +45,7 @@ public class StudioServiceImpl implements StudioService {
         Studio studio = studioRepository.findById(id).get();
 
         StudioDTO studioDTO = new StudioDTO();
-        studioDTO = modelMapper.map(studio, StudioDTO.class);
+        studioDTO = modelMapperConfiguration.map(studio, StudioDTO.class);
 
         return studioDTO;
     }

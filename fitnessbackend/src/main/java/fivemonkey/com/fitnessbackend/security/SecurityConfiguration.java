@@ -21,6 +21,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
     @Autowired
     private DataSource dataSource;
 
@@ -47,33 +48,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .cors()
-//                .and()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-//                .and()
-//                .csrf()
-//                .disable()
-//                .authorizeRequests()
-//                .antMatchers("/blog").hasRole("Manager")
-//                .anyRequest().permitAll()
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .permitAll()
-//                .usernameParameter("email")
-//                .loginProcessingUrl("/doLogin")
-//                .and()
-//                .logout()
-//                .permitAll()
-//                .logoutUrl("/doLogout")
-//                .logoutSuccessUrl("/")
-//                .and()
-//                .rememberMe().tokenRepository(persistentTokenRepository())
-//
-//        ;
-
         //Config http
         http
                 .cors()
@@ -97,8 +71,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")//
-                .usernameParameter("email")
-                .passwordParameter("password")
                 .successForwardUrl("/login").permitAll()
                 // Config for Logout Page
                 .and()

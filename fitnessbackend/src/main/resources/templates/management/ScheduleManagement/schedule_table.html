@@ -1,6 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
-<section id="training-schedule" class="s-training-schedule" style="background-image: url(/static/img/bg-table-1.svg);">
+<section id="training-schedule" class="s-training-schedule p-0 pb-5"
+    style="background-image: url(/static/img/bg-table-1.svg);">
     <div class="container">
         <h2 class="title-decor">Class <span>Schedule</span></h2>
         <p class="slogan">Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor
@@ -11,15 +12,6 @@
             <h6 class="training-schedule-top " style="height: 5.25rem">
                 <nav class="nav-menu position-absolute">
                     <ul class="nav-list my-4">
-                        <li class="dropdown">
-                            <a>Select Class <i class="fa fa-caret-down"></i></a>
-                            <ul id="list-class" style="min-width: 200px">
-                                <!--                        this is list class-->
-                            </ul>
-                        </li>
-                        <li>
-                            <a id="class-name">Current class name</a>
-                        </li>
                         <li class="dropdown">
                             <a>Select Time<i class="fa fa-caret-down"></i></a>
                             <ul id="list-year" style="min-width: 125px">
@@ -42,16 +34,9 @@
                 </nav>
             </h6>
             <div class="training-schedule-table">
-                <table>
-                    <thead>
-                    <th></th>
-                    <th>sunday</th>
-                    <th>monday</th>
-                    <th>tuesday</th>
-                    <th>wednesday</th>
-                    <th>thursday</th>
-                    <th>friday</th>
-                    <th>saturday</th>
+                <table id="schedule-table">
+                    <thead id="schedule-header">
+
                     </thead>
                     <tbody id="schedule-body">
 
@@ -62,163 +47,4 @@
     </div>
 </section>
 
-<script>
-    $(window).on("load", (event) => {
-        fetchingClass();
-    })
-
-    const fetchingScheduleByClassInfor = () => {
-        let id;
-        $("#class-name").val() ? id = $("#class-name").val() : id = "CL0001";
-        let year = $("#current-year")[0].innerText;
-        let start = $("#start-week")[0].innerText;
-        let end = $("#end-week")[0].innerText;
-        console.log(`Time: year=${year}, start=${start}, end=${end}`)
-
-
-        $.get(`http://localhost:8080/api/v1/schedule/${id}/${year}?start=${start}&end=${end}`, function (result) {
-            const code = result.code;
-            const data = result.data;
-            if (true) {
-                $(`#training-schedule #list-class`).children().removeClass("menu-active");
-                $(`#training-schedule #list-class #${id}`).addClass("menu-active");
-
-                const classInformation = data;
-                const scheduleInformation = data.scheduleDTO;
-
-                $('#class-name').val(classInformation.id);
-                $('#class-name').html(classInformation.name);
-
-                let body = "";
-                $("#schedule-body").html("");
-                scheduleInformation.forEach(schedule => {
-                    $("#schedule-body").append(`<tr id="${schedule.id}" style="height: 6rem;">
-                                                <td>${schedule.startTime}</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>`);
-                    schedule.sessionDTOs.forEach(session => {
-                        $(`#${schedule.id} > td`).eq(session.weekDay).html("something").html(
-                            `<div class="w-100 h-100">
-                            <h4>${session.name}</h4>
-                            <div class="date">${schedule.startTime} – ${schedule.endTime}</div>
-                            <div class="name">${session.happenedDate}</div>
-                        </div>`)
-                    })
-                })
-            }
-        })
-            .fail(function (data) {
-                console.log("lỗi quá!")
-            })
-    }
-
-    const fetchingClass = () => {
-        $.get("http://localhost:8080/api/v1/schedule/list-class", (data) => {
-            data.forEach(c => {
-                $("#training-schedule #list-class")
-                    .append(`<li style="text-align: center" id="${c.id}">
-                                <div class="container-fluid p-0 m-0">
-                                    <a class="navbar-brand " onclick="setClassValue(${c.id})">
-                                      <img src="/img/programs-3.jpg" alt="Logo" width="40" height="40" class="d-block align-text-top rounded">
-                                         <p class="d-block w-100 text-center">${c.name}</p>
-                                    </a>
-                                  </div>
-                                </li>`)
-            })
-        }).then(() => {
-            getYear();
-        })
-
-    }
-
-    const setClassValue = (element) => {
-        $("#class-name").val(element.id)
-        fetchingScheduleByClassInfor();
-    }
-    const getYear = () => {
-        const years = $("#list-year");
-        let currentYear = new Date().getFullYear();
-
-        let startYear = 2019;
-        while (startYear <= currentYear) {
-            years.append(`<li class="p-0 m-0" id="${startYear}-selector"><a style="display: block;text-align: center" onclick="getWeek(${startYear})">${startYear}</a> </li>`)
-            startYear++
-        }
-        $("#current-year").html(currentYear);
-        $(`#${currentYear}-selector`).addClass("menu-active");
-
-        getWeek(currentYear);
-    }
-    let currentScroll = 0;
-    const getWeek = (year) => {
-
-        $("#list-year").children().removeClass("menu-active");
-        $(`#${year}-selector`).addClass("menu-active");
-        $("#current-year").html(year);
-
-        let time = new Date;
-
-        if (time.getFullYear() === year) {
-            $("#start-week").html(`${weekStart(time).getDate()}/${weekStart(time).getMonth() + 1}`);
-            $("#end-week").html(`${weekEnd(time).getDate()}/${weekEnd(time).getMonth() + 1}`);
-        } else {
-            time = new Date(year, 0, 1);
-            $("#start-week").html(`${weekStart(time).getDate()}/${weekStart(time).getMonth() + 1}`);
-            $("#end-week").html(`${weekEnd(time).getDate()}/${weekEnd(time).getMonth() + 1}`);
-        }
-        const week = $("#list-week");
-        week.html("");
-        for (let month = 0; month <= 11; month++) {
-            let isWeek = new Date(-1);
-            for (let day = 1; day <= 31; day++) {
-                // let start = new Date(year, month, day + 7 * day);
-                // let end = new Date(year, month, day + 7 + 7 * day);
-                let start = weekStart(new Date(year, month, day));
-                let end = weekEnd(new Date(year, month, day));
-
-                // let dd = startWeek.getDate();
-                // let mm = startWeek.getMonth() + 1;
-                // if (dd == 29 && mm == 2)
-                //     console.log(`day: ${dd}, month: ${mm}`)
-
-                if (isWeek.toString() !== start.toString()) {
-                    let startWeek = `${start.getDate()}/${start.getMonth() + 1}`;
-                    let endWeek = `${end.getDate()}/${end.getMonth() + 1}`;
-                    week.append(`<li value="" class="p-0 m-0" id="day-${startWeek.replace("/", "")}"><a style="display: block;text-align: center" onclick="getWeekRange('${startWeek}','${endWeek}',${week.scrollTop()})">${startWeek} to ${endWeek}</a> </li>`);
-                    isWeek = start;
-                }
-
-            }
-        }
-
-        function weekStart(date) {
-            return new Date(date.setDate(date.getDate() - date.getDay()));
-        }
-
-        function weekEnd(date) {
-            var lastday = date.getDate() - date.getDay() + 6;
-            return new Date(date.setDate(lastday));
-        }
-
-
-        fetchingScheduleByClassInfor();
-    }
-
-
-    getWeekRange = (start, end) => {
-        $("#list-week").children().removeClass("menu-active");
-        $(`#day-${start.replace("/", "")}`).addClass("menu-active");
-        //  currentScroll = $("#list-week").scrollTop();
-
-
-        $("#start-week").html(start);
-        $("#end-week").html(end);
-        fetchingScheduleByClassInfor();
-    }
-</script>
+<script th:src="@{/js/schedule-script2.js}"></script>

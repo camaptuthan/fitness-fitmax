@@ -4,13 +4,13 @@ import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class UserDTO {
     @NotNull(message = "Required not null")
     private String email;
@@ -31,26 +31,6 @@ public class UserDTO {
     private String studioName;
 
     private String studioId;
-
-    @Override
-    public String toString() {
-        return "UserDTO{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", date=" + date +
-                ", status=" + status +
-                ", roleId='" + roleId + '\'' +
-                ", roleName='" + roleName + '\'' +
-                ", studioName='" + studioName + '\'' +
-                ", studioId='" + studioId + '\'' +
-                '}';
-    }
-
     private String vericode;
 
 

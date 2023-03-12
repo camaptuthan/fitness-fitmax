@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+
 @Configuration
 @Slf4j
 public class FirebaseConfiguration {
@@ -21,11 +22,15 @@ public class FirebaseConfiguration {
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount.getInputStream()))
                     .setStorageBucket("fitness-fitmax-01.appspot.com")
                     .build();
+
         } catch (Exception ex) {
             log.error(ex.getMessage());
         }
-        Bucket bucket = StorageClient.getInstance(FirebaseApp.initializeApp(options)).bucket();
-        log.info("Init Bucket : {}", bucket);
+        Bucket bucket = null;
+        if (FirebaseApp.getApps().isEmpty()) {
+            bucket = StorageClient.getInstance(FirebaseApp.initializeApp(options)).bucket();
+            log.info("Init Bucket : {}", bucket);
+        }
         return bucket;
     }
 }

@@ -1,9 +1,11 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
+import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.entities.Clazz;
 import fivemonkey.com.fitnessbackend.repository.ClassRepository;
 import fivemonkey.com.fitnessbackend.services.ClassService;
+import fivemonkey.com.fitnessbackend.services.RegistrationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,9 +21,11 @@ import java.util.List;
 public class ClassServiceImpl implements ClassService {
     @Autowired
     ClassRepository classRepository;
+    @Autowired
+    private ModelMapperConfiguration<Clazz, ClassDTO> modelMapperConfiguration;
 
     @Autowired
-    ModelMapper modelMapper;
+    private RegistrationService registrationService;
 
     //mapper class to class dto
     @Override
@@ -30,11 +34,16 @@ public class ClassServiceImpl implements ClassService {
         List<ClassDTO> classDTOList = new ArrayList<>();
         List<Clazz> clazzList = classRepository.findAll();
         for (Clazz c : clazzList) {
-            ClassDTO classDTO = modelMapper.map(c, ClassDTO.class);
+            ClassDTO classDTO = modelMapperConfiguration.map(c, ClassDTO.class);
             classDTOList.add(classDTO);
         }
         return classDTOList;
 
+    }
+
+    @Override
+    public List<ClassDTO> findAllRelatedByClass(Clazz clazz) {
+        return null;
     }
 
     @Override
@@ -93,9 +102,7 @@ public class ClassServiceImpl implements ClassService {
 
 
     public ClassDTO getClassById(String id) {
-        Clazz clazz = classRepository.getById(id);
-        ClassDTO classDTO = modelMapper.map(clazz, ClassDTO.class);
-        return classDTO;
+        return modelMapperConfiguration.map(classRepository.getById(id), ClassDTO.class);
     }
 
     //paging
@@ -107,10 +114,13 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public List<Clazz> searchByName(String keyword) {
-        List<Clazz> list = classRepository.searchClassByKeyword(keyword);
-        return list;
+        return classRepository.searchClassByKeyword(keyword);
     }
+
+    @Override
+    public ClassDTO getByServiceId(String id) {
+        return modelMapperConfiguration.map(classRepository.getClazzByService(id), ClassDTO.class);
+    }
+
     //search
-
-
 }

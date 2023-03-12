@@ -1,9 +1,7 @@
 package fivemonkey.com.fitnessbackend.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import fivemonkey.com.fitnessbackend.entities.Session;
+import lombok.*;
 
 import java.util.List;
 
@@ -11,13 +9,10 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class ScheduleDTO {
     private String id;
-
     private String startTime;
-
     private String endTime;
-
-    private List<SessionDTO> sessionDTOs;
-
+    private boolean haveSessions;
 }

@@ -10,6 +10,18 @@ import java.util.List;
 @Repository
 public interface PackageRepository extends JpaRepository<Package, String> {
 
-    @Query("select p from Package p where concat(p.name,'',p.des,'',p.price) like %?1%")
-    List<Package> searchPackage(String key);
+    @Query("select p from Package p where concat(p.name,'',p.des,'',p.price,'',p.duration,'',p.date) like %?1%")
+    List<Package> findAllPackage(String keyword);
+
+    @Query("select p.id,p.name,p.image,p.duration,p.price,p.des,p.status,p.services " +
+            "from Package p join p.services s join s.category c " +
+            "where concat(p.name,'',p.des,'',p.price,'',p.duration,'',p.date,'',p.services.category.name) like %?1% " +
+            "group by p.id")
+    List<Package> getAllInformationOfPackages(String keyword);
+
+    @Query("select p.id,p.name,p.image,p.duration,p.price,p.des,p.status,p.services " +
+            "from Package p join p.services s join s.category c " +
+            "group by p.id")
+    List<Package> getAllInformationOfPackage();
+    Package getPackageByServicesId(String serviceId);
 }

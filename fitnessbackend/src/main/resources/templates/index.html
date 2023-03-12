@@ -185,7 +185,36 @@
 
     <!-- ============== S-OUR-PROGRAMS ============== -->
     <!--<th:block th:insert="fragments/home_program"></th:block>-->
-    <div th:include="fragments/home_program.html"></div>
+    <!--<div th:include="management/home_program.html"></div>-->
+    <div class="s-our-programs" style="background-image: url(/img/bg-programs.jpg);">
+        <div class="mask"></div>
+        <div class="our-programs-effect" style="background-image: url(/img/bg-programs.svg);"></div>
+        <div class="container">
+            <h2 class="title-decor">Our <span>Service</span></h2>
+            <p class="slogan">Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor,
+                auctor
+                tincidunt lorem ut, venenatis dapibus miq.</p>
+            <div class="row">
+
+                <div th:each="list: ${listServiceType}" class="col-sm-6 col-md-4 program-col">
+                    <div class="program-item">
+                        <div class="program-item-front" th:style="'background-image: url(' + ${list.image} + ');'">
+                            <div class="program-item-inner">
+                                <h3 th:text="${list.type}"></h3>
+                            </div>
+                        </div>
+                        <div class="program-item-back" th:style="'background-image: url(' + ${list.image} + ');'">
+                            <div class="program-item-inner">
+                                <h3 th:text="${list.type}"></h3>
+                                <span th:if="${list.id == 1}"><a th:href="@{'/package/packages'}"
+                                        class="btn">More</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- ============ S-OUR-PROGRAMS END ============ -->
 
     <!-- =============== S-OUT-TRAINER =============== -->
@@ -202,10 +231,6 @@
         </div>
     </section>
     <!-- ========== S-CROSSFIT-BANNER END ========== -->
-
-    <!-- ============== S-CLUB-CARDS ============== -->
-    <div th:include="fragments/club_card.html"></div>
-    <!-- ============ S-CLUB-CARDS END ============ -->
 
     <!-- ============== S-TESTIMONIALS ============== -->
     <section class="s-testimonials" style="background-image: url(/static/img/bg-testimonials.jpg);">
@@ -437,7 +462,9 @@
     <!--================= TO TOP END =================-->
 
     <!--=================== SCRIPT	===================-->
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
     <script th:src="@{/js/slick.min.js}"></script>
     <script th:src="@{/js/rx-lazy.js}"></script>
     <script th:src="@{/js/parallax.min.js}"></script>

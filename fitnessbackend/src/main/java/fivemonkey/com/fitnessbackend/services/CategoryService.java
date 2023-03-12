@@ -17,5 +17,5 @@ public interface CategoryService {
 
     public Category update(CategoryDTO c);
 
-    List<Category> findAllCategoriesByType(String type);
+    List<CategoryDTO> findAllCategoriesByType(String type);
 }
