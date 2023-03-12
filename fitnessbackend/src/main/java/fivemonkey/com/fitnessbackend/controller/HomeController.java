@@ -1,36 +1,30 @@
 package fivemonkey.com.fitnessbackend.controller;
 
+import fivemonkey.com.fitnessbackend.dto.ServiceTypeDTO;
+import fivemonkey.com.fitnessbackend.entities.ServiceType;
+import fivemonkey.com.fitnessbackend.entities.Services;
+import fivemonkey.com.fitnessbackend.exceptionhandler.UserNotFoundException;
+import fivemonkey.com.fitnessbackend.services.ServiceService;
+import fivemonkey.com.fitnessbackend.services.ServiceTypeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @Controller
 public class HomeController {
+    @Autowired
+    private ServiceTypeService serviceTypeService;
 
-    @GetMapping("/trainer")
-    public String trainer() {
-        return "/trainer";
+    @GetMapping("/")
+    public String getAllServiceType(Model model) {
+        List<ServiceTypeDTO> listServiceType = serviceTypeService.getAll();
+        model.addAttribute("listServiceType", listServiceType);
+        //return "fragments/home_program";
+        return "/index";
     }
-
-    @GetMapping("/program")
-    public String program() {
-        return "/program";
-    }
-
-    @GetMapping("/service")
-    public String service() {
-        return "/service";
-    }
-
-    @GetMapping("/blog")
-    public String blog() {
-        return "/blog";
-    }
-
-    @GetMapping("/blog-writer")
-    public String blogWriter() {
-        return "/blog_writer";
-    }
-
 
     @GetMapping("/register")
     public String register() {
@@ -42,30 +36,14 @@ public class HomeController {
         return "/reset_password";
     }
 
-
     @GetMapping("/dashboard")
     public String dashboard() {
+        String msg = null;
+        if(msg == null) {
+            UserNotFoundException userNotFoundException = new UserNotFoundException("User Not Found");
+            throw userNotFoundException;
+        }
         return "management/dashboard/index";
-    }
-
-    @GetMapping("/admin-service")
-    public String serviceAdmin() {
-        return "management/dashboard/service";
-    }
-
-    @GetMapping("/managestudio")
-    public String studioAdmin() {
-        return "management/StudioManagement/manage_studio";
-    }
-
-    @GetMapping("/sd")
-    public String studioAdmind() {
-        return "management/StudioManagement/add_studio";
-    }
-
-    @GetMapping("/sds")
-    public String studioAdmindd() {
-        return "management/StudioManagement/addstudio";
     }
 
 

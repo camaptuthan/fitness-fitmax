@@ -1,6 +1,5 @@
 package fivemonkey.com.fitnessbackend.dto;
 
-import fivemonkey.com.fitnessbackend.entities.Blog;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,13 +11,11 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CategoryDTO {
+public class ServiceTypeDTO {
 
-    private String id;
+    private Long id;
 
-    private String name;
-
-    private String des;
+    private String image;
 
     private String type;
 

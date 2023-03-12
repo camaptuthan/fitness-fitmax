@@ -59,6 +59,21 @@ insert into service_type(image,description) values ('','Packages');
 insert into service_type(image,description) values ('','Personal Traning');
 insert into service_type(image,description) values ('','Classes');
 
+update service_type set image = 'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_package.jpg?alt=media&token=74815fd1-3f23-43a0-b1af-99bb15c1a404' where service_type_id = 1;
+update service_type set image = 'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/personal_training.jpg?alt=media&token=d43b4d45-061a-42f1-8b31-9ece0a972976' where service_type_id = 2;
+update service_type set image = 'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_class.jpg?alt=media&token=90d3c570-409e-41af-be27-39f2dc4d154f' where service_type_id = 3;
+
+/*select * from category;*/
+select p.package_id,p.package_name,p.description,p.duration,p.price,p.status,p.service_id,p.created_date,c.category_id 
+from package p inner join service s on p.service_id = s.service_id inner join category c on s.category_id = c.category_id group by p.package_id;
+insert into category(category_id,description,category_name,type) values ('CATE0001','Hand','','service');
+insert into category(category_id,description,category_name,type) values ('CATE0002','Leg','','service');
+insert into category(category_id,description,category_name,type) values ('CATE0003','Full Body','','service');
+insert into category(category_id,description,category_name,type) values ('CATE0004','Physical','','service');
+insert into category(category_id,description,category_name,type) values ('CATE0005','Advertisement','','blog');
+insert into category(category_id,description,category_name,type) values ('CATE0006','Exercise','','blog');
+insert into category(category_id,description,category_name,type) values ('CATE0007','Nutrition','','blog');
+
 /*select * from service;*/
 insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id) values ('SER0001','Full Body Workout 1',1,'davidpham95aka201@gmail.com','STU0001',CURDATE(),3);
 insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id) values ('SER0002','Full Body Workout 2',1,'davidpham95aka201@gmail.com','STU0001',CURDATE(),3);
@@ -86,14 +101,11 @@ insert into service(service_id,service_name,status,assistant_email,studio_id,cre
 insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id) values ('SER0024','Basic Workout 4',1,'davidpham95aka201@gmail.com','STU0001',CURDATE(),1);
 insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id) values ('SER0025','Basic Workout 5',1,'davidpham95aka201@gmail.com','STU0001',CURDATE(),1);
 
-/*select * from category;*/
-insert into category(category_id,description,category_name,type) values ('CATE0001','Hand','','service');
-insert into category(category_id,description,category_name,type) values ('CATE0002','Leg','','service');
-insert into category(category_id,description,category_name,type) values ('CATE0003','Full Body','','service');
-insert into category(category_id,description,category_name,type) values ('CATE0004','Physical','','service');
-insert into category(category_id,description,category_name,type) values ('CATE0005','Advertisement','','blog');
-insert into category(category_id,description,category_name,type) values ('CATE0006','Exercise','','blog');
-insert into category(category_id,description,category_name,type) values ('CATE0007','Nutrition','','blog');
+update service set category_id = 'CATE0003' where service_id = 'SER0021';
+update service set category_id = 'CATE0003' where service_id = 'SER0022';
+update service set category_id = 'CATE0003' where service_id = 'SER0023';
+update service set category_id = 'CATE0003' where service_id = 'SER0024';
+update service set category_id = 'CATE0003' where service_id = 'SER0025';
 
 /*select * from blog;*/
 insert into blog(blog_id,title,writer_email,description,status,created_date,category_id) values ('BLO0001','Advertise 1','davidpham95aka201@gmail.com','Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque. Ultricies tristique nulla aliquet enim tortor. Ultricies tristique nulla aliquet enim tortor. Arcu bibendum at varius vel pharetra vel turpis nunc eget. Et leo duis ut diam quam nulla. Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque.',1,CURDATE(),'CATE0005');
@@ -130,8 +142,14 @@ insert into class(class_id,description,duration,class_name,price,status,service_
 insert into package(package_id,package_name,description,duration,price,status,service_id,created_date) values ('PKG0001','Basic Workout','Basic Workout in 3 months',3,150,1,'SER0021',CURDATE());
 insert into package(package_id,package_name,description,duration,price,status,service_id,created_date) values ('PKG0002','Basic Workout','Basic Workout in 6 months',6,270,1,'SER0022',CURDATE());
 insert into package(package_id,package_name,description,duration,price,status,service_id,created_date) values ('PKG0003','Basic Workout','Basic Workout in 12 months',12,500,1,'SER0023',CURDATE());
-insert into package(package_id,package_name,description,duration,price,status,service_id,created_date) values ('PKG0004','Basic Workout','Basic Workout in 18 months',12,750,1,'SER0024',CURDATE());
-insert into package(package_id,package_name,description,duration,price,status,service_id,created_date) values ('PKG0005','Basic Workout','Basic Workout in 24 months',12,900,1,'SER0025',CURDATE());
+insert into package(package_id,package_name,description,duration,price,status,service_id,created_date) values ('PKG0004','Basic Workout','Basic Workout in 18 months',18,750,1,'SER0024',CURDATE());
+insert into package(package_id,package_name,description,duration,price,status,service_id,created_date) values ('PKG0005','Basic Workout','Basic Workout in 24 months',24,900,1,'SER0025',CURDATE());
+
+update package set image = 'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_package_1.jpg?alt=media&token=c9cf6140-edad-487a-8733-2e50a528705a' where package_id = 'PKG0001';
+update package set image = 'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_package_2.jpg?alt=media&token=8b053a63-3518-412c-9da1-4f21fc4dc97a' where package_id = 'PKG0002';
+update package set image = 'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_package_3.jpg?alt=media&token=2c5485cf-bb1a-448f-b02b-7768b53b5e4c' where package_id = 'PKG0003';
+update package set image = 'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_package_4.jpg?alt=media&token=5179633b-eabc-4b6b-b8ae-db12762175f8' where package_id = 'PKG0004';
+update package set image = 'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_package_5.jpg?alt=media&token=8adfc941-6825-4481-be9f-72f8dc83e567' where package_id = 'PKG0005';
 
 /*select * from schedule;*/
 insert into schedule(schedule_id,start_time,end_time) values ('SCHE0001','05:00:00','07:00:00');
@@ -179,7 +197,7 @@ insert into session(session_id,session_name,created_date,happened_date,class_id,
 insert into session(session_id,session_name,created_date,happened_date,class_id,schedule_id,trainer_email) values ('SES0000033','Power Yoga',CURDATE(),'2023-03-02','CL0001','SCHE0008','ducnvhe141646@fpt.edu.vn');
 insert into session(session_id,session_name,created_date,happened_date,class_id,schedule_id,trainer_email) values ('SES0000034','Hip Opening',CURDATE(),'2023-03-03','CL0001','SCHE0008','ducnvhe141646@fpt.edu.vn');
 
-
+select p.package_id,p.created_date,p.description,p.duration from package p join service s on p.service_id = s.service_id join category c on s.category_id = c.category_id;
 
 
 

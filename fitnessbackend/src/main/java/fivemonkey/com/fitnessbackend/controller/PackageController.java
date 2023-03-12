@@ -1,10 +1,17 @@
 package fivemonkey.com.fitnessbackend.controller;
 
+import fivemonkey.com.fitnessbackend.dto.CategoryDTO;
 import fivemonkey.com.fitnessbackend.dto.PackageDTO;
+import fivemonkey.com.fitnessbackend.dto.ServiceDTO;
+import fivemonkey.com.fitnessbackend.entities.Category;
 import fivemonkey.com.fitnessbackend.entities.Package;
+import fivemonkey.com.fitnessbackend.entities.Services;
+import fivemonkey.com.fitnessbackend.services.CategoryService;
 import fivemonkey.com.fitnessbackend.services.PackageService;
+import fivemonkey.com.fitnessbackend.services.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,10 +28,44 @@ public class PackageController {
     @Autowired
     private PackageService packageServices;
 
+    @Autowired
+    private ServiceService serviceService;
+
+    @Autowired
+    private CategoryService categoryService;
+
     //view all packages
+//    @GetMapping("/packages")
+//    public String getAllPackages(Model model, @Param("keyword") String keyword) {
+//        List<PackageDTO> packageDTOList = packageServices.getAll();
+//        List<PackageDTO> packageDTOList1 = packageServices.getAllPackagesByKeyword(keyword);
+//        List<ServiceDTO> servicesList = serviceService.getAllByPackage();
+//        List<CategoryDTO> category = categoryService.findAllCategoriesByType("service");
+//        if ("".equals(keyword)) {
+//            model.addAttribute("servicesList", servicesList);
+//            model.addAttribute("packagelist", packageDTOList1);
+//            model.addAttribute("size", packageDTOList1.size());
+//            model.addAttribute("category", category);
+//        } else {
+//            model.addAttribute("servicesList", servicesList);
+//            model.addAttribute("packagelist", packageDTOList1);
+//            model.addAttribute("keyword", keyword);
+//            model.addAttribute("size", packageDTOList1.size());
+//            model.addAttribute("category", category);
+//        }
+//        return "management/PackageManagement/package";
+//    }
+
     @GetMapping("/packages")
     public String getAllPackages(Model model) {
-        return findPaginated(1, model);
+        List<PackageDTO> packageDTOList1 = packageServices.getAll();
+        List<ServiceDTO> servicesList = serviceService.getAllByPackage();
+        List<CategoryDTO> category = categoryService.findAllCategoriesByType("service");
+            model.addAttribute("servicesList", servicesList);
+            model.addAttribute("packagelist", packageDTOList1);
+            model.addAttribute("size", packageDTOList1.size());
+            model.addAttribute("category", category);
+        return "management/PackageManagement/package";
     }
 
     //add new package
@@ -36,19 +77,19 @@ public class PackageController {
 
     //save new package
     @PostMapping("/save-package")
-    public String savePackage(@ModelAttribute("packagenew") @Valid PackageDTO packageDTO, BindingResult result, RedirectAttributes redirectAttributes){
+    public String savePackage(@ModelAttribute("packagenew") @Valid PackageDTO packageDTO, BindingResult result, RedirectAttributes redirectAttributes) {
 
-        try{
-            if(result.hasErrors()){
-                redirectAttributes.addFlashAttribute("fail","Add fail!");
+        try {
+            if (result.hasErrors()) {
+                redirectAttributes.addFlashAttribute("fail", "Add fail!");
                 return "management/PackageManagement/package-add";
-            }else {
+            } else {
                 packageServices.save(packageDTO);
-                redirectAttributes.addFlashAttribute("success","Add successful!");
+                redirectAttributes.addFlashAttribute("success", "Add successful!");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            redirectAttributes.addFlashAttribute("fail","Add fail!");
+            redirectAttributes.addFlashAttribute("fail", "Add fail!");
         }
         return "redirect:/package/packages";
     }
@@ -62,36 +103,36 @@ public class PackageController {
     }
 
     //disable package
-    @RequestMapping(value="/disable-package/{id}",method = {RequestMethod.PUT,RequestMethod.GET})
-    public String disablePackage(@PathVariable("id") String id,RedirectAttributes redirectAttributes){
-        try{
+    @RequestMapping(value = "/disable-package/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String disablePackage(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
+        try {
             packageServices.disablePackageById(id);
-            redirectAttributes.addFlashAttribute("success","Disabled");
-        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("success", "Disabled");
+        } catch (Exception e) {
             e.printStackTrace();
-            redirectAttributes.addFlashAttribute("fail","Fail to disable");
+            redirectAttributes.addFlashAttribute("fail", "Fail to disable");
         }
         return "redirect:/package/packages";
     }
 
     //enable package
-    @RequestMapping(value="/enable-package/{id}",method = {RequestMethod.PUT,RequestMethod.GET})
-    public String enablePackage(@PathVariable("id") String id,RedirectAttributes redirectAttributes){
-        try{
+    @RequestMapping(value = "/enable-package/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String enablePackage(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
+        try {
             packageServices.enablePackageById(id);
-            redirectAttributes.addFlashAttribute("success","Enable");
-        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("success", "Enable");
+        } catch (Exception e) {
             e.printStackTrace();
-            redirectAttributes.addFlashAttribute("fail","Fail to enable");
+            redirectAttributes.addFlashAttribute("fail", "Fail to enable");
         }
         return "redirect:/package/packages";
     }
 
     //get package detail
     @GetMapping("/update-package/{id}")
-    public String getDetail(@PathVariable("id") String id,Model model){
-        PackageDTO packageDTO=packageServices.getPackageById(id);
-        model.addAttribute("package",packageDTO);
+    public String getDetail(@PathVariable("id") String id, Model model) {
+        PackageDTO packageDTO = packageServices.getPackageById(id);
+        model.addAttribute("package", packageDTO);
         return "management/PackageManagement/package-edit";
     }
 
@@ -99,31 +140,30 @@ public class PackageController {
     //edit package
     @PostMapping("/update-package/{id}")
     public String processUpdate(@PathVariable("id") String id, @ModelAttribute("package") @Valid PackageDTO packageDTO, BindingResult result
-            ,RedirectAttributes redirectAttributes){
-        try{
-            if(result.hasErrors()){
-                redirectAttributes.addFlashAttribute("fail","Fail");
+            , RedirectAttributes redirectAttributes) {
+        try {
+            if (result.hasErrors()) {
+                redirectAttributes.addFlashAttribute("fail", "Fail");
                 return "management/PackageManagement/package-edit";
-            }
-            else{
+            } else {
                 packageServices.update(packageDTO);
-                redirectAttributes.addFlashAttribute("success","Update Successfully");
+                redirectAttributes.addFlashAttribute("success", "Update Successfully");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            redirectAttributes.addFlashAttribute("fail","Fail");
+            redirectAttributes.addFlashAttribute("fail", "Fail");
         }
         return "redirect:/package/packages";
     }
 
-    @GetMapping("/page/{pageNo}")
-    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
-        int pageSize = 5;
-        Page<Package> packages = packageServices.findPaginated(pageNo, pageSize);
-        List<Package> packageList = packages.getContent();
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", packages.getTotalPages());
-        model.addAttribute("packageList", packageList);
-        return "management/PackageManagement/package-list";
-    }
+//    @GetMapping("/page/{pageNo}")
+//    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
+//        int pageSize = 5;
+//        Page<Package> packages = packageServices.findPaginated(pageNo, pageSize);
+//        List<Package> packageList = packages.getContent();
+//        model.addAttribute("currentPage", pageNo);
+//        model.addAttribute("totalPages", packages.getTotalPages());
+//        model.addAttribute("packageList", packageList);
+//        return "management/PackageManagement/package-list";
+//    }
 }

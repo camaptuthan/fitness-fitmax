@@ -31,6 +31,8 @@ public class PackageDTO {
     private String des;
     private boolean status;
 
+    private ServiceDTO serviceDTO;
+
     public PackageDTO(String name, int duration, Float price, String des, boolean status) {
         this.name = name;
         this.duration = duration;
@@ -39,5 +41,17 @@ public class PackageDTO {
         this.status = status;
     }
 
-
+    @Override
+    public String toString() {
+        return "PackageDTO{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", image='" + image + '\'' +
+                ", duration=" + duration +
+                ", price=" + price +
+                ", des='" + des + '\'' +
+                ", status=" + status +
+                ", serviceDTO=" + serviceDTO +
+                '}';
+    }
 }

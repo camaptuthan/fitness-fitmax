@@ -1,5 +1,6 @@
 package fivemonkey.com.fitnessbackend.controller;
 
+import fivemonkey.com.fitnessbackend.dto.CategoryDTO;
 import fivemonkey.com.fitnessbackend.entities.Category;
 import fivemonkey.com.fitnessbackend.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class CategoryController {
 
     //get category by type
     @GetMapping("/type/{type}")
-    public List<Category> getCategoryByType(@PathVariable String type) {
+    public List<CategoryDTO> getCategoryByType(@PathVariable String type) {
         return categoryService.findAllCategoriesByType(type);
     }
 
