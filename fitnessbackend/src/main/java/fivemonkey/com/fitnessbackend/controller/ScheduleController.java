@@ -59,8 +59,8 @@ public class ScheduleController {
 
     }
 
-    @GetMapping("list-class")
-    public List<ClassDTO> getClasses() {
+    @GetMapping("/registered-class")
+    public List<ClassDTO> getClasses(@AuthenticationPrincipal UserDetail userDetail) {
         return classService.findAll();
     }
 

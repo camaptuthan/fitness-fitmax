@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,27 +19,54 @@ public class PackageServiceImpl implements PackageService {
 
     @Autowired
     private PackageRepository packageRepository;
+    @Autowired
+    ModelMapper modelMapper;
+
+    @Override
+    public List<PackageDTO> getAll() {
+        List<PackageDTO> list = new ArrayList<>();
+        List<Package> packages = packageRepository.findAll();
+        for (Package p : packages) {
+            list.add(modelMapper.map(p, PackageDTO.class));
+        }
+        return list;
+    }
 
     //get all packages
     @Override
-    public List<Package> getAllPackages() {
-        return packageRepository.findAll();
+    public List<PackageDTO> getAllPackagesByKeyword(String keyword) {
+        List<PackageDTO> list = new ArrayList<>();
+        List<Package> packages = packageRepository.getAllInformationOfPackages(keyword);
+        for (Package p : packages) {
+            list.add(modelMapper.map(p, PackageDTO.class));
+        }
+        return list;
+    }
+
+    @Override
+    public List<PackageDTO> getAllInforPackage() {
+        List<PackageDTO> list = new ArrayList<>();
+        List<Package> packages = packageRepository.getAllInformationOfPackage();
+        for (Package p : packages) {
+            list.add(modelMapper.map(p, PackageDTO.class));
+        }
+        return list;
     }
 
     //get package by id
     @Override
     public PackageDTO getPackageById(String id) {
-        Package p= packageRepository.getById(id);
-        PackageDTO packageDTO= new PackageDTO();
-        ModelMapper mapper= new ModelMapper();
-        packageDTO=mapper.map(p,PackageDTO.class);
+        Package p = packageRepository.getById(id);
+        PackageDTO packageDTO = new PackageDTO();
+        ModelMapper mapper = new ModelMapper();
+        packageDTO = mapper.map(p, PackageDTO.class);
         return packageDTO;
     }
 
     //add new package
     @Override
     public Package save(PackageDTO p) {
-        Package aPackage =new Package();
+        Package aPackage = new Package();
         aPackage.setName(p.getName());
         aPackage.setDuration(p.getDuration());
         aPackage.setPrice(p.getPrice());
@@ -50,14 +78,14 @@ public class PackageServiceImpl implements PackageService {
     //update
     @Override
     public Package update(PackageDTO p) {
-        try{
+        try {
             Package aPackage = packageRepository.getById(p.getId());
             aPackage.setName(p.getName());
             aPackage.setDuration(p.getDuration());
             aPackage.setPrice(p.getPrice());
             aPackage.setDes(p.getDes());
             return packageRepository.save(aPackage);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -81,7 +109,7 @@ public class PackageServiceImpl implements PackageService {
 
     @Override
     public Page<Package> findPaginated(int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo -1, pageSize);
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return packageRepository.findAll(pageable);
     }
 

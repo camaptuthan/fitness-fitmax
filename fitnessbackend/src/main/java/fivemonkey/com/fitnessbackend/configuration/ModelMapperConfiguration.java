@@ -5,8 +5,11 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Configuration
-public class ModelMapperConfiguration {
+public class ModelMapperConfiguration <S,T>{
 
 
     @Bean
@@ -14,5 +17,13 @@ public class ModelMapperConfiguration {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
         return modelMapper;
+    }
+
+    public List<T> mapList(List<S> source, Class<T> targetClass) {
+        List<T> target = new ArrayList<T>();
+        for (S element : source) {
+            target.add(getModelMapper().map(element, targetClass));
+        }
+        return target;
     }
 }

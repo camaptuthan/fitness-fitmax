@@ -16,7 +16,11 @@ import java.util.List;
 
 public interface PackageService {
 
-    public List<Package> getAllPackages();
+    List<PackageDTO> getAll();
+
+    public List<PackageDTO> getAllPackagesByKeyword(String keyword);
+
+    List<PackageDTO> getAllInforPackage();
 
     public PackageDTO getPackageById(String id);
 

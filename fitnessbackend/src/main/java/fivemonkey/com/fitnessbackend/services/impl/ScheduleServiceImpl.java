@@ -61,12 +61,12 @@ public class ScheduleServiceImpl implements ScheduleService {
     //get schedule information by provided classId
     @Override
     public ClassDTO getByInfor(String email, String serviceId, Date startTime, Date endTime) {
-        ClassDTO classDTO;
+        ClassDTO classDTO = null;
 
-        List<Registration> myRegistrations = registrationRepository.getRegistrationByTrainee(new Trainee(email));
+        List<Registration> myRegistrations  = registrationRepository.getRegistrationByTrainee(email);
 
         if (myRegistrations.isEmpty()) {
-            return null;
+            return classDTO;
         }
         //get class information
         classDTO = modelMapper.map(classRepository.findById(serviceId).get(), ClassDTO.class);
