@@ -46,7 +46,7 @@
 
 <!-- ============== S-ABOUT-PROGRAM ============== -->
 <section class="s-about">
-    <div class="container" >
+    <div class="container">
         <input type="hidden" th:value="*{id}" id="class_id">
         <img class="about-effect-tringle" th:src="@{/img/tringle-about-top.svg}" alt="img">
         <div class="row about-row">
@@ -63,7 +63,32 @@
                 </div>
             </div>
             <div class="col-md-7 about-info-cover">
-                <h2 class="title-decor">About <span th:text="*{name}"></span></h2>
+                <h2 class="title-decor">About <span th:text="*{name}"></span>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#class_order_modal">
+                        Enroll now
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="class_order_modal" tabindex="-1"
+                         aria-labelledby="class_order_modal_Label" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content" style="background-color: #202020;">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="class_order_modal_Label">Your registration</h1>
+                                </div>
+                                <div class="modal-body">
+                                    ...
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn" data-bs-dismiss="modal">Close
+                                    </button>
+                                    <button type="button" class="btn">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h2>
                 <div class="text">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmmpor incididunt ut labore et
                         dolore magna aliqua. Ut enim ad minim veniam, quis nostrud. Lorem ipsum dolor sit amet,

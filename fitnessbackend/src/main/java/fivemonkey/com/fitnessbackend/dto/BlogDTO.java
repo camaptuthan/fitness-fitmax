@@ -29,7 +29,7 @@ public class BlogDTO {
 
     private Category category;
 
-    private User writer_email;
+    private String userEmail;
 
 
 }

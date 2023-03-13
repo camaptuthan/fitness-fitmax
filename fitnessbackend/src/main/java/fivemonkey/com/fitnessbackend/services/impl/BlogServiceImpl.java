@@ -3,7 +3,9 @@ package fivemonkey.com.fitnessbackend.services.impl;
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.BlogDTO;
 import fivemonkey.com.fitnessbackend.entities.Blog;
+import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.repository.BlogRepository;
+import fivemonkey.com.fitnessbackend.repository.UserRepository;
 import fivemonkey.com.fitnessbackend.services.BlogService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class BlogServiceImpl implements BlogService {
     private BlogRepository blogRepository;
 
     @Autowired
+    private UserRepository userRepository;
+    @Autowired
     private ModelMapperConfiguration<Blog, BlogDTO> modelMapper;
 
     //get all blogs
@@ -27,7 +31,7 @@ public class BlogServiceImpl implements BlogService {
     public List<BlogDTO> findAllBlogs() {
         List<BlogDTO> blogDTOS = new ArrayList<>();
         List<Blog> blogs = blogRepository.findAll();
-        for (Blog b: blogs) {
+        for (Blog b : blogs) {
             BlogDTO blogDTO = modelMapper.map(b, BlogDTO.class);
             blogDTOS.add(blogDTO);
         }
@@ -50,27 +54,24 @@ public class BlogServiceImpl implements BlogService {
         Blog blog = new Blog();
         blog.setTitle(b.getTitle());
         blog.setDescription(b.getDes());
-        blog.setImage(b.getImage());
         blog.setStatus(true);
-        blog.setDate(b.getCreated_date());
-        blog.setUser(b.getWriter_email());
-        blog.setCategory(b.getCategory());
+        blog.setUser(userRepository.findByEmail(b.getUserEmail()).get());
         return blogRepository.save(blog);
     }
 
     @Override
     public Blog update(BlogDTO b) {
-        try{
+        try {
             Blog blog = blogRepository.getById(b.getId());
             blog.setTitle(b.getTitle());
             blog.setDescription(b.getDes());
             blog.setImage(b.getImage());
             blog.setStatus(true);
             blog.setDate(b.getCreated_date());
-            blog.setUser(b.getWriter_email());
+            blog.setUser(new User(b.getUserEmail()));
             blog.setCategory(b.getCategory());
             return blogRepository.save(blog);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

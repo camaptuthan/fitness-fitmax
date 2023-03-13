@@ -79,4 +79,7 @@ public class User {
     @Column(name = "verification_code", updatable = false)
     private String verificationCode;
 
+    public User(String userEmail) {
+        this.email = userEmail;
+    }
 }
