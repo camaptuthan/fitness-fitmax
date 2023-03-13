@@ -36,7 +36,7 @@ public class Clazz {
     @Column(name = "price")
     private Float price;
 
-    @Column(name = "description", columnDefinition = "text")
+    @Column(name = "description", columnDefinition = "longtext")
     private String des;
 
     @Temporal(TemporalType.DATE)

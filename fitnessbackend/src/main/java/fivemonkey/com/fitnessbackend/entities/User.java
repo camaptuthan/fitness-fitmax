@@ -33,6 +33,7 @@ public class User {
     @Column(name = "first_name")
     @NotEmpty(message = "This field can not empty")
     private String firstName;
+
     @Column(name = "last_name")
     @NotEmpty(message = "This field can not empty")
     private String lastName;
@@ -56,25 +57,35 @@ public class User {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "studio_id", referencedColumnName = "studio_id")
     private Studio studio;
+
     //user-blog relationship
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Blog> blogs;
-    //user-manager relationship
+
+    //user-studioManager relationship
     @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
-    private Manager manager;
+    private StudioManager studioManager;
+
     //assistant-user relationship
     @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     private Assistant assistant;
+
     //trainee-user relationship
     @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     private Trainee trainee;
+
     //trainer-user relationship
     @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     private Trainer trainer;
+
+    //cityManager-user relationship
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
+    private CityManager cityManager;
 
     @Column(name = "verification_code", updatable = false)
     private String verificationCode;

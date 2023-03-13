@@ -18,8 +18,10 @@ public class UserDTO {
     private String password;
     @NotNull(message = "Required not null")
     private String firstName;
+
     @NotNull(message = "Required not null")
     private String lastName;
+
     private String address;
     private String phone;
     private String avatar;

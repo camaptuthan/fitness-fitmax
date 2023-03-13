@@ -36,12 +36,8 @@ public class PackageServiceImpl implements PackageService {
     //get all packages
     @Override
     public List<PackageDTO> getAllPackagesByKeyword(String keyword) {
-        List<PackageDTO> list = new ArrayList<>();
         List<Package> packages = packageRepository.getAllInformationOfPackages(keyword);
-        for (Package p : packages) {
-            list.add(modelMapper.map(p, PackageDTO.class));
-        }
-        return list;
+        return modelMapper.mapList(packages, PackageDTO.class);
     }
 
     @Override

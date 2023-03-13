@@ -199,7 +199,7 @@ public class UserServiceImpl implements UserService {
         String senderName = "Fitness Service Management System";
         String subject = "Please verify your registration";
         String verifyURL = siteUrl + "/verify?code=" + user.getVerificationCode();
-        String content = "Dear " + user.getFirstName() + "" + user.getLastName() + ",<br>"
+        String content = "Dear " + user.getFirstName() + user.getLastName()+",<br>"
                 + "Please click the link below to verify your registration:<br>"
                 + "<h3><a href=\"" + verifyURL + "\" >VERIFY</a></h3>"
                 + "Thank you,<br>"

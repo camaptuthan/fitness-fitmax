@@ -27,12 +27,8 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public List<ServicesDTO> getAllByPackage() {
-        List<ServicesDTO> list = new ArrayList<>();
         List<Services> list1 = serviceRepository.getServicesByPackage();
-        for (Services s : list1) {
-            list.add(mapper.map(s, ServicesDTO.class));
-        }
-        return list;
+        return mapper.mapList(list1, ServicesDTO.class);
     }
 
     @Override

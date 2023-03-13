@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
-@ControllerAdvice
 public class GlobalControllerAdvice {
 
     private static Logger LOGGER = LoggerFactory.getLogger(GlobalControllerAdvice.class);

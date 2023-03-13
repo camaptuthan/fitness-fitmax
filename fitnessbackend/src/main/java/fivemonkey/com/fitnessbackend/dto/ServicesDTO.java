@@ -1,8 +1,15 @@
 package fivemonkey.com.fitnessbackend.dto;
 
+import lombok.*;
+
 import java.util.Date;
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class ServicesDTO {
 
     private String id;
@@ -15,9 +22,11 @@ public class ServicesDTO {
 
     private StudioDTO studioDTO;
 
-    private CategoryDTO category;
+    private String categoryId;
 
-    private ServiceTypeDTO serviceTypeDTO;
+    private String serviceTypeId;
 
     private List<RegistrationDTO> registrationDTOS;
+
+
 }

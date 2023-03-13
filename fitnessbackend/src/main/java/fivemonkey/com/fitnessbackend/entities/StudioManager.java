@@ -9,20 +9,20 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "manager", schema = "dbo")
-public class Manager {
+@Table(name = "studio_manager", schema = "dbo")
+public class StudioManager {
 
     @Id
-    @Column(name = "manager_email")
+    @Column(name = "studio_manager_email")
     private String email;
 
     //studio-manager relationship
-    @OneToOne(mappedBy = "manager")
+    @OneToOne(mappedBy = "studioManager")
     private Studio studio;
 
     //manager-user relationship
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @MapsId
-    @JoinColumn(name = "manager_email")
+    @JoinColumn(name = "studio_manager_email")
     private User user;
 }
