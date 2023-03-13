@@ -3,6 +3,7 @@ package fivemonkey.com.fitnessbackend.utils;
 import com.google.cloud.storage.Bucket;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,11 +14,12 @@ import java.io.IOException;
 @Slf4j
 public class FireBaseUtils {
 
-    private final Bucket bucket;
+    @Autowired Bucket bucket;
 
     public void uploadFile(MultipartFile file, String fileName) throws IOException {
         if (file == null) {
             log.info("[uploadFile] Cannot upload because file is not present");
+
         }
         log.info("[uploadFile] Start upload to Firebase with fileName : {},original fileName : {}",
                 fileName,

@@ -30,15 +30,8 @@ public class ClassServiceImpl implements ClassService {
     //mapper class to class dto
     @Override
     public List<ClassDTO> findAll() {
-
-        List<ClassDTO> classDTOList = new ArrayList<>();
         List<Clazz> clazzList = classRepository.findAll();
-        for (Clazz c : clazzList) {
-            ClassDTO classDTO = modelMapperConfiguration.map(c, ClassDTO.class);
-            classDTOList.add(classDTO);
-        }
-        return classDTOList;
-
+        return modelMapperConfiguration.mapList(clazzList, ClassDTO.class);
     }
 
     @Override

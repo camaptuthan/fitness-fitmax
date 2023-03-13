@@ -1,6 +1,7 @@
 package fivemonkey.com.fitnessbackend.services;
 
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
+import fivemonkey.com.fitnessbackend.entities.City;
 import fivemonkey.com.fitnessbackend.entities.User;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,9 @@ public interface UserService {
     List<UserDTO> findAllUser(String keyword);
 
     List<User> findAllUserNameContaining(String email);
+
+    void updateUserAvatar(UserDTO userDTO);
+
     void registerUser(User user);
 
    
@@ -39,6 +43,7 @@ public interface UserService {
 
 
     boolean verify(String code);
+//    public List<UserDTO> findByStudio(String id);
 
 
 }
