@@ -23,23 +23,21 @@ public class User {
 
     @Id
     @Column(name = "email")
-    @NotEmpty(message = "This field can not empty")
-    @Email(message = "Enter a valid email address")
     private String email;
     @Column(name = "password")
     @NotEmpty(message = "This field can not empty")
     @Length(min = 8, message = "Password must be at least 8 characters")
     private String password;
     @Column(name = "first_name")
-    @NotEmpty(message = "This field can not empty")
+
     private String firstName;
     @Column(name = "last_name")
-    @NotEmpty(message = "This field can not empty")
+
     private String lastName;
     @Column(name = "address")
     private String address;
     @Column(name = "phone")
-    @NotEmpty(message = "This field can not empty")
+
     private String phone;
     @Column(name = "avatar")
     private String avatar;

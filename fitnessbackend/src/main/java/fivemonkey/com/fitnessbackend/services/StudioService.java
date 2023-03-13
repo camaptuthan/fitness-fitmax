@@ -27,4 +27,6 @@ public interface StudioService {
     Page<Studio> getStudioByPage(int currentPage, String searchInput);
     List<Studio> getAll();
     Studio save(Studio studio);
+
+    public List<Studio> findByDistrict(String id);
 }

@@ -18,6 +18,7 @@ public class City {
     @Column(name = "city_id")
     private long id;
 
+
     @Column(name = "city_name")
     private String name;
 
