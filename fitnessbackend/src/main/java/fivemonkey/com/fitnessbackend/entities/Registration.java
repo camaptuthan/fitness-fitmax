@@ -31,6 +31,9 @@ public class Registration {
     @Column(name = "status", nullable = false)
     private boolean status;
 
+    @Column(name = "approved_by")
+    private String approvedBy;
+
     //registration-service relationship
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "service_id", referencedColumnName = "service_id")
@@ -40,5 +43,7 @@ public class Registration {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "user_email", referencedColumnName = "trainee_email")
     private Trainee trainee;
+
+
 
 }
