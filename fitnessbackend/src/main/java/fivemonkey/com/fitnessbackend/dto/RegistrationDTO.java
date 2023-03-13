@@ -16,7 +16,6 @@ public class RegistrationDTO {
     private boolean status;
     private String servicesId;
     private String servicesName;
-
     private String itemId;
     private String itemName;
     private String path;

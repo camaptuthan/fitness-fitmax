@@ -38,55 +38,56 @@
         <h2 class="title-decor">Packages <span>List</span></h2>
         <p class="slogan">Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor
             tincidunt lorem ut, venenatis dapibus miq.</p>
-        <div class="row1">
-            <div class="col-md-4 club-card-col" th:each="package : ${packagelist}">
-                <div class="club-card-item" th:style="'background-image: url(' + ${package.image} + ');'">
-                    <div class="price-cover">
-                        <div class="price" th:text="${package.price}"></div>
-                        <div class="date"><span th:text="${package.duration}"></span>months</div>
+        <div id="carousel-package" class="carousel slide">
+            <div class="carousel-inner overflow-visible row">
+                <th:block th:each="item,iter : ${packages}">
+                    <div class="carousel-item col-12 p-2" th:classappend="${iter.index == 0} ? active : '' ">
+                        <div class="row">
+                            <th:block th:each="package : ${item.value}">
+                                <div class="col-md-4 club-card-col">
+                                    <div class="club-card-item" th:style="'background-image: url(' + ${package.image} + ');'">
+                                        <div class="price-cover">
+                                            <div class="price" th:text="${package.price}">price</div>
+                                            <div class="date"><span th:text="${package.duration}"></span>months</div>
+                                        </div>
+                                        <ul class="list">
+                                            <li></li>
+                                            <li></li>
+                                            <li></li>
+                                            <li th:text="${package.des}" style="color:yellow"></li>
+                                            <li></li>
+                                            <li></li>
+                                            <li></li>
+                                        </ul>
+                                        <a th:href="@{'/package/package_detail/' + ${package.id}}" class="btn">order now</a>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </div>
                     </div>
-                    <ul class="list">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li th:text="${package.des}" style="color:yellow"></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                    <a th:href="@{'/package/package_detail/' + ${package.id}}" class="btn">order now</a>
-                </div>
+                </th:block>
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-package" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel-package" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
+        <style>
+            .carousel-control-prev {
+                left: -13rem;
+            }
+
+            .carousel-control-next {
+                right: -13rem;
+            }
+        </style>
     </div>
 </section>
 <script type="text/javascript" src="slick/slick.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('.row1').slick({
-            dots: true,
-            infinite: true,
-            speed: 300,
-            slidesToShow: 3,
-            responsive: [
-                {
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 2,
-                        infinite: true,
-                        dots: true
-                    }
-                },
-                {
-                    breakpoint: 600,
-                    settings: {
-                        slidesToShow: 1,
-                    }
-                },
-            ]
-    });
-    });
-</script>
 <div th:include="fragments/footer.html"></div>
 <!-- ================ FOOTER END ================ -->
 

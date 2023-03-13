@@ -20,6 +20,9 @@ public class ModelMapperConfiguration<S, T> {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
     }
 
+    public ModelMapper getModelMapper() {
+        return modelMapper;
+    }
 
     public T map(S source, Class<T> target) {
         if (source == null)

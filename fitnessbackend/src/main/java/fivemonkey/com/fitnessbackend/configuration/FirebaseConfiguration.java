@@ -6,6 +6,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.StorageClient;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -13,7 +14,7 @@ import org.springframework.core.io.ClassPathResource;
 @Configuration
 @Slf4j
 public class FirebaseConfiguration {
-    @Bean
+   @Bean
     public Bucket getBucket() {
         ClassPathResource serviceAccount = new ClassPathResource("firebase/firebase.json");
         FirebaseOptions options = null;

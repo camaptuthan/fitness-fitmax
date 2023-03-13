@@ -1,17 +1,15 @@
 package fivemonkey.com.fitnessbackend.controller;
 
-import fivemonkey.com.fitnessbackend.entities.Manager;
 import fivemonkey.com.fitnessbackend.entities.Studio;
-import fivemonkey.com.fitnessbackend.services.StudioService;
+import fivemonkey.com.fitnessbackend.entities.StudioManager;
 import fivemonkey.com.fitnessbackend.services.StudioManagerService;
+import fivemonkey.com.fitnessbackend.services.StudioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -137,7 +135,7 @@ public String viewCourse(
     }
     @GetMapping("/studios/new")
     public String createStudioForm(Model model) {
-        List<Manager> mlist = studioManagerService.getAvailableManager();
+        List<StudioManager> mlist = studioManagerService.getAvailableManager();
         Studio studio = new Studio();
         model.addAttribute("list", mlist);
         model.addAttribute("studio", studio);

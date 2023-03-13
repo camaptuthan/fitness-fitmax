@@ -3,10 +3,11 @@
 
 /*select * from role;*/
 insert into role(role_id,role_name,description) values ('ROLE0001','Admin','');
-insert into role(role_id,role_name,description) values ('ROLE0002','Manager','');
+insert into role(role_id,role_name,description) values ('ROLE0002','Studio Manager','');
 insert into role(role_id,role_name,description) values ('ROLE0003','Assistant','');
 insert into role(role_id,role_name,description) values ('ROLE0004','Trainer','');
 insert into role(role_id,role_name,description) values ('ROLE0005','Trainee','');
+insert into role(role_id,role_name,description) values ('ROLE0006','City Manager','');
 
 /*select * from city;*/
 insert into city(city_name) values ('Ha Noi');
@@ -37,19 +38,20 @@ insert into user(email,password,first_name,last_name,role_id,studio_id,status,cr
 insert into user(email,password,first_name,last_name,role_id,studio_id,status,created_date) values ('davidpham95aka201@gmail.com','123456','A','Nguyen','ROLE0003','STU0001',1,CURDATE());
 insert into user(email,password,first_name,last_name,role_id,studio_id,status,created_date) values ('haphhe151269@fpt.edu.vn','123456','Ha','Pham','ROLE0005','STU0001',1,CURDATE());
 insert into user(email,password,first_name,last_name,role_id,studio_id,status,created_date) values ('ducnvhe141646@fpt.edu.vn','123456','Duc','Nguyen','ROLE0004','STU0001',1,CURDATE());
+ 
 
-/*select * from manager;*/
-insert into manager(manager_email) values ('hungha19156@gmail.com');
-insert into manager(manager_email) values ('tuanduong144@gmail.com');
-insert into manager(manager_email) values ('huy191101@gmail.com');
-insert into manager(manager_email) values ('nguyenvanduc14012000@gmail.com');
-insert into manager(manager_email) values ('parkhunjk@gmail.com');
+/*select * from studio_manager;*/
+insert into studio_manager(studio_manager_email) values ('hungha19156@gmail.com');
+insert into studio_manager(studio_manager_email) values ('tuanduong144@gmail.com');
+insert into studio_manager(studio_manager_email) values ('huy191101@gmail.com');
+insert into studio_manager(studio_manager_email) values ('nguyenvanduc14012000@gmail.com');
+insert into studio_manager(studio_manager_email) values ('parkhunjk@gmail.com');
 
-update studio set manager_email = 'hungha19156@gmail.com' where studio_id = 'STU0001';
-update studio set manager_email = 'tuanduong144@gmail.com' where studio_id = 'STU0002';
-update studio set manager_email = 'huy191101@gmail.com' where studio_id = 'STU0003';
-update studio set manager_email = 'nguyenvanduc14012000@gmail.com' where studio_id = 'STU0004';
-update studio set manager_email = 'parkhunjk@gmail.com' where studio_id = 'STU0005';
+update studio set studio_manager_email = 'hungha19156@gmail.com' where studio_id = 'STU0001';
+update studio set studio_manager_email = 'tuanduong144@gmail.com' where studio_id = 'STU0002';
+update studio set studio_manager_email = 'huy191101@gmail.com' where studio_id = 'STU0003';
+update studio set studio_manager_email = 'nguyenvanduc14012000@gmail.com' where studio_id = 'STU0004';
+update studio set studio_manager_email = 'parkhunjk@gmail.com' where studio_id = 'STU0005';
 
 /*select * from assistant;*/
 insert into assistant(assistant_email) values ('davidpham95aka201@gmail.com');
@@ -121,6 +123,8 @@ insert into registration(registration_id,user_email,service_id,status,registrati
 insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0002','haphhe151269@fpt.edu.vn','SER0002',1,CURDATE());
 insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0003','haphhe151269@fpt.edu.vn','SER0003',1,CURDATE());
 insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0004','haphhe151269@fpt.edu.vn','SER0004',1,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0005','haphhe151269@fpt.edu.vn','SER0001',1,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0006','haphhe151269@fpt.edu.vn','SER0001',1,CURDATE());
 
 /*select * from trainer;*/
 insert into trainer(trainer_email,status) values ('ducnvhe141646@fpt.edu.vn',1);

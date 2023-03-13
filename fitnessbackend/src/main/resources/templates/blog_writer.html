@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -10,6 +10,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <th:block th:replace="fragments/head :: head"></th:block>
+    <link rel="stylesheet" th:href="@{/js/richtexteditor/rte_theme_default.css}">
 </head>
 
 <body id="home">
@@ -45,26 +46,26 @@
 <!-- ============= HEADER-TITLE END ============= -->
 
 <!--===================== S-NEWS =====================-->
-
-<section class="s-news">
+ <section class="s-news">
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-9 blog-cover">
                 <div class="post-item-cover">
-                    <form id="blog_writer_form" class="search-form d-block">
+                    <form id="blog_writer_form"  action="" th:action="@{/blog/writer}" th:object="${blogDTO}" method="post"
+                          class="search-form d-block">
                         <fieldset disabled>
                             <div class="mb-3 row">
                                 <label for="blog_author" class="col-sm-2 col-form-label">Author</label>
                                 <div class="col-sm-10">
                                     <input type="text" readonly class="form-control-plaintext" id="blog_author"
-                                           style="border-bottom-color: none;"
+                                           style="border-bottom-color: unset;"
                                            value="email@example.com">
                                 </div>
                             </div>
                         </fieldset>
                         <div class="mb-3">
                             <label for="blog_title" class="form-label">Blog title</label>
-                            <input type="text" class="form-control" id="blog_title"
+                            <input type="text" class="form-control" id="blog_title" th:field="${blogDTO.title}"
                                    placeholder="Title">
                         </div>
                         <div class="mb-3">
@@ -84,8 +85,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="blog_content" class="form-label">Blog textarea</label>
-                            <textarea class="form-control" placeholder="Your idea" id="blog_content" rows="10"
-                                      style="height: 25rem"></textarea>
+                            <textarea id="blog_content" style="width: 100%" th:field="${blogDTO.des}"
+                            ></textarea>
                         </div>
                         <button type="submit" class="btn-form w-100" style="border-radius: unset">
                             <i class="fa fa-search" aria-hidden="true"></i>
@@ -122,6 +123,8 @@
 <script th:src="@{/js/rx-lazy.js}"></script>
 <script th:src="@{/js/parallax.min.js}"></script>
 <script th:src="@{/js/scripts.js}"></script>
+<script type="text/javascript" th:src="@{/js/richtexteditor/all_plugins.js}"></script>
+<script type="text/javascript" th:src="@{/js/richtexteditor/rte.js}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
@@ -151,6 +154,7 @@
         }
     });
 
+    let editor1 = new RichTextEditor("#blog_content");
 </script>
 
 </html>

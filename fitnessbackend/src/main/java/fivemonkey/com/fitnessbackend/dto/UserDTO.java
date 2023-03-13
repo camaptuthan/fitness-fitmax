@@ -12,14 +12,13 @@ import java.util.Date;
 @Setter
 @ToString
 public class UserDTO {
-    @NotNull(message = "Required not null")
     private String email;
-    @NotNull(message = "Required not null")
     private String password;
     @NotNull(message = "Required not null")
     private String firstName;
     @NotNull(message = "Required not null")
     private String lastName;
+
     private String address;
     private String phone;
     private String avatar;

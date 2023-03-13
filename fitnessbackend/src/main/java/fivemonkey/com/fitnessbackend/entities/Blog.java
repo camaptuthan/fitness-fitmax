@@ -24,7 +24,7 @@ public class Blog {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "description", columnDefinition = "text")
+    @Column(name = "description", columnDefinition = "longtext")
     private String description;
 
     @Temporal(TemporalType.DATE)

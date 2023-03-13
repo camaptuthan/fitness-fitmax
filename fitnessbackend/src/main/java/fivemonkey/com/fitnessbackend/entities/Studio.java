@@ -52,10 +52,10 @@ public class Studio {
     @OneToMany(mappedBy = "studio", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Services> services;
 
-    //studio-manager relationship
+    //studio-studioManager relationship
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "manager_email", referencedColumnName = "manager_email", unique = true)
-    private Manager manager;
+    @JoinColumn(name = "studio_manager_email", referencedColumnName = "studio_manager_email", unique = true)
+    private StudioManager studioManager;
 
     //studio-district relationship
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)

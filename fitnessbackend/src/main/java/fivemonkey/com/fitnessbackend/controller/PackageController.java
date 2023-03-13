@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/package")
@@ -53,11 +56,23 @@ public class PackageController {
 
     @GetMapping("/packages")
     public String getAllPackages(Model model) {
-        List<PackageDTO> packageDTOList1 = packageServices.getAll();
+        List<PackageDTO> packageDTOList1 = packageServices.getAllPackagesByKeyword("");
         List<ServicesDTO> servicesList = serviceService.getAllByPackage();
         List<CategoryDTO> category = categoryService.findAllCategoriesByType("service");
+
+        Map<String,  List<PackageDTO>> packagesMapList = new HashMap<>();
+        for (int i = 0; i < (packageDTOList1.size() /3 )+1; i++) {
+            List<PackageDTO> value = new ArrayList<>();
+            for (int j = 0; j < 3; j++) {
+                if (i * 3 + j < packageDTOList1.size()) {
+                    value.add(packageDTOList1.get(i * 3 + j));
+                }
+            }
+            packagesMapList.put("PKG-"+(i+1), value);
+        }
+        System.out.println("HAPH"+ servicesList);
             model.addAttribute("servicesList", servicesList);
-            model.addAttribute("packagelist", packageDTOList1);
+            model.addAttribute("packages", packagesMapList);
             model.addAttribute("size", packageDTOList1.size());
             model.addAttribute("category", category);
         return "management/PackageManagement/package";
