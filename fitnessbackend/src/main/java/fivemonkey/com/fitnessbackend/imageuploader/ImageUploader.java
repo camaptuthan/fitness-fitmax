@@ -1,6 +1,7 @@
 package fivemonkey.com.fitnessbackend.imageuploader;
 
 import fivemonkey.com.fitnessbackend.constant.FireBaseConstant;
+import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.utils.FireBaseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ public class ImageUploader {
     @Autowired
     private FireBaseUtils fireBaseUtils;
 
+
     public String upload(MultipartFile multipartFile) {
         String fileName = null;
         try {
@@ -26,4 +28,5 @@ public class ImageUploader {
         }
         return fileName;
     }
+
 }

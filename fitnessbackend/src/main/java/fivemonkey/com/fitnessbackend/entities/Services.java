@@ -67,5 +67,10 @@ public class Services {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "service_type_id", referencedColumnName = "service_type_id")
     private ServiceType serviceType;
+
+    //city-service relationship
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id", referencedColumnName = "city_id")
+    private City city;
 }
 

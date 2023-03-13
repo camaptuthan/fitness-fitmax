@@ -14,12 +14,15 @@ import java.io.IOException;
 @Slf4j
 public class FireBaseUtils {
 
+
     @Autowired
     private Bucket bucket;
+
 
     public void uploadFile(MultipartFile file, String fileName) throws IOException {
         if (file == null) {
             log.info("[uploadFile] Cannot upload because file is not present");
+
         }
         assert file != null;
         log.info("[uploadFile] Start upload to Firebase with fileName : {},original fileName : {}",

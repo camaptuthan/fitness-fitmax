@@ -1,8 +1,6 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
-import fivemonkey.com.fitnessbackend.entities.Manager;
-import fivemonkey.com.fitnessbackend.entities.Services;
-import fivemonkey.com.fitnessbackend.repository.ServiceRepository;
+import fivemonkey.com.fitnessbackend.entities.StudioManager;
 import fivemonkey.com.fitnessbackend.repository.StudioManagerRepository;
 import fivemonkey.com.fitnessbackend.services.StudioManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +12,12 @@ public class StudioManagerServiceImpl implements StudioManagerService{
     @Autowired
     StudioManagerRepository studioManagerRepository;
     @Override
-    public List<Manager> getAll() {
+    public List<StudioManager> getAll() {
      return studioManagerRepository.findAll();
     }
 
     @Override
-    public List<Manager> getAvailableManager() {
+    public List<StudioManager> getAvailableManager() {
         return studioManagerRepository.getAvailableManager();
     }
 }
