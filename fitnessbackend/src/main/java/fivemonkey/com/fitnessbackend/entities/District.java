@@ -19,7 +19,7 @@ public class District {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "district_id")
-    private Long id;
+    private String id;
 
     @Column(name = "district_name")
     private String name;

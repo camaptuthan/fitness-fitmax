@@ -15,8 +15,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -132,8 +130,20 @@ public class UserServiceImpl implements UserService {
     public void updateUser(UserDTO userDTO) {
 
         User user1 = userRepository.getById(userDTO.getEmail());
-        user1.setAvatar(userDTO.getAvatar());
+        user1.setFirstName(userDTO.getFirstName());
+        user1.setLastName(userDTO.getLastName());
+        user1.setPhone(userDTO.getPhone());
+        user1.setAddress(userDTO.getAddress());
         userRepository.save(user1);
+
+    }
+    @Override
+    public void updateUserAvatar(UserDTO userDTO) {
+
+        User user2 = userRepository.getById(userDTO.getEmail());
+        user2.setAvatar(userDTO.getAvatar());
+
+        userRepository.save(user2);
 
     }
 
@@ -155,19 +165,6 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-//    @Override
-//    public List<UserDTO> findAllUserNameContaining(String email) {
-//        ModelMapper mapper = new ModelMapper();
-//        List<UserDTO>  userDTOList = new ArrayList<>();
-//        List<User> userList = userRepository.findAllUserNameContaining(email);
-//        for(User u : userList){
-//            UserDTO userDTO = mapper.map(u, UserDTO.class);
-//            userDTOList.add(userDTO);
-//        }
-//        return userDTOList;
-//    }
-
-
     //check email exist ,phone may be optional
     @Override
     public List<Object> isUserPresent(User user) {
@@ -178,14 +175,6 @@ public class UserServiceImpl implements UserService {
             userExists = true;
             message = "Email Already Present!";
         }
-//        Optional<User> existingUserMobile = userRepository.findByMobile(user.getPhone());
-//        if(existingUserMobile.isPresent()){
-//            userExists = true;
-//            message = "Mobile Number Already Present!";
-//        }
-//        if (existingUserEmail.isPresent() && existingUserMobile.isPresent()) {
-//            message = "Email and Mobile Number Both Already Present!";
-//        }
         System.out.println("existingUserEmail.isPresent() - " + existingUserEmail.isPresent());
         return Arrays.asList(userExists, message);
 
@@ -235,6 +224,18 @@ public class UserServiceImpl implements UserService {
             return true;
         }
     }
+
+//    @Override
+//    public List<UserDTO> findByStudio(String id) {
+//        ModelMapper mapper = new ModelMapper();
+//        List<UserDTO> userDTOList1 = new ArrayList<>();
+//        List<User> userList = userRepository.findByStudio(id);
+//        for (User u : userList) {
+//            UserDTO userDTO = mapper.map(u, UserDTO.class);
+//            userDTOList1.add(userDTO);
+//        }
+//        return userDTOList1;
+//    }
 
 }
 

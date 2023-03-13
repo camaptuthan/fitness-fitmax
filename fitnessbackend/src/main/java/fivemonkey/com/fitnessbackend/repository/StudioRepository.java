@@ -12,17 +12,10 @@ import java.util.List;
 
 @Repository
 public interface StudioRepository extends JpaRepository<Studio, String> {
-//    @Query(value = "Select * from fitmax.studio where city =:city", nativeQuery = true)
-//    public List<Studio> findStudio(@Param("city") String studioCity);
-
-//    @Query(value = "Select * from fitmax.studio where city = 'Hanoi'", nativeQuery = true)
-//    public List<Studio> findStudiosByStudioCity(@Param("city") String studioCity);
-
-//    @Query(value = "Select * from fitmax.studio where city = 'Hanoi'", nativeQuery = true)
-//    public void updateStatus(@Param("city") String studioCity);
-
+@Query("select s.id, s.name from Studio s where s.district.id= :id")
+public List<Studio> findByDistrict(@Param("id") String id);
 
     public Page<Studio> findStudioByNameContaining(String name, Pageable pageable);
-//    public Page<Studio> findStudioByCityOrderByIdDesc(String city, Pageable pageable);
+
 
 }

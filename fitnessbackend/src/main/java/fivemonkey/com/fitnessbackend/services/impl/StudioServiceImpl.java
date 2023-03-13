@@ -101,6 +101,11 @@ public class StudioServiceImpl implements StudioService {
     }
 
     @Override
+    public List<Studio> findByDistrict(String id) {
+        return studioRepository.findByDistrict(id);
+    }
+
+    @Override
     public Page<Studio> getALlByPage(int currentPage, String searchInput, String categoryId) {
         Pageable pageable = PageRequest.of(currentPage - 1,6);
         if(categoryId=="1"){

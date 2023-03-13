@@ -1,19 +1,17 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 
+import com.google.gson.Gson;
 import fivemonkey.com.fitnessbackend.configuration.Utility;
-import fivemonkey.com.fitnessbackend.constant.FireBaseConstant;
-import fivemonkey.com.fitnessbackend.dto.RegistrationDTO;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
+import fivemonkey.com.fitnessbackend.entities.City;
 import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
-import fivemonkey.com.fitnessbackend.services.RegistrationService;
-import fivemonkey.com.fitnessbackend.services.RoleService;
-import fivemonkey.com.fitnessbackend.services.StudioService;
-import fivemonkey.com.fitnessbackend.services.UserService;
+import fivemonkey.com.fitnessbackend.services.*;
+import org.hibernate.internal.util.StringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -47,19 +45,28 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private RegistrationService  registrationService;
+    private RegistrationService registrationService;
+
+    @Autowired
+    private CityService cityService;
+
+    @Autowired
+    private DistrictService districtService;
 
     @GetMapping("/management/listusers")
     public String listUser(Model model, @Param("keyword") String keyword) {
         List<UserDTO> userDTOList = userService.findAll();
         List<UserDTO> userDTOList1 = userService.findAllUser(keyword);
         List<Role> roleList = roleService.getAll();
+        List<City> cityList = cityService.findAllCity();
         if (keyword == null || "---All---".equals(keyword)) {
             model.addAttribute("listRole", roleList);
+            model.addAttribute("listCity",cityList);
             model.addAttribute("list", userDTOList);
             model.addAttribute("size", userDTOList.size());
         } else {
             model.addAttribute("listRole", roleList);
+            model.addAttribute("listCity",cityList);
             model.addAttribute("list", userDTOList1);
             model.addAttribute("keyword", keyword);
             model.addAttribute("size", userDTOList1.size());
@@ -67,6 +74,18 @@ public class UserController {
         }
         return "management/UserManagement/UserList";
 
+    }
+    @ResponseBody
+    @RequestMapping(value = "/management/searchdistrictbycity/{id}", method = RequestMethod.GET)
+    public String searchDistrictByCity(@PathVariable("id")  String id){
+        Gson gson = new Gson();
+        return gson.toJson(districtService.findByCity(id));
+    }
+    @ResponseBody
+    @RequestMapping(value = "/management/searchstudiobydistrict/{id}", method = RequestMethod.GET)
+    public String searchStudioByDistrict(@PathVariable("id")  String id){
+        Gson gson = new Gson();
+        return gson.toJson(studioService.findByDistrict(id));
     }
 
 
@@ -136,68 +155,42 @@ public class UserController {
     @RequestMapping("/search")
     public String search(Model model, @Param("keyword") String keyword) {
         List<UserDTO> userList = userService.findAllUser(keyword);
-        System.out.println("=====================hjkd==============mai========" + userList);
         model.addAttribute("list", userList);
         return "management/usermanagement/userlist";
     }
 
-    @RequestMapping("/management/avatauser/{email}")
-    public String getInformationUserPro5(@PathVariable("email") String email, Model model) {
+    @RequestMapping("/management/avataruser/{email}")
+    public String getInformationUserAvatar(@PathVariable("email") String email, Model model) {
         UserDTO userDTO = userService.getUserById(email);
         model.addAttribute("user", userDTO);
-        return "management/usermanagement/userProfile";
+        return "pro";
     }
-//@GetMapping("/search")
-//    public String search(Model model, @RequestParam(name = "email",required = false) String email){
-//    List<User> userList = null;
-//    if (StringUtils.hasText(email)){
-//        userList = userService.findAllUserNameContaining(email);}
-//    else{
-//        userList = userService.findAllUser();
-//        }
-//    model.addAttribute("list",userList);
-//    return "management/usermanagement/userlist";
 
 
-    @PostMapping("/avatauser/{email}")
+    @PostMapping("/management/avataruser/{email}")
     public String userUpdate(@RequestParam("fileImage") MultipartFile multipartFile,
 
                              @ModelAttribute("user") UserDTO userDTO,
                              Model model) throws IOException {
 
-
-//        claimDocument.setFileUrl(String.format(FireBaseConstant.FILE_URL, fileName));
-
-//        claimDocument.setFileUrl(String.format(FireBaseConstant.FILE_URL, fileName));
-
         userDTO.setAvatar(imageUploader.upload(multipartFile));
-        userService.updateUser(userDTO);
 
-//        String uploadDir = "./src/main/resources/static/avatar/" + userDTO.getEmail();
-//
-//        Path uploadPath = Paths.get(uploadDir);
+        userService.updateUserAvatar(userDTO);
 
-//        if(!Files.exists(uploadPath)) {
-//            Files.createDirectories(uploadPath);
-//        }
-//
-//        try (InputStream inputStream = multipartFile.getInputStream()) {
-//            Path filePath = uploadPath.resolve(fileName);
-//            Files.copy(inputStream, filePath , StandardCopyOption.REPLACE_EXISTING);
-//        } catch (IOException e) {
-//            throw new IOException("Could not save uploaded file: " + fileName);
-//        }
-
-//
-//        userService.updateUser(userDTO);
-//        System.out.println("-0jodjf==================================================siodhfoisd=======" + userDTO);
-
-        System.out.println("-0jodjf==================================================siodhfoisd=======" + userDTO);
-
-
-        return "redirect:/listusers";
+        return "redirect:/user/management/listusers";
     }
 
+    @RequestMapping("/management/updateprofile/{email}")
+    public String getInformationUserPro5(@PathVariable("email") String email, Model model) {
+        UserDTO userDTO = userService.getUserById(email);
+        model.addAttribute("user", userDTO);
+        return "myprofile";
+    }
+    @PostMapping("/management/updateprofile/{email}")
+    public String userUpdateAll(@ModelAttribute("user") UserDTO userDTO, Model model) throws IOException {
+        userService.updateUser(userDTO);
+        return "redirect:/user/management/listusers";
+    }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String registerUser(@Valid @ModelAttribute("userDTO") User user, RedirectAttributes attributes, HttpServletRequest request, BindingResult bindingResult) throws MessagingException, UnsupportedEncodingException {

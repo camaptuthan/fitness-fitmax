@@ -1,10 +1,12 @@
 package fivemonkey.com.fitnessbackend.repository;
 
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
+import fivemonkey.com.fitnessbackend.entities.City;
 import fivemonkey.com.fitnessbackend.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,6 +33,8 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Query("select u from User u where u.verificationCode=?1")
     User findByVerificationCode(String code);
+
+
 
 
 }
