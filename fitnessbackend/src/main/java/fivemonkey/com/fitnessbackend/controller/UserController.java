@@ -54,6 +54,7 @@ public class UserController {
         List<UserDTO> userDTOList = userService.findAll();
         List<UserDTO> userDTOList1 = userService.findAllUser(keyword);
         List<Role> roleList = roleService.getAll();
+        System.out.println("VANH" + userDTOList);
         if (keyword == null || "---All---".equals(keyword)) {
             model.addAttribute("listRole", roleList);
             model.addAttribute("list", userDTOList);

@@ -13,6 +13,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private ApplicationContext applicationContext;
+
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
         // SpringResourceTemplateResolver automatically integrates with Spring's own
