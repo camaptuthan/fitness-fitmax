@@ -187,7 +187,7 @@ public class UserServiceImpl implements UserService {
         String fromAddress = "ducnvhe141646@fpt.edu.vn";
         String senderName = "Fitness Service Management System";
         String subject = "Please verify your registration";
-        String verifyURL = siteUrl + "/verify?code=" + user.getVerificationCode();
+        String verifyURL = siteUrl + "user/verify?code=" + user.getVerificationCode();
         String content = "Dear " + user.getFirstName() + user.getLastName()+",<br>"
                 + "Please click the link below to verify your registration:<br>"
                 + "<h3><a href=\"" + verifyURL + "\" >VERIFY</a></h3>"
@@ -204,13 +204,7 @@ public class UserServiceImpl implements UserService {
 
 
     }
-
-    // ma hoa password
-    private void setPasswordEncoder(User u) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = passwordEncoder.encode(u.getPassword());
-        u.setPassword(encodedPassword);
-    }
+    
 
     @Override
     public boolean verify(String code) {
@@ -220,7 +214,7 @@ public class UserServiceImpl implements UserService {
             return false;
         } else {
             u.setStatus(true);
-            u.setVerificationCode(null);
+            u.setVerificationCode("");
             userRepository.save(u);
             return true;
         }
