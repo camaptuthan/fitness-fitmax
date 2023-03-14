@@ -25,8 +25,6 @@ public class User {
     @Column(name = "email")
     private String email;
     @Column(name = "password")
-    @NotEmpty(message = "This field can not empty")
-    @Length(min = 8, message = "Password must be at least 8 characters")
     private String password;
     @Column(name = "first_name")
     private String firstName;
@@ -46,11 +44,11 @@ public class User {
     @Column(name = "status", nullable = false)
     private boolean status;
     //role-user relationship
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
     //studio-user relationship
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "studio_id", referencedColumnName = "studio_id")
     private Studio studio;
 

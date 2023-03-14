@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="98a8d330-a515-489a-b2f5-64ed32b0a4d6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/services/CityService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/services/DistrictService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/services/impl/CityServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/services/impl/DistrictServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/configuration/FirebaseConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/configuration/FirebaseConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/dto/UserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/entities/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/entities/City.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/entities/District.java" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/entities/District.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/imageuploader/ImageUploader.java" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/imageuploader/ImageUploader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/repository/CityRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/repository/CityRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/repository/DistrictRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/repository/DistrictRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/repository/StudioRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/repository/StudioRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/services/StudioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/services/StudioService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/services/impl/StudioServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/services/impl/StudioServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/services/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/services/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/utils/FireBaseUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/src/main/java/fivemonkey/com/fitnessbackend/utils/FireBaseUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/resources/templates/management/UserManagement/UserList.html" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/src/main/resources/templates/management/UserManagement/UserList.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/resources/templates/management/UserManagement/userProfile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/resources/templates/myprofile.html" beforeDir="false" afterPath="$PROJECT_DIR$/fitnessbackend/src/main/resources/templates/myprofile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fitnessbackend/src/main/resources/templates/pro.html" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit4 Test Class" />
+        <option value="JUnit5 Test Class" />
+        <option value="HTML File" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2MS8QVM46UddhomVAdzYm3ca83B" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4": "",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "last_opened_file_path": "D:/official/sep490_g12_sep490/fitnessbackend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "advanced.settings",
+    "spring.configuration.checksum": "635b6e9331580bc3f39207d37cb75bcb",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\clone123\sep490_g12_sep490\fitnessbackend\src\main\java\fivemonkey\com\fitnessbackend" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="fivemonkey.com.fitnessbackend.services" />
+      <recent name="fivemonkey.com.fitnessbackend.repository" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="fivemonkey.com.fitnessbackend.controller" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.FitnessbackendApplication">
+    <configuration name="UserRepositoryTest.findAll" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="fitnessbackend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="fivemonkey.com.fitnessbackend.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="fivemonkey.com.fitnessbackend.repository" />
+      <option name="MAIN_CLASS_NAME" value="fivemonkey.com.fitnessbackend.repository.UserRepositoryTest" />
+      <option name="METHOD_NAME" value="findAll" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceTest.findAll" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="fitnessbackend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="fivemonkey.com.fitnessbackend.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="fivemonkey.com.fitnessbackend.services" />
+      <option name="MAIN_CLASS_NAME" value="fivemonkey.com.fitnessbackend.services.UserServiceTest" />
+      <option name="METHOD_NAME" value="findAll" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FitnessbackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="fitnessbackend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="fivemonkey.com.fitnessbackend.FitnessbackendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.UserServiceTest.findAll" />
+        <item itemvalue="JUnit.UserRepositoryTest.findAll" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="98a8d330-a515-489a-b2f5-64ed32b0a4d6" name="Changes" comment="" />
+      <created>1677749606757</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1677749606757</updated>
+      <workItem from="1677749607930" duration="8994000" />
+      <workItem from="1677767247979" duration="80000" />
+      <workItem from="1678083693797" duration="5308000" />
+      <workItem from="1678096587506" duration="598000" />
+      <workItem from="1678169720754" duration="8682000" />
+      <workItem from="1678242886765" duration="6264000" />
+      <workItem from="1678260820964" duration="220000" />
+      <workItem from="1678261113779" duration="7823000" />
+      <workItem from="1678272371906" duration="303000" />
+      <workItem from="1678349431457" duration="7034000" />
+      <workItem from="1678416426535" duration="21573000" />
+      <workItem from="1678532307636" duration="1734000" />
+      <workItem from="1678605201126" duration="10162000" />
+      <workItem from="1678618409830" duration="496000" />
+      <workItem from="1678628243762" duration="10428000" />
+      <workItem from="1678701073883" duration="1662000" />
+      <workItem from="1678702749248" duration="34000" />
+      <workItem from="1678702795032" duration="30000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
