@@ -81,7 +81,7 @@ public class User {
     @PrimaryKeyJoinColumn
     private CityManager cityManager;
 
-    @Column(name = "verification_code", updatable = false)
+    @Column(name = "verification_code")
     private String verificationCode;
 
     public User(String userEmail) {

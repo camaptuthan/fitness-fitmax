@@ -153,7 +153,7 @@ public class UserServiceImpl implements UserService {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         Role r = new Role();
-        r.setId("ROLE0006");
+        r.setId("ROLE0007");
         user.setRole(r);
         Studio s = new Studio();
         s.setId("STU0001");
@@ -187,7 +187,7 @@ public class UserServiceImpl implements UserService {
         String fromAddress = "ducnvhe141646@fpt.edu.vn";
         String senderName = "Fitness Service Management System";
         String subject = "Please verify your registration";
-        String verifyURL = siteUrl + "user/verify?code=" + user.getVerificationCode();
+        String verifyURL = siteUrl + "/user/verify?code=" + user.getVerificationCode();
         String content = "Dear " + user.getFirstName() + user.getLastName()+",<br>"
                 + "Please click the link below to verify your registration:<br>"
                 + "<h3><a href=\"" + verifyURL + "\" >VERIFY</a></h3>"
@@ -209,7 +209,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean verify(String code) {
         User u = userRepository.findByVerificationCode(code);
-        System.out.println("Verify code is :" + u.getVerificationCode());
         if (u == null) {
             return false;
         } else {

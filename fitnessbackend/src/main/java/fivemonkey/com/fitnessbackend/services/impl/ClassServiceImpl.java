@@ -45,7 +45,7 @@ public class ClassServiceImpl implements ClassService {
         clazz.setName(c.getName());
         clazz.setPrice(c.getPrice());
         clazz.setDes(c.getDes());
-//       clazz.setServices(c.getService());
+//        c.setServicesId(c.getServicesId());
         // clazz.setTrainer(c.getTrainer());
         clazz.setDate(new Date());
         clazz.setStatus(true);

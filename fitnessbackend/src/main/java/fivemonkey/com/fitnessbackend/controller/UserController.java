@@ -179,6 +179,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "register";
         }
+
         List<Object> userPresentObj = userService.isUserPresent(user);
         String phone = user.getPhone();
         String siteUrl = Utility.getSiteURL(request);
@@ -198,9 +199,9 @@ public class UserController {
     @GetMapping("/verify")
     public String verifyAccount(@Param("code") String code, Model model) {
         boolean verified = userService.verify(code);
-        String title = verified ? "Verification Success" : "Verification Failed";
+        String title = verified ? "Congratulation! Your account has created success" : "Your account already verified code";
         model.addAttribute("title", title);
-        return "/register";
+        return "/verify_status";
     }
 
 
