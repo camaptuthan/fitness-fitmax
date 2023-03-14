@@ -6,14 +6,12 @@ import fivemonkey.com.fitnessbackend.entities.Clazz;
 import fivemonkey.com.fitnessbackend.repository.ClassRepository;
 import fivemonkey.com.fitnessbackend.services.ClassService;
 import fivemonkey.com.fitnessbackend.services.RegistrationService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -92,12 +90,9 @@ public class ClassServiceImpl implements ClassService {
 
     // map dto
     @Override
-
-
     public ClassDTO getClassById(String id) {
         return modelMapperConfiguration.map(classRepository.getById(id), ClassDTO.class);
     }
-
     //paging
     @Override
     public Page<Clazz> pageClass(int pageNo, int pageSize) {

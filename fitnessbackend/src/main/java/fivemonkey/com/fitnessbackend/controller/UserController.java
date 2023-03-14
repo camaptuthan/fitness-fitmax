@@ -207,14 +207,14 @@ public class UserController {
 
     @GetMapping("/profile")
     public String myProfile(@AuthenticationPrincipal UserDetail userDetail, Model model) {
-        model.addAttribute("registrations", registrationService.getRegistrationByUserEmail(userDetail.getUser().getEmail()));
+        model.addAttribute("registrations", registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail()));
         model.addAttribute("user", userDetail.getUser());
         return "user/profile";
     }
     @ResponseBody
     @GetMapping("/profile/registration")
     public List<RegistrationDTO> registration(@AuthenticationPrincipal UserDetail userDetail) {
-        return registrationService.getRegistrationByUserEmail(userDetail.getUser().getEmail());
+        return registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail());
     }
 
 
