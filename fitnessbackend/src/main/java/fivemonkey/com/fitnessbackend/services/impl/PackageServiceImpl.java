@@ -119,4 +119,14 @@ public class PackageServiceImpl implements PackageService {
         return modelMapper.map(packageRepository.getPackageByServicesId(serviceId), PackageDTO.class);
     }
 
+    @Override
+    public List<PackageDTO> getAllPackagesByCity(Long id) {
+        return modelMapper.mapList(packageRepository.getPackageByCity(id), PackageDTO.class);
+    }
+
+    @Override
+    public List<PackageDTO> getAllPackagesByCityAndSearch(Long city_id, String keyword) {
+        return modelMapper.mapList(packageRepository.getPackageByCityAndSearch(city_id, keyword), PackageDTO.class);
+    }
+
 }

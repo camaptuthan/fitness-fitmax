@@ -210,12 +210,12 @@
         <th:block th:each="user : ${list}">
           <tr>
             <td style="width:70% ; height: 70%"><img style="width: 70%; height: 70%" th:src="${user.avatar}"/></td>
-            <td>[[${user.email}]]</td>
-            <td>[[${user.address}]]</td>
-            <td>[[${user.firstName}+' '+${user.lastName}]</td>
-            <td>[[${user.status}]]</td>
-            <td>[[${user.roleName}]]</td>
-            <td>[[${user.studioName}]]</td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.address}"></td>
+            <td th:text="${user.firstName}+' '+${user.lastName}"></td>
+            <td th:text="${user.status}"></td>
+            <td th:text="${user.roleName}"></td>
+            <td th:text="${user.studioName}"></td>
             <td>
 
               <a th:href="@{/user/management/updateuser/{email} (email=${user.email})}" class="edit" title="Edit" data-toggle="tooltip">Update &nbsp;</a><a th:href="@{/user/management/updateprofile/{email} (email=${user.email})}"><i class="material-icons">&#xE254; </i></a>

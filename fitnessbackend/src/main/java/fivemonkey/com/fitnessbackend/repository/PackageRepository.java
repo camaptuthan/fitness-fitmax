@@ -21,5 +21,13 @@ public interface PackageRepository extends JpaRepository<Package, String> {
             "from Package p join p.services s join s.category c " +
             "group by p.id")
     List<Package> getAllInformationOfPackage();
+
     Package getPackageByServicesId(String serviceId);
+
+    @Query("select p from Package p where p.services.city.id = ?1")
+    List<Package> getPackageByCity(Long id);
+
+    @Query("select p from Package p where p.services.city.id = ?1 and concat(p.name,'',p.des,'',p.price,'',p.duration,'',p.date) like %?1%")
+    List<Package> getPackageByCityAndSearch(Long id, String keyword);
 }
+
