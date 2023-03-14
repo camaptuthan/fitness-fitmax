@@ -116,7 +116,7 @@ public class UserController {
         model.addAttribute("user", userDTO);
         model.addAttribute("listRole", roleList);
         model.addAttribute("listStudio", studioList);
-        return "management/usermanagement/userupdate";
+        return "management/UserManagement/UserUpdate";
     }
 
     @PostMapping("/management/updateuser/{email}")
