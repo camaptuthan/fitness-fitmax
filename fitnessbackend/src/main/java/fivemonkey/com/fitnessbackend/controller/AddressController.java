@@ -26,4 +26,6 @@ public class AddressController {
     public List<DistrictDTO> getDistrictsByCityId(@PathVariable("city") Long cityId) {
         return addressService.getDistrictsByCityId(cityId);
     }
+
+
 }

@@ -204,7 +204,7 @@ public class UserServiceImpl implements UserService {
 
 
     }
-    
+
 
     @Override
     public boolean verify(String code) {
