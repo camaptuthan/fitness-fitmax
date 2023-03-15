@@ -44,4 +44,8 @@ public class Registration {
     @JoinColumn(name = "user_email", referencedColumnName = "trainee_email", nullable = false)
     private Trainee trainee;
 
+    //assistant-registration relationship
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "assistant_email", referencedColumnName = "assistant_email")
+    private Assistant assistant;
 }

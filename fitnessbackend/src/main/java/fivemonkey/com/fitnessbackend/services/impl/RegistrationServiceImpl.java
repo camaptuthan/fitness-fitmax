@@ -94,6 +94,7 @@ public class RegistrationServiceImpl implements RegistrationService {
                 services = packag3.getServices();
             } else {
                 PersonalTraining personalTraining = personalTrainingRepository.findById(itemId).orElse(null);
+                assert personalTraining != null;
                 services = personalTraining.getServices();
             }
         }
