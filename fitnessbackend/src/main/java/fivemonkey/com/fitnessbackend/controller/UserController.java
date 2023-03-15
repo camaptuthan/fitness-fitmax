@@ -51,13 +51,11 @@ public class UserController {
     private RegistrationService registrationService;
 
 
-
     @GetMapping("/management/listusers")
     public String listUser(Model model, @Param("keyword") String keyword) {
         List<UserDTO> userDTOList = userService.findAll();
         List<UserDTO> userDTOList1 = userService.findAllUser(keyword);
         List<Role> roleList = roleService.getAll();
-        System.out.println("VANH" + userDTOList);
         if (keyword == null || "---All---".equals(keyword)) {
             model.addAttribute("listRole", roleList);
             model.addAttribute("list", userDTOList);
@@ -71,7 +69,6 @@ public class UserController {
         return "management/UserManagement/UserList";
 
     }
-
 
 
     @PostMapping("/management/saveuser")
@@ -171,6 +168,7 @@ public class UserController {
         model.addAttribute("user", userDTO);
         return "myprofile";
     }
+
     @PostMapping("/management/updateprofile/{email}")
     public String userUpdateAll(@ModelAttribute("user") UserDTO userDTO, Model model) throws IOException {
         userService.updateUser(userDTO);
@@ -214,6 +212,7 @@ public class UserController {
         model.addAttribute("user", userDetail.getUser());
         return "user/profile";
     }
+
     @ResponseBody
     @GetMapping("/profile/registration")
     public List<RegistrationDTO> registration(@AuthenticationPrincipal UserDetail userDetail) {

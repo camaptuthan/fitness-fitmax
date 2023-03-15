@@ -32,7 +32,7 @@ public class District {
     @JoinColumn(name = "city_id", referencedColumnName = "city_id")
     private City city;
 
-    //studio-city relationship
+    //studio-district relationship
     @OneToOne(mappedBy = "district", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Studio studios;
 }
