@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
 
 
             user.setRole(role);
-            user.setStudio(studio);
+//            user.setStudio(studio);
             System.out.println("==================================" + user);
 
 
@@ -159,7 +159,7 @@ public class UserServiceImpl implements UserService {
         user.setRole(r);
         Studio s = new Studio();
         s.setId("STU0001");
-        user.setStudio(s);
+//        user.setStudio(s);
         user.setDate(new Date());
         user.setStatus(false);
         //set random ver code

@@ -4,13 +4,8 @@ import fivemonkey.com.fitnessbackend.dto.CategoryDTO;
 import fivemonkey.com.fitnessbackend.dto.CityDTO;
 import fivemonkey.com.fitnessbackend.dto.PackageDTO;
 import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
-import fivemonkey.com.fitnessbackend.repository.CityRepository;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
-import fivemonkey.com.fitnessbackend.services.CategoryService;
-import fivemonkey.com.fitnessbackend.services.CityService;
-import fivemonkey.com.fitnessbackend.services.PackageService;
-import fivemonkey.com.fitnessbackend.services.ServiceService;
-import org.dom4j.rule.Mode;
+import fivemonkey.com.fitnessbackend.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -38,33 +33,13 @@ public class PackageController {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private RegistrationService registrationService;
 
     @Autowired
     private CityService cityService;
 
-    //view all packages in dashboard
-//    @GetMapping("/management/packages")
-//    public String getAllPackages(Model model, @Param("keyword") String keyword) {
-//        List<PackageDTO> packageDTOList = packageServices.getAll();
-//        List<PackageDTO> packageDTOList1 = packageServices.getAllPackagesByKeyword(keyword);
-//        List<ServiceDTO> servicesList = serviceService.getAllByPackage();
-//        List<CategoryDTO> category = categoryService.findAllCategoriesByType("service");
-//        if ("".equals(keyword)) {
-//            model.addAttribute("servicesList", servicesList);
-//            model.addAttribute("packagelist", packageDTOList1);
-//            model.addAttribute("size", packageDTOList1.size());
-//            model.addAttribute("category", category);
-//        } else {
-//            model.addAttribute("servicesList", servicesList);
-//            model.addAttribute("packagelist", packageDTOList1);
-//            model.addAttribute("keyword", keyword);
-//            model.addAttribute("size", packageDTOList1.size());
-//            model.addAttribute("category", category);
-//        }
-//        return "management/PackageManagement/package";
-//    }
-
-
+    //view all packages(user)
     @RequestMapping(value = "/packages", method = {RequestMethod.GET, RequestMethod.POST})
     public String getAllPackages(Model model, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
                                  @RequestParam(value = "cityname", required = false, defaultValue = "All") String cityname) {
@@ -98,8 +73,15 @@ public class PackageController {
         return "management/PackageManagement/package";
     }
 
-    @GetMapping("management/packages")
-    public String getAllPackagesForManagement(Model model, @AuthenticationPrincipal UserDetail userDetail){
+    //view packages in dashboard
+    @GetMapping("/management/packages")
+    public String getAllPackagesForManagement(Model model, @AuthenticationPrincipal UserDetail userDetail,
+                                              @Param("keyword") String keyword,
+                                              @Param("cityname") String cityname){
+
+        List<PackageDTO> list = packageServices.getAllPackageByStudio(userDetail.getUser().getEmail());
+        System.out.println(list);
+
         return "management/PackageManagement/package-list";
     }
     //add new package
@@ -130,15 +112,21 @@ public class PackageController {
 
     //view package by id
     @GetMapping("/package_detail/{id}")
-    public String viewPackageDetail(@PathVariable(name = "id") String id, Model model) {
+    public String viewPackageDetail(@AuthenticationPrincipal UserDetail userDetail,@PathVariable(name = "id") String id, Model model) {
         PackageDTO p = packageServices.getPackageById(id);
+        boolean hasRegistered = false;
+        if (userDetail != null) {
+            hasRegistered = registrationService.hasRegistration(p.getId(), userDetail.getUser().getEmail());
+        }
+
+        model.addAttribute("hasRegistered", hasRegistered);
         model.addAttribute("package", p);
         return "management/PackageManagement/detail";
     }
 
     //disable package
     @RequestMapping(value = "/disable-package/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String disablePackage(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
+    public String disablePackage(@AuthenticationPrincipal UserDetail userDetail, @PathVariable("id") String id, RedirectAttributes redirectAttributes) {
         try {
             packageServices.disablePackageById(id);
             redirectAttributes.addFlashAttribute("success", "Disabled");
