@@ -25,7 +25,6 @@ public class DataSourceConfig {
     }
 
     public DataSource dataSourceConfig(String pass) {
-
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(Objects.requireNonNull(env.getProperty("spring.datasource.driver-class-name")));
         dataSource.setUrl(env.getProperty("spring.datasource.url"));
@@ -33,7 +32,6 @@ public class DataSourceConfig {
         dataSource.setPassword(env.getProperty(pass));
         return dataSource;
     }
-
 
     @Bean
     public DataSource dataSourceBuilder() {

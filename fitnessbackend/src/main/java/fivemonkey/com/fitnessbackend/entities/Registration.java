@@ -36,14 +36,12 @@ public class Registration {
 
     //registration-service relationship
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "service_id", referencedColumnName = "service_id")
+    @JoinColumn(name = "service_id", referencedColumnName = "service_id", nullable = false)
     private Services services;
 
     //trainee-registration relationship
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "user_email", referencedColumnName = "trainee_email")
+    @JoinColumn(name = "user_email", referencedColumnName = "trainee_email", nullable = false)
     private Trainee trainee;
-
-
 
 }

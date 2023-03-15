@@ -24,10 +24,10 @@ public interface PackageRepository extends JpaRepository<Package, String> {
 
     Package getPackageByServicesId(String serviceId);
 
-    @Query("select p from Package p where p.services.city.id = ?1")
-    List<Package> getPackageByCity(Long id);
+    @Query("select p from Package p where p.services.city.name = ?1")
+    List<Package> getPackageByCity(String city_name  );
 
-    @Query("select p from Package p where p.services.city.id = ?1 and concat(p.name,'',p.des,'',p.price,'',p.duration,'',p.date) like %?1%")
-    List<Package> getPackageByCityAndSearch(Long id, String keyword);
+    @Query("select p from Package p where p.services.city.name = ?1 and concat(p.name,'',p.des,'',p.price,'',p.duration,'',p.date) like %?2%")
+    List<Package> getPackageByCityAndSearch(String city_name, String keyword);
 }
 

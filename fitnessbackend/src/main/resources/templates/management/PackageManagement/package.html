@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -36,43 +36,36 @@
 <section class="s-club-cards">
     <div class="container">
         <h2 class="title-decor">Packages <span>List</span></h2>
-        <p class="slogan">Below is a list of packages for free trainees. You guys can search by city, package name,
+        <p class="slogan">Below is a list of packages for free trainees. People can search by city, package name,
             price... Details are in each package.</p>
-        <form id="searchAndFilter" th:action="/package/packages">
-            <div class="input-group">
-                <div class="form-outline">
-                    <input type="text" id="form1" class="form-control" name="keyword" th:value="${keyword}" required/>
-                    <label class="form-label" for="form1">Search</label>
-                    <input id="btn-submit" type="submit" value="Search">
-                </div>
+        <form id="searchAndFilter" th:action="@{/package/packages}" method="get">
+                City: <select th:name="cityname" style="width:30%" onchange="submitForm()">
+                <option >All</option>
+                <th:block th:each="city : ${cities}">
+                    <option th:value="${city.name}" th:text="${city.name}" th:selected="${city.name == currentCity }"  ></option>
+                </th:block>
+            </select>
+            <div>
+                Filter: <input type="text" th:name="keyword" style="color:red"/>
+                &nbsp
+                <input id="btn-submit" type="submit" value="Search"/>
+                &nbsp
             </div>
-
-            City: <select name="city_id" style="width:30%" onchange="submitForm()">
-            <option selected>All</option>
-            <option th:each="city : ${cities}" th:text="${city.name}" th:value="${city.name}"
-                    th:selected="${city.id == city_id}"></option>
-        </select>
-            <script type="text/javascript">
-                function submitForm() {
-                    document.getElementById("searchAndFilter").submit();
-                }
-            </script>
-            <!--            <script>-->
-            <!--                $("#dropdown_city").append(`<li><a class="dropdown-item"  onclick="viewCity('ALL')">All</a></li>`)-->
-            <!--                $.get("http://localhost:8080/address/city", (result) => {-->
-            <!--                    result.forEach(item => {-->
-            <!--                        $("#dropdown_city").append(`<li><a class="dropdown-item" href="" onclick="viewCity('${item.name}')">${item.name}</a></li>`)-->
-            <!--                    })-->
-            <!--                })-->
-            <!--                const viewCity = (city_name) => {-->
-
-            <!--                    $("#city_name").html(city_name);-->
-            <!--                }-->
-            <!--            </script>-->
         </form>
-        <br>
-        <br>
-        <br>
+
+        <!--            <script>-->
+        <!--                $("#dropdown_city").append(`<li><a class="dropdown-item"  onclick="viewCity('ALL')">All</a></li>`)-->
+        <!--                $.get("http://localhost:8080/address/city", (result) => {-->
+        <!--                    result.forEach(item => {-->
+        <!--                        $("#dropdown_city").append(`<li><a class="dropdown-item" href="" onclick="viewCity('${item.name}')">${item.name}</a></li>`)-->
+        <!--                    })-->
+        <!--                })-->
+        <!--                const viewCity = (city_name) => {-->
+
+        <!--                    $("#city_name").html(city_name);-->
+        <!--                }-->
+        <!--            </script>-->
+
         <div id="carousel-package" class="carousel slide">
             <div class="carousel-inner overflow-visible row">
                 <th:block th:each="item,iter : ${packages}">
@@ -142,5 +135,10 @@
 <script th:src="@{/js/rx-lazy.js}"></script>
 <script th:src="@{/js/parallax.min.js}"></script>
 <script th:src="@{/js/scripts.js}"></script>
+<script type="text/javascript">
+    function submitForm() {
+        document.getElementById("searchAndFilter").submit();
+    }
+</script>
 </body>
 </html>

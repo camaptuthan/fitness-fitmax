@@ -27,10 +27,6 @@ public class Studio {
     @Column(name = "image")
     private String image;
 
-    @Column(name = "city")
-    private String city;
-
-
     @Column(name = "contact")
     private String contact;
 

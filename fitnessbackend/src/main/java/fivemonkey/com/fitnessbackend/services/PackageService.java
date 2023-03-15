@@ -37,7 +37,7 @@ public interface PackageService {
     public List<Package> searchPackage(String key);
     PackageDTO getPackageByServiceId(String serviceId);
 
-    List<PackageDTO> getAllPackagesByCity(Long id);
+    List<PackageDTO> getAllPackagesByCity(String city_name);
 
-    List<PackageDTO> getAllPackagesByCityAndSearch(Long city_id, String keyword);
+    List<PackageDTO> getAllPackagesByCityAndSearch(String city_name, String keyword);
 }

@@ -62,19 +62,20 @@ public class PackageController {
 //    }
 
 
-    @GetMapping("/packages")
-    public String getAllPackages(Model model, @Param ("keyword") String keyword, @Param("city_id") String city_id) {
+    @RequestMapping(value = "/packages", method = {RequestMethod.GET, RequestMethod.POST})
+    public String getAllPackages(Model model, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+                                 @RequestParam(value = "cityname", required = false, defaultValue = "All") String cityname) {
         List<ServicesDTO> servicesList = serviceService.getAllByPackage();
         List<CityDTO> listCity = cityService.getAllCity();
         List<CategoryDTO> category = categoryService.findAllCategoriesByType("service");
         Map<String, List<PackageDTO>> packagesMapList = new HashMap<>();
         List<PackageDTO> listPkg;
-        if (keyword == null && city_id == null) {
+        if ("".equals(keyword) && "All".equals(cityname)) {
             listPkg = packageServices.getAll();
         } else if (keyword == null) {
-            listPkg = packageServices.getAllPackagesByCity(Long.parseLong(city_id));
+            listPkg = packageServices.getAllPackagesByCity(cityname);
         } else {
-            listPkg = packageServices.getAllPackagesByCityAndSearch(Long.parseLong(city_id), keyword);
+            listPkg = packageServices.getAllPackagesByCityAndSearch(cityname, keyword);
         }
         for (int i = 0; i < (listPkg.size() / 3) + 1; i++) {
             List<PackageDTO> value = new ArrayList<>();
@@ -87,8 +88,8 @@ public class PackageController {
         }
         model.addAttribute("packages", packagesMapList);
         model.addAttribute("servicesList", servicesList);
-        model.addAttribute("keyword", keyword);
         model.addAttribute("cities", listCity);
+        model.addAttribute("currentCity", cityname);
         model.addAttribute("size", packagesMapList.size());
         model.addAttribute("category", category);
         return "management/PackageManagement/package";

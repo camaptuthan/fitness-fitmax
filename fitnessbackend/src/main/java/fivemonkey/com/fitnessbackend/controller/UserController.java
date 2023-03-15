@@ -113,7 +113,7 @@ public class UserController {
         model.addAttribute("user", userDTO);
         model.addAttribute("listRole", roleList);
         model.addAttribute("listStudio", studioList);
-        return "management/usermanagement/userupdate";
+        return "management/UserManagement/UserUpdate";
     }
 
     @PostMapping("/management/updateuser/{email}")
@@ -177,6 +177,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "register";
         }
+
         List<Object> userPresentObj = userService.isUserPresent(user);
         String phone = user.getPhone();
         String siteUrl = Utility.getSiteURL(request);
@@ -196,15 +197,15 @@ public class UserController {
     @GetMapping("/verify")
     public String verifyAccount(@Param("code") String code, Model model) {
         boolean verified = userService.verify(code);
-        String title = verified ? "Verification Success" : "Verification Failed";
+        String title = verified ? "Congratulation! Your account has created success" : "Your account already verified code";
         model.addAttribute("title", title);
-        return "/register";
+        return "/verify_status";
     }
 
 
     @GetMapping("/profile")
     public String myProfile(@AuthenticationPrincipal UserDetail userDetail, Model model) {
-        model.addAttribute("registrations", registrationService.getRegistrationByUserEmail(userDetail.getUser().getEmail()));
+        model.addAttribute("registrations", registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail()));
         model.addAttribute("user", userDetail.getUser());
         return "user/profile";
     }
@@ -212,7 +213,7 @@ public class UserController {
     @ResponseBody
     @GetMapping("/profile/registration")
     public List<RegistrationDTO> registration(@AuthenticationPrincipal UserDetail userDetail) {
-        return registrationService.getRegistrationByUserEmail(userDetail.getUser().getEmail());
+        return registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail());
     }
 
 

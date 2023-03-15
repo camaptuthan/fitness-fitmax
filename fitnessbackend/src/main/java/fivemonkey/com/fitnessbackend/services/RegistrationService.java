@@ -1,13 +1,16 @@
 package fivemonkey.com.fitnessbackend.services;
 
-import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.RegistrationDTO;
-import fivemonkey.com.fitnessbackend.entities.Registration;
+import fivemonkey.com.fitnessbackend.entities.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public interface RegistrationService {
-    List<RegistrationDTO> getRegistrationByUserEmail(String userEmail);
+
+    boolean hasRegistration(String itemId, String userEmail);
+    List<RegistrationDTO> getRegistrationsByUserEmail(String userEmail);
+
+    RegistrationDTO doRegistration(User user, String itemId);
 }
