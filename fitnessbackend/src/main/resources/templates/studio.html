@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <th:block th:insert="~{fragments/head::link}"></th:block>
-  <script th:src="@{/js/jquery-2.2.4.min.js}"></script>
+  <script th:src="@{../../js/jquery-2.2.4.min.js}"></script>
 </head>
 
 <body id="home">
@@ -65,28 +65,30 @@
 <!--================ RELATED POSTS ================-->
 <section class="s-related-posts home-related-posts">
   <div class="container">
-    <h2 class="title-decor">Studio <span>Fitness</span></h2>
-    <div class="custom-select" style="width:400px;">
-      <select>
-        <option value="0">Select City:</option>
-        <option value="1">Ha Noi</option>
-        <option value="2">Hai Phong</option>
-        <option value="3">Ho Chi Minh</option>
+      <h2 class="title-decor">Studio <span>Fitness</span></h2>
+      <div class="custom-select" style="width:400px;">
+          <select>
+              <option value="0">Select City:</option>
+              <option value="1">Ha Noi</option>
+              <option value="2">Hai Phong</option>
+              <option value="3">Ho Chi Minh</option>
 
-      </select>
-    </div>
-    <p class="slogan">CLB tiên phong của Elite Fitness đáng sống bậc nhất tại Hà Nội; Elite Fitness Xuân Diệu là sự lựa chọn hoàn hảo để tận hưởng trọn vẹn không gian tập luyện đẳng cấp, cộng đồng văn minh, một nhịp sống bình yên rất Hà Nội mà không kém phần sôi động.</p>
-
-    <div class="row">
-      <div th:each="s : ${studios}" class="col-md-6 related-post-col">
-        <div class="post-item-cover">
-          <div class="post-header">
-            <div class="related-post-categ">fitness</div>
-            <div class="post-thumbnail">
-              <a href="single-blog.html"><img class="rx-lazy" src="/img/placeholder-all.png" data-src="img/blog-4.jpg" alt="img"></a>
-            </div>
-          </div>
-          <div class="post-content">
+          </select>
+      </div>
+      <p class="slogan">Sứ mệnh của Fitmax là mang đến sự nhận thức đúng đắn cho cộng đồng trong việc rèn luyện thể chất
+          để có được sức khỏe và tinh thần tuyệt vời, luôn vững vàng vượt qua mọi thử thách trong cuộc sống.</p>
+      <!--    <th:block th:insert="/fragments/admin_fragment/city"></th:block>-->
+      <div class="row">
+          <div class="col-md-6 related-post-col" th:each="s : ${studios}">
+              <div class="post-item-cover">
+                  <div class="post-header">
+                      <div class="related-post-categ">fitness</div>
+                      <div class="post-thumbnail">
+                          <a href="single-blog.html"><img alt="img" class="rx-lazy"
+                                                          data-src="img/blog-4.jpg" src="/img/placeholder-all.png"></a>
+                      </div>
+                  </div>
+                  <div class="post-content">
             <div class="meta">
               <span class="post-date"><i class="fa fa-calendar" aria-hidden="true" th:text="${s.date}"></i></span>
             </div>
@@ -97,7 +99,7 @@
           </div>
           <div class="post-footer">
             <div class="meta">
-              <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a href="#" th:text="${s.district}+', '+${s.city}"></a></span>
+              <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a href="#" th:text="${s.district}+', '+${s.district.name}"></a></span>
               <span th:text="${s.contact}" class="post-comment"><i class="fa fa-comment" aria-hidden="true"></i><a href="#">2 Comments(s)</a></span>
             </div>
             <a href="single-blog.html" class="btn"><span>read more</span></a>

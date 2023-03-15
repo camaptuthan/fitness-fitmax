@@ -27,7 +27,10 @@ public class HomeController {
         //return "fragments/home_program";
         return "/index";
     }
-
+    @GetMapping("/blog-writer")
+    public String blogWriter() {
+        return "/blog_writer";
+    }
     @GetMapping("/register")
     public String register() {
         return "/register";
@@ -55,9 +58,10 @@ public class HomeController {
 
     }
 
-
-
-
+    @GetMapping("/managestudio")
+    public String studioAdmin() {
+        return "management/StudioManagement/manage_studio";
+    }
 
 
 }

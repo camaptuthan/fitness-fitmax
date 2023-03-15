@@ -8,6 +8,9 @@ import java.util.List;
 @Service
 public interface StudioManagerService {
     List <StudioManager> getAll();
+
     @Query()
-    List <StudioManager> getAvailableManager();
+    List<StudioManager> getAvailableManager();
+
+    StudioManager getStudioManagerByEmail(String email);
 }
