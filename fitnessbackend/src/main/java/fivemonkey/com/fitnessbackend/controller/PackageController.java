@@ -4,13 +4,10 @@ import fivemonkey.com.fitnessbackend.dto.CategoryDTO;
 import fivemonkey.com.fitnessbackend.dto.CityDTO;
 import fivemonkey.com.fitnessbackend.dto.PackageDTO;
 import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
-import fivemonkey.com.fitnessbackend.repository.CityRepository;
-import fivemonkey.com.fitnessbackend.services.CategoryService;
-import fivemonkey.com.fitnessbackend.services.CityService;
-import fivemonkey.com.fitnessbackend.services.PackageService;
-import fivemonkey.com.fitnessbackend.services.ServiceService;
+import fivemonkey.com.fitnessbackend.security.UserDetail;
+import fivemonkey.com.fitnessbackend.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,6 +32,8 @@ public class PackageController {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private RegistrationService registrationService;
 
     @Autowired
     private CityService cityService;
@@ -123,15 +122,21 @@ public class PackageController {
 
     //view package by id
     @GetMapping("/package_detail/{id}")
-    public String viewPackageDetail(@PathVariable(name = "id") String id, Model model) {
+    public String viewPackageDetail(@AuthenticationPrincipal UserDetail userDetail,@PathVariable(name = "id") String id, Model model) {
         PackageDTO p = packageServices.getPackageById(id);
+        boolean hasRegistered = false;
+        if (userDetail != null) {
+            hasRegistered = registrationService.hasRegistration(p.getId(), userDetail.getUser().getEmail());
+        }
+
+        model.addAttribute("hasRegistered", hasRegistered);
         model.addAttribute("package", p);
         return "management/PackageManagement/detail";
     }
 
     //disable package
     @RequestMapping(value = "/disable-package/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String disablePackage(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
+    public String disablePackage(@AuthenticationPrincipal UserDetail userDetail, @PathVariable("id") String id, RedirectAttributes redirectAttributes) {
         try {
             packageServices.disablePackageById(id);
             redirectAttributes.addFlashAttribute("success", "Disabled");
