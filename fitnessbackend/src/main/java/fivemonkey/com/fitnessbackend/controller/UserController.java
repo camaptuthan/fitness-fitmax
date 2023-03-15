@@ -52,7 +52,7 @@ public class UserController {
     public String listUser(Model model, @Param("keyword") String keyword,@AuthenticationPrincipal UserDetail userDetail) {
         List<UserDTO> userDTOList = userService.findAll();
         List<UserDTO> listManager = userService.listByManager(userDetail.getUser().getStudio().getId());
-        List<UserDTO> listCityAdmin = userService.listByCityAdmin(userDetail.getUser().getStudio().getCity());
+        List<UserDTO> listCityAdmin = userService.listByCityAdmin(userDetail.getUser().getStudio().getDistrict().getCity().getName());
         List<UserDTO> listAssistant = userService.listByAssistant(userDetail.getUser().getStudio().getId());
         List<UserDTO> userSearch = userService.findAllUser(keyword);
         List<Role> roleList = roleService.getAll();
