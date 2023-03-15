@@ -48,26 +48,66 @@ public class UserController {
     private RegistrationService registrationService;
 
 
-
     @GetMapping("/management/listusers")
-    public String listUser(Model model, @Param("keyword") String keyword) {
+    public String listUser(Model model, @Param("keyword") String keyword,@AuthenticationPrincipal UserDetail userDetail) {
         List<UserDTO> userDTOList = userService.findAll();
-        List<UserDTO> userDTOList1 = userService.findAllUser(keyword);
+        List<UserDTO> listManager = userService.listByManager(userDetail.getUser().getStudio().getId());
+        List<UserDTO> listCityAdmin = userService.listByCityAdmin(userDetail.getUser().getStudio().getDistrict().getCity().getName());
+        List<UserDTO> listAssistant = userService.listByAssistant(userDetail.getUser().getStudio().getId());
+        List<UserDTO> userSearch = userService.findAllUser(keyword);
         List<Role> roleList = roleService.getAll();
-        if (keyword == null || "---All---".equals(keyword)) {
-            model.addAttribute("listRole", roleList);
-            model.addAttribute("list", userDTOList);
-            model.addAttribute("size", userDTOList.size());
-        } else {
-            model.addAttribute("listRole", roleList);
-            model.addAttribute("list", userDTOList1);
-            model.addAttribute("keyword", keyword);
-            model.addAttribute("size", userDTOList1.size());
+        switch(userDetail.getUser().getRole().getId()){
+            case"ROLE0001":
+                if (keyword == null || "---All---".equals(keyword)) {
+                    model.addAttribute("listRole", roleList);
+                    model.addAttribute("list", userDTOList);
+                    model.addAttribute("size", userDTOList.size());
+                } else {
+                    model.addAttribute("listRole", roleList);
+                    model.addAttribute("list", userSearch);
+                    model.addAttribute("keyword", keyword);
+                    model.addAttribute("size",userSearch.size());
+                }
+            case"ROLE0006":
+                if (keyword == null || "---All---".equals(keyword)) {
+                    model.addAttribute("listRole", roleList);
+                    model.addAttribute("list", listCityAdmin);
+                    model.addAttribute("size", listCityAdmin.size());
+                } else {
+                    model.addAttribute("listRole", roleList);
+                    model.addAttribute("list", userSearch);
+                    model.addAttribute("keyword", keyword);
+                    model.addAttribute("size",userSearch.size());
+                }
+            case"ROLE0002":
+                if (keyword == null || "---All---".equals(keyword)) {
+                    model.addAttribute("listRole", roleList);
+                    model.addAttribute("list", listManager);
+                    model.addAttribute("size", listManager.size());
+                } else {
+                    model.addAttribute("listRole", roleList);
+                    model.addAttribute("list", userSearch);
+                    model.addAttribute("keyword", keyword);
+                    model.addAttribute("size",userSearch.size());
+                }
+            case"ROLE0004":
+                if (keyword == null || "---All---".equals(keyword)) {
+                    model.addAttribute("listRole", roleList);
+                    model.addAttribute("list", listAssistant);
+                    model.addAttribute("size", listAssistant.size());
+                } else {
+                    model.addAttribute("listRole", roleList);
+                    model.addAttribute("list", userSearch);
+                    model.addAttribute("keyword", keyword);
+                    model.addAttribute("size",userSearch.size());
+                }
+
+
         }
+
         return "management/UserManagement/UserList";
 
     }
-
 
 
     @PostMapping("/management/saveuser")
@@ -115,7 +155,7 @@ public class UserController {
         model.addAttribute("user", userDTO);
         model.addAttribute("listRole", roleList);
         model.addAttribute("listStudio", studioList);
-        return "management/usermanagement/userupdate";
+        return "management/UserManagement/UserUpdate";
     }
 
     @PostMapping("/management/updateuser/{email}")
@@ -147,7 +187,6 @@ public class UserController {
         return "pro";
     }
 
-
     @PostMapping("/management/avataruser/{email}")
     public String userUpdate(@RequestParam("fileImage") MultipartFile multipartFile,
 
@@ -167,6 +206,7 @@ public class UserController {
         model.addAttribute("user", userDTO);
         return "myprofile";
     }
+
     @PostMapping("/management/updateprofile/{email}")
     public String userUpdateAll(@ModelAttribute("user") UserDTO userDTO, Model model) throws IOException {
         userService.updateUser(userDTO);
@@ -178,6 +218,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "register";
         }
+
         List<Object> userPresentObj = userService.isUserPresent(user);
         String phone = user.getPhone();
         String siteUrl = Utility.getSiteURL(request);
@@ -197,22 +238,23 @@ public class UserController {
     @GetMapping("/verify")
     public String verifyAccount(@Param("code") String code, Model model) {
         boolean verified = userService.verify(code);
-        String title = verified ? "Verification Success" : "Verification Failed";
+        String title = verified ? "Congratulation! Your account has created success" : "Your account already verified code";
         model.addAttribute("title", title);
-        return "/register";
+        return "/verify_status";
     }
 
 
     @GetMapping("/profile")
     public String myProfile(@AuthenticationPrincipal UserDetail userDetail, Model model) {
-        model.addAttribute("registrations", registrationService.getRegistrationByUserEmail(userDetail.getUser().getEmail()));
+        model.addAttribute("registrations", registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail()));
         model.addAttribute("user", userDetail.getUser());
         return "user/profile";
     }
+
     @ResponseBody
     @GetMapping("/profile/registration")
     public List<RegistrationDTO> registration(@AuthenticationPrincipal UserDetail userDetail) {
-        return registrationService.getRegistrationByUserEmail(userDetail.getUser().getEmail());
+        return registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail());
     }
 
 

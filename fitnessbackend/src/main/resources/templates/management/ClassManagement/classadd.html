@@ -10,14 +10,16 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link th:href="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css}" rel="stylesheet" id="bootstrap-css">
+    <link th:href="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css}" rel="stylesheet"
+          id="bootstrap-css">
     <script th:src="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js}"></script>
     <script th:src="@{//code.jquery.com/jquery-1.11.1.min.js}"></script>
+    <script th:src="@{/js/validate-form.js}"></script>
 </head>
 
 <!------ Include the above in your HEAD tag ---------->
 
-<form class="form-horizontal"   th:action="@{/admin/save-class}"   th:object="${clazz}" method="post">
+<form class="form-horizontal" th:action="@{/class/management/save-class}" th:object="${clazz}" method="post">
     <fieldset>
 
         <!-- Form Name -->
@@ -25,24 +27,26 @@
 
         <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-4 control-label"  > Form Add Class</label>
+            <label class="col-md-4 control-label"> Form Add Class</label>
 
         </div>
 
         <!-- Text input-->
-        <div  class="form-group">
+        <div class="form-group">
             <label class="col-md-4 control-label" for="name">NAME</label>
             <div class="col-md-4">
-                <input id="name"  th:value="${clazz.name}" name="name"  placeholder="Name" class="form-control input-md"
-                       required  type="text"/>
+                <input id="name" onblur="inputValidation(this)" th:value="${clazz.name}" name="name" placeholder="Name"
+                       class="form-control input-md"
+                       type="text"/>
+                <div id="textFieldName"></div>
             </div>
         </div>
         <!-- Select Basic -->
         <div class="form-group">
             <label class="col-md-4 control-label" for="service"> Service Type</label>
             <div class="col-md-4">
-                <select id="service"  name="services" class="form-control">
-                    <option th:each="list:${list}" th:value="${list.id}"  th:text="${list.name}"  >
+                <select id="service" name="services" class="form-control">
+                    <option th:each="list:${list}" th:value="${list.id}" th:text="${list.name}">
                     </option>
                 </select>
             </div>
@@ -51,9 +55,11 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="des">Description</label>
             <div class="col-md-4">
-                <input required id="des"  name="des" th:value="${clazz.des}" placeholder=" Description" class="form-control input-md"
+                <input id="des" onblur="inputValidationDes(this)" name="des" th:value="${clazz.des}"
+                       placeholder=" Description"
+                       class="form-control input-md"
                        type="text">
-
+                <div id="textFieldDes"></div>
             </div>
 
         </div>
@@ -61,17 +67,21 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="price">Price</label>
             <div class="col-md-4">
-                <input required id="price"  th:value="${clazz.price}" name="price" placeholder="Price" class="form-control input-md"
+                <input id="price" onblur="inputValidationPrice(this)" th:value="${clazz.price}" name="price"
+                       placeholder="Price"
+                       class="form-control input-md"
                        type="number">
-
+                <div id="textFieldPrice"></div>
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-4 control-label" for="duration">Duration</label>
             <div class="col-md-4">
-                <input required id="duration" th:value="${clazz.duration}" name="duration" placeholder="Duration" class="form-control input-md"
+                <input id="duration" onblur="inputValidationDuration(this)" th:value="${clazz.duration}" name="duration"
+                       placeholder="Duration"
+                       class="form-control input-md"
                        type="text">
-
+                <div id="textFieldDuration"></div>
             </div>
         </div>
 
@@ -86,7 +96,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="singlebutton"></label>
             <div class="col-md-4">
-                <button   type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Save</button>
+                <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Save</button>
 
             </div>
 
@@ -94,10 +104,7 @@
 
     </fieldset>
 </form>
-<script>
 
-
-</script>
 
 
 </html>

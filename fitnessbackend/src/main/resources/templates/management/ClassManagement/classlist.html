@@ -178,7 +178,7 @@
                 </div>
             </div>
             <div>
-                <a th:href="@{/admin/add-class}" style="color: blue">Add</a>
+                <a th:href="@{/class/management/add-class}" style="color: blue">Add</a>
                 <div th:if="${success}">
                     <p style="color: green" th:text="${success}"></p>
                 </div>
@@ -210,13 +210,13 @@
 
                     <td>
 
-                        <a th:href="@{'/admin/update-class/' + ${c.id}}" class="edit" title="Edit"
+                        <a th:href="@{'/class/management/update-class/' + ${c.id}}" class="edit" title="Edit"
                            data-toggle="tooltip">Edit
                             &nbsp;<i class="material-icons">&#xE254;</i></a>
                         <!--                        <button type="button" class="btn btn-danger">Danger</button>-->
 
 
-                        <a th:if="${c.status==true}" th:href="@{'/admin/disable-class/' + ${c.id}}" class="disable"
+                        <a th:if="${c.status==true}" th:href="@{'/class/management/disable-class/' + ${c.id}}" class="disable"
                            title="Disable" data-toggle="tooltip">
 
                             <button onclick="return confirm('Are you sure you want to disable class')" type="button"
@@ -224,7 +224,7 @@
                             </button>
 
                         </a>
-                        <a th:if="${c.status==false}" th:href="@{'/admin/enable-class/' + ${c.id}}" class="enable"
+                        <a th:if="${c.status==false}" th:href="@{'/class/management/enable-class/' + ${c.id}}" class="enable"
                            title="Enable" data-toggle="tooltip">
 
                             <button onclick="return confirm('Are you sure you want to enable class')" type="button"

@@ -183,15 +183,35 @@
       </div>
       <div>&nbsp</div>
       <div>
-        <form id="searchFilterTN" th:action="@{/user/management/listusers}" >
-          City:  <select name="city" id="comboboxCity" style="width:30%" >
-          <option>---All---</option>
-          <option  th:each="city : ${listCity}" th:text="${city.name}" th:value="${city.id}"></option>
+        <select class="form-select" aria-label="Default select example" id="city_selector">
+          <option selected>Open this select menu</option>
         </select>
-          </br>
-          Studio:  <select  id="comboboxDistrict" style="width:30%" >
+        <select class="form-select" aria-label="Default select example" id="district_selector">
+          <option selected>Open this select menu</option>
         </select>
-        </form>
+        <script>
+          const origin_path = window.location.origin;
+          $.get(`${origin_path}/address/city`, (results) => {
+            results.forEach(result => {
+              console.log(result.name)
+              $("#city_selector").append(`<option value="${result.id}">${result.name}</option>`);
+            })
+          })
+
+          $("#city_selector").on("change", (e) => {
+            getDistrict(e.target.value);
+          })
+
+          const getDistrict = (cityId) => {
+            $("#district_selector").html('  <option selected>Open this select menu</option>');
+            $.get(`${origin_path}/address/district/${cityId}`, (results) => {
+              results.forEach(result => {
+                console.log(result.name)
+                $("#district_selector").append(`<option value="${result.id}">${result.name}</option>`);
+              })
+            })
+          }
+        </script>
         <div>&nbsp</div>
       </div>
       <div>
@@ -210,12 +230,12 @@
         <th:block th:each="user : ${list}">
           <tr>
             <td style="width:70% ; height: 70%"><img style="width: 70%; height: 70%" th:src="${user.avatar}"/></td>
-            <td>[[${user.email}]]</td>
-            <td>[[${user.address}]]</td>
-            <td>[[${user.firstName}+' '+${user.lastName}]]</td>
-            <td>[[${user.status}]]</td>
-            <td>[[${user.roleName}]]</td>
-            <td>[[${user.studioName}]]</td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.address}"></td>
+            <td th:text="${user.firstName}+' '+${user.lastName}"></td>
+            <td th:text="${user.status}"></td>
+            <td th:text="${user.roleName}"></td>
+            <td th:text="${user.studioName}"></td>
             <td>
 
               <a th:href="@{/user/management/updateuser/{email} (email=${user.email})}" class="edit" title="Edit" data-toggle="tooltip">Update &nbsp;</a><a th:href="@{/user/management/updateprofile/{email} (email=${user.email})}"><i class="material-icons">&#xE254; </i></a>
@@ -268,23 +288,6 @@
     document.getElementById("searchFilter").submit();
   }
 
- $(document).ready(function (){
-    $('#comboboxCity').change(function (){
-        var cityId = $(this).val();
-        $.ajax({
-          type:'GET',
-          url:'/user//management/searchdistrictbycity/{id}'+cityId,
-          success:function (result){
-            var result = JSON.parse(result);
-            for (var i =0 ; i<result.length; i++){
-  s += '<option value="' + result[i].id +'">' + result[i].name + '</option>';
 
-            }
-  $('#comboboxDistrict').html(s);
-          }
-
-        })
-    });
-  });
 </script>
 </html>

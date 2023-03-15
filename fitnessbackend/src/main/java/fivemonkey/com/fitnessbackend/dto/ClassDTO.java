@@ -1,7 +1,9 @@
 package fivemonkey.com.fitnessbackend.dto;
 
 
+import fivemonkey.com.fitnessbackend.entities.Services;
 import lombok.*;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +23,8 @@ public class ClassDTO {
 
     private String servicesId;
     private String servicesName;
+
+//    private Services service;
     private String img;
 
     private boolean status;

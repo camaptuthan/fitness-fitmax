@@ -24,7 +24,8 @@ public class AddressController {
     @ResponseBody
     @GetMapping("/district/{city}")
     public List<DistrictDTO> getDistrictsByCityId(@PathVariable("city") Long cityId) {
-        System.out.println("Huy"+cityId);
         return addressService.getDistrictsByCityId(cityId);
     }
+
+
 }

@@ -1,5 +1,6 @@
 package fivemonkey.com.fitnessbackend.repository;
 
+import fivemonkey.com.fitnessbackend.entities.District;
 import fivemonkey.com.fitnessbackend.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -28,5 +29,15 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Query("select u from User u where u.verificationCode=?1")
     User findByVerificationCode(String code);
+
+    @Query("select u from User u where u.role.id not in ('ROLE0001','ROLE0002','ROLE0006')  and u.studio.id=?1")
+    List<User>listByManager(String studioId);
+    @Query("select u from User u where u.role.id not in ('ROLE0001','ROLE0006') and u.studio.district.city.name=?1")
+    List<User>listByCityAdmin(String city);
+    @Query("select u from User u where u.role.id not in ('ROLE0001','ROLE0003','ROLE0002','ROLE0006') and u.studio.id=?1")
+    List<User>listByAssistant(String studioId);
+
+
+
 
 }

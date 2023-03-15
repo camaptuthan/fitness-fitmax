@@ -1,12 +1,13 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.dto.CategoryDTO;
+import fivemonkey.com.fitnessbackend.dto.CityDTO;
 import fivemonkey.com.fitnessbackend.dto.PackageDTO;
 import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
-import fivemonkey.com.fitnessbackend.services.CategoryService;
-import fivemonkey.com.fitnessbackend.services.PackageService;
-import fivemonkey.com.fitnessbackend.services.ServiceService;
+import fivemonkey.com.fitnessbackend.security.UserDetail;
+import fivemonkey.com.fitnessbackend.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,9 +32,14 @@ public class PackageController {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private RegistrationService registrationService;
 
-    //view all packages
-//    @GetMapping("/packages")
+    @Autowired
+    private CityService cityService;
+
+    //view all packages in dashboard
+//    @GetMapping("/management/packages")
 //    public String getAllPackages(Model model, @Param("keyword") String keyword) {
 //        List<PackageDTO> packageDTOList = packageServices.getAll();
 //        List<PackageDTO> packageDTOList1 = packageServices.getAllPackagesByKeyword(keyword);
@@ -54,27 +60,37 @@ public class PackageController {
 //        return "management/PackageManagement/package";
 //    }
 
-    @GetMapping("/packages")
-    public String getAllPackages(Model model) {
-        List<PackageDTO> packageDTOList1 = packageServices.getAllPackagesByKeyword("");
-        List<ServicesDTO> servicesList = serviceService.getAllByPackage();
-        List<CategoryDTO> category = categoryService.findAllCategoriesByType("service");
 
-        Map<String,  List<PackageDTO>> packagesMapList = new HashMap<>();
-        for (int i = 0; i < (packageDTOList1.size() /3 )+1; i++) {
+    @RequestMapping(value = "/packages", method = {RequestMethod.GET, RequestMethod.POST})
+    public String getAllPackages(Model model, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+                                 @RequestParam(value = "cityname", required = false, defaultValue = "All") String cityname) {
+        List<ServicesDTO> servicesList = serviceService.getAllByPackage();
+        List<CityDTO> listCity = cityService.getAllCity();
+        List<CategoryDTO> category = categoryService.findAllCategoriesByType("service");
+        Map<String, List<PackageDTO>> packagesMapList = new HashMap<>();
+        List<PackageDTO> listPkg;
+        if ("".equals(keyword) && "All".equals(cityname)) {
+            listPkg = packageServices.getAll();
+        } else if (keyword == null) {
+            listPkg = packageServices.getAllPackagesByCity(cityname);
+        } else {
+            listPkg = packageServices.getAllPackagesByCityAndSearch(cityname, keyword);
+        }
+        for (int i = 0; i < (listPkg.size() / 3) + 1; i++) {
             List<PackageDTO> value = new ArrayList<>();
             for (int j = 0; j < 3; j++) {
-                if (i * 3 + j < packageDTOList1.size()) {
-                    value.add(packageDTOList1.get(i * 3 + j));
+                if (i * 3 + j < listPkg.size()) {
+                    value.add(listPkg.get(i * 3 + j));
                 }
             }
-            packagesMapList.put("PKG-"+(i+1), value);
+            packagesMapList.put("PKG-" + (i + 1), value);
         }
-        System.out.println("HAPH"+ servicesList);
-            model.addAttribute("servicesList", servicesList);
-            model.addAttribute("packages", packagesMapList);
-            model.addAttribute("size", packageDTOList1.size());
-            model.addAttribute("category", category);
+        model.addAttribute("packages", packagesMapList);
+        model.addAttribute("servicesList", servicesList);
+        model.addAttribute("cities", listCity);
+        model.addAttribute("currentCity", cityname);
+        model.addAttribute("size", packagesMapList.size());
+        model.addAttribute("category", category);
         return "management/PackageManagement/package";
     }
 
@@ -106,15 +122,21 @@ public class PackageController {
 
     //view package by id
     @GetMapping("/package_detail/{id}")
-    public String viewPackageDetail(@PathVariable(name = "id") String id, Model model) {
+    public String viewPackageDetail(@AuthenticationPrincipal UserDetail userDetail,@PathVariable(name = "id") String id, Model model) {
         PackageDTO p = packageServices.getPackageById(id);
+        boolean hasRegistered = false;
+        if (userDetail != null) {
+            hasRegistered = registrationService.hasRegistration(p.getId(), userDetail.getUser().getEmail());
+        }
+
+        model.addAttribute("hasRegistered", hasRegistered);
         model.addAttribute("package", p);
         return "management/PackageManagement/detail";
     }
 
     //disable package
     @RequestMapping(value = "/disable-package/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String disablePackage(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
+    public String disablePackage(@AuthenticationPrincipal UserDetail userDetail, @PathVariable("id") String id, RedirectAttributes redirectAttributes) {
         try {
             packageServices.disablePackageById(id);
             redirectAttributes.addFlashAttribute("success", "Disabled");

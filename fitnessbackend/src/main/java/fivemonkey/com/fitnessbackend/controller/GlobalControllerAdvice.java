@@ -10,13 +10,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
+@ControllerAdvice
 public class GlobalControllerAdvice {
 
     private static Logger LOGGER = LoggerFactory.getLogger(GlobalControllerAdvice.class);
 
-    @ExceptionHandler(value = {UserNotFoundException.class, IllegalArgumentException.class})
+    @ExceptionHandler(value = {IllegalArgumentException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ModelAndView handleBusinessException(Exception ex, HttpServletRequest request) {
         LOGGER.debug("======Inside handleBusinessException() ======================");
@@ -25,6 +27,23 @@ public class GlobalControllerAdvice {
         LOGGER.error("Exception Error = " + ex);
 
         ModelAndView mv = new ModelAndView("management/600");
+        mv.addObject("errorMsg", ex.getMessage());
+        mv.addObject("errorStack", ex.getCause());
+
+        LOGGER.warn("==============Be careful::::::::::::::::::;");
+
+        return mv;
+    }
+
+    @ExceptionHandler(value = {UserNotFoundException.class, EntityNotFoundException.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ModelAndView handleNotFoundException(Exception ex, HttpServletRequest request) {
+        LOGGER.debug("======Inside handleBusinessException() ======================");
+        LOGGER.info("=========request URI: " + request.getRequestURI());
+
+        LOGGER.error("Exception Error = " + ex);
+
+        ModelAndView mv = new ModelAndView("management/404");
         mv.addObject("errorMsg", ex.getMessage());
         mv.addObject("errorStack", ex.getCause());
 
