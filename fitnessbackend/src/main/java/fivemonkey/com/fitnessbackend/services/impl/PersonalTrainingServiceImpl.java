@@ -19,6 +19,6 @@ public class PersonalTrainingServiceImpl implements PersonalTrainingService {
 
     @Override
     public PersonalTrainingDTO getPersonalTrainingByServiceId(String serviceId) {
-        return modelMapperConfiguration.map(personalTrainingRepository.findByServicesId(serviceId), PersonalTrainingDTO.class);
+        return modelMapperConfiguration.map(personalTrainingRepository.getByServicesId(serviceId), PersonalTrainingDTO.class);
     }
 }

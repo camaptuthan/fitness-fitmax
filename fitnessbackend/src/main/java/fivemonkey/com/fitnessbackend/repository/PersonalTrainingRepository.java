@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PersonalTrainingRepository extends JpaRepository<PersonalTraining, String> {
-    PersonalTraining findByServicesId(String serviceId);
+    PersonalTraining getByServicesId(String serviceId);
 }

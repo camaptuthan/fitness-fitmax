@@ -16,7 +16,7 @@ public class FireBaseUtils {
 
 
     @Autowired
-    private Bucket bucket;
+    private final Bucket bucket;
 
 
     public void uploadFile(MultipartFile file, String fileName) throws IOException {
