@@ -24,13 +24,10 @@ public class FireBaseUtils {
             log.info("[uploadFile] Cannot upload because file is not present");
 
         }
-        assert file != null;
         log.info("[uploadFile] Start upload to Firebase with fileName : {},original fileName : {}",
                 fileName,
                 file.getOriginalFilename());
-        if(!bucket.exists(Bucket.BucketSourceOption.userProject(fileName))){
-            bucket.create(fileName, file.getBytes(), file.getContentType());
-        }
+        bucket.create(fileName, file.getBytes(), file.getContentType());
     }
 
 }

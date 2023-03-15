@@ -1,5 +1,6 @@
 package fivemonkey.com.fitnessbackend.repository;
 
+import fivemonkey.com.fitnessbackend.entities.District;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,8 @@ public interface StudioRepository extends JpaRepository<Studio, String> {
 public List<Studio> findByDistrict(@Param("id") String id);
 
     public Page<Studio> findStudioByNameContaining(String name, Pageable pageable);
+
+
 
 
 }
