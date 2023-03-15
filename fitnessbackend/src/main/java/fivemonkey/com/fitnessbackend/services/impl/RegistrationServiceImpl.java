@@ -85,15 +85,15 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     private Services getServices(String itemId) {
         Services services = null;
-        Clazz clazz = classRepository.getById(itemId);
+        Clazz clazz = classRepository.findById(itemId).orElse(null);
         if (clazz != null) {
             services = clazz.getServices();
         } else {
-            Package packag3 = packageRepository.getById(itemId);
+            Package packag3 = packageRepository.findById(itemId).orElse(null);
             if (packag3 != null) {
                 services = packag3.getServices();
             } else {
-                PersonalTraining personalTraining = personalTrainingRepository.getById(itemId);
+                PersonalTraining personalTraining = personalTrainingRepository.findById(itemId).orElse(null);
                 services = personalTraining.getServices();
             }
         }
@@ -112,6 +112,9 @@ public class RegistrationServiceImpl implements RegistrationService {
 
 
     private Date getStartDateFromClass(Services services) {
+        if(services.getClazz() == null){
+            return null;
+        }
         return services.getClazz().getSessions().isEmpty() ? null : services.getClazz().getSessions().get(0).getHappenedDate();
     }
 
