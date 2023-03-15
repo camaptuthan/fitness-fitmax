@@ -178,7 +178,6 @@ public class UserServiceImpl implements UserService {
             userExists = true;
             message = "Email Already Present!";
         }
-        System.out.println("existingUserEmail.isPresent() - " + existingUserEmail.isPresent());
         return Arrays.asList(userExists, message);
 
     }

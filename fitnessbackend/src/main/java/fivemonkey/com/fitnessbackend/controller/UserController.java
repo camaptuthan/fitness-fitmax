@@ -226,15 +226,21 @@ public class UserController {
 
 
     @PostMapping("/reset-password")
-    public String resetPass(@ModelAttribute("userDTO") User user, Model model) throws MessagingException, UnsupportedEncodingException {
-        userService.sendOTP(user.getEmail());
-        model.addAttribute("email", user.getEmail());
-        return "verifyOTP";
+    public String resetPassGetOtp(@ModelAttribute("userDTO") User user, Model model,RedirectAttributes attributes) throws MessagingException, UnsupportedEncodingException {
+        //validate email not exist
+        List<Object> userPresentObj = userService.isUserPresent(user);
+        if((Boolean) userPresentObj.get(0)){
+            userService.sendOTP(user.getEmail());
+            model.addAttribute("email", user.getEmail());
+            return "verifyOTP";
+        }
+        attributes.addFlashAttribute("fail", "Email Invalid");
+        return "redirect:/reset-password";
+
     }
     @PostMapping("/verifyOTP")
     public String verifyOTP(@RequestParam String email, @RequestParam String otp, Model model) {
         if (userService.verifyOTP(email, otp)) {
-            // TODO: save the user's information
             model.addAttribute("email", email);
             model.addAttribute("userDTO", new User());
             return "changepass";
@@ -250,7 +256,7 @@ public class UserController {
         userDTO.setPassword(passwordEncoder.encode(password));
         UserDTO u= new UserDTO();
         u.setPassword(userDTO.getPassword());
-        userService.update(u);
+        userService.save(u);
         ModelAndView mav = new ModelAndView("register");
         mav.addObject("message", "Password reset successful");
         return mav;
