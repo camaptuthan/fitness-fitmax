@@ -5,12 +5,15 @@ import fivemonkey.com.fitnessbackend.dto.CityDTO;
 import fivemonkey.com.fitnessbackend.dto.PackageDTO;
 import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
 import fivemonkey.com.fitnessbackend.repository.CityRepository;
+import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.services.CategoryService;
 import fivemonkey.com.fitnessbackend.services.CityService;
 import fivemonkey.com.fitnessbackend.services.PackageService;
 import fivemonkey.com.fitnessbackend.services.ServiceService;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -95,6 +98,10 @@ public class PackageController {
         return "management/PackageManagement/package";
     }
 
+    @GetMapping("management/packages")
+    public String getAllPackagesForManagement(Model model, @AuthenticationPrincipal UserDetail userDetail){
+        return "management/PackageManagement/package-list";
+    }
     //add new package
     @GetMapping("/add-package")
     public String addPackage(Model model) {

@@ -60,7 +60,7 @@ public class ClassController {
     //and list service to add
     //get information for class
     @GetMapping("/management/add-class")
-    public String addClass(Model model) {
+    public String addClass(Model model) { 
         List<Services> list = serviceService.getAll();
         model.addAttribute("list", list);
         model.addAttribute("clazz", new ClassDTO());
