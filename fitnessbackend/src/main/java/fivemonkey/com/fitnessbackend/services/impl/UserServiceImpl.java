@@ -26,7 +26,9 @@ import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private final int OTP_EXPIRATION_TIME_MINUTES = 5;
 
+    private Map<String, String> otpMap = new HashMap<>();
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -202,7 +204,6 @@ public class UserServiceImpl implements UserService {
         helper.setText(content, true);
         mailSender.send(message);
 
-
     }
 
 
@@ -217,6 +218,57 @@ public class UserServiceImpl implements UserService {
             userRepository.save(u);
             return true;
         }
+    }
+
+
+
+    //send otp to forgot password
+    @Override
+    public void sendOTP(String email)  throws MessagingException, UnsupportedEncodingException{
+        String otp = generateOTP();
+        // send the OTP to the user's email
+        otpMap.put(email, otp);
+        // set the expiration time for the OTP
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                otpMap.remove(email);
+            }
+        }, OTP_EXPIRATION_TIME_MINUTES * 60 * 1000);
+        String toAddress = email;
+        String fromAddress = "ducnvhe141646@fpt.edu.vn";
+        String senderName = "Fitness Service Management System";
+        String subject = "Please verify ";
+
+        String content = "Dear ,<br>"
+                + "This is your otp please verify otp now :<br>"
+                + "<h3>" + otp +"</h3> <br>"
+                +"<a>"+"It's expired time after "+OTP_EXPIRATION_TIME_MINUTES+ "minutes </a><br>"
+                + "Thank you,<br>"
+                + "From FSM.";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+        helper.setText(content, true);
+        mailSender.send(message);
+    }
+
+    @Override
+    public boolean verifyOTP(String email, String otp) {
+        String storedOTP = otpMap.get(email);
+        //check otp equal or not >>>
+        return storedOTP != null && storedOTP.equals(otp);
+    }
+
+    private String generateOTP() {
+        // generate a random 6-digit OTP
+        Random random = new Random();
+        int otp = 100000 + random.nextInt(900000);
+        return String.valueOf(otp);
     }
 
 //    @Override

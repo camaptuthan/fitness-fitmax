@@ -10,17 +10,20 @@ import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
+import fivemonkey.com.fitnessbackend.repository.UserRepository;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.services.*;
 import org.hibernate.internal.util.StringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
@@ -216,6 +219,43 @@ public class UserController {
     public List<RegistrationDTO> registration(@AuthenticationPrincipal UserDetail userDetail) {
         return registrationService.getRegistrationByUserEmail(userDetail.getUser().getEmail());
     }
+
+
+
+
+
+
+    @PostMapping("/reset-password")
+    public String resetPass(@ModelAttribute("userDTO") User user, Model model) throws MessagingException, UnsupportedEncodingException {
+        userService.sendOTP(user.getEmail());
+        model.addAttribute("email", user.getEmail());
+        return "verifyOTP";
+    }
+    @PostMapping("/verifyOTP")
+    public String verifyOTP(@RequestParam String email, @RequestParam String otp, Model model) {
+        if (userService.verifyOTP(email, otp)) {
+            // TODO: save the user's information
+            model.addAttribute("email", email);
+            model.addAttribute("userDTO", new User());
+            return "changepass";
+        } else {
+            model.addAttribute("error", "Invalid OTP");
+            return "verifyOTP";
+        }
+    }
+    @PostMapping("/reset-password-result/{email}")
+    public ModelAndView resetPassword(@PathVariable("email") String email,@ModelAttribute("userDTO") User userDTO) {
+        String password=userDTO.getPassword();
+        BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
+        userDTO.setPassword(passwordEncoder.encode(password));
+        UserDTO u= new UserDTO();
+        u.setPassword(userDTO.getPassword());
+        userService.update(u);
+        ModelAndView mav = new ModelAndView("register");
+        mav.addObject("message", "Password reset successful");
+        return mav;
+    }
+
 
 
 }
