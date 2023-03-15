@@ -52,20 +52,62 @@ public class UserController {
 
 
     @GetMapping("/management/listusers")
-    public String listUser(Model model, @Param("keyword") String keyword) {
+    public String listUser(Model model, @Param("keyword") String keyword,@AuthenticationPrincipal UserDetail userDetail) {
         List<UserDTO> userDTOList = userService.findAll();
-        List<UserDTO> userDTOList1 = userService.findAllUser(keyword);
+        List<UserDTO> listManager = userService.listByManager(userDetail.getUser().getStudio().getId());
+        List<UserDTO> listCityAdmin = userService.listByCityAdmin(userDetail.getUser().getStudio().getDistrict().getCity().getName());
+        List<UserDTO> listAssistant = userService.listByAssistant(userDetail.getUser().getStudio().getId());
+        List<UserDTO> userSearch = userService.findAllUser(keyword);
         List<Role> roleList = roleService.getAll();
-        if (keyword == null || "---All---".equals(keyword)) {
-            model.addAttribute("listRole", roleList);
-            model.addAttribute("list", userDTOList);
-            model.addAttribute("size", userDTOList.size());
-        } else {
-            model.addAttribute("listRole", roleList);
-            model.addAttribute("list", userDTOList1);
-            model.addAttribute("keyword", keyword);
-            model.addAttribute("size", userDTOList1.size());
+        switch(userDetail.getUser().getRole().getId()){
+            case"ROLE0001":
+                if (keyword == null || "---All---".equals(keyword)) {
+                    model.addAttribute("listRole", roleList);
+                    model.addAttribute("list", userDTOList);
+                    model.addAttribute("size", userDTOList.size());
+                } else {
+                    model.addAttribute("listRole", roleList);
+                    model.addAttribute("list", userSearch);
+                    model.addAttribute("keyword", keyword);
+                    model.addAttribute("size",userSearch.size());
+                }
+            case"ROLE0006":
+                if (keyword == null || "---All---".equals(keyword)) {
+                    model.addAttribute("listRole", roleList);
+                    model.addAttribute("list", listCityAdmin);
+                    model.addAttribute("size", listCityAdmin.size());
+                } else {
+                    model.addAttribute("listRole", roleList);
+                    model.addAttribute("list", userSearch);
+                    model.addAttribute("keyword", keyword);
+                    model.addAttribute("size",userSearch.size());
+                }
+            case"ROLE0002":
+                if (keyword == null || "---All---".equals(keyword)) {
+                    model.addAttribute("listRole", roleList);
+                    model.addAttribute("list", listManager);
+                    model.addAttribute("size", listManager.size());
+                } else {
+                    model.addAttribute("listRole", roleList);
+                    model.addAttribute("list", userSearch);
+                    model.addAttribute("keyword", keyword);
+                    model.addAttribute("size",userSearch.size());
+                }
+            case"ROLE0004":
+                if (keyword == null || "---All---".equals(keyword)) {
+                    model.addAttribute("listRole", roleList);
+                    model.addAttribute("list", listAssistant);
+                    model.addAttribute("size", listAssistant.size());
+                } else {
+                    model.addAttribute("listRole", roleList);
+                    model.addAttribute("list", userSearch);
+                    model.addAttribute("keyword", keyword);
+                    model.addAttribute("size",userSearch.size());
+                }
+
+
         }
+
         return "management/UserManagement/UserList";
 
     }
@@ -147,7 +189,6 @@ public class UserController {
         model.addAttribute("user", userDTO);
         return "pro";
     }
-
 
     @PostMapping("/management/avataruser/{email}")
     public String userUpdate(@RequestParam("fileImage") MultipartFile multipartFile,
@@ -248,14 +289,14 @@ public class UserController {
             return "verifyOTP";
         }
     }
-    @PostMapping("/reset-password-result/{email}")
-    public ModelAndView resetPassword(@PathVariable("email") String email,@ModelAttribute("userDTO") User userDTO) {
-        String password=userDTO.getPassword();
-        BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
-        userDTO.setPassword(passwordEncoder.encode(password));
-        UserDTO u= new UserDTO();
-        u.setPassword(userDTO.getPassword());
-        userService.save(u);
+    @PostMapping("/reset-password-result")
+    public ModelAndView resetPassword(@ModelAttribute("userDTO") User user) {
+//        String password=user.getPassword();
+//        BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
+//        user.setPassword(passwordEncoder.encode(password));
+//        UserDTO u= new UserDTO();
+//        u.setPassword(user.getPassword());
+//        userService.save(u);
         ModelAndView mav = new ModelAndView("register");
         mav.addObject("message", "Password reset successful");
         return mav;

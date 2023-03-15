@@ -45,7 +45,13 @@ public interface UserService {
     boolean verify(String code);
 //    public List<UserDTO> findByStudio(String id);
 
+
     void sendOTP(String email) throws MessagingException, UnsupportedEncodingException;;
     boolean verifyOTP(String email, String otp);
+
+    List<UserDTO>listByManager(String studioId);
+    List<UserDTO>listByCityAdmin(String city);
+    List<UserDTO>listByAssistant(String studioId);
+
 
 }

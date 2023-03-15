@@ -29,4 +29,5 @@ public interface StudioService {
     Studio save(Studio studio);
 
     public List<Studio> findByDistrict(String id);
+
 }
