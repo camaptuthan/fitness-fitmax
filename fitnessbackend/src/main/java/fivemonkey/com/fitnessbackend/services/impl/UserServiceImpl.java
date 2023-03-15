@@ -1,7 +1,9 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
+import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
+import fivemonkey.com.fitnessbackend.entities.Clazz;
 import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
@@ -219,17 +221,24 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-//    @Override
-//    public List<UserDTO> findByStudio(String id) {
-//        ModelMapper mapper = new ModelMapper();
-//        List<UserDTO> userDTOList1 = new ArrayList<>();
-//        List<User> userList = userRepository.findByStudio(id);
-//        for (User u : userList) {
-//            UserDTO userDTO = mapper.map(u, UserDTO.class);
-//            userDTOList1.add(userDTO);
-//        }
-//        return userDTOList1;
-//    }
+    @Override
+    public List<UserDTO> listByManager(String studioId) {
+        List<User> userList = userRepository.listByManager(studioId);
+        return modelMapperConfiguration.mapList(userList,UserDTO.class);
+    }
+
+    @Override
+    public List<UserDTO> listByCityAdmin(String city) {
+        List<User> userList = userRepository.listByCityAdmin(city);
+        return modelMapperConfiguration.mapList(userList,UserDTO.class);
+
+    }
+
+    @Override
+    public List<UserDTO> listByAssistant(String studioId) {
+        List<User> userList = userRepository.listByAssistant(studioId);
+        return modelMapperConfiguration.mapList(userList,UserDTO.class);
+    }
 
 }
 
