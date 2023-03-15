@@ -31,8 +31,8 @@ public class Blog {
     @Column(name = "created_date")
     private Date date;
 
-    @Column(name = "image")
-    private String image;
+    @Column(name = "thumbnail")
+    private String thumbnail;
 
     @Column(name = "status", nullable = false)
     private boolean status;

@@ -16,13 +16,14 @@ public class StudioManager {
     @Column(name = "studio_manager_email")
     private String email;
 
-    //studio-manager relationship
-    @OneToOne(mappedBy = "studioManager")
-    private Studio studio;
-
     //manager-user relationship
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "studio_manager_email")
     private User user;
+
+    //studio-studioManager relationship
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "studio_id", referencedColumnName = "studio_id", unique = true)
+    private Studio studio;
 }

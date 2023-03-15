@@ -25,11 +25,6 @@ public class CityManager {
     private City city;
 
     //cityManager-user relationship
-    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    private Trainer trainer;
-
-    //cityManager-user relationship
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "city_manager_email")

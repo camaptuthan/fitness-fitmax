@@ -28,13 +28,11 @@ public class User {
     private String password;
     @Column(name = "first_name")
     private String firstName;
-
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "address")
     private String address;
     @Column(name = "phone")
-
     private String phone;
     @Column(name = "avatar")
     private String avatar;
@@ -43,14 +41,16 @@ public class User {
     private Date date;
     @Column(name = "status", nullable = false)
     private boolean status;
+
     //role-user relationship
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
-    //studio-user relationship
+
+    //city-user relationship
     @ManyToOne
-    @JoinColumn(name = "studio_id", referencedColumnName = "studio_id")
-    private Studio studio;
+    @JoinColumn(name = "city_id", referencedColumnName = "city_id")
+    private City city;
 
     //user-blog relationship
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)

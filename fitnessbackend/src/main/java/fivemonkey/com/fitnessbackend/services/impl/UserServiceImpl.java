@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
 
 
             user.setRole(role);
-            user.setStudio(studio);
+//            user.setStudio(studio);
             System.out.println("==================================" + user);
 
 
@@ -157,11 +157,12 @@ public class UserServiceImpl implements UserService {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         Role r = new Role();
-        r.setId("ROLE0007");
+        //register auto role trainee
+        r.setId("ROLE0005");
         user.setRole(r);
         Studio s = new Studio();
         s.setId("STU0001");
-        user.setStudio(s);
+//        user.setStudio(s);
         user.setDate(new Date());
         user.setStatus(false);
         //set random ver code
@@ -300,6 +301,14 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> listByAssistant(String studioId) {
         List<User> userList = userRepository.listByAssistant(studioId);
         return modelMapperConfiguration.mapList(userList,UserDTO.class);
+    }
+
+    @Override
+    public void resetPassword(String email,String password) {
+        User user = userRepository.getById(email);
+        BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
     }
 
 

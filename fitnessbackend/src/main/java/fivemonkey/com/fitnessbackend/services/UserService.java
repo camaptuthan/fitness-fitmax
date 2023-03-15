@@ -53,5 +53,7 @@ public interface UserService {
     List<UserDTO>listByCityAdmin(String city);
     List<UserDTO>listByAssistant(String studioId);
 
+    void resetPassword(String email,String password);
+
 
 }
