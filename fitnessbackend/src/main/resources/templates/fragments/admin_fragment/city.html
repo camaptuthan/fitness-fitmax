@@ -1,0 +1,74 @@
+<meta charset="utf-8">
+<div class="container">
+    <div class="row justify-content-md-center p-2">
+        <div class="col-md-auto">
+            <select aria-label=".form-select-sm" class="form-select form-select-sm mb-3" id="cityvn">
+                <option selected value="">Chọn tỉnh thành</option>
+            </select>
+
+            <select aria-label=".form-select-sm" class="form-select form-select-sm mb-3" id="districtvn">
+                <option selected value="">Chọn quận huyện</option>
+            </select>
+
+            <select aria-label=".form-select-sm" class="form-select form-select-sm" id="wardvn">
+                <option selected value="">Chọn phường xã</option>
+            </select>
+        </div>
+    </div>
+</div>
+<script crossorigin="anonymous"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+</body>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    var citis = document.getElementById("cityvn");
+    var districts = document.getElementById("districtvn");
+    var wards = document.getElementById("wardvn");
+    var Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json", //Đường dẫn đến file chứa dữ liệu hoặc api do backend cung cấp
+        method: "GET", //do backend cung cấp
+        responseType: "json", //kiểu Dữ liệu trả về do backend cung cấp
+    };
+    //gọi ajax = axios => nó trả về cho chúng ta là một promise
+    var promise = axios(Parameter);
+    //Xử lý khi request thành công
+    promise.then(function (result) {
+        renderCity(result.data);
+    });
+
+    function renderCity(data) {
+        for (const x of data) {
+            citis.options[citis.options.length] = new Option(x.Name, x.Id);
+        }
+
+        // xứ lý khi thay đổi tỉnh thành thì sẽ hiển thị ra quận huyện thuộc tỉnh thành đó
+        citis.onchange = function () {
+            districtvn.length = 1;
+            wardvn.length = 1;
+            if (this.value != "") {
+                const result = data.filter(n => n.Id === this.value);
+
+                for (const k of result[0].Districts) {
+                    districtvn.options[districtvn.options.length] = new Option(k.Name, k.Id);
+                }
+            }
+        };
+
+        // xứ lý khi thay đổi quận huyện thì sẽ hiển thị ra phường xã thuộc quận huyện đó
+        districtvn.onchange = function () {
+            wardvn.length = 1;
+            const dataCity = data.filter((n) => n.Id === citis.value);
+            if (this.value != "") {
+                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+
+                for (const w of dataWards) {
+                    wards.options[wards.options.length] = new Option(w.Name, w.Id);
+                }
+            }
+        };
+    }
+</script>

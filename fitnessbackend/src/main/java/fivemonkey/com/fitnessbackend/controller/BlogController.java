@@ -34,25 +34,26 @@ public class BlogController {
         return "/blog";
     }
 
-    @GetMapping("/writer")
+    @GetMapping("/management/writer")
     public String blogWriter(Model model) {
         model.addAttribute("blogDTO", new BlogDTO());
         return "/blog_writer";
     }
 
-    @PostMapping("/writer")
+    @PostMapping("/management/writer")
     public String blogWriter(@ModelAttribute("blogDTO") @Valid BlogDTO blogDTO, @AuthenticationPrincipal UserDetail userDetail, BindingResult result, RedirectAttributes attributes) {
         blogDTO.setUserEmail(userDetail.getUser().getEmail());
+        blogService.save(blogDTO);
         System.out.println("Huy: " + blogDTO.getDes());
         return "redirect:/";
     }
 
-    @GetMapping("/listblogs")
+    @GetMapping("/management/blogs")
     public String getAllBlogs(Model model) {
         List<BlogDTO> list = blogService.findAllBlogs();
         model.addAttribute("list", list);
         model.addAttribute("size", list.size());
-        return "management/blogmanagement/blog-list";
+        return "management/BlogManagement/blog-list";
     }
 
     @GetMapping("/addblogs")

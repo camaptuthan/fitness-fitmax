@@ -39,6 +39,9 @@ public class ClassController {
 
     @GetMapping("/management/list-class")
     public String classes(Model model, @Param("keyword") String keyword, @AuthenticationPrincipal UserDetail userDetail) {
+        if(userDetail==null){
+            return "redirect:/login";
+        }
         if (userDetail.getUser().getRole().getId().equals("ROLE0001") || userDetail.getUser().getRole().getId().equals("ROLE0002") || userDetail.getUser().getRole().getId().equals("ROLE0006")) {
             List<ClassDTO> classDTOList = classService.findAll();
             if (keyword == null) {
@@ -50,7 +53,7 @@ public class ClassController {
             model.addAttribute("size", classService.searchByName(keyword).size());
             return "management/classmanagement/classlist";
         }
-        return "redirect:/";
+        return "/management/403";
 
 
     }

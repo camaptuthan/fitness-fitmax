@@ -11,14 +11,21 @@ import java.util.List;
 public class StudioManagerServiceImpl implements StudioManagerService{
     @Autowired
     StudioManagerRepository studioManagerRepository;
+
     @Override
     public List<StudioManager> getAll() {
-     return studioManagerRepository.findAll();
+        return studioManagerRepository.findAll();
     }
 
     @Override
     public List<StudioManager> getAvailableManager() {
         return studioManagerRepository.getAvailableManager();
     }
+
+    @Override
+    public StudioManager getStudioManagerByEmail(String email) {
+        return studioManagerRepository.getById(email);
+    }
+
 }
 

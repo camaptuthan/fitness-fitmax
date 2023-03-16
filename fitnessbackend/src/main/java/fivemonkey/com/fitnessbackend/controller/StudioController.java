@@ -5,7 +5,6 @@ import fivemonkey.com.fitnessbackend.entities.StudioManager;
 import fivemonkey.com.fitnessbackend.services.StudioManagerService;
 import fivemonkey.com.fitnessbackend.services.StudioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,34 +19,31 @@ public class StudioController {
 
     @Autowired
     private StudioManagerService studioManagerService;
-    @GetMapping("/managestudio")
-    public String studioAdmin() {
-        return "management/StudioManagement/manage_studio";
+
+    //Get Studio List
+    @GetMapping("management/studios")
+    public String listStudios(Model model) {
+        model.addAttribute("studios", studioService.getAllStudios());
+        return "management/StudioManagement/studios";
     }
 
-    @GetMapping("/sd")
-    public String studioAdmind() {
-        return "management/StudioManagement/add_studio";
+    //Add Studio
+    @GetMapping("/management/addstudio")
+    public String newStudio(Model model) {
+        List<StudioManager> mlist = studioManagerService.getAvailableManager();
+        Studio studio = new Studio();
+        model.addAttribute("list", mlist);
+        model.addAttribute("studio", studio);
+        return "./management/StudioManagement/add_studio";
     }
 
-    @GetMapping("/sds")
-    public String studioAdmindd() {
-        return "management/StudioManagement/addstudio";
-    }
-    @PostMapping("/insertstudios")
-    public void insertStudio(@RequestBody(required = false) Studio studio) {
-        studioService.insertStudio(studio);
-    }
-    @GetMapping("/st")
-    public String trainer(){
-        return "management/StudioManagement/add_studio";
-    }
-    @GetMapping("/studios/{id}")
+    @GetMapping("/management/studios/{id}")
     public String deleteStudio(@PathVariable String id) {
         studioService.deleteStudioById(id);
         return "redirect:/studios";
     }
 
+    //Update Studio Status
     @GetMapping("/statusstudios/{id}/{status}")
     public String updateStatus(@PathVariable String id, @PathVariable boolean status) {
         Studio studio = studioService.getStudioById(id);
@@ -58,7 +54,7 @@ public class StudioController {
         return "redirect:/studios";
     }
 
-    @PostMapping("/studios/{id}")
+    @PostMapping("management/studioupdate/{id}")
     public String updateStudio(@PathVariable String id,
                                @ModelAttribute("studio") Studio studio,
                                Model model) {
@@ -74,66 +70,40 @@ public class StudioController {
         return "redirect:/studios";
     }
 
-    @GetMapping("/studios/edit/{id}")
+    @GetMapping("management/studios/edit/{id}")
     public String editStudioForm(@PathVariable String id, Model model) {
         model.addAttribute("studio", studioService.getStudioById(id));
         return "management/StudioManagement/updatestudio";
     }
 
-    @GetMapping("/studios")
-    public String listStudios(Model model) {
-        model.addAttribute("studios", studioService.getAllStudios());
-        return "management/StudioManagement/studios";
-    }
-//    @GetMapping("/studios/{pageNumber}")
-//    public String getAllByPage(Model model,
-//                              @RequestParam(value = "search ", defaultValue = "") String searchInput,
-//                              @RequestParam(value = "city", defaultValue = "1") String city,
-//                              @PathVariable(name = "pageNumber") int currentPage){
-//        Page<Studio> page = studioService.getALlByPage(currentPage, searchInput, city);
+    //
+//@GetMapping("/studiopage")
+//public String viewStudioPage(
+//                         Model model,
+//                         @RequestParam(value = "search", defaultValue = "") String searchInput,
+//                         @RequestParam(value = "category", defaultValue = "-1") Integer categoryId) {
+//    return getStudioByPage(model, searchInput, 1);
+//}
+//    @GetMapping("/studiopage/{pageNumber}")
+//    public String getStudioByPage(Model model,
+//                               @RequestParam(value = "search ", defaultValue = "") String searchInput,
+//                               @PathVariable(name = "pageNumber") int currentPage){
+//        Page<Studio> page = studioService.getStudioByPage(currentPage, searchInput);
 //        long totalItems = page.getTotalElements();
 //        int totalPages = page.getTotalPages();
-//        List<Studio> listCourse = page.getContent();
-//        List<Studio> listCourseRegister = new ArrayList<>();
+//        List<Studio> listStudio = page.getContent();
 //
-//        model.addAttribute("listCourseRegister", listCourseRegister);
-////        model.addAttribute("listCategory", categoryService.findAll());
 ////        model.addAttribute("query", "/?search=" + searchInput + "&category=" + categoryId);
 ////        model.addAttribute("currentCategoryId", categoryId);
 //        model.addAttribute("currentSearch", searchInput);
 //        model.addAttribute("currentPage", currentPage);
 //        model.addAttribute("totalItems", totalItems);
 //        model.addAttribute("totalPages", totalPages);
-//        model.addAttribute("listCourse", listCourse);
+//        model.addAttribute("query", "/?search=" + searchInput);
+//        model.addAttribute("listStudio", listStudio);
 //        return "management/StudioManagement/studio";
 //    }
-@GetMapping("/studiopage")
-public String viewCourse(
-                         Model model,
-                         @RequestParam(value = "search", defaultValue = "") String searchInput,
-                         @RequestParam(value = "category", defaultValue = "-1") Integer categoryId) {
-    return getStudioByPage(model, searchInput, 1);
-}
-    @GetMapping("/studiopage/{pageNumber}")
-    public String getStudioByPage(Model model,
-                               @RequestParam(value = "search ", defaultValue = "") String searchInput,
-                               @PathVariable(name = "pageNumber") int currentPage){
-        Page<Studio> page = studioService.getStudioByPage(currentPage, searchInput);
-        long totalItems = page.getTotalElements();
-        int totalPages = page.getTotalPages();
-        List<Studio> listStudio = page.getContent();
-
-//        model.addAttribute("query", "/?search=" + searchInput + "&category=" + categoryId);
-//        model.addAttribute("currentCategoryId", categoryId);
-        model.addAttribute("currentSearch", searchInput);
-        model.addAttribute("currentPage", currentPage);
-        model.addAttribute("totalItems", totalItems);
-        model.addAttribute("totalPages", totalPages);
-        model.addAttribute("query", "/?search=" + searchInput);
-        model.addAttribute("listStudio", listStudio);
-        return "management/StudioManagement/studio";
-    }
-    @GetMapping("/studios/new")
+    @GetMapping("/management/studios/new")
     public String createStudioForm(Model model) {
         List<StudioManager> mlist = studioManagerService.getAvailableManager();
         Studio studio = new Studio();
@@ -142,17 +112,16 @@ public String viewCourse(
         return "management/StudioManagement/addstudio";
     }
 
-    @PostMapping("/studios")
+    @PostMapping("/management/poststudio")
     public String saveStudio( @ModelAttribute("studio") Studio studio) {
             studio.setStatus(true);
             studioService.saveStudio(studio);
             return "redirect:/studios";
-
     }
 
 
 //    list studio in main
-    @GetMapping("/homepage/studio")
+@GetMapping("/viewpublicstudio")
     public String listStudiosHomepage(Model model) {
         model.addAttribute("studios", studioService.getAllStudios());
         return "/studio";

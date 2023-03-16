@@ -28,7 +28,9 @@ import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private final int OTP_EXPIRATION_TIME_MINUTES = 5;
 
+    private Map<String, String> otpMap = new HashMap<>();
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -150,12 +152,21 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public void updateUserPassword(User user) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        userRepository.save(user);
+    }
+
     public void registerUser(User user) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         Role r = new Role();
-        r.setId("ROLE0007");
+        //register auto role trainee
+        r.setId("ROLE0005");
         user.setRole(r);
         Studio s = new Studio();
         s.setId("STU0001");
@@ -221,6 +232,68 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
+
+    //send otp to forgot password
+    @Override
+    public void sendOTP(String email)  throws MessagingException, UnsupportedEncodingException{
+        String otp = generateOTP();
+        // send the OTP to the user's email
+        otpMap.put(email, otp);
+        // set the expiration time for the OTP
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                otpMap.remove(email);
+            }
+        }, OTP_EXPIRATION_TIME_MINUTES * 60 * 1000);
+        String toAddress = email;
+        String fromAddress = "ducnvhe141646@fpt.edu.vn";
+        String senderName = "Fitness Service Management System";
+        String subject = "Please verify ";
+
+        String content = "Dear ,<br>"
+                + "This is your otp please verify otp now :<br>"
+                + "<h3>" + otp +"</h3> <br>"
+                +"<a>"+"It's expired time after "+OTP_EXPIRATION_TIME_MINUTES+ "minutes </a><br>"
+                + "Thank you,<br>"
+                + "From FSM.";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+        helper.setText(content, true);
+        mailSender.send(message);
+    }
+
+    @Override
+    public boolean verifyOTP(String email, String otp) {
+        String storedOTP = otpMap.get(email);
+        //check otp equal or not >>>
+        return storedOTP != null && storedOTP.equals(otp);
+    }
+
+    private String generateOTP() {
+        // generate a random 6-digit OTP
+        Random random = new Random();
+        int otp = 100000 + random.nextInt(900000);
+        return String.valueOf(otp);
+    }
+
+//    @Override
+//    public List<UserDTO> findByStudio(String id) {
+//        ModelMapper mapper = new ModelMapper();
+//        List<UserDTO> userDTOList1 = new ArrayList<>();
+//        List<User> userList = userRepository.findByStudio(id);
+//        for (User u : userList) {
+//            UserDTO userDTO = mapper.map(u, UserDTO.class);
+//            userDTOList1.add(userDTO);
+//        }
+//        return userDTOList1;
+//    }
     @Override
     public List<UserDTO> listByManager(String studioId) {
         List<User> userList = userRepository.listByManager(studioId);
@@ -239,6 +312,15 @@ public class UserServiceImpl implements UserService {
         List<User> userList = userRepository.listByAssistant(studioId);
         return modelMapperConfiguration.mapList(userList,UserDTO.class);
     }
+
+    @Override
+    public void resetPassword(String email,String password) {
+        User user = userRepository.getById(email);
+        BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+    }
+
 
 }
 
