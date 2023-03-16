@@ -30,8 +30,7 @@ public interface PackageRepository extends JpaRepository<Package, String> {
     @Query("select p from Package p where p.services.city.name = ?1 and concat(p.name,'',p.des,'',p.price,'',p.duration,'',p.date) like %?2%")
     List<Package> getPackageByCityAndSearch(String city_name, String keyword);
 
-    @Query("select p from Package p where p.services.studio.studioManager.email = ?1")
-    List<Package> getPackageByStudio(String email);
-
+//    @Query("select p from Package p where p.services.studio.studioManager.email = ?1")
+//    List<Package> getPackageByStudio(String email);
 
 }

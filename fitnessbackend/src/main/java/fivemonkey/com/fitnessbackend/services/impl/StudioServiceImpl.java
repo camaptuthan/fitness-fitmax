@@ -20,14 +20,16 @@ import java.util.Optional;
 
 @Service
 public class StudioServiceImpl implements StudioService {
-   @Autowired
+    @Autowired
     private StudioRepository studioRepository;
     @Autowired
-    ModelMapperConfiguration<Studio,StudioDTO> modelMapperConfiguration;
+    ModelMapperConfiguration<Studio, StudioDTO> modelMapperConfiguration;
+
     public void insertStudio(Studio studio) {
         studio.setDate(new Date());
         studioRepository.save(studio);
     }
+
     public void deleteStudioById(String id) {
         studioRepository.deleteById(id);
     }
@@ -40,6 +42,7 @@ public class StudioServiceImpl implements StudioService {
     public Studio getStudioById(String id) {
         return studioRepository.findById(id).get();
     }
+
     @Override
     public StudioDTO getStudioByIdd(String id) {
         Studio studio = studioRepository.findById(id).get();
@@ -49,15 +52,16 @@ public class StudioServiceImpl implements StudioService {
 
         return studioDTO;
     }
+
     public Studio updateStudio(Studio existingStudio) {
-        try{
+        try {
             Studio st = studioRepository.getById(existingStudio.getId());
             st.setName(existingStudio.getName());
             st.setContact(existingStudio.getContact());
             st.setDes(existingStudio.getDes());
             st.setStatus(existingStudio.isStatus());
             studioRepository.save(st);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -81,6 +85,7 @@ public class StudioServiceImpl implements StudioService {
 //        System.out.println(studio.getDate());
         return studioRepository.save(studio);
     }
+
     @Override
     public Page<Studio> getStudioByPage(int currentPage, String searchInput) {
         Pageable pageable = PageRequest.of(currentPage - 1, 6);
@@ -106,22 +111,24 @@ public class StudioServiceImpl implements StudioService {
         return studioRepository.findByDistrict(id);
     }
 
+//    @Override
+//    public List<StudioDTO> getAllByCity(String cityname) {
+//        return modelMapperConfiguration.mapList(studioRepository.getStudioByCity(cityname), StudioDTO.class);
+//    }
+
     @Override
     public Page<Studio> getALlByPage(int currentPage, String searchInput, String categoryId) {
-        Pageable pageable = PageRequest.of(currentPage - 1,6);
-        if(categoryId=="1"){
-            if(searchInput==""){
+        Pageable pageable = PageRequest.of(currentPage - 1, 6);
+        if (categoryId == "1") {
+            if (searchInput == "") {
                 return studioRepository.findAll(pageable);
+            } else {
+                return studioRepository.findStudioByNameContaining(searchInput, pageable);
             }
-            else{
-                return studioRepository.findStudioByNameContaining(searchInput,pageable);
-            }
-        }
-        else if (searchInput==""){
+        } else if (searchInput == "") {
 //            return studioRepository.findStudioByCityOrderByIdDesc(categoryId,pageable);
             return studioRepository.findAll(pageable);
-        }
-        else
+        } else
             //return studioRepository.findStudioByCategoryIdAndTitleContaining(categoryId,searchInput,pageable);
             return studioRepository.findAll(pageable);
     }

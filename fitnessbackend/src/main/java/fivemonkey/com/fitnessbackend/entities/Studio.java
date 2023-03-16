@@ -45,7 +45,7 @@ public class Studio {
     private List<Assistant> assistants;
 
     //studio-service relationship
-    @OneToMany(mappedBy = "studio", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "studios", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Services> services;
 
     //studio-studioManager relationship

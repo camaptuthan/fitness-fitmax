@@ -41,5 +41,5 @@ public interface PackageService {
 
     List<PackageDTO> getAllPackagesByCityAndSearch(String city_name, String keyword);
 
-    List<PackageDTO> getAllPackageByStudio(String email);
+//    List<PackageDTO> getAllPackageByStudio(String email);
 }
