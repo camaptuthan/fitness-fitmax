@@ -9,6 +9,7 @@ import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.repository.RoleRepository;
 import fivemonkey.com.fitnessbackend.repository.StudioRepository;
+import fivemonkey.com.fitnessbackend.repository.TrainerRepository;
 import fivemonkey.com.fitnessbackend.repository.UserRepository;
 import fivemonkey.com.fitnessbackend.services.UserService;
 import net.bytebuddy.utility.RandomString;
@@ -177,6 +178,7 @@ public class UserServiceImpl implements UserService {
         String randomVerificationCode = RandomString.make(64);
         user.setVerificationCode(randomVerificationCode);
         userRepository.save(user);
+
     }
 
     //check email exist ,phone may be optional
