@@ -65,7 +65,7 @@ public class BlogServiceImpl implements BlogService {
             Blog blog = blogRepository.getById(b.getId());
             blog.setTitle(b.getTitle());
             blog.setDescription(b.getDes());
-            blog.setImage(b.getImage());
+            blog.setThumbnail(b.getImage());
             blog.setStatus(true);
             blog.setDate(b.getCreated_date());
             blog.setUser(new User(b.getUserEmail()));

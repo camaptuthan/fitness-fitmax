@@ -121,7 +121,37 @@ public class RegistrationServiceImpl implements RegistrationService {
 
 
     @Override
+    public List<RegistrationDTO> getRegistrationByUserEmail(String userEmail) {
+        return null;
+    }
+
+    @Override
     public RegistrationDTO doRegistration(User user, String itemId) {
         return modelMapper.map(registrationRepository.save(makeRegistration(user, itemId)), RegistrationDTO.class);
+    }
+
+    @Override
+    public List<Registration> getAllRegistrations() {
+        return registrationRepository.findAll();
+    }
+
+    @Override
+    public Registration getRegistrationById(String id) {
+        return registrationRepository.getById(id);
+    }
+
+    @Override
+    public void updateRegistration(Registration existingRegis) {
+        registrationRepository.save(existingRegis);
+    }
+
+//    @Override
+//    public List<Registration> getRegistrationByManager(String studioId) {
+//        return registrationRepository.getRegistrationByManager(studioId);
+//    }
+
+    @Override
+    public List<Registration> getRegistrationByAssistant(String email) {
+        return registrationRepository.getRegistrationByAssistant(email);
     }
 }

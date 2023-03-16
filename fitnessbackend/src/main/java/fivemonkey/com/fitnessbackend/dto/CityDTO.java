@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class CityDTO {
 
-    private String id;
+    private Long id;
 
     private String name;
 

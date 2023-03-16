@@ -40,21 +40,17 @@ public class Studio {
     @Column(name = "status", nullable = false)
     private boolean status;
 
-    //studio-user relationship
+    //assistant-studio relationship
     @OneToMany(mappedBy = "studio", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    private List<User> users;
-
-    //studio-service relationship
-    @OneToMany(mappedBy = "studio", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    private List<Services> services;
+    private List<Assistant> assistants;
 
     //studio-studioManager relationship
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "studio_manager_email", referencedColumnName = "studio_manager_email", unique = true)
+    @OneToOne(mappedBy = "studio", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private StudioManager studioManager;
 
     //studio-district relationship
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "district_id", referencedColumnName = "district_id", unique = true)
     private District district;
+
 }

@@ -13,12 +13,11 @@ import java.util.List;
 
 @Repository
 public interface StudioRepository extends JpaRepository<Studio, String> {
-@Query("select s.id, s.name from Studio s where s.district.id= :id")
-public List<Studio> findByDistrict(@Param("id") String id);
+    @Query("select s.id, s.name from Studio s where s.district.id= :id")
+    List<Studio> findByDistrict(@Param("id") String id);
 
-    public Page<Studio> findStudioByNameContaining(String name, Pageable pageable);
+    Page<Studio> findStudioByNameContaining(String name, Pageable pageable);
 
-
-
-
+    @Query("select s from Studio s where s.district.city.name = ?1")
+    Studio getStudioByCity(String cityname);
 }

@@ -1,5 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<form method="post" th:action="@{/user/reset-password-result}" >-->
+<!--    <input type="hidden"  name="email" th:value="${email}">-->
+<!--    <label>OTP:</label>-->
+<!--    <input type="password"  name="password" required>-->
+<!--    <button type="submit">Submit</button>-->
+<!--    <h4 th:text="${message}"></h4>-->
+<!--</form>-->
+<!--</body>-->
+
 
 <head>
     <title>Reset Password</title>
@@ -22,11 +36,11 @@
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-4">
                 <div class="login-wrap p-0">
-                    <h3 class="mb-4 text-center"><a href="/login">Click to Login</a></h3>
-                    <h6 style="color: red" th:text="${fail}"></h6>
-                    <form method="post" th:action="@{/user/reset-password}" class="signin-form">
+                    <h3 class="mb-4 text-center"><a href="/login">Reset Password</a></h3>
+                    <form method="post" th:action="@{/user/reset-password-result}" class="signin-form">
+                        <input type="hidden"  name="email" th:value="${email}">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="email" placeholder="Email" required>
+                            <input type="password" class="form-control" name="password" placeholder="Enter password" required>
                         </div>
 
                         <div class="form-group">
@@ -44,5 +58,3 @@
 
 </body>
 </html>
-
-

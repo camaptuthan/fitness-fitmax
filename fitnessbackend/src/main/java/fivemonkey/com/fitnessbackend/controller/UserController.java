@@ -10,17 +10,20 @@ import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
+import fivemonkey.com.fitnessbackend.repository.UserRepository;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.services.*;
 import org.hibernate.internal.util.StringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
@@ -48,66 +51,127 @@ public class UserController {
     private RegistrationService registrationService;
 
 
-    @GetMapping("/management/listusers")
-    public String listUser(Model model, @Param("keyword") String keyword,@AuthenticationPrincipal UserDetail userDetail) {
-        List<UserDTO> userDTOList = userService.findAll();
-        List<UserDTO> listManager = userService.listByManager(userDetail.getUser().getStudio().getId());
-        List<UserDTO> listCityAdmin = userService.listByCityAdmin(userDetail.getUser().getStudio().getDistrict().getCity().getName());
-        List<UserDTO> listAssistant = userService.listByAssistant(userDetail.getUser().getStudio().getId());
-        List<UserDTO> userSearch = userService.findAllUser(keyword);
-        List<Role> roleList = roleService.getAll();
-        switch(userDetail.getUser().getRole().getId()){
-            case"ROLE0001":
-                if (keyword == null || "---All---".equals(keyword)) {
-                    model.addAttribute("listRole", roleList);
-                    model.addAttribute("list", userDTOList);
-                    model.addAttribute("size", userDTOList.size());
-                } else {
-                    model.addAttribute("listRole", roleList);
-                    model.addAttribute("list", userSearch);
-                    model.addAttribute("keyword", keyword);
-                    model.addAttribute("size",userSearch.size());
-                }
-            case"ROLE0006":
-                if (keyword == null || "---All---".equals(keyword)) {
-                    model.addAttribute("listRole", roleList);
-                    model.addAttribute("list", listCityAdmin);
-                    model.addAttribute("size", listCityAdmin.size());
-                } else {
-                    model.addAttribute("listRole", roleList);
-                    model.addAttribute("list", userSearch);
-                    model.addAttribute("keyword", keyword);
-                    model.addAttribute("size",userSearch.size());
-                }
-            case"ROLE0002":
-                if (keyword == null || "---All---".equals(keyword)) {
-                    model.addAttribute("listRole", roleList);
-                    model.addAttribute("list", listManager);
-                    model.addAttribute("size", listManager.size());
-                } else {
-                    model.addAttribute("listRole", roleList);
-                    model.addAttribute("list", userSearch);
-                    model.addAttribute("keyword", keyword);
-                    model.addAttribute("size",userSearch.size());
-                }
-            case"ROLE0004":
-                if (keyword == null || "---All---".equals(keyword)) {
-                    model.addAttribute("listRole", roleList);
-                    model.addAttribute("list", listAssistant);
-                    model.addAttribute("size", listAssistant.size());
-                } else {
-                    model.addAttribute("listRole", roleList);
-                    model.addAttribute("list", userSearch);
-                    model.addAttribute("keyword", keyword);
-                    model.addAttribute("size",userSearch.size());
-                }
+//    @GetMapping("/management/listusers")
+//    public String listUser(Model model, @Param("keyword") String keyword,@AuthenticationPrincipal UserDetail userDetail) {
+//        List<UserDTO> userDTOList = userService.findAll();
+//        List<UserDTO> listManager = userService.listByManager(userDetail.getUser().getStudio().getId());
+//        List<UserDTO> listCityAdmin = userService.listByCityAdmin(userDetail.getUser().getStudio().getDistrict().getCity().getName());
+//        List<UserDTO> listAssistant = userService.listByAssistant(userDetail.getUser().getStudio().getId());
+//        List<UserDTO> userSearch = userService.findAllUser(keyword);
+//        List<Role> roleList = roleService.getAll();
+//        switch(userDetail.getUser().getRole().getId()){
+//            case"ROLE0001":
+//                if (keyword == null || "---All---".equals(keyword)) {
+//                    model.addAttribute("listRole", roleList);
+//                    model.addAttribute("list", userDTOList);
+//                    model.addAttribute("size", userDTOList.size());
+//                } else {
+//                    model.addAttribute("listRole", roleList);
+//                    model.addAttribute("list", userSearch);
+//                    model.addAttribute("keyword", keyword);
+//                    model.addAttribute("size",userSearch.size());
+//                }
+//            case"ROLE0006":
+//                if (keyword == null || "---All---".equals(keyword)) {
+//                    model.addAttribute("listRole", roleList);
+//                    model.addAttribute("list", listCityAdmin);
+//                    model.addAttribute("size", listCityAdmin.size());
+//                } else {
+//                    model.addAttribute("listRole", roleList);
+//                    model.addAttribute("list", userSearch);
+//                    model.addAttribute("keyword", keyword);
+//                    model.addAttribute("size",userSearch.size());
+//                }
+//            case"ROLE0002":
+//                if (keyword == null || "---All---".equals(keyword)) {
+//                    model.addAttribute("listRole", roleList);
+//                    model.addAttribute("list", listManager);
+//                    model.addAttribute("size", listManager.size());
+//                } else {
+//                    model.addAttribute("listRole", roleList);
+//                    model.addAttribute("list", userSearch);
+//                    model.addAttribute("keyword", keyword);
+//                    model.addAttribute("size",userSearch.size());
+//                }
+//            case"ROLE0004":
+//                if (keyword == null || "---All---".equals(keyword)) {
+//                    model.addAttribute("listRole", roleList);
+//                    model.addAttribute("list", listAssistant);
+//                    model.addAttribute("size", listAssistant.size());
+//                } else {
+//                    model.addAttribute("listRole", roleList);
+//                    model.addAttribute("list", userSearch);
+//                    model.addAttribute("keyword", keyword);
+//                    model.addAttribute("size",userSearch.size());
+//                }
+//
+//
+//        }
+//
+//        return "management/UserManagement/UserList";
+//
+//    }
+//    @GetMapping("/management/listusers")
+//    public String listUser(Model model, @Param("keyword") String keyword,@AuthenticationPrincipal UserDetail userDetail) {
+//        List<UserDTO> userDTOList = userService.findAll();
+//        List<UserDTO> listManager = userService.listByManager(userDetail.getUser().getStudio().getId());
+//        List<UserDTO> listCityAdmin = userService.listByCityAdmin(userDetail.getUser().getStudio().getDistrict().getCity().getName());
+//        List<UserDTO> listAssistant = userService.listByAssistant(userDetail.getUser().getStudio().getId());
+//        List<UserDTO> userSearch = userService.findAllUser(keyword);
+//        List<Role> roleList = roleService.getAll();
+//        switch(userDetail.getUser().getRole().getId()){
+//            case"ROLE0001":
+//                if (keyword == null || "---All---".equals(keyword)) {
+//                    model.addAttribute("listRole", roleList);
+//                    model.addAttribute("list", userDTOList);
+//                    model.addAttribute("size", userDTOList.size());
+//                } else {
+//                    model.addAttribute("listRole", roleList);
+//                    model.addAttribute("list", userSearch);
+//                    model.addAttribute("keyword", keyword);
+//                    model.addAttribute("size",userSearch.size());
+//                }
+//            case"ROLE0006":
+//                if (keyword == null || "---All---".equals(keyword)) {
+//                    model.addAttribute("listRole", roleList);
+//                    model.addAttribute("list", listCityAdmin);
+//                    model.addAttribute("size", listCityAdmin.size());
+//                } else {
+//                    model.addAttribute("listRole", roleList);
+//                    model.addAttribute("list", userSearch);
+//                    model.addAttribute("keyword", keyword);
+//                    model.addAttribute("size",userSearch.size());
+//                }
+//            case"ROLE0002":
+//                if (keyword == null || "---All---".equals(keyword)) {
+//                    model.addAttribute("listRole", roleList);
+//                    model.addAttribute("list", listManager);
+//                    model.addAttribute("size", listManager.size());
+//                } else {
+//                    model.addAttribute("listRole", roleList);
+//                    model.addAttribute("list", userSearch);
+//                    model.addAttribute("keyword", keyword);
+//                    model.addAttribute("size",userSearch.size());
+//                }
+//            case"ROLE0004":
+//                if (keyword == null || "---All---".equals(keyword)) {
+//                    model.addAttribute("listRole", roleList);
+//                    model.addAttribute("list", listAssistant);
+//                    model.addAttribute("size", listAssistant.size());
+//                } else {
+//                    model.addAttribute("listRole", roleList);
+//                    model.addAttribute("list", userSearch);
+//                    model.addAttribute("keyword", keyword);
+//                    model.addAttribute("size",userSearch.size());
+//                }
+//
+//
+//        }
+//
+//        return "management/UserManagement/UserList";
+//
+//    }
 
-
-        }
-
-        return "management/UserManagement/UserList";
-
-    }
 
 
     @PostMapping("/management/saveuser")
@@ -256,6 +320,90 @@ public class UserController {
     public List<RegistrationDTO> registration(@AuthenticationPrincipal UserDetail userDetail) {
         return registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail());
     }
+
+    //Change Password
+    @GetMapping("/profilechangepassword")
+    public String changePassword(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+        model.addAttribute("user", userDetail.getUser());
+        return "user/changepassword";
+    }
+
+    @PostMapping("/changepassword")
+    public String passwordUpdate(@RequestParam("cpassword") String cpassword, @RequestParam("npassword") String npassword, @RequestParam("cnpassword") String cnpassword, @AuthenticationPrincipal UserDetail userDetail, Model model, RedirectAttributes ra) {
+        String path = "redirect:/user/profile";
+        try {
+
+            if (cpassword.equals(userDetail.getUser().getPassword()) && npassword.length() >= 6) {
+                ra.addFlashAttribute("success", "Change your password successfully! Please login again!");
+                userDetail.getUser().setPassword(npassword);
+                userService.updateUserPassword(userDetail.getUser());
+                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
+
+            } else if (npassword.length() < 6) {
+                ra.addFlashAttribute("fail", "New password must be longer than 8 characters! Please enter new password again!");
+                model.addAttribute("npassword", npassword);
+                model.addAttribute("cnpassword", cnpassword);
+                model.addAttribute("cpassword", cpassword);
+                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
+
+            } else if (!cpassword.equals(userDetail.getPassword())) {
+                ra.addFlashAttribute("fail", "Current password is wrong! Please enter your password again!");
+                model.addAttribute("npassword", npassword);
+                model.addAttribute("cnpassword", cnpassword);
+                model.addAttribute("cpassword", cpassword);
+                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
+
+            } else {
+                ra.addFlashAttribute("fail", "Confirm new password must be different from new password! Please enter confirm new password again!");
+                model.addAttribute("npassword", npassword);
+                model.addAttribute("cnpassword", cnpassword);
+                model.addAttribute("cpassword", cpassword);
+                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            ra.addFlashAttribute("fail", "Fail");
+        }
+        System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
+        return path;
+    }
+
+
+
+
+
+
+    @PostMapping("/reset-password")
+    public String resetPassGetOtp(@ModelAttribute("userDTO") User user, Model model,RedirectAttributes attributes) throws MessagingException, UnsupportedEncodingException {
+        //validate email not exist
+        List<Object> userPresentObj = userService.isUserPresent(user);
+        if((Boolean) userPresentObj.get(0)){
+            userService.sendOTP(user.getEmail());
+            model.addAttribute("email", user.getEmail());
+            return "verifyOTP";
+        }
+        attributes.addFlashAttribute("fail", "Email Invalid");
+        return "redirect:/reset-password";
+
+    }
+    @PostMapping("/verifyOTP")
+    public String verifyOTP(@RequestParam String email, @RequestParam String otp, Model model) {
+        if (userService.verifyOTP(email, otp)) {
+            model.addAttribute("email", email);
+            return "changepass";
+        } else {
+            model.addAttribute("error", "Invalid OTP");
+            return "verifyOTP";
+        }
+    }
+    @PostMapping("/reset-password-result")
+    public ModelAndView resetPassword(@RequestParam String email,@RequestParam String password) {
+        userService.resetPassword(email,password);
+        ModelAndView mav = new ModelAndView("register");
+        mav.addObject("message", "Password reset successful");
+        return mav;
+    }
+
 
 
 }

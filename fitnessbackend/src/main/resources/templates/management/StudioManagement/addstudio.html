@@ -21,7 +21,7 @@
         <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
             <h1 class="text-center"> Create New Studio </h1>
             <div class="card-body">
-                <form method="POST" th:action="@{/studios}" th:object="${studio}">
+                <form method="POST" th:action="@{/management/poststudio}" th:object="${studio}">
                     <div class="form-group">
                         <label> Studio Name </label>
                         <input
@@ -50,7 +50,7 @@
                                 class="form-control"
                                 name="city"
                                 placeholder="Enter Student Last Name"
-                                th:field="*{city}"
+                                th:field="*{district.city.name}"
                                 type="text"
                         />
                     </div>
@@ -95,18 +95,6 @@
                     </div>
                     <div class="form-group">
 
-<!--                        <input-->
-<!--                                class="form-control"-->
-<!--                                hidden="fasle"-->
-<!--                                name="date"-->
-<!--                                placeholder="Enter date"-->
-<!--                                th:field="*{date}"-->
-<!--                                th:text="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}"-->
-<!--                                th:value="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}"-->
-<!--                                type="date"-->
-<!--                        />-->
-<!--                    </div>-->
-
                         <input
                                 class="form-control"
                                 hidden="true"
@@ -117,17 +105,7 @@
                                 value="true"
                         />
                     </div>
-                    <!--						<div class ="form-group">-->
 
-                    <!--							<input-->
-                    <!--									hidden="true"-->
-                    <!--									type = "text"-->
-                    <!--									name = "contact"-->
-                    <!--									th:field = "*{manager}"-->
-                    <!--									class = "form-control"-->
-                    <!--									placeholder="Enter contact"-->
-                    <!--							/>-->
-                    <!--						</div>-->
                     <div class="box-footer">
                         <button class="btn btn-primary" type="submit">
                             Submit
@@ -139,5 +117,48 @@
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    var citis = document.getElementById("cityvn");
+    var districts = document.getElementById("districtvn");
+    var wards = document.getElementById("wardvn");
+    var Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+        method: "GET",
+        responseType: "application/json",
+    };
+    var promise = axios(Parameter);
+    promise.then(function (result) {
+        renderCity(result.data);
+    });
+
+    function renderCity(data) {
+        for (const x of data) {
+            citis.options[citis.options.length] = new Option(x.Name, x.Id);
+        }
+        citis.onchange = function () {
+            districtvn.length = 1;
+            wardvn.length = 1;
+            if (this.value != "") {
+                const result = data.filter(n => n.Id === this.value);
+
+                for (const k of result[0].Districts) {
+                    districtvn.options[districtvn.options.length] = new Option(k.Name, k.Id);
+                }
+            }
+        };
+        districtvn.onchange = function () {
+            wardvn.length = 1;
+            const dataCity = data.filter((n) => n.Id === citis.value);
+            if (this.value != "") {
+                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+
+                for (const w of dataWards) {
+                    wards.options[wards.options.length] = new Option(w.Name, w.Id);
+                }
+            }
+        };
+    }
+</script>
 </body>
 </html>

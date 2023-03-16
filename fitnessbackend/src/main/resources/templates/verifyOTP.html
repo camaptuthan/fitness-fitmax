@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Reset Password</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" th:href="@{/css/stylelogin.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="img js-fullheight" th:style="'background: url(/img/bg-2.jpg)'">
+<section class="ftco-section">
+  <div class="container">
+    <div class="row justify-content-center">
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-4">
+        <div class="login-wrap p-0">
+          <h3 class="mb-4 text-center"><a href="">Otp</a></h3>
+          <h4 style="color: green">An OTP has been sent to <span th:text="${email}"></span>. </h4>
+          <br>
+          <h4 th:text="${error}"></h4>
+          <form method="post"  th:action="@{/user/verifyOTP}" class="signin-form">
+            <div class="form-group">
+              <input type="text" class="form-control" name="otp" placeholder="Enter OTP" required>
+            </div>
+            <input type="hidden" name="email" th:value="${email}">
+            <div class="form-group">
+              <button type="submit" class="form-control btn btn-primary submit px-3">Submit</button>
+            </div>
+          </form>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

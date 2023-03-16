@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" th:href="@{../css/font-awesome.min.css}">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" th:href="@{css/font-awesome.min.css}">
+    <link href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" rel="stylesheet">
 </head>
-
+<th:block th:insert="fragments/admin_fragment/header"></th:block>
 <!-- Mirrored from educhamp.themetrades.com/demo/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Feb 2019 13:08:15 GMT -->
-<th:block th:insert="/fragments/admin_fragment/head"></th:block>
-<th:block th:insert="/fragments/admin_fragment/header"></th:block>
+<!--<th:block th:insert="fragments/admin_fragment/head"></th:block>-->
+<th:block th:block th:insert="~{/fragments/admin_fragment/head::link}"></th:block>
 <body class="ttr-opened-sidebar ttr-pinned-sidebar">
-<th:block th:insert="/fragments/admin_fragment/sidebar_fragment"></th:block>
+<th:block th:insert="fragments/admin_fragment/sidebar_fragment"></th:block>
 <!-- Left sidebar menu end -->
+
 <!--Main container start -->
 <main class="ttr-wrapper">
     <div class="container-fluid">
@@ -25,25 +26,18 @@
 
         <div class="row">
             <div class="col-lg-12 m-b30">
-                <form method="POST" th:action="@{/studio/management/poststudio}" th:object="${studio}">
-                    <div class="form-group">
-                        <input
-                                class="form-control"
-                                hidden="true"
-                                name="id"
-                                th:field="*{id}"
-                                type="text"
-                        />
-                    </div>
+                <form method="POST" name="updatestudiomanager"
+                      th:action="@{/poststudiomanager/{email} (email=${manager.email})}" th:object="${manager}">
+
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label"> Studio Name: </label>
+                        <label class="col-sm-2 col-form-label"> Manager Email: </label>
                         <div class="col-sm-4">
                             <input
                                     class="form-control"
-                                    name="name"
+                                    name="email"
                                     placeholder="Enter Studio Name"
                                     required=""
-                                    th:field="*{name}"
+                                    th:field="*{user.studio.name}"
                                     type="text"
                             />
                         </div>
@@ -51,14 +45,15 @@
                         <div class="col-sm-4">
                             <input
                                     class="form-control"
-                                    name="manager"
-                                    placeholder="Enter Manager"
+                                    name="name"
+                                    placeholder="Enter Studio Name"
                                     required=""
-                                    th:field="*{studioManager}"
+                                    th:field="*{user.firstName}"
                                     type="text"
                             />
+                        </div>
                     </div>
-                    </div>
+
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label"> Studio City: </label>
                         <div class="col-sm-4">
@@ -67,7 +62,7 @@
                                     name="city"
                                     placeholder="Enter Studio City"
                                     required=""
-                                    th:field="*{district.city.name}"
+                                    th:field="*{email}"
                                     type="text"
                             />
                         </div>
@@ -78,15 +73,12 @@
                                     name="district"
                                     placeholder="Enter Studio District"
                                     required=""
-                                    th:field="*{district.name}"
+                                    th:field="*{email}"
                                     type="text"
                             />
                         </div>
                     </div>
-                    <!--          <label class="col-sm-2 col-form-label"> Studio City: </label>-->
-                    <!--          <div class="col-sm-4">-->
-                    <!--            <th:block th:insert="/fragments/admin_fragment/city"></th:block>-->
-                    <!--          </div>-->
+
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label"> Studio Contact: </label>
                         <div class="col-sm-4">
@@ -98,39 +90,23 @@
                                     pattern="[0]{1}[0-9]{9}"
                                     placeholder="Mobile Number (10 digits only)"
                                     required
-                                    th:field="*{contact}"
+                                    th:field="*{email}"
                                     type="tel">
-
-                            <p class="alert alert-danger" th:errors="*{contact}" th:if="${#fields.hasErrors('contact')}"/>
-
 
                         </div>
                         <label class="col-sm-2 col-form-label "> District: </label>
                         <div class="col-sm-4">
                             <div>
-                                <input name="status" th:checked="*{status}"
-                                       th:field="*{status}" th:type="radio" th:value="true"/>
+                                <input name="status" th:checked="*{email}"
+                                       th:field="*{email}" th:type="radio" th:value="true"/>
                                 Active
-                                <input name="status" th:checked="*{status==false}"
-                                       th:field="*{status}" th:type="radio" th:value="false"/>
+                                <input name="status" th:checked="*{false}"
+                                       th:field="*{email}" th:type="radio" th:value="false"/>
                                 Inactive
                             </div>
                         </div>
                     </div>
 
-
-                    <div class="form-group">
-                        <label> Description </label>
-
-                        <textarea
-                                class="form-control"
-                                name="description"
-                                placeholder="Enter description"
-                                rows="5"
-                                th:field="*{des}"
-                                type="textarea"
-                        />    </textarea>
-                    </div>
 
                     <div class="box-footer">
                         <button class="btn btn-primary" type="submit">
@@ -151,8 +127,9 @@
 
 </main>
 <div class="ttr-overlay"></div>
-<th:block th:insert="/fragments/admin_fragment/script"></th:block>
 
+<!-- External JavaScripts -->
+<th:block th:insert="/fragments/admin_fragment/script"></th:block>
 </body>
 <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
 <script>
@@ -165,5 +142,4 @@
         });
     });
 </script>
-
 </html>

@@ -20,14 +20,9 @@ public class CityManager {
     private String email;
 
     //city-cityManager relationship
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "city_id", referencedColumnName = "city_id")
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id", referencedColumnName = "city_id", unique = true)
     private City city;
-
-    //cityManager-user relationship
-    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    private Trainer trainer;
 
     //cityManager-user relationship
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)

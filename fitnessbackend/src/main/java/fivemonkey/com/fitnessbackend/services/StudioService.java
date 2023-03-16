@@ -30,4 +30,5 @@ public interface StudioService {
 
     public List<Studio> findByDistrict(String id);
 
+//    List<StudioDTO> getAllByCity(String cityname);
 }

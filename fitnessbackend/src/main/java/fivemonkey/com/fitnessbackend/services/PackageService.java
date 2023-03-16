@@ -40,4 +40,6 @@ public interface PackageService {
     List<PackageDTO> getAllPackagesByCity(String city_name);
 
     List<PackageDTO> getAllPackagesByCityAndSearch(String city_name, String keyword);
+
+//    List<PackageDTO> getAllPackageByStudio(String email);
 }
