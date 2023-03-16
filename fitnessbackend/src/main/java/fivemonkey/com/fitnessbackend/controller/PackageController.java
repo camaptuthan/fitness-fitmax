@@ -43,14 +43,13 @@ public class PackageController {
     @RequestMapping(value = "/packages", method = {RequestMethod.GET, RequestMethod.POST})
     public String getAllPackages(Model model, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
                                  @RequestParam(value = "cityname", required = false, defaultValue = "All") String cityname) {
-        List<ServicesDTO> servicesList = serviceService.getAllByPackage();
         List<CityDTO> listCity = cityService.getAllCity();
-        List<CategoryDTO> category = categoryService.findAllCategoriesByType("service");
+        List<CategoryDTO> categoryList = categoryService.findAllCategoriesByType("service");
         Map<String, List<PackageDTO>> packagesMapList = new HashMap<>();
         List<PackageDTO> listPkg;
         if ("".equals(keyword) && "All".equals(cityname)) {
             listPkg = packageServices.getAll();
-        } else if (keyword == null) {
+        } else if ("".equals(keyword)) {
             listPkg = packageServices.getAllPackagesByCity(cityname);
         } else {
             listPkg = packageServices.getAllPackagesByCityAndSearch(cityname, keyword);
@@ -65,25 +64,51 @@ public class PackageController {
             packagesMapList.put("PKG-" + (i + 1), value);
         }
         model.addAttribute("packages", packagesMapList);
-        model.addAttribute("servicesList", servicesList);
         model.addAttribute("cities", listCity);
         model.addAttribute("currentCity", cityname);
         model.addAttribute("size", packagesMapList.size());
-        model.addAttribute("category", category);
+        model.addAttribute("categoryList", categoryList);
         return "management/PackageManagement/package";
     }
 
     //view packages in dashboard
-    @GetMapping("/management/packages")
+    @RequestMapping(value = "/management/packages", method = {RequestMethod.GET, RequestMethod.POST})
     public String getAllPackagesForManagement(Model model, @AuthenticationPrincipal UserDetail userDetail,
-                                              @Param("keyword") String keyword,
-                                              @Param("cityname") String cityname){
+                                              @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+                                              @RequestParam(value = "cityname", required = false, defaultValue = "All") String cityname,
+                                              @RequestParam(value = "studio",required = false, defaultValue = "All") String studio,
+                                              @RequestParam(value = "category", required = false, defaultValue = "") String category) {
+        List<CategoryDTO> categoryList = categoryService.findAllCategoriesByType("service");
+        List<CityDTO> listCity = new ArrayList<>();
+        List<PackageDTO> listPackage;
+        switch (userDetail.getUser().getRole().getId()) {
+            case "ROLE0001":
+                listCity = cityService.getAllCity();
+                if("".equals(keyword) && "All".equals(cityname)){
+                    listPackage = packageServices.getAll();
+                } else if ("".equals(keyword)) {
+                    listPackage = packageServices.getAllPackagesByCity(cityname);
+                } else {
+                    listPackage = packageServices.getAllPackagesByCityAndSearch(cityname, keyword);
+                }
+            case "ROLE0006":
+                listCity.add(cityService.getCityByCityManager(userDetail.getUser().getEmail()));
+                if ("".equals(keyword)){
+                    listPackage = packageServices.getAllPackagesByCity(cityService.getCityByCityManager(userDetail.getUser().getEmail()).getName());
+                }else {
+                    listPackage = packageServices.getAllPackagesByCityAndSearch(cityService.getCityByCityManager(userDetail.getUser().getEmail()).getName(), keyword);
+                }
+            case "ROLE0002":
+                listCity.add(cityService.getCityByAssistant(userDetail.getUser().getEmail()));
 
-        List<PackageDTO> list = packageServices.getAllPackageByStudio(userDetail.getUser().getEmail());
-        System.out.println(list);
+
+        }
+//        List<PackageDTO> list = packageServices.getAllPackageByStudio(userDetail.getUser().getEmail());
+//        System.out.println(list);
 
         return "management/PackageManagement/package-list";
     }
+
     //add new package
     @GetMapping("/add-package")
     public String addPackage(Model model) {
@@ -112,7 +137,7 @@ public class PackageController {
 
     //view package by id
     @GetMapping("/package_detail/{id}")
-    public String viewPackageDetail(@AuthenticationPrincipal UserDetail userDetail,@PathVariable(name = "id") String id, Model model) {
+    public String viewPackageDetail(@AuthenticationPrincipal UserDetail userDetail, @PathVariable(name = "id") String id, Model model) {
         PackageDTO p = packageServices.getPackageById(id);
         boolean hasRegistered = false;
         if (userDetail != null) {

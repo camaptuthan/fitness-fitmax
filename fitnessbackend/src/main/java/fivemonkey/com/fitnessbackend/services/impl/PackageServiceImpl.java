@@ -129,9 +129,9 @@ public class PackageServiceImpl implements PackageService {
         return modelMapper.mapList(packageRepository.getPackageByCityAndSearch(city_name, keyword), PackageDTO.class);
     }
 
-    @Override
-    public List<PackageDTO> getAllPackageByStudio(String email) {
-        return modelMapper.mapList(packageRepository.getPackageByStudio(email), PackageDTO.class);
-    }
+//    @Override
+//    public List<PackageDTO> getAllPackageByStudio(String email) {
+//        return modelMapper.mapList(packageRepository.getPackageByStudio(email), PackageDTO.class);
+//    }
 
 }

@@ -152,6 +152,14 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public void updateUserPassword(User user) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        userRepository.save(user);
+    }
+
     public void registerUser(User user) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
@@ -181,6 +189,7 @@ public class UserServiceImpl implements UserService {
             userExists = true;
             message = "Email Already Present!";
         }
+        System.out.println("existingUserEmail.isPresent() - " + existingUserEmail.isPresent());
         return Arrays.asList(userExists, message);
 
     }
@@ -205,6 +214,7 @@ public class UserServiceImpl implements UserService {
         helper.setSubject(subject);
         helper.setText(content, true);
         mailSender.send(message);
+
 
     }
 

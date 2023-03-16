@@ -32,10 +32,8 @@ public class Services {
     @Column(name = "created_date")
     private Date date;
 
-    //studio-service relationship
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "studio_id", referencedColumnName = "studio_id")
-    private Studio studio;
+    @Column(name = "studio_id")
+    private String studio_id;
 
     //service-category relationship
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)

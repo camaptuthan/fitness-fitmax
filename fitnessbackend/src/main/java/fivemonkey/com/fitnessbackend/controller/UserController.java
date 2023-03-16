@@ -253,6 +253,7 @@ public class UserController {
 
     @PostMapping("/management/avataruser/{email}")
     public String userUpdate(@RequestParam("fileImage") MultipartFile multipartFile,
+
                              @ModelAttribute("user") UserDTO userDTO,
                              Model model) throws IOException {
 
@@ -318,6 +319,53 @@ public class UserController {
     @GetMapping("/profile/registration")
     public List<RegistrationDTO> registration(@AuthenticationPrincipal UserDetail userDetail) {
         return registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail());
+    }
+
+    //Change Password
+    @GetMapping("/profilechangepassword")
+    public String changePassword(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+        model.addAttribute("user", userDetail.getUser());
+        return "user/changepassword";
+    }
+
+    @PostMapping("/changepassword")
+    public String passwordUpdate(@RequestParam("cpassword") String cpassword, @RequestParam("npassword") String npassword, @RequestParam("cnpassword") String cnpassword, @AuthenticationPrincipal UserDetail userDetail, Model model, RedirectAttributes ra) {
+        String path = "redirect:/user/profile";
+        try {
+
+            if (cpassword.equals(userDetail.getUser().getPassword()) && npassword.length() >= 6) {
+                ra.addFlashAttribute("success", "Change your password successfully! Please login again!");
+                userDetail.getUser().setPassword(npassword);
+                userService.updateUserPassword(userDetail.getUser());
+                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
+
+            } else if (npassword.length() < 6) {
+                ra.addFlashAttribute("fail", "New password must be longer than 8 characters! Please enter new password again!");
+                model.addAttribute("npassword", npassword);
+                model.addAttribute("cnpassword", cnpassword);
+                model.addAttribute("cpassword", cpassword);
+                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
+
+            } else if (!cpassword.equals(userDetail.getPassword())) {
+                ra.addFlashAttribute("fail", "Current password is wrong! Please enter your password again!");
+                model.addAttribute("npassword", npassword);
+                model.addAttribute("cnpassword", cnpassword);
+                model.addAttribute("cpassword", cpassword);
+                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
+
+            } else {
+                ra.addFlashAttribute("fail", "Confirm new password must be different from new password! Please enter confirm new password again!");
+                model.addAttribute("npassword", npassword);
+                model.addAttribute("cnpassword", cnpassword);
+                model.addAttribute("cpassword", cpassword);
+                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            ra.addFlashAttribute("fail", "Fail");
+        }
+        System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
+        return path;
     }
 
 
