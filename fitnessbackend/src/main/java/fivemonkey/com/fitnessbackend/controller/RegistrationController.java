@@ -19,6 +19,9 @@ public class RegistrationController {
 
     @PostMapping("/make")
     public String doRegistration(@RequestParam("item_id") String itemId, @AuthenticationPrincipal UserDetail userDetail) {
+        if (userDetail == null) {
+            return "redirect:/login";
+        }
         registrationService.doRegistration(userDetail.getUser(), itemId);
         return "redirect:/user/profile";
     }

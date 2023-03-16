@@ -42,7 +42,7 @@ public class ScheduleController {
                                                    @RequestParam("start") String start,
                                                    @RequestParam("end") String end
     ) {
-        return sessionService.getSessionByScheduleIdBetweenTimes(scheduleId, formatTime(start), formatTime(end));
+        return sessionService.getRegisteredSessionByScheduleIdBetweenTimes(scheduleId, formatTime(start), formatTime(end));
     }
 
     @GetMapping("/session/{schedule_id}/{class_id}")

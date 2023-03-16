@@ -4,7 +4,6 @@ import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.entities.Clazz;
 import fivemonkey.com.fitnessbackend.entities.Services;
 import fivemonkey.com.fitnessbackend.entities.Trainer;
-import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.services.ClassService;
 import fivemonkey.com.fitnessbackend.services.RegistrationService;
@@ -44,15 +43,11 @@ public class ClassController {
             if (keyword == null) {
                 model.addAttribute("list", classDTOList);
             } else {
-
                 model.addAttribute("list", classService.searchByName(keyword));
             }
             model.addAttribute("size", classService.searchByName(keyword).size());
-            return "management/classmanagement/classlist";
         }
-        return "redirect:/";
-
-
+        return "management/classmanagement/classlist";
     }
 
 
@@ -113,7 +108,6 @@ public class ClassController {
 
 
     @PostMapping("/management/update-class/{id}")
-
     public String processUpdate(@PathVariable("id") String id, @ModelAttribute("clazz") ClassDTO classDTO, RedirectAttributes redirectAttributes) {
         try {
             classService.update(classDTO);
@@ -142,6 +136,8 @@ public class ClassController {
 
     @GetMapping("{id}")
     public String getDetail(@AuthenticationPrincipal UserDetail userDetail, @PathVariable("id") String id, Model model) {
+
+
         ClassDTO classDTO = classService.getClassById(id);
         List<ClassDTO> classDTOList = classService.findAll();
         Map<String, List<ClassDTO>> classDTOListMap = new HashMap<>();
@@ -166,6 +162,8 @@ public class ClassController {
         model.addAttribute("hasRegistered", hasRegistered);
         model.addAttribute("related_class", classDTOListMap);
         model.addAttribute("class", classDTO);
+
+
         return "class/profile";
     }
 }

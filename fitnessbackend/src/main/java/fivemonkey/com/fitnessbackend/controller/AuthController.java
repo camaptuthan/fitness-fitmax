@@ -36,7 +36,7 @@ public class AuthController {
     }
 
     @PostMapping
-    public String signIn(@ModelAttribute("loginDto") LoginDTO loginDTO) {
+    public String signIn(@ModelAttribute("loginDto") LoginDTO loginDTO){
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
