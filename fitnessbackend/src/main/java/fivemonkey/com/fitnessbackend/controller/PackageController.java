@@ -72,49 +72,49 @@ public class PackageController {
     }
 
     //view packages in dashboard
-//    @RequestMapping(value = "/management/packages", method = {RequestMethod.GET, RequestMethod.POST})
-//    public String getAllPackagesForManagement(Model model, @AuthenticationPrincipal UserDetail userDetail,
-//                                              @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
-//                                              @RequestParam(value = "cityname", required = false, defaultValue = "All") String cityname,
-//                                              @RequestParam(value = "studio",required = false, defaultValue = "All") String studio,
-//                                              @RequestParam(value = "category", required = false, defaultValue = "") String category) {
-//        List<CategoryDTO> categoryList = categoryService.findAllCategoriesByType("service");
-//        List<CityDTO> listCity = new ArrayList<>();
-//        List<PackageDTO> listPackage;
-//        switch (userDetail.getUser().getRole().getId()) {
-//            case "ROLE0001":
-//                listCity = cityService.getAllCity();
-//                if("".equals(keyword) && "All".equals(cityname)){
-//                    listPackage = packageServices.getAll();
-//                } else if ("".equals(keyword)) {
-//                    listPackage = packageServices.getAllPackagesByCity(cityname);
-//                } else {
-//                    listPackage = packageServices.getAllPackagesByCityAndSearch(cityname, keyword);
-//                }
-//            case "ROLE0006":
-//                listCity.add(cityService.getCityByCityManager(userDetail.getUser().getEmail()));
-//                if ("".equals(keyword)){
-//                    listPackage = packageServices.getAllPackagesByCity(cityService.getCityByCityManager(userDetail.getUser().getEmail()).getName());
-//                }else {
-//                    listPackage = packageServices.getAllPackagesByCityAndSearch(cityService.getCityByCityManager(userDetail.getUser().getEmail()).getName(), keyword);
-//                }
-//            case "ROLE0002":
-//                listCity.add(cityService.getCityByAssistant(userDetail.getUser().getEmail()));
-//
-//
-//        }
+    @RequestMapping(value = "/management/packages", method = {RequestMethod.GET, RequestMethod.POST})
+    public String getAllPackagesForManagement(Model model, @AuthenticationPrincipal UserDetail userDetail,
+                                              @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+                                              @RequestParam(value = "cityname", required = false, defaultValue = "All") String cityname,
+                                              @RequestParam(value = "studio",required = false, defaultValue = "All") String studio,
+                                              @RequestParam(value = "category", required = false, defaultValue = "") String category) {
+        List<CategoryDTO> categoryList = categoryService.findAllCategoriesByType("service");
+        List<CityDTO> listCity = new ArrayList<>();
+        List<PackageDTO> listPackage;
+        switch (userDetail.getUser().getRole().getId()) {
+            case "ROLE0001":
+                listCity = cityService.getAllCity();
+                if("".equals(keyword) && "All".equals(cityname)){
+                    listPackage = packageServices.getAll();
+                } else if ("".equals(keyword)) {
+                    listPackage = packageServices.getAllPackagesByCity(cityname);
+                } else {
+                    listPackage = packageServices.getAllPackagesByCityAndSearch(cityname, keyword);
+                }
+            case "ROLE0006":
+                listCity.add(cityService.getCityByCityManager(userDetail.getUser().getEmail()));
+                if ("".equals(keyword)){
+                    listPackage = packageServices.getAllPackagesByCity(cityService.getCityByCityManager(userDetail.getUser().getEmail()).getName());
+                }else {
+                    listPackage = packageServices.getAllPackagesByCityAndSearch(cityService.getCityByCityManager(userDetail.getUser().getEmail()).getName(), keyword);
+                }
+            case "ROLE0002":
+                listCity.add(cityService.getCityByAssistant(userDetail.getUser().getEmail()));
+
+
+        }
 //        List<PackageDTO> list = packageServices.getAllPackageByStudio(userDetail.getUser().getEmail());
 //        System.out.println(list);
-//
-//        return "management/PackageManagement/package-list";
-//    }
-//
-//    //add new package
-//    @GetMapping("/add-package")
-//    public String addPackage(Model model) {
-//        model.addAttribute("packagenew", new PackageDTO());
-//        return "management/PackageManagement/package-add";
-//    }
+
+        return "management/PackageManagement/package-list";
+    }
+
+    //add new package
+    @GetMapping("/add-package")
+    public String addPackage(Model model) {
+        model.addAttribute("packagenew", new PackageDTO());
+        return "management/PackageManagement/package-add";
+    }
 
     //save new package
     @PostMapping("/save-package")

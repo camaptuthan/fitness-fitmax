@@ -14,6 +14,9 @@ insert into city(city_name) values ('Ha Noi');
 insert into city(city_name) values ('Ho Chi Minh');
 insert into city(city_name) values ('Da Nang');
 
+/*select c.city_id from assistant a join studio s on a.studio_id = s.studio_id join district d on s.district_id = d.district_id join city c on d.city_id = c.city_id
+where assistant_email = 'davidpham95aka201@gmail.com';*/
+/*select r.registration_id from registration r join service s on r.service_id = s.service_id where user_email = '';*/
 /*select * from district;*/
 insert into district(district_name,road,city_id) values ('Hai Ba Trung','458 Minh Khai',1);
 insert into district(district_name,road,city_id) values ('Dong Da','88 Lang Ha',1);
@@ -170,72 +173,75 @@ insert into category(category_id,description,category_name,type) values ('CATE00
 insert into category(category_id,description,category_name,type) values ('CATE0009','','Back','service');
 insert into category(category_id,description,category_name,type) values ('CATE0010','','Shoulder','service');
 
-
 /*select * from service;*/
 /*select count(*) from service;*/
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0001','Basic Workout 1.1',1,'davidpham95aka201@gmail.com','STU0001',CURDATE(),1,1,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0002','Basic Workout 1.2',1,'davidpham95aka201@gmail.com','STU0001',CURDATE(),1,1,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0003','Basic Workout 2.1',1,'davidpham95aka2011@gmail.com','STU0002',CURDATE(),1,1,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0004','Basic Workout 2.2',1,'davidpham95aka2011@gmail.com','STU0002',CURDATE(),1,1,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0005','Basic Workout 3.1',1,'davidpham95aka2012@gmail.com','STU0003',CURDATE(),1,1,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0006','Basic Workout 3.2',1,'davidpham95aka2012@gmail.com','STU0003',CURDATE(),1,1,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0007','Basic Workout 4.1',1,'davidpham95aka2013@gmail.com','STU0004',CURDATE(),1,1,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0008','Basic Workout 4.2',1,'davidpham95aka2013@gmail.com','STU0004',CURDATE(),1,1,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0009','Basic Workout 5.1',1,'davidpham95aka2014@gmail.com','STU0005',CURDATE(),1,1,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0010','Basic Workout 5.2',1,'davidpham95aka2014@gmail.com','STU0005',CURDATE(),1,1,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0011','Basic Workout 6.1',1,'davidpham95aka2015@gmail.com','STU0006',CURDATE(),1,2,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0012','Basic Workout 6.2',1,'davidpham95aka2015@gmail.com','STU0006',CURDATE(),1,2,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0013','Basic Workout 7.1',1,'davidpham95aka2016@gmail.com','STU0007',CURDATE(),1,2,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0014','Basic Workout 7.2',1,'davidpham95aka2016@gmail.com','STU0007',CURDATE(),1,2,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0015','Basic Workout 8.1',1,'davidpham95aka2017@gmail.com','STU0008',CURDATE(),1,2,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0016','Basic Workout 8.2',1,'davidpham95aka2017@gmail.com','STU0008',CURDATE(),1,2,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0017','Basic Workout 9.1',1,'davidpham95aka2018@gmail.com','STU0009',CURDATE(),1,2,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0018','Basic Workout 9.2',1,'davidpham95aka2018@gmail.com','STU0009',CURDATE(),1,2,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0019','Basic Workout 10.1',1,'davidpham95aka2019@gmail.com','STU0010',CURDATE(),1,2,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0020','Basic Workout 10.2',1,'davidpham95aka2019@gmail.com','STU0010',CURDATE(),1,2,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0021','Basic Workout 11.1',1,'davidpham95aka20110@gmail.com','STU0011',CURDATE(),1,3,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0022','Basic Workout 11.2',1,'davidpham95aka20110@gmail.com','STU0011',CURDATE(),1,3,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0023','Basic Workout 12.1',1,'davidpham95aka20111@gmail.com','STU0012',CURDATE(),1,3,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0024','Basic Workout 12.2',1,'davidpham95aka20111@gmail.com','STU0012',CURDATE(),1,3,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0025','Basic Workout 13.1',1,'davidpham95aka20112@gmail.com','STU0013',CURDATE(),1,3,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0026','Basic Workout 13.2',1,'davidpham95aka20112@gmail.com','STU0013',CURDATE(),1,3,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0027','Basic Workout 14.1',1,'davidpham95aka20113@gmail.com','STU0014',CURDATE(),1,3,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0028','Basic Workout 14.2',1,'davidpham95aka20113@gmail.com','STU0014',CURDATE(),1,3,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0029','Basic Workout 15.1',1,'davidpham95aka20114@gmail.com','STU0015',CURDATE(),1,3,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0030','Basic Workout 15.2',1,'davidpham95aka20114@gmail.com','STU0015',CURDATE(),1,3,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0001','Basic Workout 1.1',1,'davidpham95aka201@gmail.com',CURDATE(),1,1,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0002','Basic Workout 1.2',1,'davidpham95aka201@gmail.com',CURDATE(),1,1,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0003','Basic Workout 2.1',1,'davidpham95aka2011@gmail.com',CURDATE(),1,1,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0004','Basic Workout 2.2',1,'davidpham95aka2011@gmail.com',CURDATE(),1,1,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0005','Basic Workout 3.1',1,'davidpham95aka2012@gmail.com',CURDATE(),1,1,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0006','Basic Workout 3.2',1,'davidpham95aka2012@gmail.com',CURDATE(),1,1,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0007','Basic Workout 4.1',1,'davidpham95aka2013@gmail.com',CURDATE(),1,1,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0008','Basic Workout 4.2',1,'davidpham95aka2013@gmail.com',CURDATE(),1,1,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0009','Basic Workout 5.1',1,'davidpham95aka2014@gmail.com',CURDATE(),1,'STU0001',1,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0010','Basic Workout 5.2',1,'davidpham95aka2014@gmail.com',CURDATE(),1,'STU0001',1,'CATE0004');
+
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0011','Basic Workout 6.1',1,'davidpham95aka2015@gmail.com',CURDATE(),1,2,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0012','Basic Workout 6.2',1,'davidpham95aka2015@gmail.com',CURDATE(),1,2,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0013','Basic Workout 7.1',1,'davidpham95aka2016@gmail.com',CURDATE(),1,2,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0014','Basic Workout 7.2',1,'davidpham95aka2016@gmail.com',CURDATE(),1,2,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0015','Basic Workout 8.1',1,'davidpham95aka2017@gmail.com',CURDATE(),1,2,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0016','Basic Workout 8.2',1,'davidpham95aka2017@gmail.com',CURDATE(),1,2,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0017','Basic Workout 9.1',1,'davidpham95aka2018@gmail.com',CURDATE(),1,2,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0018','Basic Workout 9.2',1,'davidpham95aka2018@gmail.com',CURDATE(),1,2,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0019','Basic Workout 10.1',1,'davidpham95aka2019@gmail.com',CURDATE(),1,'STU0006',2,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0020','Basic Workout 10.2',1,'davidpham95aka2019@gmail.com',CURDATE(),1,'STU0006',2,'CATE0004');
+
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0021','Basic Workout 11.1',1,'davidpham95aka20110@gmail.com',CURDATE(),1,3,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0022','Basic Workout 11.2',1,'davidpham95aka20110@gmail.com',CURDATE(),1,3,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0023','Basic Workout 12.1',1,'davidpham95aka20111@gmail.com',CURDATE(),1,3,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0024','Basic Workout 12.2',1,'davidpham95aka20111@gmail.com',CURDATE(),1,3,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0025','Basic Workout 13.1',1,'davidpham95aka20112@gmail.com',CURDATE(),1,3,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0026','Basic Workout 13.2',1,'davidpham95aka20112@gmail.com',CURDATE(),1,3,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0027','Basic Workout 14.1',1,'davidpham95aka20113@gmail.com',CURDATE(),1,3,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,city_id,category_id) values ('SER0028','Basic Workout 14.2',1,'davidpham95aka20113@gmail.com',CURDATE(),1,3,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0029','Basic Workout 15.1',1,'davidpham95aka20114@gmail.com',CURDATE(),1,'STU0011',3,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0030','Basic Workout 15.2',1,'davidpham95aka20114@gmail.com',CURDATE(),1,'STU0011',3,'CATE0004');
 
 
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0031','Full Body Workout 1.1',1,'davidpham95aka201@gmail.com',CURDATE(),3,'STU0001',1,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0032','Full Body Workout 1.2',1,'davidpham95aka201@gmail.com',CURDATE(),3,'STU0001',1,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0033','Full Body Workout 2.1',1,'davidpham95aka2011@gmail.com',CURDATE(),3,'STU0002',1,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0034','Full Body Workout 2.2',1,'davidpham95aka2011@gmail.com',CURDATE(),3,'STU0002',1,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0035','Full Body Workout 3.1',1,'davidpham95aka2012@gmail.com',CURDATE(),3,'STU0003',1,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0036','Full Body Workout 3.2',1,'davidpham95aka2012@gmail.com',CURDATE(),3,'STU0003',1,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0037','Full Body Workout 4.1',1,'davidpham95aka2013@gmail.com',CURDATE(),3,'STU0004',1,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0038','Full Body Workout 4.2',1,'davidpham95aka2013@gmail.com',CURDATE(),3,'STU0004',1,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0039','Full Body Workout 5.1',1,'davidpham95aka2014@gmail.com',CURDATE(),3,'STU0005',1,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0040','Full Body Workout 5.2',1,'davidpham95aka2014@gmail.com',CURDATE(),3,'STU0005',1,'CATE0004');
 
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0031','Full Body Workout 1.1',1,'davidpham95aka201@gmail.com','STU0001',CURDATE(),3,1,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0032','Full Body Workout 1.2',1,'davidpham95aka201@gmail.com','STU0001',CURDATE(),3,1,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0033','Full Body Workout 2.1',1,'davidpham95aka2011@gmail.com','STU0002',CURDATE(),3,1,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0034','Full Body Workout 2.2',1,'davidpham95aka2011@gmail.com','STU0002',CURDATE(),3,1,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0035','Full Body Workout 3.1',1,'davidpham95aka2012@gmail.com','STU0003',CURDATE(),3,1,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0036','Full Body Workout 3.2',1,'davidpham95aka2012@gmail.com','STU0003',CURDATE(),3,1,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0037','Full Body Workout 4.1',1,'davidpham95aka2013@gmail.com','STU0004',CURDATE(),3,1,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0038','Full Body Workout 4.2',1,'davidpham95aka2013@gmail.com','STU0004',CURDATE(),3,1,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0039','Full Body Workout 5.1',1,'davidpham95aka2014@gmail.com','STU0005',CURDATE(),3,1,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0040','Full Body Workout 5.2',1,'davidpham95aka2014@gmail.com','STU0005',CURDATE(),3,1,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0041','Full Body Workout 6.1',1,'davidpham95aka2015@gmail.com','STU0006',CURDATE(),3,2,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0042','Full Body Workout 6.2',1,'davidpham95aka2015@gmail.com','STU0006',CURDATE(),3,2,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0043','Full Body Workout 7.1',1,'davidpham95aka2016@gmail.com','STU0007',CURDATE(),3,2,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0044','Full Body Workout 7.2',1,'davidpham95aka2016@gmail.com','STU0007',CURDATE(),3,2,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0045','Full Body Workout 8.1',1,'davidpham95aka2017@gmail.com','STU0008',CURDATE(),3,2,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0046','Full Body Workout 8.2',1,'davidpham95aka2017@gmail.com','STU0008',CURDATE(),3,2,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0047','Full Body Workout 9.1',1,'davidpham95aka2018@gmail.com','STU0009',CURDATE(),3,2,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0048','Full Body Workout 9.2',1,'davidpham95aka2018@gmail.com','STU0009',CURDATE(),3,2,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0049','Full Body Workout 10.1',1,'davidpham95aka2019@gmail.com','STU0010',CURDATE(),3,2,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0050','Full Body Workout 10.2',1,'davidpham95aka2019@gmail.com','STU0010',CURDATE(),3,2,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0051','Full Body Workout 11.1',1,'davidpham95aka20110@gmail.com','STU0011',CURDATE(),3,3,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0052','Full Body Workout 11.2',1,'davidpham95aka20110@gmail.com','STU0011',CURDATE(),3,3,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0053','Full Body Workout 12.1',1,'davidpham95aka20111@gmail.com','STU0012',CURDATE(),3,3,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0054','Full Body Workout 12.2',1,'davidpham95aka20111@gmail.com','STU0012',CURDATE(),3,3,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0055','Full Body Workout 13.1',1,'davidpham95aka20112@gmail.com','STU0013',CURDATE(),3,3,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0056','Full Body Workout 13.2',1,'davidpham95aka20112@gmail.com','STU0013',CURDATE(),3,3,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0057','Full Body Workout 14.1',1,'davidpham95aka20113@gmail.com','STU0014',CURDATE(),3,3,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0058','Full Body Workout 14.2',1,'davidpham95aka20113@gmail.com','STU0014',CURDATE(),3,3,'CATE0004');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0059','Full Body Workout 15.1',1,'davidpham95aka20114@gmail.com','STU0015',CURDATE(),3,3,'CATE0003');
-insert into service(service_id,service_name,status,assistant_email,studio_id,created_date,service_type_id,city_id,category_id) values ('SER0060','Full Body Workout 15.2',1,'davidpham95aka20114@gmail.com','STU0015',CURDATE(),3,3,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0041','Full Body Workout 6.1',1,'davidpham95aka2015@gmail.com',CURDATE(),3,'STU0006',2,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0042','Full Body Workout 6.2',1,'davidpham95aka2015@gmail.com',CURDATE(),3,'STU0006',2,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0043','Full Body Workout 7.1',1,'davidpham95aka2016@gmail.com',CURDATE(),3,'STU0007',2,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0044','Full Body Workout 7.2',1,'davidpham95aka2016@gmail.com',CURDATE(),3,'STU0007',2,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0045','Full Body Workout 8.1',1,'davidpham95aka2017@gmail.com',CURDATE(),3,'STU0008',2,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0046','Full Body Workout 8.2',1,'davidpham95aka2017@gmail.com',CURDATE(),3,'STU0008',2,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0047','Full Body Workout 9.1',1,'davidpham95aka2018@gmail.com',CURDATE(),3,'STU0009',2,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0048','Full Body Workout 9.2',1,'davidpham95aka2018@gmail.com',CURDATE(),3,'STU0009',2,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0049','Full Body Workout 10.1',1,'davidpham95aka2019@gmail.com',CURDATE(),3,'STU0010',2,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0050','Full Body Workout 10.2',1,'davidpham95aka2019@gmail.com',CURDATE(),3,'STU0010',2,'CATE0004');
+
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0051','Full Body Workout 11.1',1,'davidpham95aka20110@gmail.com',CURDATE(),3,'STU0011',3,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0052','Full Body Workout 11.2',1,'davidpham95aka20110@gmail.com',CURDATE(),3,'STU0011',3,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0053','Full Body Workout 12.1',1,'davidpham95aka20111@gmail.com',CURDATE(),3,'STU0012',3,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0054','Full Body Workout 12.2',1,'davidpham95aka20111@gmail.com',CURDATE(),3,'STU0012',3,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0055','Full Body Workout 13.1',1,'davidpham95aka20112@gmail.com',CURDATE(),3,'STU0013',3,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0056','Full Body Workout 13.2',1,'davidpham95aka20112@gmail.com',CURDATE(),3,'STU0013',3,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0057','Full Body Workout 14.1',1,'davidpham95aka20113@gmail.com',CURDATE(),3,'STU0014',3,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0058','Full Body Workout 14.2',1,'davidpham95aka20113@gmail.com',CURDATE(),3,'STU0014',3,'CATE0004');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0059','Full Body Workout 15.1',1,'davidpham95aka20114@gmail.com',CURDATE(),3,'STU0015',3,'CATE0003');
+insert into service(service_id,service_name,status,assistant_email,created_date,service_type_id,studio_id,city_id,category_id) values ('SER0060','Full Body Workout 15.2',1,'davidpham95aka20114@gmail.com',CURDATE(),3,'STU0015',3,'CATE0004');
+
 
 
 

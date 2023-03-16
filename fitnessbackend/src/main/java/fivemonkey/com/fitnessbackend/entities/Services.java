@@ -32,14 +32,8 @@ public class Services {
     @Column(name = "created_date")
     private Date date;
 
-    //studio-service relationship
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "studio_service",
-            joinColumns = {@JoinColumn(name = "service_id")},
-            inverseJoinColumns = {@JoinColumn(name = "studio_id")}
-    )
-    private List<Studio> studios;
+    @Column(name = "studio_id")
+    private String studio_id;
 
     //service-category relationship
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
