@@ -1,73 +1,40 @@
 package fivemonkey.com.fitnessbackend.services;
 
+import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.repository.UserRepository;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-@DataJpaTest
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Rollback(value = false)
-class UserServiceTest {
-    @Autowired
-    UserRepository userRepository;
+@RunWith(MockitoJUnitRunner.class)
+public class UserServiceTest {
+    @Mock
+    private UserRepository userRepository;
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
+    @InjectMocks
+    private UserService userService;
 
     @Test
-    void findAll() {
-        List<User> users = userRepository.findAll();
-        Assertions.assertThat(users).hasSizeGreaterThan(0);
-        for (User u: users){
-            System.out.println(u);
-        }
-    }
+    public void testGetUser() {
+        String userId = "ducnvhe141646@fpt.edu.vn";
+        User user = new User();
+        user.setEmail("ducnvhe141646@fpt.edu.vn");
+        user.setLastName("John");
 
-    @Test
-    void save() {
-    }
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
 
-    @Test
-    void update() {
-    }
+        UserDTO result = userService.getUserById(user.getEmail());
 
-    @Test
-    void disableUser() {
-    }
-
-    @Test
-    void enableById() {
-    }
-
-    @Test
-    void getUserById() {
-    }
-
-    @Test
-    void findAllUser() {
-    }
-
-    @Test
-    void findAllUserNameContaining() {
-    }
-
-    @Test
-    void updateUser() {
+        assertEquals(result, user);
+//        verify(userRepository).findById(userId);
     }
 }

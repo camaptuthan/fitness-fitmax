@@ -43,19 +43,7 @@ public class HomeController {
 
     @GetMapping("/dashboard")
     public String dashboard(@AuthenticationPrincipal UserDetail userDetail) {
-        if(userDetail==null){
-            return "redirect:/login";
-        }else if(userDetail.getUser().getRole().getId().equals("ROLE0001")){
             return "/management/Dashboard/index";
-        }else{
-            return "/management/403";
-        }
-//        String msg = null;
-//        if(msg == null) {
-//            UserNotFoundException userNotFoundException = new UserNotFoundException("User Not Found");
-//            throw userNotFoundException;
-//        }
-
     }
 
     @GetMapping("/managestudio")

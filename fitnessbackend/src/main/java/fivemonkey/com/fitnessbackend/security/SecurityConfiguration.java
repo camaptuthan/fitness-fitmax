@@ -26,6 +26,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
+    @Autowired
+    private LoginFailureHandler failureHandler;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -74,6 +76,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")//
                 .successForwardUrl("/login").permitAll()
+                .failureHandler(failureHandler)
                 // Config for Logout Page
                 .and()
                 .logout()

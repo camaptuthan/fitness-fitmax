@@ -399,7 +399,7 @@ public class UserController {
     @PostMapping("/reset-password-result")
     public ModelAndView resetPassword(@RequestParam String email,@RequestParam String password) {
         userService.resetPassword(email,password);
-        ModelAndView mav = new ModelAndView("register");
+        ModelAndView mav = new ModelAndView("reset_password");
         mav.addObject("message", "Password reset successful");
         return mav;
     }

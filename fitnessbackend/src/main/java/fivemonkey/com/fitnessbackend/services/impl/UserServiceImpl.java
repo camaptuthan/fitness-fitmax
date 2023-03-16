@@ -3,10 +3,7 @@ package fivemonkey.com.fitnessbackend.services.impl;
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
-import fivemonkey.com.fitnessbackend.entities.Clazz;
-import fivemonkey.com.fitnessbackend.entities.Role;
-import fivemonkey.com.fitnessbackend.entities.Studio;
-import fivemonkey.com.fitnessbackend.entities.User;
+import fivemonkey.com.fitnessbackend.entities.*;
 import fivemonkey.com.fitnessbackend.repository.RoleRepository;
 import fivemonkey.com.fitnessbackend.repository.StudioRepository;
 import fivemonkey.com.fitnessbackend.repository.TrainerRepository;
@@ -174,6 +171,10 @@ public class UserServiceImpl implements UserService {
 //        user.setStudio(s);
         user.setDate(new Date());
         user.setStatus(false);
+        Trainee trainee= new Trainee();
+        trainee.setEmail(user.getEmail());
+        trainee.setUser(user);
+        user.setTrainee(trainee);
         //set random ver code
         String randomVerificationCode = RandomString.make(64);
         user.setVerificationCode(randomVerificationCode);

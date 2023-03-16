@@ -53,4 +53,11 @@ public class Trainer {
     @MapsId
     @JoinColumn(name = "trainer_email")
     private User user;
+
+    public Trainer(String email, String certi, String exp, boolean status) {
+        this.email = email;
+        this.certi = certi;
+        this.exp = exp;
+        this.status = status;
+    }
 }
