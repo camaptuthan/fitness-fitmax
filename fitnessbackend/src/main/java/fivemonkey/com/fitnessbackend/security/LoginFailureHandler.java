@@ -23,7 +23,7 @@ public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 		if(username.isEmpty() || password.isEmpty()) {
 			redirect += "Email and password is required!";
 		}else if(exception instanceof DisabledException) {
-			redirect += "Account has been locked!";
+			redirect += "Email is not active";
 		}
 		else if(exception instanceof BadCredentialsException) {
 			redirect += "Email Or Password is invalid!!";

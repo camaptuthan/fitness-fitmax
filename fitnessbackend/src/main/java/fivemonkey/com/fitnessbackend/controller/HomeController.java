@@ -17,21 +17,22 @@ public class HomeController {
     @Autowired
     private ServiceTypeService serviceTypeService;
 
-    @GetMapping("/")
-    public String getAllServiceType(@AuthenticationPrincipal UserDetail userDetail, Model model) {
-        String path = "redirect:/dashboard";
-        User currentUser = userDetail.getUser();
-        if ("ROLE0004".equalsIgnoreCase(currentUser.getRole().getId())
-                || "ROLE0005".equalsIgnoreCase(currentUser.getRole().getId())) {
-            List<ServiceTypeDTO> listServiceType = serviceTypeService.getAll();
-            model.addAttribute("listServiceType", listServiceType);
-
-            path = "/index";
-        }
-
-        //return "fragments/home_program";
-        return path;
-    }
+//    @GetMapping("/")
+//    public String getAllServiceType(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+//        String path = "redirect:/dashboard";
+//        User currentUser = userDetail.getUser();
+//
+//        if ("ROLE0004".equalsIgnoreCase(currentUser.getRole().getId())
+//                || "ROLE0005".equalsIgnoreCase(currentUser.getRole().getId())) {
+//            List<ServiceTypeDTO> listServiceType = serviceTypeService.getAll();
+//            model.addAttribute("listServiceType", listServiceType);
+//
+//            path = "/index";
+//        }
+//
+//        //return "fragments/home_program";
+//        return path;
+//    }
 
     @GetMapping("/blog-writer")
     public String blogWriter() {

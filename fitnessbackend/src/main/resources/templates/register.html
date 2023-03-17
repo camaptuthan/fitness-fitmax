@@ -1,88 +1,67 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<div th:include="fragments/admin_fragment/head.html"></div>
-<body id="bg">
-<div class="page-wraper">
-    <div id="loading-icon-bx"></div>
-    <div class="account-form">
-        <div class="account-head"  >
-            <a href="index.html"><img  alt=""></a>
+<head>
+    <title>Login </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" th:href="@{/css/stylelogin.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="img js-fullheight">
+<section class="ftco-section" th:style="'background: url(/img/bg-2.jpg);background-repeat: no-repeat;background-size: cover;'">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">
+                <h2 class="heading-section"><img th:src="@{/img/logo.svg}" alt="logo"></h2>
+            </div>
         </div>
-        <div class="account-form-inner">
-            <div class="account-container">
-                <div class="heading-bx left">
-                    <h2 class="title-head">Sign Up <span>Now</span></h2>
-                    <p>Login Your Account <a href="/login">Click here</a></p>
-                </div>
-                <form class="contact-bx" th:action="@{/user/register}"  method="post" th:object="${userDTO}">
-                    <div class="row placeani">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input   placeholder="First Name" name="firstName"  type="text" required="" class="form-control">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="login-wrap p-0">
+                    <h3 class="mb-4 text-center"><a href="/login">Back Login</a></h3>
+                    <h6 style="color: red" th:text="${success}"></h6>
+                    <form class="signin-form" th:action="@{/user/register}"   method="post" th:object="${userDTO}"  >
+                        <div class="form-group" style="display: block">
+                            <input  style="width: 49%;display: inline-block" id="firstname" type="text" class="form-control" placeholder="First Name"
+                                    name="firstName"   required>
+                            <input style="width: 49%;display: inline-block" id="lastname" type="text" class="form-control" placeholder="Last Name"
+                                   name="lastName"   required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text"  class="form-control" placeholder="Email" name="email" required>
+                            <h6 style="color: red" th:text="${fail}"></h6>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control"  placeholder="Phone" name="phone"  type="text" required="">
+                            <h6 style="color: red" th:text="${regexPhone}"></h6>
+                        </div>
 
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <input id="password-field" name="password" type="password" class="form-control" placeholder="Password"
+                                   required>
+                            <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                         </div>
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input placeholder="Last Name" name="lastName"  type="text" required="" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <div class="input-group">
-
-                                    <input  placeholder="Phone" name="phone"  type="text" required="" class="form-control" >
-                                    <h6 style="color: red" th:text="${regexPhone}"></h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <label>Your Email Address</label>
-                                    <input  name="email" type="email" required="" class="form-control">
-                                    <h6 style="color: red" th:text="${fail}"></h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <label>Your Password</label>
-                                    <input  name="password" type="password" class="form-control"  required="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 m-b30">
-                            <h6 style="color: green" th:text="${message}"></h6></br>
+                        <div class="form-group">
+                            <h6 style="color: green" th:text="${message}"></h6>
                             <h6 style="color: green" th:text="${message2}"></h6>
-                            <button name="submit" type="submit" value="Submit" class="btn button-md">Sign Up</button>
-
-
+                            <button type="submit" class="form-control btn btn-primary submit px-3">Register</button>
                         </div>
+                    </form>
 
-<!--                        <div   class="col-lg-12">-->
-
-<!--                            <div class="d-flex">-->
-<!--                                <a class="btn flex-fill m-r5 facebook" href="#"><i class="fa fa-facebook"></i>Facebook</a>-->
-<!--                                <a class="btn flex-fill m-l5 google-plus" href="#"><i class="fa fa-google-plus"></i>Google Plus</a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- External JavaScripts -->
-<div th:include="fragments/admin_fragment/script.html"></div>
+</section>
 </body>
-
-
-
 </html>
+
+
+
+
