@@ -10,17 +10,18 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link th:href="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css}" rel="stylesheet"
-          id="bootstrap-css">
-    <script th:src="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script th:src="@{//code.jquery.com/jquery-1.11.1.min.js}"></script>
+    <script th:src="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/validate-form.js}"></script>
 </head>
 
 <!------ Include the above in your HEAD tag ---------->
 
-<form class="form-horizontal" th:action="@{/class/management/save-class}" th:object="${clazz}" method="post">
-    <fieldset>
+<form class="form-horizontal" th:action="@{/class/management/add-class}" th:object="${clazz}" method="post"
+      th:class="'w-100 d-flex justify-content-center align-content-center'">
+    <fieldset th:style="'width: 60rem;'">
 
         <!-- Form Name -->
 
@@ -28,23 +29,20 @@
         <!-- Text input-->
         <div class="form-group">
             <label class="col-md-4 control-label"> Form Add Class</label>
-
         </div>
 
         <!-- Text input-->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="name">NAME</label>
-            <div class="col-md-4">
-                <input id="name" onblur="inputValidation(this)" th:value="${clazz.name}" name="name" placeholder="Name"
+        <div class="form-group row">
+            <div th:class="'col-6'">
+                <label class="control-label" for="name">NAME</label>
+                <input id="name" onblur="inputValidation(this)" th:value="${clazz.name}" name="name"
+                       placeholder="Name"
                        class="form-control input-md"
                        type="text"/>
                 <div id="textFieldName"></div>
             </div>
-        </div>
-        <!-- Select Basic -->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="service"> Service Type</label>
-            <div class="col-md-4">
+            <div th:class="'col-6'">
+                <label class="control-label" for="service"> Service Type</label>
                 <select id="service" name="services" class="form-control">
                     <option th:each="list:${list}" th:value="${list.id}" th:text="${list.name}">
                     </option>
@@ -52,51 +50,55 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="des">Description</label>
-            <div class="col-md-4">
+        <div class="form-group row">
+            <div th:class="'col-6'">
+                <label class="control-label" for="des">Description</label>
                 <input id="des" onblur="inputValidationDes(this)" name="des" th:value="${clazz.des}"
                        placeholder=" Description"
                        class="form-control input-md"
                        type="text">
                 <div id="textFieldDes"></div>
             </div>
-
-        </div>
-        <!-- Text input-->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="price">Price</label>
-            <div class="col-md-4">
-                <input id="price" onblur="inputValidationPrice(this)" th:value="${clazz.price}" name="price"
-                       placeholder="Price"
-                       class="form-control input-md"
-                       type="number">
-                <div id="textFieldPrice"></div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="duration">Duration</label>
-            <div class="col-md-4">
-                <input id="duration" onblur="inputValidationDuration(this)" th:value="${clazz.duration}" name="duration"
+            <div th:class="'col-6'">
+                <label class="control-label" for="class-duration">Duration</label>
+                <input id="class-duration" onblur="inputValidationDuration(this)" th:value="${clazz.duration}"
+                       name="duration"
                        placeholder="Duration"
                        class="form-control input-md"
                        type="text">
                 <div id="textFieldDuration"></div>
             </div>
         </div>
-
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="filebutton">Img</label>
-            <div class="col-md-4">
-                <input id="filebutton" name="filebutton" class="input-file" type="file">
+        <!-- Text input-->
+        <div class="form-group row">
+            <div th:class="'col-6'">
+                <label class="control-label" for="price">Price</label>
+                <input id="price" onblur="inputValidationPrice(this)" th:value="${clazz.price}" name="price"
+                       placeholder="Price"
+                       class="form-control input-md"
+                       type="number">
+                <div id="textFieldPrice"></div>
+            </div>
+            <div th:class="'col-6'">
+                <label class="control-label" for="filebutton">Image</label>
+                <input id="filebutton" name="filebutton" class="form-control input-md" type="file">
             </div>
         </div>
 
+        <div class="form-group">
+            <label class="control-label">Session</label>
+            <div class="list-group" id="session-list">
+                <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
+                    The current button
+                </button>
+                <button type="button" class="list-group-item list-group-item-action">A second button item</button>
+                <button type="button" class="list-group-item list-group-item-action">A third button item</button>
+            </div>
+        </div>
         <!-- Button -->
         <div class="form-group">
-            <label class="col-md-4 control-label" for="singlebutton"></label>
             <div class="col-md-4">
-                <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary">Save</button>
 
             </div>
 
@@ -104,8 +106,41 @@
 
     </fieldset>
 </form>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+<script>
+    const durationEle = $("#class-duration");
+    const sessionListEle = $("#session-list");
+    durationEle.on("input", () => {
+            sessionListEle.html("");
+            for (let i = 0; i < durationEle.val(); i++) {
+                sessionListEle.append(` <button class="list-group-item list-group-item-action" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#session-${i}" aria-expanded="false"
+                                            aria-controls="collapseExample">
+                                        Session No ${i + 1}
+                                    </button>
 
+                                    <div class="collapse" id="session-${i}">
+                                        <div class="card card-body">
+                                            Some placeholder content for the collapse component. This panel is hidden by default but
+                                            revealed when the user activates the relevant trigger.
+                                        </div>
+                                    </div>`)
+            }
+        }
+    )
+</script>
+<style>
+    .form-group {
+        margin-bottom: 10px;
+    }
 
+    label {
+        margin-left: 10px;
+        margin-bottom: 5px;
+    }
+</style>
 
 </html>
 

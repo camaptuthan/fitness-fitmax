@@ -74,7 +74,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .and()
                 .formLogin()
-                .loginPage("/login")//
+                .loginPage("/login")
+                .successHandler(new RefererRedirectionAuthenticationSuccessHandler())
                 .successForwardUrl("/login").permitAll()
                 .failureHandler(failureHandler)
                 // Config for Logout Page

@@ -41,7 +41,7 @@ public class ScheduleServiceImpl implements ScheduleService {
             ScheduleDTO scheduleDTO = modelMapperConfiguration.map(schedule, ScheduleDTO.class);
             scheduleDTO.setStartTime(getTime(schedule.getStartTime()));
             scheduleDTO.setEndTime(getTime(schedule.getEndTime()));
-            scheduleDTO.setHaveSessions(!sessionService.getSessionByScheduleIdBetweenTimes(schedule.getId(), startTime, endTime).isEmpty());
+            scheduleDTO.setHaveSessions(!sessionService.getRegisteredSessionByScheduleIdBetweenTimes(schedule.getId(), startTime, endTime).isEmpty());
             scheduleDTOS.add(scheduleDTO);
         });
         return scheduleDTOS;

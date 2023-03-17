@@ -1,11 +1,16 @@
 package fivemonkey.com.fitnessbackend.entities;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,17 +45,21 @@ public class Studio {
     @Column(name = "status", nullable = false)
     private boolean status;
 
-    //assistant-studio relationship
-    @OneToMany(mappedBy = "studio", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    private List<Assistant> assistants;
-
-    //studio-studioManager relationship
-    @OneToOne(mappedBy = "studio", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    private StudioManager studioManager;
 
     //studio-district relationship
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "district_id", referencedColumnName = "district_id", unique = true)
     private District district;
+
+    @OneToMany(mappedBy = "studio", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<User> users;
+    @OneToMany(mappedBy = "studio", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Services> services;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "studio_managers",
+            joinColumns = { @JoinColumn(name = "studio_id") },
+            inverseJoinColumns = {@JoinColumn(name = "user_id") })
+    private Set<User> managers = new HashSet<>();
 
 }

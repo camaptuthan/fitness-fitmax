@@ -65,10 +65,10 @@ public class PackageServiceImpl implements PackageService {
     public Package save(PackageDTO p) {
         Package aPackage = new Package();
         aPackage.setName(p.getName());
-        aPackage.setDuration(p.getDuration());
-        aPackage.setPrice(p.getPrice());
-        aPackage.setDes(p.getDes());
-        aPackage.setStatus(true);
+//        aPackage.setDuration(p.getDuration());
+//        aPackage.setPrice(p.getPrice());
+//        aPackage.setDes(p.getDes());
+//        aPackage.setStatus(true);
         return packageRepository.save(aPackage);
     }
 
@@ -78,9 +78,9 @@ public class PackageServiceImpl implements PackageService {
         try {
             Package aPackage = packageRepository.getById(p.getId());
             aPackage.setName(p.getName());
-            aPackage.setDuration(p.getDuration());
-            aPackage.setPrice(p.getPrice());
-            aPackage.setDes(p.getDes());
+//            aPackage.setDuration(p.getDuration());
+//            aPackage.setPrice(p.getPrice());
+//            aPackage.setDes(p.getDes());
             return packageRepository.save(aPackage);
         } catch (Exception e) {
             e.printStackTrace();
@@ -92,7 +92,7 @@ public class PackageServiceImpl implements PackageService {
     @Override
     public void disablePackageById(String id) {
         Package p = packageRepository.getById(id);
-        p.setStatus(false);
+      //  p.setStatus(false);
         packageRepository.save(p);
     }
 
@@ -100,7 +100,7 @@ public class PackageServiceImpl implements PackageService {
     @Override
     public void enablePackageById(String id) {
         Package p = packageRepository.getById(id);
-        p.setStatus(true);
+     //   p.setStatus(true);
         packageRepository.save(p);
     }
 

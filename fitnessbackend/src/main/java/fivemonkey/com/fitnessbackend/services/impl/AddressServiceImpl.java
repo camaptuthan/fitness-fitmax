@@ -41,7 +41,8 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<DistrictDTO> getDistrictsByCityId(Long cityId) {
-        return modelMapperDistrict.mapList(districtRepository.getDistrictsByCity(cityId), DistrictDTO.class);
+        return null;
+      //  return modelMapperDistrict.mapList(districtRepository.getDistrictsByCity(cityId), DistrictDTO.class);
     }
 
 //    @Override

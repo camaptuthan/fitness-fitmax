@@ -20,7 +20,7 @@ public class SessionServiceImpl implements SessionService {
     private ModelMapperConfiguration<Session, SessionDTO> modelMapperConfiguration;
 
     @Override
-    public List<SessionDTO> getSessionByScheduleIdBetweenTimes(String scheduleId, Date startTime, Date endTime) {
+    public List<SessionDTO> getRegisteredSessionByScheduleIdBetweenTimes(String scheduleId, Date startTime, Date endTime) {
         return modelMapperConfiguration.mapList(sessionRepository.getSessionsByScheduleAndHappenedDateBetween(scheduleId, startTime, endTime), SessionDTO.class);
     }
 

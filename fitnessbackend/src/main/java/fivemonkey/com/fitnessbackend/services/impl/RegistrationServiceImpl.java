@@ -20,8 +20,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     private RegistrationRepository registrationRepository;
     @Autowired
     private ClassRepository classRepository;
-    @Autowired
-    private PersonalTrainingRepository personalTrainingRepository;
+
     @Autowired
     private PackageRepository packageRepository;
 
@@ -58,17 +57,13 @@ public class RegistrationServiceImpl implements RegistrationService {
         Clazz clazz = service.getClazz();
         if (clazz != null) {
             itemId = clazz.getId();
-            itemName = clazz.getName();
+            itemName = service.getName();
             path = "/class/" + itemId;
         } else {
             Package packag3 = service.getAPackage();
             if (packag3 != null) {
                 itemId = packag3.getId();
                 itemName = packag3.getName();
-            } else {
-                PersonalTraining personalTraining = service.getPersonalTraining();
-                itemId = personalTraining.getId();
-                itemName = personalTraining.getName();
             }
         }
 
@@ -92,10 +87,6 @@ public class RegistrationServiceImpl implements RegistrationService {
             Package packag3 = packageRepository.findById(itemId).orElse(null);
             if (packag3 != null) {
                 services = packag3.getServices();
-            } else {
-                PersonalTraining personalTraining = personalTrainingRepository.findById(itemId).orElse(null);
-                assert personalTraining != null;
-                services = personalTraining.getServices();
             }
         }
         return services;

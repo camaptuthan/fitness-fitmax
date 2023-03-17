@@ -10,7 +10,7 @@ import java.util.List;
 public interface SessionService {
 
     //get all sessions by schedule id between start time and end time
-    List<SessionDTO> getSessionByScheduleIdBetweenTimes(String scheduleId, Date startTime, Date endTime);
+    List<SessionDTO> getRegisteredSessionByScheduleIdBetweenTimes(String scheduleId, Date startTime, Date endTime);
 
 
     //get all sessions by schedule id and class id between start time and end time

@@ -23,34 +23,10 @@ public class Clazz {
     @Column(name = "class_id")
     private String id;
 
-    @Column(name = "class_name")
-    private String name;
-
-    @Column(name = "image")
-    private String image;
-
-    @NotNull(message = "Not null")
-    @Column(name = "duration")
-    private int duration;
-
-    @Column(name = "price")
-    private Float price;
-
-    @Column(name = "description", columnDefinition = "longtext")
-    private String des;
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "created_date")
-    private Date date;
-
-    @Column(name = "status", nullable = false)
-    private boolean status;
-
     //service-class relationship
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "service_id", referencedColumnName = "service_id", nullable = false, unique = true)
     private Services services;
-
 
     //class-session relationship
     @OneToMany(mappedBy = "aClass", cascade = {CascadeType.PERSIST, CascadeType.MERGE})

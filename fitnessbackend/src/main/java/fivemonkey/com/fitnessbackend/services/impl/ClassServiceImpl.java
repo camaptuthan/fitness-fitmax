@@ -3,6 +3,7 @@ package fivemonkey.com.fitnessbackend.services.impl;
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.entities.Clazz;
+import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.repository.ClassRepository;
 import fivemonkey.com.fitnessbackend.services.ClassService;
 import fivemonkey.com.fitnessbackend.services.RegistrationService;
@@ -40,13 +41,13 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public Clazz save(ClassDTO c) {
         Clazz clazz = new Clazz();
-        clazz.setName(c.getName());
-        clazz.setPrice(c.getPrice());
-        clazz.setDes(c.getDes());
-//        c.setServicesId(c.getServicesId());
-        // clazz.setTrainer(c.getTrainer());
-        clazz.setDate(new Date());
-        clazz.setStatus(true);
+//        clazz.setName(c.getName());
+//        clazz.setPrice(c.getPrice());
+//        clazz.setDes(c.getDes());
+////        c.setServicesId(c.getServicesId());
+//        // clazz.setTrainer(c.getTrainer());
+//        clazz.setDate(new Date());
+//        clazz.setStatus(true);
         return classRepository.save(clazz);
     }
 
@@ -54,9 +55,9 @@ public class ClassServiceImpl implements ClassService {
     public Clazz update(ClassDTO c) {
         try {
             Clazz clazz = classRepository.getById(c.getId());
-            clazz.setName(c.getName());
-            clazz.setPrice(c.getPrice());
-            clazz.setDes(c.getDes());
+//            clazz.setName(c.getName());
+//            clazz.setPrice(c.getPrice());
+//            clazz.setDes(c.getDes());
             // clazz.setService(c.getService());
             //  clazz.setTrainer(c.getTrainer());
             return classRepository.save(clazz);
@@ -75,7 +76,7 @@ public class ClassServiceImpl implements ClassService {
     public void disableClass(String id) {
         Clazz clazz = classRepository.getById(id);
 
-        clazz.setStatus(false);
+//        clazz.setStatus(false);
         classRepository.save(clazz);
     }
 
@@ -84,7 +85,7 @@ public class ClassServiceImpl implements ClassService {
 
     public void enableById(String id) {
         Clazz clazz = classRepository.getById(id);
-        clazz.setStatus(true);
+//        clazz.setStatus(true);
         classRepository.save(clazz);
     }
 
@@ -93,6 +94,7 @@ public class ClassServiceImpl implements ClassService {
     public ClassDTO getClassById(String id) {
         return modelMapperConfiguration.map(classRepository.getById(id), ClassDTO.class);
     }
+
     //paging
     @Override
     public Page<Clazz> pageClass(int pageNo, int pageSize) {
@@ -102,12 +104,40 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public List<Clazz> searchByName(String keyword) {
-        return classRepository.searchClassByKeyword(keyword);
+        return null;
+       // return classRepository.searchClassByKeyword(keyword);
     }
 
     @Override
     public ClassDTO getByServiceId(String id) {
         return modelMapperConfiguration.map(classRepository.getClazzByService(id), ClassDTO.class);
+    }
+
+    @Override
+    public List<ClassDTO> getClassByUser(User user) {
+        List<Clazz> clazzList = null;
+        String id;
+        switch (user.getRole().getId()) {
+            case "ROLE0006":
+                id = user.getCity().getName();
+                clazzList = classRepository.findClazzByCityOrStudio(id);
+                break;
+            case "ROLE0002":
+            case "ROLE0003":
+                id = user.getStudio().getId();
+                clazzList = classRepository.findClazzByCityOrStudio(id);
+                break;
+            default:
+                clazzList = classRepository.findAll();
+                break;
+        }
+
+        return modelMapperConfiguration.mapList(clazzList, ClassDTO.class);
+    }
+
+    @Override
+    public Clazz addClassByUser(User user, ClassDTO classDTO) {
+        return null;
     }
 
     //search

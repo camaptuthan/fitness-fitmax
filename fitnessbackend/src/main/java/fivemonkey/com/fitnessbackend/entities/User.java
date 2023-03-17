@@ -10,7 +10,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @NoArgsConstructor
@@ -20,7 +22,6 @@ import java.util.List;
 @Entity
 @Table(name = "[user]", schema = "dbo")
 public class User {
-
     @Id
     @Column(name = "email")
     private String email;
@@ -57,15 +58,6 @@ public class User {
     private List<Blog> blogs;
 
     //user-studioManager relationship
-    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    private StudioManager studioManager;
-
-    //assistant-user relationship
-    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    private Assistant assistant;
-
     //trainee-user relationship
     @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
@@ -77,10 +69,17 @@ public class User {
     private Trainer trainer;
 
     //cityManager-user relationship
-    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    private CityManager cityManager;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "studio_id", referencedColumnName = "studio_id", nullable = true)
+    private Studio studio;
 
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<Services> services;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "studio_managers",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = {@JoinColumn(name = "studio_id") })
+    private Set<Studio> studios = new HashSet<>();
     @Column(name = "verification_code")
     private String verificationCode;
 

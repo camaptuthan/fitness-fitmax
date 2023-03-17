@@ -1,16 +1,16 @@
 package fivemonkey.com.fitnessbackend.services;
 
-import fivemonkey.com.fitnessbackend.entities.StudioManager;
+import fivemonkey.com.fitnessbackend.entities.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 public interface StudioManagerService {
-    List <StudioManager> getAll();
+    List <User> getAll();
 
-    @Query()
-    List<StudioManager> getAvailableManager();
 
-    StudioManager getStudioManagerByEmail(String email);
+    List<User> getAvailableManager();
+
+    User getStudioManagerByEmail(String email);
 }
