@@ -1,6 +1,7 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.entities.Studio;
+import fivemonkey.com.fitnessbackend.services.CityService;
 import fivemonkey.com.fitnessbackend.services.StudioManagerService;
 import fivemonkey.com.fitnessbackend.services.StudioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import java.util.List;
 public class StudioController {
     @Autowired
     private StudioService studioService;
+    @Autowired
+    private CityService cityService;
 
     @Autowired
     private StudioManagerService studioManagerService;
@@ -120,9 +123,6 @@ public class StudioController {
 
 
 //    list studio in main
-@GetMapping("/viewpublicstudio")
-    public String listStudiosHomepage(Model model) {
-        model.addAttribute("studios", studioService.getAllStudios());
-        return "/studio";
-    }
+
+
 }

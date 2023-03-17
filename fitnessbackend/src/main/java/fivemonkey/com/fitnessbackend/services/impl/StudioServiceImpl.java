@@ -2,6 +2,7 @@ package fivemonkey.com.fitnessbackend.services.impl;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.ClassDTO;
+import fivemonkey.com.fitnessbackend.dto.PackageDTO;
 import fivemonkey.com.fitnessbackend.dto.StudioDTO;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.repository.StudioRepository;
@@ -97,8 +98,8 @@ public class StudioServiceImpl implements StudioService {
     }
 
     @Override
-    public List<Studio> getAll() {
-        return studioRepository.findAll();
+    public List<StudioDTO> getAll() {
+        return modelMapperConfiguration.mapList(studioRepository.findAll(), StudioDTO.class);
     }
 
     @Override
@@ -106,10 +107,13 @@ public class StudioServiceImpl implements StudioService {
         return studioRepository.save(studio);
     }
 
+
     @Override
     public List<Studio> findByDistrict(String id) {
         return studioRepository.findByDistrict(id);
     }
+
+
 
 //    @Override
 //    public List<StudioDTO> getAllByCity(String cityname) {
@@ -132,4 +136,12 @@ public class StudioServiceImpl implements StudioService {
             //return studioRepository.findStudioByCategoryIdAndTitleContaining(categoryId,searchInput,pageable);
             return studioRepository.findAll(pageable);
     }
+
+
+    @Override
+    public List<StudioDTO> getAllByCity(String cityname) {
+        return modelMapperConfiguration.mapList(studioRepository.findStudioByCityName(cityname), StudioDTO.class);
+    }
+
+
 }

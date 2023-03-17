@@ -156,39 +156,11 @@
 </section>
 <!-- ============== S-CROSSFIT END ============== -->
 
-<!-- ============== S-OUR-PROGRAMS ============== -->
+<!-- ============== S-OUR-Service ============== -->
 <!--<th:block th:insert="fragments/home_program"></th:block>-->
 <!--<div th:include="management/home_program.html"></div>-->
 
-<div class="s-our-programs" style="background-image: url(/img/bg-programs.jpg);">
-    <div class="mask"></div>
-    <div class="our-programs-effect" style="background-image: url(/img/bg-programs.svg);"></div>
-    <div class="container">
-        <h2 class="title-decor">Our <span>Service</span></h2>
-        <p class="slogan">Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor,
-            auctor
-            tincidunt lorem ut, venenatis dapibus miq.</p>
-        <div class="row">
-
-            <div th:each="list: ${listServiceType}" class="col-sm-6 col-md-4 program-col">
-                <div class="program-item">
-                    <div class="program-item-front" th:style="'background-image: url(' + ${list.image} + ');'">
-                        <div class="program-item-inner">
-                            <h3 th:text="${list.type}"></h3>
-                        </div>
-                    </div>
-                    <div class="program-item-back" th:style="'background-image: url(' + ${list.image} + ');'">
-                        <div class="program-item-inner">
-                            <h3 th:text="${list.type}"></h3>
-                            <span th:if="${list.id == 1}"><a th:href="@{'/package/packages'}"
-                                                             class="btn">More</a></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<th:block th:insert="/fragments/home_program"></th:block>
 <!-- ============ S-OUR-PROGRAMS END ============ -->
 
 <!-- =============== S-OUT-TRAINER =============== -->

@@ -25,10 +25,11 @@ public interface StudioService {
     Studio saveStudio(Studio studio);
     Page<Studio> getALlByPage(int currentPage, String searchInput, String categoryId);
     Page<Studio> getStudioByPage(int currentPage, String searchInput);
-    List<Studio> getAll();
+    List<StudioDTO> getAll();
     Studio save(Studio studio);
 
-    public List<Studio> findByDistrict(String id);
 
-//    List<StudioDTO> getAllByCity(String cityname);
+    List<Studio> findByDistrict(String id);
+
+    List<StudioDTO> getAllByCity(String cityname);
 }
