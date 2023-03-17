@@ -1,6 +1,8 @@
 package fivemonkey.com.fitnessbackend.services;
 
 import fivemonkey.com.fitnessbackend.dto.ClassDTO;
+import fivemonkey.com.fitnessbackend.entities.Clazz;
+import fivemonkey.com.fitnessbackend.entities.Trainer;
 import fivemonkey.com.fitnessbackend.repository.ClassRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
 class ClassServiceTest {

@@ -3,6 +3,8 @@ package fivemonkey.com.fitnessbackend.controller;
 import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.entities.Clazz;
 import fivemonkey.com.fitnessbackend.entities.Services;
+import fivemonkey.com.fitnessbackend.entities.Trainer;
+import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.services.ClassService;
 import fivemonkey.com.fitnessbackend.services.RegistrationService;
