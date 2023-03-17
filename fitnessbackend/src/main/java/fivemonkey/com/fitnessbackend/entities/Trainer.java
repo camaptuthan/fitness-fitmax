@@ -23,14 +23,7 @@ public class Trainer {
 
     @Column(name = "experience")
     private String exp;
-
-    @Column(name = "status", nullable = false)
-    private boolean status;
-
     //trainer-personalTraining relationship
-    @OneToMany(mappedBy = "trainer", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    private List<PersonalTraining> personalTrainings;
-
     //trainer-session relationship
     @OneToMany(mappedBy = "trainer",cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
     private List<Session> sessions;
@@ -53,4 +46,6 @@ public class Trainer {
     @MapsId
     @JoinColumn(name = "trainer_email")
     private User user;
+    @OneToMany(mappedBy = "trainee", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<Registration> registrations;
 }

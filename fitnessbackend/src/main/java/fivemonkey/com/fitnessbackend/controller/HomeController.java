@@ -1,11 +1,8 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.dto.ServiceTypeDTO;
-import fivemonkey.com.fitnessbackend.entities.ServiceType;
-import fivemonkey.com.fitnessbackend.entities.Services;
-import fivemonkey.com.fitnessbackend.exceptionhandler.UserNotFoundException;
+import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
-import fivemonkey.com.fitnessbackend.services.ServiceService;
 import fivemonkey.com.fitnessbackend.services.ServiceTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,16 +18,26 @@ public class HomeController {
     private ServiceTypeService serviceTypeService;
 
     @GetMapping("/")
-    public String getAllServiceType(Model model) {
-        List<ServiceTypeDTO> listServiceType = serviceTypeService.getAll();
-        model.addAttribute("listServiceType", listServiceType);
+    public String getAllServiceType(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+        String path = "redirect:/dashboard";
+        User currentUser = userDetail.getUser();
+        if ("ROLE0004".equalsIgnoreCase(currentUser.getRole().getId())
+                || "ROLE0005".equalsIgnoreCase(currentUser.getRole().getId())) {
+            List<ServiceTypeDTO> listServiceType = serviceTypeService.getAll();
+            model.addAttribute("listServiceType", listServiceType);
+
+            path = "/index";
+        }
+
         //return "fragments/home_program";
-        return "/index";
+        return path;
     }
+
     @GetMapping("/blog-writer")
     public String blogWriter() {
         return "/blog_writer";
     }
+
     @GetMapping("/register")
     public String register() {
         return "/register";
@@ -43,13 +50,7 @@ public class HomeController {
 
     @GetMapping("/dashboard")
     public String dashboard(@AuthenticationPrincipal UserDetail userDetail) {
-        if(userDetail==null){
-            return "redirect:/login";
-        }else if(userDetail.getUser().getRole().getId().equals("ROLE0001")){
-            return "/management/Dashboard/index";
-        }else{
-            return "/management/403";
-        }
+        return "/management/Dashboard/index";
 //        String msg = null;
 //        if(msg == null) {
 //            UserNotFoundException userNotFoundException = new UserNotFoundException("User Not Found");

@@ -4,6 +4,7 @@ import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.entities.Clazz;
 import fivemonkey.com.fitnessbackend.entities.Services;
 import fivemonkey.com.fitnessbackend.entities.Trainer;
+import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.services.ClassService;
 import fivemonkey.com.fitnessbackend.services.RegistrationService;
@@ -27,29 +28,19 @@ import java.util.Map;
 @RequestMapping("/class")
 public class ClassController {
     @Autowired
-    TrainerService trainerService;
+    private TrainerService trainerService;
     @Autowired
-    ServiceService serviceService;
+    private ServiceService serviceService;
     @Autowired
     private ClassService classService;
-
     @Autowired
     private RegistrationService registrationService;
 
     @GetMapping("/management/list-class")
     public String classes(Model model, @Param("keyword") String keyword, @AuthenticationPrincipal UserDetail userDetail) {
-        if(userDetail==null){
-            return "redirect:/login";
-        }
-        if (userDetail.getUser().getRole().getId().equals("ROLE0001") || userDetail.getUser().getRole().getId().equals("ROLE0002") || userDetail.getUser().getRole().getId().equals("ROLE0006")) {
-            List<ClassDTO> classDTOList = classService.findAll();
-            if (keyword == null) {
-                model.addAttribute("list", classDTOList);
-            } else {
-                model.addAttribute("list", classService.searchByName(keyword));
-            }
-            model.addAttribute("size", classService.searchByName(keyword).size());
-        }
+        List<ClassDTO> classDTOList = classService.getClassByUser(userDetail.getUser());
+        model.addAttribute("list", classDTOList);
+//        model.addAttribute("size", classService.searchByName(keyword).size());
         return "management/classmanagement/classlist";
     }
 
@@ -66,7 +57,7 @@ public class ClassController {
     }
 
 
-    @PostMapping("/management/save-class")
+    @PostMapping("/management/add-class")
     public String saveClass(@ModelAttribute("clazz") ClassDTO classDTO,
                             RedirectAttributes attributes) {
         try {
@@ -143,8 +134,8 @@ public class ClassController {
 
         ClassDTO classDTO = classService.getClassById(id);
         List<ClassDTO> classDTOList = classService.findAll();
-        Map<String, List<ClassDTO>> classDTOListMap = new HashMap<>();
 
+        Map<String, List<ClassDTO>> classDTOListMap = new HashMap<>();
 
         for (int i = 0; i < (classDTOList.size() / 3) + 1; i++) {
             List<ClassDTO> valueList = new ArrayList<>();

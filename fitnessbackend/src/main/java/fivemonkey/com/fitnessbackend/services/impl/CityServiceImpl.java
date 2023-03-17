@@ -29,7 +29,8 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public CityDTO getCityByCityManager(String email) {
-        return mapper.map(cityRepository.getCityByCityManager(email), CityDTO.class);
+        return null;
+        // return mapper.map(cityRepository.getCityByCityManager(email), CityDTO.class);
     }
 
     @Override
@@ -39,6 +40,7 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public CityDTO getCityByAssistant(String email) {
-        return mapper.map(cityRepository.getCityByAssistant(email), CityDTO.class);
+        return null;
+        //  return mapper.map(cityRepository.getCityByAssistant(email), CityDTO.class);
     }
 }

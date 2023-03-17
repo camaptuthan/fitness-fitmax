@@ -30,8 +30,6 @@ public class Session {
     @Temporal(TemporalType.DATE)
     @Column(name = "happened_date")
     private Date happenedDate;
-
-
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
     private Date createdDate;

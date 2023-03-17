@@ -33,6 +33,5 @@ public class ClassDTO {
 
     private String trainerId;
 
-    private List<ScheduleDTO> scheduleDTO;
-
+    private List<SessionDTO> sessions;
 }

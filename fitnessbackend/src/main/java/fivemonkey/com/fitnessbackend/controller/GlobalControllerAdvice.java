@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class GlobalControllerAdvice {
 
     private static Logger LOGGER = LoggerFactory.getLogger(GlobalControllerAdvice.class);

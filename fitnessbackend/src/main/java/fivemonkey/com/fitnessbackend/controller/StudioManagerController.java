@@ -1,7 +1,6 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 
-import fivemonkey.com.fitnessbackend.entities.StudioManager;
 import fivemonkey.com.fitnessbackend.services.StudioManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,12 +21,12 @@ public class StudioManagerController {
 
     @PostMapping("/studiomanagerupdate/{id}")
     public String updateStudio(@PathVariable String email,
-                               @ModelAttribute("manager") StudioManager studiomanager,
+                               @ModelAttribute("manager") Long studiomanager,
                                Model model) {
         // get studio from database by id
-        StudioManager existingManager = studioManagerService.getStudioManagerByEmail(email);
-
-        existingManager.setUser(studiomanager.getUser());
+//        StudioManager existingManager = studioManagerService.getStudioManagerByEmail(email);
+//
+//        existingManager.setUser(studiomanager.getUser());
 
 //        existingStudio.setId(id);
 //        existingStudio.setName(studio.getName());
@@ -50,9 +49,9 @@ public class StudioManagerController {
     @GetMapping("/addstudiomanagers")
     public String studioDetails(Model model) {
         //List<Manager> mlist = studioManagerService.getAvailableManager();
-        StudioManager manager = new StudioManager();
+//        StudioManager manager = new StudioManager();
 //        model.addAttribute("list", mlist);
-        model.addAttribute("manager", manager);
+//        model.addAttribute("manager", manager);
         return "management/StudioManagerManagement/addstudiomanager";
     }
 }

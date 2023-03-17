@@ -32,9 +32,6 @@ public class City {
     @OneToMany(mappedBy = "city", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<User> users;
 
-    //city-cityManager relationship
-    @OneToOne(mappedBy = "city", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private CityManager cityManager;
 
     //city-service relationship
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
