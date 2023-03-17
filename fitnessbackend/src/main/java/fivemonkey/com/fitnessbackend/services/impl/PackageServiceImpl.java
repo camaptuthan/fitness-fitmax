@@ -5,23 +5,33 @@ import fivemonkey.com.fitnessbackend.dto.PackageDTO;
 import fivemonkey.com.fitnessbackend.entities.Package;
 import fivemonkey.com.fitnessbackend.repository.PackageRepository;
 import fivemonkey.com.fitnessbackend.services.PackageService;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PackageServiceImpl implements PackageService {
 
     @Autowired
     ModelMapperConfiguration<Package, PackageDTO> modelMapper;
+
     @Autowired
     private PackageRepository packageRepository;
+
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
     public List<PackageDTO> getAll() {
@@ -31,6 +41,33 @@ public class PackageServiceImpl implements PackageService {
             list.add(modelMapper.map(p, PackageDTO.class));
         }
         return list;
+    }
+
+    @Override
+    public List<Package> getByFields(@Param("keyword") String keyword,
+                                     @Param("cityname") String cityname,
+                                     @Param("studio") String studio,
+                                     @Param("category") String category) {
+        Session session = sessionFactory.openSession();
+//        session.beginTransaction();
+        String query = "select p from Package p where p.id is not null ";
+        if (keyword != null) {
+            query += " and concat(p.name,'',p.des,'',p.price,'',p.duration,'',p.date) like '%" + keyword + "%' ";
+        }
+        if (!"All".equals(cityname)) {
+            query += " and p.services.city.name = '" + cityname + "' ";
+        }
+        if (!"All".equals(studio)) {
+            query += " and p.services.studio_id = '" + studio + "' ";
+        }
+        if (!"All".equals(category)) {
+            query += " and p.services.category.id = '" + category + "' ";
+        }
+        Query<Package> query1 = session.createQuery(query, Package.class);
+        return query1.getResultList();
+//        session.getTransaction().commit();
+//        session.close();
+//        return modelMapper.mapList(packageRepository.getPackageByFields(keyword, cityname, studio, category), PackageDTO.class);
     }
 
     //get all packages
@@ -114,6 +151,7 @@ public class PackageServiceImpl implements PackageService {
     public List<Package> searchPackage(String key) {
         return null;
     }
+
     @Override
     public PackageDTO getPackageByServiceId(String serviceId) {
         return modelMapper.map(packageRepository.getPackageByServicesId(serviceId), PackageDTO.class);
@@ -121,7 +159,12 @@ public class PackageServiceImpl implements PackageService {
 
     @Override
     public List<PackageDTO> getAllPackagesByCity(String city_name) {
-        return modelMapper.mapList(packageRepository.getPackageByCity(city_name), PackageDTO.class);
+        List<PackageDTO> list = new ArrayList<>();
+        List<Package> packages = packageRepository.getPackageByCity(city_name);
+        for (Package p : packages) {
+            list.add(modelMapper.map(p, PackageDTO.class));
+        }
+        return list;
     }
 
     @Override
@@ -129,9 +172,15 @@ public class PackageServiceImpl implements PackageService {
         return modelMapper.mapList(packageRepository.getPackageByCityAndSearch(city_name, keyword), PackageDTO.class);
     }
 
-//    @Override
-//    public List<PackageDTO> getAllPackageByStudio(String email) {
-//        return modelMapper.mapList(packageRepository.getPackageByStudio(email), PackageDTO.class);
-//    }
+    @Override
+    public List<PackageDTO> getAllPackageByStudio(String studio_id) {
+        return modelMapper.mapList(packageRepository.getPackageByStudio(studio_id), PackageDTO.class);
+    }
+
+    @Override
+    public List<PackageDTO> getPackageByStudioAndSearchAndCategory(String keyword, String studioid, String categoryname) {
+        return modelMapper.mapList(packageRepository.getPackageByStudioAndSearchAndCategory(keyword, studioid, categoryname), PackageDTO.class);
+    }
+
 
 }

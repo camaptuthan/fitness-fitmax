@@ -18,5 +18,8 @@ public interface CityRepository extends JpaRepository<City, Long> {
 
     @Query("select a.studio.district.city from Assistant a where a.email = ?1")
     City getCityByAssistant(String email);
+
+    @Query("select s.studio.district.city from StudioManager s where s.email = ?1")
+    City getCityByStudioManager(String email);
 }
 

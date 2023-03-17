@@ -17,6 +17,7 @@ insert into city(city_name) values ('Da Nang');
 /*select c.city_id from assistant a join studio s on a.studio_id = s.studio_id join district d on s.district_id = d.district_id join city c on d.city_id = c.city_id
 where assistant_email = 'davidpham95aka201@gmail.com';*/
 /*select r.registration_id from registration r join service s on r.service_id = s.service_id where user_email = '';*/
+ 
 /*select * from district;*/
 insert into district(district_name,road,city_id) values ('Hai Ba Trung','458 Minh Khai',1);
 insert into district(district_name,road,city_id) values ('Dong Da','88 Lang Ha',1);
@@ -101,6 +102,7 @@ insert into user(email,password,first_name,last_name,role_id,city_id,status,crea
 insert into user(email,password,first_name,last_name,role_id,city_id,status,created_date) values ('traineecity3.5@fpt.edu.vn','123456','','','ROLE0005',3,1,CURDATE());
 insert into user(email,password,first_name,last_name,role_id,city_id,status,created_date) values ('traineecity3.6@fpt.edu.vn','123456','','','ROLE0005',3,1,CURDATE());
 
+select * from studio s join district d on s.district_id = d.district_id join city c on d.city_id = c.city_id where c.city_name = 'Ha Noi';
 /*select * from studio;*/
 insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU0001',1,'','Gym Ha Noi A',1,CURDATE());
 insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU0002',2,'','Gym Ha Noi B',1,CURDATE());
@@ -137,6 +139,7 @@ insert into studio_manager(studio_manager_email,studio_id) values ('parkhunjk1@g
 insert into studio_manager(studio_manager_email,studio_id) values ('parkhunjk2@gmail.com','STU0015');
 
 /*select * from user where role_id = 'ROLE0003';*/
+/*select a.studio_id from assistant a where assistant_email = 'davidpham95aka201@gmail.com';*/
 /*select * from assistant;*/
 insert into assistant(assistant_email,studio_id) values ('davidpham95aka201@gmail.com','STU0001');
 insert into assistant(assistant_email,studio_id) values ('davidpham95aka2011@gmail.com','STU0002');
@@ -275,14 +278,30 @@ insert into trainee(trainee_email) values ('traineecity3.4@fpt.edu.vn');
 insert into trainee(trainee_email) values ('traineecity3.5@fpt.edu.vn');
 insert into trainee(trainee_email) values ('traineecity3.6@fpt.edu.vn');
 
-
+/*select * from service where service_type_id = 3;*/
+/*select * from user where role_id = 'ROLE0005';*/
 /*select * from registration;*/
-/*insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0001','haphhe151269@fpt.edu.vn','SER0001',1,CURDATE());
-insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0002','haphhe151269@fpt.edu.vn','SER0002',1,CURDATE());
-insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0003','haphhe151269@fpt.edu.vn','SER0003',1,CURDATE());
-insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0004','haphhe151269@fpt.edu.vn','SER0004',1,CURDATE());
-insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0005','haphhe151269@fpt.edu.vn','SER0001',1,CURDATE());
-insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0006','haphhe151269@fpt.edu.vn','SER0001',1,CURDATE());*/
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0001','haphhe151269@fpt.edu.vn','SER0031',0,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0002','haphhe151269@fpt.edu.vn','SER0032',0,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0003','traineecity1.1@fpt.edu.vn','SER0031',0,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0004','traineecity1.1@fpt.edu.vn','SER0032',0,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0005','traineecity1.2@fpt.edu.vn','SER0031',0,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0006','traineecity1.2@fpt.edu.vn','SER0032',0,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0007','traineecity1.3@fpt.edu.vn','SER0031',0,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0008','traineecity1.3@fpt.edu.vn','SER0032',0,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0009','traineecity1.4@fpt.edu.vn','SER0033',0,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0010','traineecity1.4@fpt.edu.vn','SER0034',0,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0011','traineecity1.5@fpt.edu.vn','SER0035',0,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0012','traineecity1.5@fpt.edu.vn','SER0036',0,CURDATE());
+
+/*insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0006','haphhe1512691@fpt.edu.vn','SER0041',0,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0007','haphhe1512691@fpt.edu.vn','SER0042',0,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0007','haphhe1512691@fpt.edu.vn','SER0043',0,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0007','haphhe1512691@fpt.edu.vn','SER0044',0,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0007','haphhe1512691@fpt.edu.vn','SER0045',0,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0007','haphhe1512691@fpt.edu.vn','SER0046',0,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0007','haphhe1512691@fpt.edu.vn','SER0047',0,CURDATE());
+insert into registration(registration_id,user_email,service_id,status,registration_date) values ('REGIS0007','haphhe1512691@fpt.edu.vn','SER0048',0,CURDATE());*/
 
 /*select * from trainer;*/
 /*select * from user where role_id = 'ROLE0004'*/

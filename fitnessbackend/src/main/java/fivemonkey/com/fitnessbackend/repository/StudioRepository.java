@@ -1,5 +1,6 @@
 package fivemonkey.com.fitnessbackend.repository;
 
+import fivemonkey.com.fitnessbackend.dto.StudioDTO;
 import fivemonkey.com.fitnessbackend.entities.District;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,12 @@ public interface StudioRepository extends JpaRepository<Studio, String> {
 
     Page<Studio> findStudioByNameContaining(String name, Pageable pageable);
 
-    @Query("select s from Studio s where s.district.city.name = ?1")
-    Studio getStudioByCity(String cityname);
+    @Query("select s from Studio s join District d on s.district.id = d.id join City c on d.city.id = c.id where c.name = ?1")
+    List<Studio> getStudioByCity(String cityname);
+
+    @Query("select s from Studio s where s.studioManager.email = ?1")
+    Studio getStudioByStudioManager(String email);
+
+    @Query("select s from Studio  s where s.id = ?1")
+    Studio getStudioByStudioId(String id);
 }

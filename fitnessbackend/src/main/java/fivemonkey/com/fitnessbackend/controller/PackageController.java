@@ -1,13 +1,11 @@
 package fivemonkey.com.fitnessbackend.controller;
 
-import fivemonkey.com.fitnessbackend.dto.CategoryDTO;
-import fivemonkey.com.fitnessbackend.dto.CityDTO;
-import fivemonkey.com.fitnessbackend.dto.PackageDTO;
-import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
+import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
+import fivemonkey.com.fitnessbackend.dto.*;
+import fivemonkey.com.fitnessbackend.entities.Package;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +37,15 @@ public class PackageController {
     @Autowired
     private CityService cityService;
 
+    @Autowired
+    ModelMapperConfiguration<Package, PackageDTO> modelMapper;
+
+    @Autowired
+    private StudioService studioService;
+
+    @Autowired
+    private AssistantService assistantService;
+
     //view all packages(user)
     @RequestMapping(value = "/packages", method = {RequestMethod.GET, RequestMethod.POST})
     public String getAllPackages(Model model, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
@@ -51,6 +58,8 @@ public class PackageController {
             listPkg = packageServices.getAll();
         } else if ("".equals(keyword)) {
             listPkg = packageServices.getAllPackagesByCity(cityname);
+        } else if ("All".equals(cityname)) {
+            listPkg = packageServices.getAllPackagesByKeyword(keyword);
         } else {
             listPkg = packageServices.getAllPackagesByCityAndSearch(cityname, keyword);
         }
@@ -66,9 +75,10 @@ public class PackageController {
         model.addAttribute("packages", packagesMapList);
         model.addAttribute("cities", listCity);
         model.addAttribute("currentCity", cityname);
+        model.addAttribute("currentKeyword", keyword);
         model.addAttribute("size", packagesMapList.size());
         model.addAttribute("categoryList", categoryList);
-        return "management/PackageManagement/package";
+        return "user/package";
     }
 
     //view packages in dashboard
@@ -76,36 +86,48 @@ public class PackageController {
     public String getAllPackagesForManagement(Model model, @AuthenticationPrincipal UserDetail userDetail,
                                               @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
                                               @RequestParam(value = "cityname", required = false, defaultValue = "All") String cityname,
-                                              @RequestParam(value = "studio",required = false, defaultValue = "All") String studio,
-                                              @RequestParam(value = "category", required = false, defaultValue = "") String category) {
+                                              @RequestParam(value = "studio", required = false, defaultValue = "All") String studio,
+                                              @RequestParam(value = "category", required = false, defaultValue = "All") String category) {
         List<CategoryDTO> categoryList = categoryService.findAllCategoriesByType("service");
         List<CityDTO> listCity = new ArrayList<>();
-        List<PackageDTO> listPackage;
+        List<StudioDTO> listStudio = new ArrayList<>();
+        List<PackageDTO> listPackage = new ArrayList<>();
         switch (userDetail.getUser().getRole().getId()) {
             case "ROLE0001":
                 listCity = cityService.getAllCity();
-                if("".equals(keyword) && "All".equals(cityname)){
-                    listPackage = packageServices.getAll();
-                } else if ("".equals(keyword)) {
-                    listPackage = packageServices.getAllPackagesByCity(cityname);
-                } else {
-                    listPackage = packageServices.getAllPackagesByCityAndSearch(cityname, keyword);
-                }
+                listStudio = studioService.getAllByCity(cityname);
+                List<Package> listPackage1 = packageServices.getByFields(keyword, cityname, studio, category);
+                listPackage = modelMapper.mapList(listPackage1, PackageDTO.class);
+                System.out.println("HAPH" + listPackage);
+                break;
             case "ROLE0006":
                 listCity.add(cityService.getCityByCityManager(userDetail.getUser().getEmail()));
-                if ("".equals(keyword)){
-                    listPackage = packageServices.getAllPackagesByCity(cityService.getCityByCityManager(userDetail.getUser().getEmail()).getName());
-                }else {
-                    listPackage = packageServices.getAllPackagesByCityAndSearch(cityService.getCityByCityManager(userDetail.getUser().getEmail()).getName(), keyword);
-                }
+                listStudio = studioService.getAllByCity(cityname);
+                listPackage1 = packageServices.getByFields(keyword, cityname, studio, category);
+                listPackage = modelMapper.mapList(listPackage1, PackageDTO.class);
+                break;
             case "ROLE0002":
+                listCity.add(cityService.getCityByStudioManager(userDetail.getUser().getEmail()));
+                listStudio.add(studioService.getByStudioManager(userDetail.getUser().getEmail()));
+                listPackage1 = packageServices.getByFields(keyword, cityname, studio, category);
+                listPackage = modelMapper.mapList(listPackage1, PackageDTO.class);
+                break;
+            case "ROLE0003":
                 listCity.add(cityService.getCityByAssistant(userDetail.getUser().getEmail()));
-
-
+                listStudio.add(studioService.getStudioByStudioId(assistantService.getStudioIdByAssistant(userDetail.getUser().getEmail())));
+                listPackage1 = packageServices.getByFields(keyword, cityname, studio, category);
+                listPackage = modelMapper.mapList(listPackage1, PackageDTO.class);
+                break;
         }
-//        List<PackageDTO> list = packageServices.getAllPackageByStudio(userDetail.getUser().getEmail());
-//        System.out.println(list);
-
+        model.addAttribute("packages", listPackage);
+        model.addAttribute("size", listPackage.size());
+        model.addAttribute("citylist", listCity);
+        model.addAttribute("studios", listStudio);
+        model.addAttribute("categories", categoryList);
+        model.addAttribute("currentCity", cityname);
+        model.addAttribute("currentKeyword", keyword);
+        model.addAttribute("currentStudio", studio);
+        model.addAttribute("currentCategory", category);
         return "management/PackageManagement/package-list";
     }
 
@@ -146,7 +168,7 @@ public class PackageController {
 
         model.addAttribute("hasRegistered", hasRegistered);
         model.addAttribute("package", p);
-        return "management/PackageManagement/detail";
+        return "user/packagedetail";
     }
 
     //disable package
@@ -202,6 +224,8 @@ public class PackageController {
         }
         return "redirect:/package/packages";
     }
+
+
 
 //    @GetMapping("/page/{pageNo}")
 //    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {

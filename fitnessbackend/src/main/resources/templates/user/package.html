@@ -39,14 +39,17 @@
         <p class="slogan">Below is a list of packages for free trainees. People can search by city, package name,
             price... Details are in each package.</p>
         <form id="searchAndFilter" th:action="@{/package/packages}" method="get">
+            <div>
                 City: <select th:name="cityname" style="width:30%" onchange="submitForm()">
-                <option >All</option>
+                <option>All</option>
                 <th:block th:each="city : ${cities}">
-                    <option th:value="${city.name}" th:text="${city.name}" th:selected="${city.name == currentCity }"  ></option>
+                    <option th:value="${city.name}" th:text="${city.name}"
+                            th:selected="${city.name == currentCity}"></option>
                 </th:block>
             </select>
+            </div>
             <div>
-                Filter: <input type="text" th:name="keyword" style="color:red"/>
+                Filter: <input type="text" th:name="keyword" style="color:red" th:value="${currentKeyword}"/>
                 &nbsp
                 <input id="btn-submit" type="submit" value="Search"/>
                 &nbsp
@@ -67,6 +70,10 @@
         <!--            </script>-->
 
         <div id="carousel-package" class="carousel slide">
+            <div th:if="${size} == 0">
+                <h2>There are no packages available at the moment. Please contact us via email or our hotline for more
+                    information.</h2>
+            </div>
             <div class="carousel-inner overflow-visible row">
                 <th:block th:each="item,iter : ${packages}">
                     <div class="carousel-item col-12 p-2" th:classappend="${iter.index == 0} ? active : '' ">

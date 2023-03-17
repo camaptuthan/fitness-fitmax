@@ -29,8 +29,6 @@ public class PackageDTO {
     private String des;
     private boolean status;
 
-    private String servicesId;
-
     public PackageDTO(String name, int duration, Float price, String des, boolean status) {
         this.name = name;
         this.duration = duration;

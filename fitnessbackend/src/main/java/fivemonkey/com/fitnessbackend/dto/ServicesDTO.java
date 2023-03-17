@@ -26,7 +26,7 @@ public class ServicesDTO {
 
     private String serviceTypeId;
 
-    private Long cityId;
+    private String cityName;
 
     private List<RegistrationDTO> registrationDTOS;
 

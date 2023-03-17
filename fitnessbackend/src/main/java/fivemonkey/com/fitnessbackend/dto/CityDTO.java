@@ -16,4 +16,11 @@ public class CityDTO {
 
     private String name;
 
+    @Override
+    public String toString() {
+        return "CityDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

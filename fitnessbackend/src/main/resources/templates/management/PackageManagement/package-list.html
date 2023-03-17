@@ -173,8 +173,50 @@
                         </a>
                     </div>
                 </div>
-
             </div>
+            <div th:if="${size}==0">
+                <h1>No Package.</h1>
+            </div>
+            <div>&nbsp</div>
+            <form id="searchAndFilterForPackage" th:action="@{/package/management/packages}" method="get">
+                <div>
+                    Filter: <input type="text" th:name="keyword" style="color:red"
+                                   th:value="${currentKeyword}"/>
+                    &nbsp
+                    <input id="btn-submit" type="submit" value="Search"/>
+                </div>
+                <div>&nbsp</div>
+                <div>
+                    City: <select th:name="cityname" style="width:30%" onchange="submitForm()">
+                    <option th:selected>All</option>
+                    <th:block th:each="city : ${citylist}">
+                        <option th:value="${city.name}" th:text="${city.name}"
+                                th:selected="${city.name == currentCity}"></option>
+                    </th:block>
+                </select>
+                </div>
+                <div>&nbsp</div>
+                <div>
+                    Studio: <select th:name="studio" style="width:30%" onchange="submitForm()">
+                    <option>All</option>
+                    <th:block th:each="studio : ${studios}">
+                        <option th:value="${studio.id}" th:text="${studio.name}"
+                                th:selected="${studio.name == currentStudio}"></option>
+                    </th:block>
+                </select>
+                </div>
+                <div>&nbsp</div>
+                <div>
+                    Category: <select th:name="category" style="width:30%" onchange="submitForm()">
+                    <option>All</option>
+                    <th:block th:each="category : ${categories}">
+                        <option th:value="${category.id}" th:text="${category.name}"
+                                th:selected="${category.name == currentCategory}"></option>
+                    </th:block>
+                </select>
+                </div>
+            </form>
+            <div>&nbsp</div>
             <div>
                 <table id="PackageTable" class="table table-striped table-hover table-bordered">
                     <thead>
@@ -188,7 +230,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="package: ${packageList}">
+                    <tr th:each="package: ${packages}">
                         <td th:text="${package.id}"></td>
                         <td th:text="${package.name}"></td>
                         <td th:text="${package.des}"></td>
@@ -220,10 +262,17 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('#PackageTable').DataTable();
+        $('#PackageTable').DataTable({
+            "searching": false
+        });
         $('[data-toggle="tooltip"]').tooltip();
-    });
 
+    });
+</script>
+<script type="text/javascript">
+    function submitForm() {
+        document.getElementById("searchAndFilterForPackage").submit();
+    }
 </script>
 </body>
 </html>

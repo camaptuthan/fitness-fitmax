@@ -28,6 +28,7 @@ public class Registration {
     @Column(name = "started_date")
     private Date startDate;
 
+
     @Column(name = "status", nullable = false)
     private boolean status;
 

@@ -44,14 +44,10 @@ public class StudioServiceImpl implements StudioService {
     }
 
     @Override
-    public StudioDTO getStudioByIdd(String id) {
-        Studio studio = studioRepository.findById(id).get();
-
-        StudioDTO studioDTO = new StudioDTO();
-        studioDTO = modelMapperConfiguration.map(studio, StudioDTO.class);
-
-        return studioDTO;
+    public StudioDTO getStudioByStudioId(String id) {
+        return modelMapperConfiguration.map(studioRepository.getStudioByStudioId(id), StudioDTO.class);
     }
+
 
     public Studio updateStudio(Studio existingStudio) {
         try {
@@ -97,8 +93,8 @@ public class StudioServiceImpl implements StudioService {
     }
 
     @Override
-    public List<Studio> getAll() {
-        return studioRepository.findAll();
+    public List<StudioDTO> getAll() {
+        return modelMapperConfiguration.mapList(studioRepository.findAll(), StudioDTO.class);
     }
 
     @Override
@@ -111,10 +107,15 @@ public class StudioServiceImpl implements StudioService {
         return studioRepository.findByDistrict(id);
     }
 
-//    @Override
-//    public List<StudioDTO> getAllByCity(String cityname) {
-//        return modelMapperConfiguration.mapList(studioRepository.getStudioByCity(cityname), StudioDTO.class);
-//    }
+    @Override
+    public List<StudioDTO> getAllByCity(String cityname) {
+        return modelMapperConfiguration.mapList(studioRepository.getStudioByCity(cityname), StudioDTO.class);
+    }
+
+    @Override
+    public StudioDTO getByStudioManager(String email) {
+        return modelMapperConfiguration.map(studioRepository.getStudioByStudioManager(email), StudioDTO.class);
+    }
 
     @Override
     public Page<Studio> getALlByPage(int currentPage, String searchInput, String categoryId) {

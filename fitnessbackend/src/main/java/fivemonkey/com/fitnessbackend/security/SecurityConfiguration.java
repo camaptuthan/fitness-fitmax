@@ -61,6 +61,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .disable();
         // Author for manager
         http.authorizeRequests().antMatchers("/user/management/**").hasAnyAuthority("ROLE0002","ROLE0001","ROLE0006","ROLE0003");
+        http.authorizeRequests().antMatchers("/package/management/**").hasAnyAuthority("ROLE0002","ROLE0001","ROLE0006","ROLE0003");
         http.authorizeRequests().antMatchers("/user/**").authenticated();
         http.authorizeRequests().anyRequest().permitAll();
         // When the user has logged in as XX.

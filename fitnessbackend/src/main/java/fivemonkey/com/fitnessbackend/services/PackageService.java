@@ -18,6 +18,8 @@ public interface PackageService {
 
     List<PackageDTO> getAll();
 
+    List<Package> getByFields(String keyword, String cityname, String studio, String category);
+
     public List<PackageDTO> getAllPackagesByKeyword(String keyword);
 
     List<PackageDTO> getAllInforPackage();
@@ -35,11 +37,15 @@ public interface PackageService {
     Page<Package> findPaginated(int pageNo, int pageSize);
 
     public List<Package> searchPackage(String key);
+
     PackageDTO getPackageByServiceId(String serviceId);
 
     List<PackageDTO> getAllPackagesByCity(String city_name);
 
     List<PackageDTO> getAllPackagesByCityAndSearch(String city_name, String keyword);
 
-//    List<PackageDTO> getAllPackageByStudio(String email);
+    List<PackageDTO> getAllPackageByStudio(String studio_id);
+
+    List<PackageDTO> getPackageByStudioAndSearchAndCategory(String keyword, String studioid, String categoryname);
+
 }
