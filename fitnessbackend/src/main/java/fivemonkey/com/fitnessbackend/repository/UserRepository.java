@@ -44,4 +44,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     //count trainer
     @Query("SELECT COUNT(u) FROM User u WHERE u.role.id=?1 ")
     long getCountOfTrainer(String role);
+
+    @Query("SELECT u FROM User u where u.role.id=?1")
+    List<User> listAllTrainer(String role);
 }

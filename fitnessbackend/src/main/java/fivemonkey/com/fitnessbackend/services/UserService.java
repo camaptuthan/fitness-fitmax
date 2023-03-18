@@ -58,5 +58,7 @@ public interface UserService {
 
     long countTrainer(String roleId);
 
+    List<User> listAllTrainer(String role);
+
 
 }

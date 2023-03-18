@@ -331,6 +331,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.getCountOfTrainer("ROLE0004");
     }
 
+    @Override
+    public List<User> listAllTrainer(String role) {
+        return userRepository.listAllTrainer(role);
+    }
+
 
 }
 

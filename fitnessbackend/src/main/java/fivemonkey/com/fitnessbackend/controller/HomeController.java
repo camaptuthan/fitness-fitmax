@@ -47,7 +47,10 @@ public class HomeController {
         if ("ROLE0004".equalsIgnoreCase(currentUser.getRole().getId())
                 || "ROLE0005".equalsIgnoreCase(currentUser.getRole().getId())) {
             List<ServiceTypeDTO> listServiceType = serviceTypeService.getAll();
+            String role="ROLE0004";
+            List<User> listAllTrainer=userService.listAllTrainer(role);
             model.addAttribute("listServiceType", listServiceType);
+            model.addAttribute("listAllTrainer", listAllTrainer);
             path = "/index";
         }
         //return "fragments/home_program";
@@ -73,6 +76,15 @@ public class HomeController {
     public String dashboard(@AuthenticationPrincipal UserDetail userDetail) {
         return "/management/Dashboard/index";
 
+    }
+    @GetMapping("/trainer/detail")
+    public String homepageTrainer() {
+        return "/trainer";
+    }
+
+    @GetMapping("/schedule")
+    public String homepageSchedule() {
+        return "/schedule";
     }
 
     @GetMapping("/managestudio")

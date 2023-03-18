@@ -3,16 +3,19 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Fitmax - Program</title>
+  <title>Fitmax</title>
   <!-- =================== META =================== -->
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="format-detection" content="telephone=no">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <th:block th:insert="~{fragments/head::link}"></th:block>
+
+  <th:block th:replace="fragments/head :: head"></th:block>
+
+
 </head>
 
-<body id="home" class="page-program">
+<body id="home" >
 <!--================ PRELOADER ================-->
 <div class="preloader-cover">
   <div id="cube-loader">
@@ -29,7 +32,7 @@
 <!--============== PRELOADER END ==============-->
 
 <!-- ================= HEADER ================= -->
-<div th:include="fragments/header.html"></div>
+<th:block th:insert="fragments/header.html"></th:block>
 <!-- =============== HEADER END =============== -->
 
 <!-- =============== HEADER-TITLE =============== -->
@@ -64,8 +67,9 @@
       <div class="col-md-7 about-info-cover">
         <h2 class="title-decor">About <span>Service</span></h2>
         <div class="text">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmmpor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut <a href="contacts.html">enim ad minim</a> veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+          <p>Suitable for everyone
+            Our schedule and programs are designed and adjusted regularly to fit the needs and timings of every member.</p>
+          <p>Fitness has grown from the first club in Xuan Dieu, Hanoi, to become a leading international standard 5-star sports club system, owned by a Vietnamese company - with 14 clubs spread across the country.  <a href="contacts.html">FSM </a>It's not just a sports business. More than that, it is the passion and enthusiasm of the founders in raising awareness and bringing support to the Vietnamese community about health and exercise.</p>
         </div>
         <ul class="about-cont">
           <li><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:18004886040">1-800-488-6040</a></li>

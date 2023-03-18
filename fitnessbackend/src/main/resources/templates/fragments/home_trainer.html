@@ -2,15 +2,17 @@
 <section class="s-out-trainer" style="background-image: url(/img/bg-contacts.svg);">
   <div class="container">
     <h2 class="title-decor">Our <span>Trainer</span></h2>
-    <p class="slogan">Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor tincidunt lorem ut, venenatis dapibus miq.</p>
+    <p class="slogan">
+      Working out with a personal trainer is the fastest and most effective way for you to achieve your health and fitness goals. We design programs to suit the most common needs of our members, and we also create personalized workouts to suit each person's fitness and needs.</p>
     <div class="row">
+      <th:block th:each="list: ${listAllTrainer}">
       <div class="col-md-6 out-trainer-col">
         <div class="out-trainer-item">
-          <a href="trainer.html" class="out-trainer-img"><img class="rx-lazy" src="@{/img/placeholder-all.png}}" data-src="img/trainer-1.jpg" alt="img"></a>
+          <a href="/trainer" class="out-trainer-img"><img th:src="${list.avatar}" alt="img"></a>
           <div class="out-trainer-info">
-            <h3><a href="trainer.html">Sam piters</a></h3>
+            <h3><a href="/trainer" th:text="${list.firstName}+' '+${list.lastName}"></a></h3>
             <div class="prof">Weightlifting</div>
-            <p>Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor tincidunt lorem ut, venenatis dapibus miq.</p>
+            <p th:text="${list.address}+' '+${list.phone}"></p>
             <ul class="social-list">
               <li><a target="_blank" href="https://www.facebook.com/rovadex"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
               <li><a target="_blank" href="https://twitter.com/RovadexStudio"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
@@ -20,54 +22,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6 out-trainer-col">
-        <div class="out-trainer-item">
-          <a href="trainer.html" class="out-trainer-img"><img class="rx-lazy" src="@{/img/placeholder-all.png}}" data-src="img/trainer-2.jpg" alt="img"></a>
-          <div class="out-trainer-info">
-            <h3><a href="trainer.html">kim piters</a></h3>
-            <div class="prof">Weightlifting</div>
-            <p>Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor tincidunt lorem ut, venenatis dapibus miq.</p>
-            <ul class="social-list">
-              <li><a target="_blank" href="https://www.facebook.com/rovadex"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-              <li><a target="_blank" href="https://twitter.com/RovadexStudio"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-              <li><a target="_blank" href="https://www.youtube.com/"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
-              <li><a target="_blank" href="https://www.instagram.com/rovadex"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 out-trainer-col">
-        <div class="out-trainer-item">
-          <a href="trainer.html" class="out-trainer-img"><img class="rx-lazy" src="@{/img/placeholder-all.png}}" data-src="img/trainer-3.jpg" alt="img"></a>
-          <div class="out-trainer-info">
-            <h3><a href="trainer.html">Samanta piters</a></h3>
-            <div class="prof">Weightlifting</div>
-            <p>Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor tincidunt lorem ut, venenatis dapibus miq.</p>
-            <ul class="social-list">
-              <li><a target="_blank" href="https://www.facebook.com/rovadex"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-              <li><a target="_blank" href="https://twitter.com/RovadexStudio"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-              <li><a target="_blank" href="https://www.youtube.com/"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
-              <li><a target="_blank" href="https://www.instagram.com/rovadex"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 out-trainer-col">
-        <div class="out-trainer-item">
-          <a href="trainer.html" class="out-trainer-img"><img class="rx-lazy" src="@{/img/placeholder-all.png}" data-src="img/trainer-4.jpg" alt="img"></a>
-          <div class="out-trainer-info">
-            <h3><a href="trainer.html">artur piters</a></h3>
-            <div class="prof">Weightlifting</div>
-            <p>Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor tincidunt lorem ut, venenatis dapibus miq.</p>
-            <ul class="social-list">
-              <li><a target="_blank" href="https://www.facebook.com/rovadex"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-              <li><a target="_blank" href="https://twitter.com/RovadexStudio"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-              <li><a target="_blank" href="https://www.youtube.com/"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
-              <li><a target="_blank" href="https://www.instagram.com/rovadex"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      </th:block>
     </div>
   </div>
 </section>
