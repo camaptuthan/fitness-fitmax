@@ -41,6 +41,7 @@ public class StudioServiceImpl implements StudioService {
 
     @Override
     public Studio getStudioById(String id) {
+
         return studioRepository.findById(id).get();
     }
 

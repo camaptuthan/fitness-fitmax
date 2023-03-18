@@ -27,4 +27,6 @@ public interface StudioRepository extends JpaRepository<Studio, String> {
     //count studio
     @Query("SELECT COUNT(s) FROM Studio s  ")
     long countStudio();
+
+
 }

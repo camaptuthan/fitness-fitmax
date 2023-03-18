@@ -86,7 +86,7 @@
                   <div class="post-header">
                       <div class="related-post-categ">fitness</div>
                       <div class="post-thumbnail" >
-                          <a th:href="@{publicstudio/{id} (id=${s.id})}"> <img th:src="${s.image}" alt="img"></a>
+                          <a th:href="@{/studio-details/{id} (id=${s.id})}"> <img th:src="${s.image}" alt="img"></a>
                       </div>
                   </div>
                   <div class="post-content">
@@ -103,7 +103,7 @@
                           <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a href="#" th:text="${s.district.city.name}+', '+${s.district.getName()}+', '+${s.district.getRoad()}"></a></span>
                           <span th:text="${s.contact}" class="post-comment"><i class="fa fa-comment" aria-hidden="true"></i><a href="#">2 Comments(s)</a></span>
                       </div>
-                      <a href="single-blog.html" class="btn"><span>Detail</span></a>
+                      <a th:href="@{/studio-details/{id} (id=${s.id})}" class="btn"><span>Detail</span></a>
                   </div>
               </div>
           </div>

@@ -38,23 +38,14 @@ public class HomeController {
     StudioService studioService;
 
     @GetMapping("/")
-    public String getAllServiceType(@AuthenticationPrincipal UserDetail userDetail, Model model) {
-        if(userDetail==null){
-            return "/index";
-        }
-        String path = "redirect:/dashboard";
-        User currentUser = userDetail.getUser();
-        if ("ROLE0004".equalsIgnoreCase(currentUser.getRole().getId())
-                || "ROLE0005".equalsIgnoreCase(currentUser.getRole().getId())) {
-            List<ServiceTypeDTO> listServiceType = serviceTypeService.getAll();
-            String role="ROLE0004";
-            List<User> listAllTrainer=userService.listAllTrainer(role);
-            model.addAttribute("listServiceType", listServiceType);
-            model.addAttribute("listAllTrainer", listAllTrainer);
-            path = "/index";
-        }
+    public String getAllServiceType( Model model) {
+        List<ServiceTypeDTO> listServiceType = serviceTypeService.getAll();
+        String role = "ROLE0004";
+        List<User> listAllTrainer = userService.listAllTrainer(role);
+        model.addAttribute("listServiceType", listServiceType);
+        model.addAttribute("listAllTrainer", listAllTrainer);
         //return "fragments/home_program";
-        return path;
+        return "index";
     }
 
     @GetMapping("/blog-writer")
@@ -77,6 +68,7 @@ public class HomeController {
         return "/management/Dashboard/index";
 
     }
+
     @GetMapping("/trainer/detail")
     public String homepageTrainer() {
         return "/trainer";
@@ -94,26 +86,26 @@ public class HomeController {
 
     @GetMapping("/homepage/service")
     public String service(Model model) {
-        long resultStudio=studioService.countStudio();
+        long resultStudio = studioService.countStudio();
         List<ServiceTypeDTO> listServiceType = serviceTypeService.getAll();
-        String role="ROLE0004";
+        String role = "ROLE0004";
         //count trainer
-        long result=userService.countTrainer(role);
-        model.addAttribute("numOfTrainer",result);
+        long result = userService.countTrainer(role);
+        model.addAttribute("numOfTrainer", result);
         model.addAttribute("numStudio", resultStudio);
         model.addAttribute("listServiceType", listServiceType);
         return "/program";
     }
 
     @RequestMapping(value = "/homepage/studio", method = {RequestMethod.GET, RequestMethod.POST})
-    public String listStudiosHomepage(Model model,@RequestParam(value = "cityname", required = false, defaultValue = "All") String cityname) {
+    public String listStudiosHomepage(Model model, @RequestParam(value = "cityname", required = false, defaultValue = "All") String cityname) {
         Map<String, List<StudioDTO>> studioMapList = new HashMap<>();
         List<CityDTO> listCity = cityService.getAllCity();
         List<StudioDTO> studioList;
-        if ( "All".equals(cityname)) {
-            studioList =studioService.getAll();
-        }else{
-            studioList=studioService.getAllByCity(cityname);
+        if ("All".equals(cityname)) {
+            studioList = studioService.getAll();
+        } else {
+            studioList = studioService.getAllByCity(cityname);
         }
         for (int i = 0; i < (studioList.size() / 3) + 1; i++) {
             List<StudioDTO> value = new ArrayList<>();

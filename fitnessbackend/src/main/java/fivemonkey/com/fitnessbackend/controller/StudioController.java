@@ -103,14 +103,11 @@ public class StudioController {
 
 
 //    list studio in main
-@GetMapping("/publicstudio")
-    public String listStudiosHomepage(Model model) {
-        model.addAttribute("studios", studioService.getAllStudios());
-        return "/studio";
-    }
-    @GetMapping("publicstudio/{id}")
-    public String publicstudiodetail(@PathVariable String id, Model model) {
-        model.addAttribute("studio", studioService.getStudioById(id));
+
+    @GetMapping("/studio-details/{id}")
+    public String homepageStudioDetail(@PathVariable String id, Model model) {
+        Studio s=  studioService.getStudioById(id);
+        model.addAttribute("studio",s);
         return "/studio_details";
     }
 }
