@@ -1,10 +1,12 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.entities.Studio;
+import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.services.CityService;
 import fivemonkey.com.fitnessbackend.services.StudioManagerService;
 import fivemonkey.com.fitnessbackend.services.StudioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +26,13 @@ public class StudioController {
 
     //Get Studio List
     @GetMapping("management/studios")
-    public String listStudios(Model model) {
-        model.addAttribute("studios", studioService.getAllStudios());
+    public String listStudios(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+        if (userDetail.getUser().getRole().getName().equals("Admin")) {
+            model.addAttribute("studios", studioService.getAllStudios());
+        } else if (userDetail.getUser().getRole().getName().equals("City Manager")) {
+            model.addAttribute("studios", studioService.getStudioByCity(userDetail.getUser().getCity().getName()));
+        }
+//        model.addAttribute("studios", studioService.getAllStudios());
         return "management/StudioManagement/studios";
     }
 
@@ -78,33 +85,6 @@ public class StudioController {
         return "management/StudioManagement/updatestudio";
     }
 
-    //
-//@GetMapping("/studiopage")
-//public String viewStudioPage(
-//                         Model model,
-//                         @RequestParam(value = "search", defaultValue = "") String searchInput,
-//                         @RequestParam(value = "category", defaultValue = "-1") Integer categoryId) {
-//    return getStudioByPage(model, searchInput, 1);
-//}
-//    @GetMapping("/studiopage/{pageNumber}")
-//    public String getStudioByPage(Model model,
-//                               @RequestParam(value = "search ", defaultValue = "") String searchInput,
-//                               @PathVariable(name = "pageNumber") int currentPage){
-//        Page<Studio> page = studioService.getStudioByPage(currentPage, searchInput);
-//        long totalItems = page.getTotalElements();
-//        int totalPages = page.getTotalPages();
-//        List<Studio> listStudio = page.getContent();
-//
-////        model.addAttribute("query", "/?search=" + searchInput + "&category=" + categoryId);
-////        model.addAttribute("currentCategoryId", categoryId);
-//        model.addAttribute("currentSearch", searchInput);
-//        model.addAttribute("currentPage", currentPage);
-//        model.addAttribute("totalItems", totalItems);
-//        model.addAttribute("totalPages", totalPages);
-//        model.addAttribute("query", "/?search=" + searchInput);
-//        model.addAttribute("listStudio", listStudio);
-//        return "management/StudioManagement/studio";
-//    }
     @GetMapping("/management/studios/new")
     public String createStudioForm(Model model) {
      //   List<StudioManager> mlist = studioManagerService.getAvailableManager();
@@ -123,6 +103,14 @@ public class StudioController {
 
 
 //    list studio in main
-
-
+@GetMapping("/publicstudio")
+    public String listStudiosHomepage(Model model) {
+        model.addAttribute("studios", studioService.getAllStudios());
+        return "/studio";
+    }
+    @GetMapping("publicstudio/{id}")
+    public String publicstudiodetail(@PathVariable String id, Model model) {
+        model.addAttribute("studio", studioService.getStudioById(id));
+        return "/studio_details";
+    }
 }

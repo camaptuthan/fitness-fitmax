@@ -32,7 +32,7 @@ public class RegistrationController {
         if (userDetail.getUser().getRole().getName().equals("Admin")) {
             model.addAttribute("registrations", registrationService.getAllRegistrations());
         } else if (userDetail.getUser().getRole().getName().equals("Manager")) {
-//            model.addAttribute("registrations", registrationService.getRegistrationByManager(userDetail.getUser().getStudioManager().getStudio().getId()));
+            model.addAttribute("registrations", registrationService.getRegistrationByManager(userDetail.getUser().getStudio().getId()));
         } else if (userDetail.getUser().getRole().getName().equals("Assistant")) {
             model.addAttribute("registrations", registrationService.getRegistrationByAssistant(userDetail.getUser().getEmail()));
         }
@@ -72,5 +72,7 @@ public class RegistrationController {
         model.addAttribute("registration", registrationService.getRegistrationById("SER0001"));
         return "management/RegistrationManagement/registrationdetails";
     }
+
+
 
 }

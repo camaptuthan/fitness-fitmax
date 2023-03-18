@@ -16,7 +16,7 @@ public interface StudioService {
 //    List<Studio> findStudio(String studioCity);
 
     Studio getStudioById(String id);
-    StudioDTO getStudioByIdd(String id);
+    List<Studio> getStudioByCity(String id);
     Studio updateStudio(Studio existingStudio);
 
     Studio updateStatus(long id, boolean status, Studio studio);

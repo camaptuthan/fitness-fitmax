@@ -45,13 +45,8 @@ public class StudioServiceImpl implements StudioService {
     }
 
     @Override
-    public StudioDTO getStudioByIdd(String id) {
-        Studio studio = studioRepository.findById(id).get();
-
-        StudioDTO studioDTO = new StudioDTO();
-        studioDTO = modelMapperConfiguration.map(studio, StudioDTO.class);
-
-        return studioDTO;
+    public List<Studio> getStudioByCity(String city) {
+        return studioRepository.findStudioByCityName(city);
     }
 
     public Studio updateStudio(Studio existingStudio) {

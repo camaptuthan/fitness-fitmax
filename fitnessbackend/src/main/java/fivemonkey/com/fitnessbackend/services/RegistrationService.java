@@ -20,7 +20,7 @@ public interface RegistrationService {
 
     void updateRegistration(Registration existingRegis);
 
-//    List<Registration> getRegistrationByManager(String studioId);
+    List<Registration> getRegistrationByManager(String studioId);
 
     List<Registration> getRegistrationByAssistant(String email);
 }

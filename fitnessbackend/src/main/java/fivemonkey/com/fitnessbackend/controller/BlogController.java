@@ -37,7 +37,7 @@ public class BlogController {
     @GetMapping("/management/writer")
     public String blogWriter(Model model) {
         model.addAttribute("blogDTO", new BlogDTO());
-        return "/blog_writer";
+        return "management/BlogManagement/blog_writer";
     }
 
     @PostMapping("/management/writer")

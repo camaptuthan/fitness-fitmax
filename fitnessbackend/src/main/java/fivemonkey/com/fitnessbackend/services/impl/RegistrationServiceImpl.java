@@ -136,6 +136,11 @@ public class RegistrationServiceImpl implements RegistrationService {
         registrationRepository.save(existingRegis);
     }
 
+    @Override
+    public List<Registration> getRegistrationByManager(String studioId) {
+        return registrationRepository.getRegistrationByManager(studioId);
+    }
+
 //    @Override
 //    public List<Registration> getRegistrationByManager(String studioId) {
 //        return registrationRepository.getRegistrationByManager(studioId);

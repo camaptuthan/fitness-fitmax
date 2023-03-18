@@ -33,53 +33,22 @@
 <!-- ================= HEADER ================= -->
 
 <div th:include="fragments/header.html"></div>
-<!-- =============== HEADER END =============== -->
 
-<!-- ============ S-CROSSFIT-SLIDER ============ -->
-
-<!-- ========== S-CROSSFIT-SLIDER END ========== -->
-
-<!-- ============== S-CROSSFIT END ============== -->
-
-<!-- ============== S-OUR-PROGRAMS ============== -->
-<!--<th:block th:insert="fragments/home_program"></th:block>-->
-
-<!-- ============ S-OUR-PROGRAMS END ============ -->
-
-<!-- =============== S-OUT-TRAINER =============== -->
-
-<!-- ============= S-OUT-TRAINER END ============= -->
-
-<!-- ============ S-CROSSFIT-BANNER ============ -->
-
-<!-- ========== S-CROSSFIT-BANNER END ========== -->
-
-<!-- ============== S-CLUB-CARDS ============== -->
-
-<!-- ============ S-CLUB-CARDS END ============ -->
-
-<!-- ============== S-TESTIMONIALS ============== -->
-
-<!-- ============ S-TESTIMONIALS END ============ -->
-
-<!--================ RELATED POSTS ================-->
 <section class="s-related-posts home-related-posts">
     <div class="container">
         <h2 class="title-decor">Studio <span>Fitness</span></h2>
-        <div class="custom-select" style="width:400px;">
-            <select>
-                <option value="0">Select City:</option>
-                <option value="1">Ha Noi</option>
-                <option value="2">Hai Phong</option>
-                <option value="3">Ho Chi Minh</option>
-
-            </select>
-        </div>
         <p class="slogan">Sứ mệnh của Fitmax là mang đến sự nhận thức đúng đắn cho cộng đồng trong việc rèn luyện thể chất
             để có được sức khỏe và tinh thần tuyệt vời, luôn vững vàng vượt qua mọi thử thách trong cuộc sống.</p>
-        <!--    <th:block th:insert="/fragments/admin_fragment/city"></th:block>-->
         <div class="row">
-            <div class="col-md-6 related-post-col" th:each="s : ${studios}">
+            <div class="" th:object="${studio}">
+                <section class="s-crossfit-banner">
+                    <div class="crossfit-banner-left" style="background-image: url(static/img/gall-7-min.jpg);"></div>
+                    <div class="crossfit-banner-right">
+                        <div class="text-top" th:text="${name}"></div>
+                        <h2><th:block></th:block></h2>
+                        <div class="text-bottom">free open <a href="program.html">training</a></div>
+                    </div>
+                </section>
                 <div class="post-item-cover">
                     <div class="post-header">
                         <div class="related-post-categ">fitness</div>
@@ -90,17 +59,17 @@
                     </div>
                     <div class="post-content">
                         <div class="meta">
-                            <span class="post-date"><i class="fa fa-calendar" aria-hidden="true" th:text="${s.date}"></i></span>
+                            <span class="post-date"><i class="fa fa-calendar" aria-hidden="true" th:text="${name}"></i></span>
                         </div>
-                        <h3 class="title" th:text="${s.name}"><a href="single-blog.html">Sed ut perspiciatis unde omnis</a></h3>
+                        <h3 class="title" th:text="${name}"><a href="single-blog.html">Sed ut perspiciatis unde omnis</a></h3>
                         <div class="text">
-                            <p th:text="${s.des}"></p>
+                            <p th:text="${studio.name}"></p>
                         </div>
                     </div>
                     <div class="post-footer">
                         <div class="meta">
-                            <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a href="#" th:text="${s.district}+', '+${s.district.name}"></a></span>
-                            <span th:text="${s.contact}" class="post-comment"><i class="fa fa-comment" aria-hidden="true"></i><a href="#">2 Comments(s)</a></span>
+                            <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a href="#" th:text="${name}+', '+${name}"></a></span>
+                            <span th:text="${name}" class="post-comment"><i class="fa fa-comment" aria-hidden="true"></i><a href="#">2 Comments(s)</a></span>
                         </div>
                         <a href="single-blog.html" class="btn"><span>read more</span></a>
                     </div>
