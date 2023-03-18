@@ -10,11 +10,14 @@ import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.services.CityService;
 import fivemonkey.com.fitnessbackend.services.ServiceTypeService;
 import fivemonkey.com.fitnessbackend.services.StudioService;
+import fivemonkey.com.fitnessbackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
@@ -28,6 +31,9 @@ public class HomeController {
     private ServiceTypeService serviceTypeService;
     @Autowired
     private CityService cityService;
+
+    @Autowired
+    UserService userService;
     @Autowired
     StudioService studioService;
 
@@ -76,14 +82,20 @@ public class HomeController {
 
     @GetMapping("/homepage/service")
     public String service(Model model) {
+        long resultStudio=studioService.countStudio();
         List<ServiceTypeDTO> listServiceType = serviceTypeService.getAll();
+        String role="ROLE0004";
+        //count trainer
+        long result=userService.countTrainer(role);
+        model.addAttribute("numOfTrainer",result);
+        model.addAttribute("numStudio", resultStudio);
         model.addAttribute("listServiceType", listServiceType);
         return "/program";
     }
 
-    @GetMapping("/homepage/studio")
+    @RequestMapping(value = "/homepage/studio", method = {RequestMethod.GET, RequestMethod.POST})
     public String listStudiosHomepage(Model model,@RequestParam(value = "cityname", required = false, defaultValue = "All") String cityname) {
-        Map<String, List<StudioDTO>> cityMapList = new HashMap<>();
+        Map<String, List<StudioDTO>> studioMapList = new HashMap<>();
         List<CityDTO> listCity = cityService.getAllCity();
         List<StudioDTO> studioList;
         if ( "All".equals(cityname)) {
@@ -98,11 +110,11 @@ public class HomeController {
                     value.add(studioList.get(i * 3 + j));
                 }
             }
-            cityMapList.put("STU-" + (i + 1), value);
+            studioMapList.put("STU-" + (i + 1), value);
         }
         model.addAttribute("cities", listCity);
         model.addAttribute("currentCity", cityname);
-        model.addAttribute("studios", cityMapList);
+        model.addAttribute("studios", studioMapList);
         return "/studio";
     }
 }

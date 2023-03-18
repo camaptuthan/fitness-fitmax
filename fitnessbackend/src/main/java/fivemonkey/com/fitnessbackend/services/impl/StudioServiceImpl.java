@@ -143,5 +143,10 @@ public class StudioServiceImpl implements StudioService {
         return modelMapperConfiguration.mapList(studioRepository.findStudioByCityName(cityname), StudioDTO.class);
     }
 
+    @Override
+    public Long countStudio() {
+        return studioRepository.countStudio();
+    }
+
 
 }

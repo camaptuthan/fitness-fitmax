@@ -56,5 +56,7 @@ public interface UserService {
 
     void resetPassword(String email,String password);
 
+    long countTrainer(String roleId);
+
 
 }

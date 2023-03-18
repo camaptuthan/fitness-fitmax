@@ -40,4 +40,8 @@ public interface UserRepository extends JpaRepository<User, String> {
 //    List<User>listByCityAdmin(String city);
 //    @Query("select u from User u where u.role.id not in ('ROLE0001','ROLE0003','ROLE0002','ROLE0006') and u.studioManager.studio.id = ?1")
 //    List<User>listByAssistant(String studioId);
+
+    //count trainer
+    @Query("SELECT COUNT(u) FROM User u WHERE u.role.id=?1 ")
+    long getCountOfTrainer(String role);
 }

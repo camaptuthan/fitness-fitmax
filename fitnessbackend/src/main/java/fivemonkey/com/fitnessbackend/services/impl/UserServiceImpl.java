@@ -326,6 +326,11 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Override
+    public long countTrainer(String roleId) {
+        return userRepository.getCountOfTrainer("ROLE0004");
+    }
+
 
 }
 

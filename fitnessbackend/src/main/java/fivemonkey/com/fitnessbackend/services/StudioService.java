@@ -32,4 +32,6 @@ public interface StudioService {
     List<Studio> findByDistrict(String id);
 
     List<StudioDTO> getAllByCity(String cityname);
+
+    Long countStudio();
 }
