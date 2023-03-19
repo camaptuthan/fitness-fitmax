@@ -1,7 +1,5 @@
 package fivemonkey.com.fitnessbackend.controller;
 
-import fivemonkey.com.fitnessbackend.dto.ServiceTypeDTO;
-import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.services.ServiceTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.List;
-
 @Controller
 public class HomeController {
     @Autowired
@@ -19,16 +15,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String getAllServiceType(@AuthenticationPrincipal UserDetail userDetail, Model model) {
-        String path = "redirect:/dashboard";
-        User currentUser = userDetail.getUser();
-        if ("ROLE0004".equalsIgnoreCase(currentUser.getRole().getId())
-                || "ROLE0005".equalsIgnoreCase(currentUser.getRole().getId())) {
-            List<ServiceTypeDTO> listServiceType = serviceTypeService.getAll();
-            model.addAttribute("listServiceType", listServiceType);
-
-            path = "/index";
-        }
-
+        String path = "/index";
         //return "fragments/home_program";
         return path;
     }
