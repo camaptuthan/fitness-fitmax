@@ -20,35 +20,9 @@ import java.util.List;
 public class Clazz {
 
     @Id
-    @GeneratedValue(generator = "class_generator")
-    @GenericGenerator(name = "class_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.ClassIdentifier")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "class_id")
-    private String id;
-
-    @Column(name = "class_name")
-    private String name;
-
-    @Column(name = "image")
-    private String image;
-
-    @NotNull(message = "Not null")
-    @Column(name = "duration")
-    private int duration;
-
-    @Column(name = "price")
-    private Float price;
-
-    @Column(name = "description", columnDefinition = "longtext")
-    private String des;
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "created_date")
-    private Date date;
-
-    @Min(value = 0)
-    @Max(value = 3)
-    @Column(name = "status", nullable = false)
-    private int status;
+    private Long id;
 
     //service-class relationship
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -60,6 +34,5 @@ public class Clazz {
     @OneToMany(mappedBy = "aClass", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonIgnore
     private List<Session> sessions;
-
 
 }

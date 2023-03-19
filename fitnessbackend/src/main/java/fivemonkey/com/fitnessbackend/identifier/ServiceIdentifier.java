@@ -14,17 +14,12 @@ public class ServiceIdentifier implements IdentifierGenerator {
 
     @Override
     public Serializable generate(SharedSessionContractImplementor sharedSessionContractImplementor, Object obj) throws HibernateException {
-        String query = "select s.id from Services s";
+        String query = "select s.id from Services s order by des limit 1";
         Stream<String> ids = sharedSessionContractImplementor.createQuery(query, String.class).stream();
-        Long max = ids.map(o -> o.replace(prefix, "")).mapToLong(Long::parseLong).max().orElse(0L);
-        int curYear = 2023;
         LocalDate current_date = LocalDate.now();
-        if (current_date.getYear() - curYear == 1) {
-
-            curYear = current_date.getYear();
-            return prefix + (String.format("%04d", max + 1)) + curYear;
-        } else {
-            return prefix + (String.format("%04d", max + 1)) + curYear;
-        }
+        prefix = prefix + "" + current_date.getYear();
+        Long max = ids.map(o -> o.replace(prefix, "")).mapToLong(Long::parseLong).max().orElse(0L);
+        return prefix + (String.format("%04d", max + 1));
     }
+
 }

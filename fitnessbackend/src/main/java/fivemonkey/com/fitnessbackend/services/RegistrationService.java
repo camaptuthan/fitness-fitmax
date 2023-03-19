@@ -10,15 +10,19 @@ import java.util.List;
 
 @Service
 public interface RegistrationService {
-    List<RegistrationDTO> getRegistrationByUserEmail(String userEmail);
-    RegistrationDTO doRegistration(User user, String itemId);
-    boolean hasRegistration(String itemId, String userEmail);
-    List<RegistrationDTO> getRegistrationsByUserEmail(String userEmail);
-    List<Registration> getAllRegistrations();
-
-    Registration getRegistrationById(String id);
-
-    void updateRegistration(Registration existingRegis);
+//    List<RegistrationDTO> getRegistrationByUserEmail(String userEmail);
+//
+//    RegistrationDTO doRegistration(User user, String itemId);
+//
+//    boolean hasRegistration(String itemId, String userEmail);
+//
+//    List<RegistrationDTO> getRegistrationsByUserEmail(String userEmail);
+//
+//    List<Registration> getAllRegistrations();
+//
+//    Registration getRegistrationById(String id);
+//
+//    void updateRegistration(Registration existingRegis);
 
 //    List<Registration> getRegistrationByManager(String studioId);
 

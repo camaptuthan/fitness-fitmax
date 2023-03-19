@@ -22,6 +22,10 @@ import java.util.List;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Long id;
+
     @Column(name = "email")
     private String email;
     @Column(name = "password")
@@ -65,6 +69,11 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     private Trainer trainer;
+
+    //user-studio relationship
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "studio_id", referencedColumnName = "studio_id", nullable = true)
+    private Studio studio;
 
     @Column(name = "verification_code")
     private String verificationCode;

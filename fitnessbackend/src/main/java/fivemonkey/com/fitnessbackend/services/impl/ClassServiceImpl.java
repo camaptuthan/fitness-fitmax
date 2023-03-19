@@ -39,24 +39,25 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public Clazz save(ClassDTO c) {
-        Clazz clazz = new Clazz();
-        clazz.setName(c.getName());
-        clazz.setPrice(c.getPrice());
-        clazz.setDes(c.getDes());
-//        c.setServicesId(c.getServicesId());
-        // clazz.setTrainer(c.getTrainer());
-        clazz.setDate(new Date());
-        clazz.setStatus(0);
-        return classRepository.save(clazz);
+//        Clazz clazz = new Clazz();
+//        clazz.setName(c.getName());
+//        clazz.setPrice(c.getPrice());
+//        clazz.setDes(c.getDes());
+////        c.setServicesId(c.getServicesId());
+//        // clazz.setTrainer(c.getTrainer());
+//        clazz.setDate(new Date());
+//        clazz.setStatus(0);
+//        return classRepository.save(clazz);
+        return null;
     }
 
     @Override
     public Clazz update(ClassDTO c) {
         try {
             Clazz clazz = classRepository.getById(c.getId());
-            clazz.setName(c.getName());
-            clazz.setPrice(c.getPrice());
-            clazz.setDes(c.getDes());
+//            clazz.setName(c.getName());
+//            clazz.setPrice(c.getPrice());
+//            clazz.setDes(c.getDes());
             // clazz.setService(c.getService());
             //  clazz.setTrainer(c.getTrainer());
             return classRepository.save(clazz);
@@ -75,7 +76,7 @@ public class ClassServiceImpl implements ClassService {
     public void disableClass(String id) {
         Clazz clazz = classRepository.getById(id);
 
-        clazz.setStatus(2);
+//        clazz.setStatus(2);
         classRepository.save(clazz);
     }
 
@@ -84,7 +85,7 @@ public class ClassServiceImpl implements ClassService {
 
     public void enableById(String id) {
         Clazz clazz = classRepository.getById(id);
-        clazz.setStatus(1);
+//        clazz.setStatus(1);
         classRepository.save(clazz);
     }
 

@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.util.Date;
 import java.util.List;
@@ -44,8 +45,11 @@ public class Services {
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
     private Date date;
+
+    @Min(value = 0)
+    @Max(value = 3)
     @Column(name = "status", nullable = false)
-    private boolean status;
+    private int status;
 
     //city-service relationship
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
@@ -65,10 +69,6 @@ public class Services {
     //registration-service relationship
     @OneToMany(mappedBy = "services")
     private List<Registration> registrations;
-
-    //service-package relationship
-    @OneToOne(mappedBy = "services")
-    private Package aPackage;
 
     //service-class relationship
     @OneToOne(mappedBy = "services")

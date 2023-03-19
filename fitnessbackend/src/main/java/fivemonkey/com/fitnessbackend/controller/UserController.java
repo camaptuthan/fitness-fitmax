@@ -310,7 +310,7 @@ public class UserController {
 
     @GetMapping("/profile")
     public String myProfile(@AuthenticationPrincipal UserDetail userDetail, Model model) {
-        model.addAttribute("registrations", registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail()));
+//        model.addAttribute("registrations", registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail()));
         model.addAttribute("user", userDetail.getUser());
         return "user/profile";
     }
@@ -318,7 +318,8 @@ public class UserController {
     @ResponseBody
     @GetMapping("/profile/registration")
     public List<RegistrationDTO> registration(@AuthenticationPrincipal UserDetail userDetail) {
-        return registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail());
+//        return registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail());
+        return null;
     }
 
     //Change Password

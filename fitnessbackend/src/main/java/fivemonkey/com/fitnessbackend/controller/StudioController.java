@@ -1,8 +1,6 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.entities.Studio;
-import fivemonkey.com.fitnessbackend.entities.StudioManager;
-import fivemonkey.com.fitnessbackend.services.StudioManagerService;
 import fivemonkey.com.fitnessbackend.services.StudioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,8 +15,6 @@ public class StudioController {
     @Autowired
     private StudioService studioService;
 
-    @Autowired
-    private StudioManagerService studioManagerService;
 
     //Get Studio List
     @GetMapping("management/studios")
@@ -30,9 +26,9 @@ public class StudioController {
     //Add Studio
     @GetMapping("/management/addstudio")
     public String newStudio(Model model) {
-        List<StudioManager> mlist = studioManagerService.getAvailableManager();
+//        List<StudioManager> mlist = studioManagerService.getAvailableManager();
         Studio studio = new Studio();
-        model.addAttribute("list", mlist);
+//        model.addAttribute("list", mlist);
         model.addAttribute("studio", studio);
         return "./management/StudioManagement/add_studio";
     }
@@ -105,9 +101,9 @@ public class StudioController {
 //    }
     @GetMapping("/management/studios/new")
     public String createStudioForm(Model model) {
-        List<StudioManager> mlist = studioManagerService.getAvailableManager();
+//        List<StudioManager> mlist = studioManagerService.getAvailableManager();
         Studio studio = new Studio();
-        model.addAttribute("list", mlist);
+//        model.addAttribute("list", mlist);
         model.addAttribute("studio", studio);
         return "management/StudioManagement/addstudio";
     }

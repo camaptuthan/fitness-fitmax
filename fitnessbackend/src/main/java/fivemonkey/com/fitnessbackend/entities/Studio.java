@@ -41,8 +41,8 @@ public class Studio {
     private boolean status;
 
     //studio-studioManager relationship
-    @OneToOne(mappedBy = "studio", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    private StudioManager studioManager;
+    @OneToMany(mappedBy = "studio", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<User> user;
 
     //studio-district relationship
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)

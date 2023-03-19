@@ -162,9 +162,9 @@ public class ClassController {
 
 
         boolean hasRegistered = false;
-        if (userDetail != null) {
-            hasRegistered = registrationService.hasRegistration(classDTO.getId(), userDetail.getUser().getEmail());
-        }
+//        if (userDetail != null) {
+//            hasRegistered = registrationService.hasRegistration(classDTO.getId(), userDetail.getUser().getEmail());
+//        }
 
         model.addAttribute("hasRegistered", hasRegistered);
         model.addAttribute("related_class", classDTOListMap);

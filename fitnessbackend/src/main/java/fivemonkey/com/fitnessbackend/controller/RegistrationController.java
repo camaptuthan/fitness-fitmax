@@ -20,7 +20,7 @@ public class RegistrationController {
 
     @PostMapping("/make")
     public String doRegistration(@RequestParam("item_id") String itemId, @AuthenticationPrincipal UserDetail userDetail) {
-        registrationService.doRegistration(userDetail.getUser(), itemId);
+//        registrationService.doRegistration(userDetail.getUser(), itemId);
         return "redirect:/user/profile";
     }
 
@@ -28,7 +28,7 @@ public class RegistrationController {
     @GetMapping("management/registrations")
     public String listRegistration(@AuthenticationPrincipal UserDetail userDetail, Model model) {
         if (userDetail.getUser().getRole().getName().equals("Admin")) {
-            model.addAttribute("registrations", registrationService.getAllRegistrations());
+//            model.addAttribute("registrations", registrationService.getAllRegistrations());
         } else if (userDetail.getUser().getRole().getName().equals("Manager")) {
 //            model.addAttribute("registrations", registrationService.getRegistrationByManager(userDetail.getUser().getStudioManager().getStudio().getId()));
 //        } else if (userDetail.getUser().getRole().getName().equals("Assistant")) {
