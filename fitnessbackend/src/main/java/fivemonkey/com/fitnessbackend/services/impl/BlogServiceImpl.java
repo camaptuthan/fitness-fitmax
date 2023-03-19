@@ -9,6 +9,9 @@ import fivemonkey.com.fitnessbackend.repository.UserRepository;
 import fivemonkey.com.fitnessbackend.services.BlogService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -53,7 +56,7 @@ public class BlogServiceImpl implements BlogService {
     public Blog save(BlogDTO b) {
         Blog blog = new Blog();
         blog.setTitle(b.getTitle());
-        blog.setDescription(b.getDes());
+        blog.setDescription(b.getDescription());
         blog.setStatus(true);
         blog.setUser(userRepository.findByEmail(b.getUserEmail()).get());
         return blogRepository.save(blog);
@@ -64,10 +67,10 @@ public class BlogServiceImpl implements BlogService {
         try {
             Blog blog = blogRepository.getById(b.getId());
             blog.setTitle(b.getTitle());
-            blog.setDescription(b.getDes());
-            blog.setThumbnail(b.getImage());
+            blog.setDescription(b.getDescription());
+            blog.setThumbnail(b.getThumbnail());
             blog.setStatus(true);
-            blog.setDate(b.getCreated_date());
+            blog.setDate(b.getDate());
             blog.setUser(new User(b.getUserEmail()));
             blog.setCategory(b.getCategory());
             return blogRepository.save(blog);
@@ -94,5 +97,18 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public void delete(String id) {
 
+    }
+
+    @Override
+    public List<Blog> findTop3NewestBlogs() {
+        return blogRepository.findTop3NewestBlogs();
+    }
+
+    @Override
+    public Page<Blog> findBlogByKeyword(String keyword,int pageNumber) {
+
+        Pageable pageable = PageRequest.of(pageNumber , 1);
+
+        return blogRepository.findBlogByKeyword(keyword, pageable);
     }
 }

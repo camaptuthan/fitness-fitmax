@@ -105,8 +105,9 @@ public class StudioController {
 //    list studio in main
 
     @GetMapping("/studio-details/{id}")
-    public String homepageStudioDetail(@PathVariable String id, Model model) {
+    public String homepageStudioDetail(@PathVariable("id") String id, Model model) {
         Studio s=  studioService.getStudioById(id);
+        System.out.println("name is"+s.getName());
         model.addAttribute("studio",s);
         return "/studio_details";
     }

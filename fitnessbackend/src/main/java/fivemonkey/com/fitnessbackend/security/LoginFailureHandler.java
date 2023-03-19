@@ -26,7 +26,7 @@ public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 			redirect += "Email is not active";
 		}
 		else if(exception instanceof BadCredentialsException) {
-			redirect += "Email Or Password is invalid!!";
+			redirect += "Email Or Password is invalid";
 		}
 		super.setDefaultFailureUrl(redirect);
 		//super.setUseForward(true);

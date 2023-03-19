@@ -18,4 +18,6 @@ public interface ServiceRepository extends JpaRepository<Services, String> {
 
     @Query("select s from Services s where s.serviceType.id = 3")
     List<Services> getServicesByClass();
+
+
 }

@@ -2,8 +2,10 @@ package fivemonkey.com.fitnessbackend.services;
 
 import fivemonkey.com.fitnessbackend.dto.BlogDTO;
 import fivemonkey.com.fitnessbackend.entities.Blog;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @Service
@@ -22,5 +24,10 @@ public interface BlogService {
     public void enableBlogById(String id);
 
     public void delete(String id);
+
+
+    List<Blog> findTop3NewestBlogs();
+
+    Page<Blog> findBlogByKeyword(String keyword,int pageNumber);
 
 }
