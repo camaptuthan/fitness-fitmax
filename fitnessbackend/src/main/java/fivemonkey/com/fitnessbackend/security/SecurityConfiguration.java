@@ -26,6 +26,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
+    @Autowired
+    private LoginFailureHandler failureHandler;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -33,7 +35,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public PasswordEncoder passwordDecoder() {
         return NoOpPasswordEncoder.getInstance();
     }
 
@@ -61,7 +68,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .disable();
         // Author for manager
         http.authorizeRequests().antMatchers("/user/management/**").hasAnyAuthority("ROLE0002","ROLE0001","ROLE0006","ROLE0003");
-        http.authorizeRequests().antMatchers("/user/**").authenticated();
+//        http.authorizeRequests().antMatchers("/user/**").authenticated();
         http.authorizeRequests().anyRequest().permitAll();
         // When the user has logged in as XX.
         // But access a page that requires role YY,
@@ -72,8 +79,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .and()
                 .formLogin()
-                .loginPage("/login")//
+                .loginPage("/login")
+                .successHandler(new RefererRedirectionAuthenticationSuccessHandler())
                 .successForwardUrl("/login").permitAll()
+                .failureHandler(failureHandler)
                 // Config for Logout Page
                 .and()
                 .logout()

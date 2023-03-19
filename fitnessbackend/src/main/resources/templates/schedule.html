@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Fitmax</title>
+  <!-- =================== META =================== -->
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <th:block th:replace="fragments/head :: head"></th:block>
+
+
+</head>
+
+<body id="home" >
+<!--================ PRELOADER ================-->
+<div class="preloader-cover">
+  <div id="cube-loader">
+    <div class="caption">
+      <div class="cube-loader">
+        <div class="cube loader-1"></div>
+        <div class="cube loader-2"></div>
+        <div class="cube loader-4"></div>
+        <div class="cube loader-3"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--============== PRELOADER END ==============-->
+
+<!-- ================= HEADER ================= -->
+<th:block th:insert="fragments/header.html"></th:block>
+<!-- =============== HEADER END =============== -->
+
+<!-- =============== HEADER-TITLE =============== -->
+<!-- ============= HEADER-TITLE END ============= -->
+
+<!-- ============== S-ABOUT-PROGRAM ============== -->
+<!-- ============ S-ABOUT-PROGRAM END ============ -->
+<div th:include="management/ScheduleManagement/schedule_table"></div>
+<!-- ============== S-ABOUT-BOTTOM ============== -->
+<!-- ============ S-ABOUT-BOTTOM END ============ -->
+
+<!-- ============== S-OUR-PROGRAMS ============== -->
+
+<!-- ============ S-OUR-PROGRAMS END ============ -->
+
+<!-- =========== S-TRAINING-SCHEDULE =========== -->
+
+<!-- ========= S-TRAINING-SCHEDULE END ========= -->
+
+<!-- ================ S-CONTACTS ================ -->
+
+<!-- ============== S-CONTACTS-END ============== -->
+
+<!-- ================== FOOTER ================== -->
+<div th:include="fragments/footer.html"></div>
+<!-- ================ FOOTER END ================ -->
+
+<!--=================== TO TOP ===================-->
+<a class="to-top" href="#home">
+  <i class="fa fa-chevron-up" aria-hidden="true"></i>
+</a>
+<!--================= TO TOP END =================-->
+
+<!--=================== SCRIPT	===================-->
+<script th:src="@{/js/jquery-2.2.4.min.js}"></script>
+<script th:src="@{/js/scripts.js}"></script>
+</body>

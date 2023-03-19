@@ -29,7 +29,6 @@ public class Clazz {
     @JoinColumn(name = "service_id", referencedColumnName = "service_id", nullable = false, unique = true)
     private Services services;
 
-
     //class-session relationship
     @OneToMany(mappedBy = "aClass", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonIgnore

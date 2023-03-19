@@ -12,7 +12,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name = "session", schema = "dbo", uniqueConstraints = {@UniqueConstraint(columnNames = {"happened_date", "schedule_id"})})
+@Table(name = "session", schema = "dbo",  uniqueConstraints = {@UniqueConstraint(columnNames = {"happened_date","trainer_email","schedule_id"})})
 public class Session {
 
     @Id
@@ -30,7 +30,6 @@ public class Session {
     @Temporal(TemporalType.DATE)
     @Column(name = "happened_date")
     private Date happenedDate;
-
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
     private Date createdDate;

@@ -158,7 +158,7 @@ const getSession = () => {
                         <div class="w-100 h-100" style="display: none">
                             <h4><a href="">${session.name}</a></h4>
                             <div class="date">${schedule_startTime} – ${schedule_endTime}</div>
-                            <div class="name">${session.happenedDate}</div>
+                            <div class="name">${session.classId}</div>
                         </div>
                         `);
                     sessionEle.children().fadeIn(1000 + index * 250);

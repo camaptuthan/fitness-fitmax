@@ -67,47 +67,50 @@
   <div class="container">
       <h2 class="title-decor">Studio <span>Fitness</span></h2>
       <div class="custom-select" style="width:400px;">
-          <select>
-              <option value="0">Select City:</option>
-              <option value="1">Ha Noi</option>
-              <option value="2">Hai Phong</option>
-              <option value="3">Ho Chi Minh</option>
-
+          <form id="searchAndFilter" th:action="@{/homepage/studio}" method="get">
+              City: <select th:name="cityname" style="width:30%" onchange="submitForm()">
+              <option >All</option>
+              <th:block th:each="city : ${cities}">
+                  <option th:value="${city.name}" th:text="${city.name}" th:selected="${city.name == currentCity }"  ></option>
+              </th:block>
           </select>
+          </form>
       </div>
-      <p class="slogan">Sứ mệnh của Fitmax là mang đến sự nhận thức đúng đắn cho cộng đồng trong việc rèn luyện thể chất
-          để có được sức khỏe và tinh thần tuyệt vời, luôn vững vàng vượt qua mọi thử thách trong cuộc sống.</p>
+      <p class="slogan">Fitmax's mission is to bring the right awareness to the community in physical training to have great health and spirit, always firmly overcome all challenges in life.</p>
       <!--    <th:block th:insert="/fragments/admin_fragment/city"></th:block>-->
-      <div class="row">
-          <div class="col-md-6 related-post-col" th:each="s : ${studios}">
+<th:block th:each="item,iter : ${studios}">
+    <div th:classappend="${iter.index == 0} ? active : '' ">
+      <div class="row" >
+          <div class="col-md-6 related-post-col" th:each="s : ${item.value}">
               <div class="post-item-cover">
                   <div class="post-header">
                       <div class="related-post-categ">fitness</div>
-                      <div class="post-thumbnail">
-                          <a href="single-blog.html"><img alt="img" class="rx-lazy"
-                                                          data-src="img/blog-4.jpg" src="/img/placeholder-all.png"></a>
+                      <div class="post-thumbnail" >
+                          <a th:href="@{/studio/studio-details/{id} (id=${s.id})}"> <img th:src="${s.image}" alt="img"></a>
                       </div>
                   </div>
                   <div class="post-content">
-            <div class="meta">
-              <span class="post-date"><i class="fa fa-calendar" aria-hidden="true" th:text="${s.date}"></i></span>
-            </div>
-            <h3 class="title" th:text="${s.name}"><a href="single-blog.html">Sed ut perspiciatis unde omnis</a></h3>
-            <div class="text">
-              <p th:text="${s.des}"></p>
-            </div>
+                      <div class="meta">
+                          <span class="post-date"><i class="fa fa-calendar" aria-hidden="true" th:text="${#dates.format(s.date, 'dd-MM-yyyy')}"></i></span>
+                      </div>
+                      <h3 class="title" th:text="${s.name}"><a href="single-blog.html"></a></h3>
+                      <div class="text">
+                          <p th:text="${s.des}"></p>
+                      </div>
+                  </div>
+                  <div class="post-footer">
+                      <div class="meta">
+                          <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a href="#" th:text="${s.district.city.name}+', '+${s.district.getName()}+', '+${s.district.getRoad()}"></a></span>
+                          <span th:text="${s.contact}" class="post-comment"><i class="fa fa-comment" aria-hidden="true"></i><a href="#">2 Comments(s)</a></span>
+                      </div>
+                      <a th:href="@{/studio/studio-details/{id} (id=${s.id})}" class="btn"><span>Detail</span></a>
+                  </div>
+              </div>
           </div>
-          <div class="post-footer">
-            <div class="meta">
-              <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a href="#" th:text="${s.district}+', '+${s.district.name}"></a></span>
-              <span th:text="${s.contact}" class="post-comment"><i class="fa fa-comment" aria-hidden="true"></i><a href="#">2 Comments(s)</a></span>
-            </div>
-            <a href="single-blog.html" class="btn"><span>read more</span></a>
-          </div>
-        </div>
       </div>
+      </div>
+    </th:block>
 
-    </div>
   </div>
 </section>
 <!--============== RELATED POSTS END ==============-->
@@ -164,7 +167,11 @@
 <script th:src="@{/js/rx-lazy.js}"></script>
 <script th:src="@{/js/parallax.min.js}"></script>
 <script th:src="@{/js/scripts.js}"></script>
-
+<script type="text/javascript">
+    function submitForm() {
+        document.getElementById("searchAndFilter").submit();
+    }
+</script>
 </body>
 
 </html>

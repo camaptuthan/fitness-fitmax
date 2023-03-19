@@ -15,5 +15,8 @@ public interface DistrictRepository extends JpaRepository<District,Long> {
     List<District> getDistrictsByCity(Long cityId);
 
 //    @Query("select d from District d where d.studios.user.email = ?1")
+//    @Query("select d from District d where d.city.id = ?1")
+//    List<District> getDistrictsByCity(Long cityId);
+//
 //    District getDistrictByStudio(String email);
 }

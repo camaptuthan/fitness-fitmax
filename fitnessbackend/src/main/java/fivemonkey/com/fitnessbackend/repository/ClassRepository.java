@@ -20,11 +20,14 @@ public interface ClassRepository extends JpaRepository<Clazz, String> {
 
     @Query("select c from Clazz  c where CONCAT(c.services.name,'',c.services.des,'',c.services.price) like %?1% ")
     List<Clazz> searchClassByKeyword(String keyword);
+  //  @Query("select c from Clazz  c where CONCAT(c.name,'',c.des,'',c.price) like %?1% ")
+    //List<Clazz> searchClassByKeyword(String keyword);
 
 
     @Query("select c from Clazz c where c.services.id = ?1")
     Clazz getClazzByService(String servicesId);
 
 
-
+    @Query("select c from Clazz c where c.services.city.name = ?1 or c.services.studio.id = ?1")
+    List<Clazz> findClazzByCityOrStudio(String id);
 }

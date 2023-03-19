@@ -45,123 +45,62 @@
 <!-- ============= HEADER-TITLE END ============= -->
 
 <!--===================== S-NEWS =====================-->
-
 <section class="s-news">
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-9 blog-cover">
-                <div class="post-item-cover">
+                <div class="post-item-cover" th:each="blog:${listBlog}">
                     <div class="post-header">
                         <div class="post-thumbnail">
                             <a href="single-blog.html">
-                                <img th:src="@{/img/blog-1.jpg}" alt="img">
+                                <img th:src="${blog.thumbnail}" alt="img">
                             </a>
                         </div>
                     </div>
                     <div class="post-content">
                         <div class="meta">
-                            <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a
-                                    href="#">By Rovadex</a></span>
-                            <span class="post-date"><i class="fa fa-calendar"
-                                                       aria-hidden="true"></i>October 31, 2019</span>
-                            <span class="post-category"><i class="fa fa-tag" aria-hidden="true"></i><a
-                                    href="#">Fitness</a></span>
+                            <span class="post-by"><i class="fa fa-user" aria-hidden="true" ></i><a
+                                    href="#" th:text="${blog.getUser().lastName+' '+blog.getUser().firstName}" ></a></span>
+                            <span class="post-date" aria-hidden="true" th:text="${#dates.format(blog.date, 'dd-MM-yyyy')}"><i class="fa fa-calendar"
+                                                       ></i></span>
+                            <span class="post-category" ><i class="fa fa-tag" aria-hidden="true" th:text="${blog.category.name}"></i><a
+                                    href="#"></a></span>
                         </div>
-                        <h2 class="title"><a href="single-blog.html">Sed ut perspiciatis unde omnis</a></h2>
+                        <h2 class="title"><a href="single-blog.html" th:text="${blog.title}"></a></h2>
                         <div class="text">
-                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                                laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                                architecto beatae vitae dicta sunt...</p>
+                            <p th:text="${#strings.length(blog.description) > 150 ? #strings.substring(blog.description, 0, 150) + '...' : blog.description}"></p>
                         </div>
                     </div>
                     <div class="post-footer">
-                        <div class="meta">
-                            <span class="post-comment"><i class="fa fa-comment" aria-hidden="true"></i><a href="#">2 Comments(s)</a></span>
-                            <span class="post-tags"><i class="fa fa-hashtag" aria-hidden="true"></i><a
-                                    href="#">Aenean</a><a href="#">Mattis</a></span>
-                        </div>
                         <a href="single-blog.html" class="btn"><span>read more</span></a>
                     </div>
                 </div>
-                <div class="post-item-cover">
-                    <div class="post-header">
-                        <div class="post-thumbnail">
-                            <a href="single-blog.html">
-                                <img th:src="@{/img/blog-2.jpg}" alt="img">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="post-content">
-                        <div class="meta">
-                            <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a
-                                    href="#">By Rovadex</a></span>
-                            <span class="post-date"><i class="fa fa-calendar"
-                                                       aria-hidden="true"></i>October 31, 2019</span>
-                            <span class="post-category"><i class="fa fa-tag" aria-hidden="true"></i><a
-                                    href="#">Lifting</a></span>
-                        </div>
-                        <h2 class="title"><a href="single-blog.html">Creating a WordPress Blog</a></h2>
-                        <div class="text">
-                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                                laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                                architecto beatae vitae dicta sunt...</p>
-                        </div>
-                    </div>
-                    <div class="post-footer">
-                        <div class="meta">
-                            <span class="post-comment"><i class="fa fa-comment" aria-hidden="true"></i><a href="#">2 Comments(s)</a></span>
-                            <span class="post-tags"><i class="fa fa-hashtag" aria-hidden="true"></i><a
-                                    href="#">Aenean</a><a href="#">Mattis</a></span>
-                        </div>
-                        <a href="single-blog.html" class="btn"><span>read more</span></a>
-                    </div>
-                </div>
-                <div class="post-item-cover">
-                    <blockquote>
-                        <p>“At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
-                            voluptatum deleniti atque corrupti quos dolores et quas molestias”</p>
-                        <cite>by <a href="#">Kerry Ashman</a></cite>
-                    </blockquote>
-                </div>
-                <div class="post-item-cover">
-                    <div class="post-content">
-                        <div class="meta">
-                            <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a
-                                    href="#">By Rovadex</a></span>
-                            <span class="post-date"><i class="fa fa-calendar"
-                                                       aria-hidden="true"></i>October 31, 2019</span>
-                            <span class="post-category"><i class="fa fa-tag" aria-hidden="true"></i><a
-                                    href="#">Fitness</a></span>
-                        </div>
-                        <h2 class="title"><a href="single-blog.html">Sed ut perspiciatis unde omnis</a></h2>
-                        <div class="text">
-                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                                laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                                architecto beatae vitae dicta sunt...</p>
-                        </div>
-                    </div>
-                    <div class="post-footer">
-                        <div class="meta">
-                            <span class="post-comment"><i class="fa fa-comment" aria-hidden="true"></i><a href="#">2 Comments(s)</a></span>
-                            <span class="post-tags"><i class="fa fa-hashtag" aria-hidden="true"></i><a
-                                    href="#">Aenean</a><a href="#">Mattis</a></span>
-                        </div>
-                        <a href="single-blog.html" class="btn"><span>read more</span></a>
-                    </div>
-                </div>
+<!--                <div class="pagination-cover">-->
+<!--                    <ul class="pagination" th:if="${currentPage > 0}">-->
+<!--                        <li class="pagination-item "><a th:href="@{/blog(keyword=${keyword},page=0)}"></a></li>-->
+<!--                        <li class="pagination-item">&lt; </a></li>-->
+<!--                    </ul>-->
+
+<!--                    <ul class="pagination" th:if="${currentPage < totalPages }"></li>-->
+<!--                        <li class="pagination-item"><a th:href="@{/blog(keyword=${keyword},page=${currentPage + 1})}" th:text="${currentPage+1}"> &gt;</a></li>-->
+<!--                        <li class="pagination-item"><a th:href="@{/blog(keyword=${keyword},page=${totalPages - 1})}"></a></li>-->
+<!--                    </ul>-->
+
+<!--                </div>-->
                 <div class="pagination-cover">
                     <ul class="pagination">
-                        <li class="pagination-item item-prev"><a href="#"><i class="fa fa-angle-left"
-                                                                             aria-hidden="true"></i></a></li>
+                        <li class="pagination-item item-prev"><a href="#"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
                         <li class="pagination-item active"><a href="#">1</a></li>
                         <li class="pagination-item"><a href="#">2</a></li>
                         <li class="pagination-item"><a href="#">3</a></li>
                         <li class="pagination-item"><a href="#">4</a></li>
                         <li class="pagination-item"><a href="#">5</a></li>
-                        <li class="pagination-item item-next"><a href="#"><i class="fa fa-angle-right"
-                                                                             aria-hidden="true"></i></a></li>
+                        <li class="pagination-item item-next"><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                     </ul>
                 </div>
+
+
+
             </div>
             <!--================= SIDEBAR =================-->
             <div class="col-12 col-lg-3 sidebar">
@@ -171,6 +110,7 @@
         </div>
     </div>
 </section>
+
 <!--=================== S-NEWS END ===================-->
 
 <!-- ================== FOOTER ================== -->

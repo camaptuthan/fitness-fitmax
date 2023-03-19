@@ -32,12 +32,24 @@ public interface UserRepository extends JpaRepository<User, String> {
 
 //    @Query("select u from User u where u.role.id not in ('ROLE0001','ROLE0002','ROLE0006') and u.studioManager.studio.id = ?1")
 //    List<User>listByManager(String studioId);
+//
+////    @Query("select u from User u where u.role.id not in ('ROLE0001','ROLE0006') and u.studio.district.city.name=?1")
+//
+//    @Query("select u from User u where u.role.id not in ('ROLE0001','ROLE0006') and u.city.name=?1")
+//
+//    List<User>listByCityAdmin(String city);
+//    @Query("select u from User u where u.role.id not in ('ROLE0001','ROLE0003','ROLE0002','ROLE0006') and u.studioManager.studio.id = ?1")
+//    List<User>listByAssistant(String studioId);
 
-//    @Query("select u from User u where u.role.id not in ('ROLE0001','ROLE0006') and u.studio.district.city.name=?1")
+    //count trainer
+    @Query("SELECT COUNT(u) FROM User u WHERE u.role.id=?1 ")
+    long getCountOfTrainer(String role);
 
     @Query("select u from User u where u.role.id not in ('ROLE0001','ROLE0006') and u.city.name=?1")
 
     List<User>listByCityAdmin(String city);
 //    @Query("select u from User u where u.role.id not in ('ROLE0001','ROLE0003','ROLE0002','ROLE0006') and u.studioManager.studio.id = ?1")
 //    List<User>listByAssistant(String studioId);
+    @Query("SELECT u FROM User u where u.role.id=?1")
+    List<User> listAllTrainer(String role);
 }

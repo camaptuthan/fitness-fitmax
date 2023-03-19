@@ -70,6 +70,10 @@ public class Services {
     @OneToMany(mappedBy = "services")
     private List<Registration> registrations;
 
+    //service-package relationship
+    @OneToOne(mappedBy = "services")
+    private Package aPackage;
+
     //service-class relationship
     @OneToOne(mappedBy = "services")
     private Clazz clazz;

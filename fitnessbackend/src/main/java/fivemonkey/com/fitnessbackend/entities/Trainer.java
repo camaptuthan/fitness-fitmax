@@ -49,4 +49,5 @@ public class Trainer {
     @MapsId
     @JoinColumn(name = "trainer_email")
     private User user;
+
 }

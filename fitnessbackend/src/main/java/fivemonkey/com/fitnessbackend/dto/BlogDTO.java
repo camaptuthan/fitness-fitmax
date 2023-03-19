@@ -19,17 +19,18 @@ public class BlogDTO {
 
     private String title;
 
-    private String image;
+    private String thumbnail;
 
-    private String des;
+    private String description;
 
-    private Date created_date;
+    private Date date;
 
     private boolean status;
 
     private Category category;
 
     private String userEmail;
+    private User user;
 
 
 }
