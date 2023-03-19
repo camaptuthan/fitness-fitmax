@@ -14,7 +14,7 @@ public class ServiceIdentifier implements IdentifierGenerator {
 
     @Override
     public Serializable generate(SharedSessionContractImplementor sharedSessionContractImplementor, Object obj) throws HibernateException {
-        String query = "select s.id from Services s order by des limit 1";
+        String query = "select s.id from Services s order by s.id desc limit 1";
         Stream<String> ids = sharedSessionContractImplementor.createQuery(query, String.class).stream();
         LocalDate current_date = LocalDate.now();
         prefix = prefix + "" + current_date.getYear();
