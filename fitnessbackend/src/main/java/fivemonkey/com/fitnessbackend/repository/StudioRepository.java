@@ -16,17 +16,16 @@ public interface StudioRepository extends JpaRepository<Studio, String> {
     @Query("select s.id, s.name from Studio s where s.district.id= :id")
     List<Studio> findByDistrict(@Param("id") String id);
 
-    Page<Studio> findStudioByNameContaining(String name, Pageable pageable);
-
-    @Query("select s from Studio s where s.district.city.name = ?1")
-    Studio getStudioByCity(String cityname);
-
     @Query("select s from Studio s where s.district.city.name = ?1")
     List<Studio> findStudioByCityName(String cityname);
 
+    @Query("select u.studio from User u where u.email = ?1")
+    Studio findStudioByStudioManager(String email);
+
+    @Query("select s from Studio s where s.id = ?1")
+    Studio findStudioById(String id);
     //count studio
     @Query("SELECT COUNT(s) FROM Studio s  ")
     long countStudio();
-
 
 }

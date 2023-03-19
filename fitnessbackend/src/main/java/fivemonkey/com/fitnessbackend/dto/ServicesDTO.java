@@ -28,13 +28,11 @@ public class ServicesDTO {
 
     private String studioId;
 
-    private int categoryId;
+    private Long categoryId;
 
-    private int serviceTypeId;
+    private Long serviceTypeId;
 
     private Long cityId;
-
-    private List<RegistrationDTO> registrationDTOS;
 
 
 }

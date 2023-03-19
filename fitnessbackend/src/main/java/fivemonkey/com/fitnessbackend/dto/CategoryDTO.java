@@ -20,5 +20,4 @@ public class CategoryDTO {
 
     private String type;
 
-    private List<ServicesDTO> serviceDTOList;
 }
