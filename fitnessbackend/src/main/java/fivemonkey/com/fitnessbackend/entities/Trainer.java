@@ -1,6 +1,7 @@
 package fivemonkey.com.fitnessbackend.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 import lombok.*;
 
@@ -46,8 +47,11 @@ public class Trainer {
 
     //trainer-user relationship
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "trainer_email")
+    @JoinColumn(name = "trainer_email", referencedColumnName = "email", unique = true)
     private User user;
 
+    //trainer-registration relationship
+    @Size(max = 3)
+    @OneToMany(mappedBy = "trainer", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<Registration> registrations;
 }

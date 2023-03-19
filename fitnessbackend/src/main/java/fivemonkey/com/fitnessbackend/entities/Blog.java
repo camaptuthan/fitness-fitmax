@@ -28,7 +28,7 @@ public class Blog {
     @Column(name = "description", columnDefinition = "longtext")
     private String description;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")
     private Date date;
 

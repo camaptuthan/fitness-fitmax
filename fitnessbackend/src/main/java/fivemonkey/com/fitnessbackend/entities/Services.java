@@ -42,7 +42,7 @@ public class Services {
     private Float price;
     @Column(name = "description", columnDefinition = "longtext")
     private String des;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")
     private Date date;
 
@@ -69,11 +69,7 @@ public class Services {
     //registration-service relationship
     @OneToMany(mappedBy = "services")
     private List<Registration> registrations;
-
-    //service-package relationship
-    @OneToOne(mappedBy = "services")
-    private Package aPackage;
-
+    
     //service-class relationship
     @OneToOne(mappedBy = "services")
     private Clazz clazz;

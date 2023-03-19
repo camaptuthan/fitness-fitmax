@@ -22,7 +22,7 @@ public class Registration {
     @Column(name = "registration_id")
     private String id;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "registration_date")
     private Date date;
 
@@ -46,6 +46,7 @@ public class Registration {
     @JoinColumn(name = "user_email", referencedColumnName = "trainee_email", nullable = false)
     private Trainee trainee;
 
+    //trainer-registration relationship
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "assigned_email", referencedColumnName = "trainer_email", nullable = true)
     private Trainer trainer;

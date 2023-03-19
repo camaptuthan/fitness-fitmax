@@ -63,26 +63,25 @@ public class User {
 
     //trainee-user relationship
     @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
     private Trainee trainee;
 
     //trainer-user relationship
     @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
     private Trainer trainer;
 
-    //cityManager-user relationship
+    //studio-user relationship
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "studio_id", referencedColumnName = "studio_id", nullable = true)
     private Studio studio;
 
+    //user-service relationship
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Services> services;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "studio_managers",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = {@JoinColumn(name = "studio_id") })
-    private Set<Studio> studios = new HashSet<>();
+
+    //user-slider relationship
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<Slider> sliders;
+
     @Column(name = "verification_code")
     private String verificationCode;
 

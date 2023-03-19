@@ -26,10 +26,10 @@ public class Trainee {
     //trainee-tracking relationship
     @OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY)
     private List<Tracking> trackings;
+
     //trainee-user relationship
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "trainee_email")
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "trainee_email", referencedColumnName = "email", unique = true)
     private User user;
 
     //trainee-registration relationship
