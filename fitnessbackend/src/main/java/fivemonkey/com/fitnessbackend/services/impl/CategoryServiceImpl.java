@@ -27,7 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDTO getCategoryById(String id) {
+    public CategoryDTO getCategoryById(Long id) {
         Category c = categoryRepository.getById(id);
         CategoryDTO categoryDTO = new CategoryDTO();
         ModelMapper mapper = new ModelMapper();

@@ -5,17 +5,26 @@ import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.stream.Stream;
 
 public class ServiceIdentifier implements IdentifierGenerator {
 
     private String prefix = "SER";
+
     @Override
     public Serializable generate(SharedSessionContractImplementor sharedSessionContractImplementor, Object obj) throws HibernateException {
         String query = "select s.id from Services s";
-        Stream<String> ids = sharedSessionContractImplementor.createQuery(query,String.class).stream();
-        Long max = ids.map(o -> o.replace(prefix,"")).mapToLong(Long::parseLong).max().orElse(0L);
+        Stream<String> ids = sharedSessionContractImplementor.createQuery(query, String.class).stream();
+        Long max = ids.map(o -> o.replace(prefix, "")).mapToLong(Long::parseLong).max().orElse(0L);
+        int curYear = 2023;
+        LocalDate current_date = LocalDate.now();
+        if (current_date.getYear() - curYear == 1) {
 
-        return prefix + (String.format("%04d",max + 1));
+            curYear = current_date.getYear();
+            return prefix + (String.format("%04d", max + 1)) + curYear;
+        } else {
+            return prefix + (String.format("%04d", max + 1)) + curYear;
+        }
     }
 }

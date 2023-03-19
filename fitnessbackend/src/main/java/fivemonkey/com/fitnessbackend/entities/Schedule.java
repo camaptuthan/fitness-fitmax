@@ -29,11 +29,9 @@ public class Schedule {
     @Column(name = "end_time")
     private Date endTime;
 
-
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
     private Date createdDate;
-
 
     @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Session> sessions;

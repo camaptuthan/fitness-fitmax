@@ -11,7 +11,7 @@ public interface CategoryService {
 
     public List<Category> findAllCategories();
 
-    public CategoryDTO getCategoryById(String id);
+    public CategoryDTO getCategoryById(Long id);
 
     public Category save(CategoryDTO c);
 

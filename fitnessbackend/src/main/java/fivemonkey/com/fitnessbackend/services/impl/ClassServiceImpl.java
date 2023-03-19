@@ -46,7 +46,7 @@ public class ClassServiceImpl implements ClassService {
 //        c.setServicesId(c.getServicesId());
         // clazz.setTrainer(c.getTrainer());
         clazz.setDate(new Date());
-        clazz.setStatus(true);
+        clazz.setStatus(0);
         return classRepository.save(clazz);
     }
 
@@ -75,7 +75,7 @@ public class ClassServiceImpl implements ClassService {
     public void disableClass(String id) {
         Clazz clazz = classRepository.getById(id);
 
-        clazz.setStatus(false);
+        clazz.setStatus(2);
         classRepository.save(clazz);
     }
 
@@ -84,7 +84,7 @@ public class ClassServiceImpl implements ClassService {
 
     public void enableById(String id) {
         Clazz clazz = classRepository.getById(id);
-        clazz.setStatus(true);
+        clazz.setStatus(1);
         classRepository.save(clazz);
     }
 

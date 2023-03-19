@@ -22,5 +22,5 @@ public interface RegistrationService {
 
 //    List<Registration> getRegistrationByManager(String studioId);
 
-    List<Registration> getRegistrationByAssistant(String email);
+//    List<Registration> getRegistrationByAssistant(String email);
 }

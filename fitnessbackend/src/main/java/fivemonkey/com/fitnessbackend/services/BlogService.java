@@ -11,16 +11,16 @@ public interface BlogService {
 
     public List<BlogDTO> findAllBlogs();
 
-    public BlogDTO findBlogById(String id);
+    public BlogDTO findBlogById(Long id);
 
     public Blog save(BlogDTO b);
 
     public Blog update(BlogDTO b);
 
-    public void disableBlogById(String id);
+    public void disableBlogById(Long id);
 
-    public void enableBlogById(String id);
+    public void enableBlogById(Long id);
 
-    public void delete(String id);
+    public void delete(Long id);
 
 }

@@ -1,6 +1,8 @@
 package fivemonkey.com.fitnessbackend.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -16,10 +18,9 @@ import java.util.*;
 public class Blog {
 
     @Id
-    @GeneratedValue(generator = "blog_generator")
-    @GenericGenerator(name = "blog_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.BlogIdentifier")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "blog_id")
-    private String id;
+    private Long id;
 
     @Column(name = "title")
     private String title;
@@ -34,8 +35,10 @@ public class Blog {
     @Column(name = "thumbnail")
     private String thumbnail;
 
+    @Min(value = 0)
+    @Max(value = 2)
     @Column(name = "status", nullable = false)
-    private boolean status;
+    private int status;
 
     //user-blog relationship
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)

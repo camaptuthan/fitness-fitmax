@@ -16,6 +16,6 @@ public class ScheduleIdentifier implements IdentifierGenerator {
         Stream<String> ids = sharedSessionContractImplementor.createQuery(query,String.class).stream();
         Long max = ids.map(o -> o.replace(prefix,"")).mapToLong(Long::parseLong).max().orElse(0L);
 
-        return prefix + (String.format("%04d",max + 1));
+        return prefix + (String.format("%02d",max + 1));
     }
 }

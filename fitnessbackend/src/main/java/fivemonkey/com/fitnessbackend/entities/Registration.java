@@ -1,5 +1,7 @@
 package fivemonkey.com.fitnessbackend.entities;
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -44,8 +46,7 @@ public class Registration {
     @JoinColumn(name = "user_email", referencedColumnName = "trainee_email", nullable = false)
     private Trainee trainee;
 
-    //assistant-registration relationship
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "assistant_email", referencedColumnName = "assistant_email")
-    private Assistant assistant;
+    @JoinColumn(name = "assigned_email", referencedColumnName = "trainer_email", nullable = true)
+    private Trainer trainer;
 }

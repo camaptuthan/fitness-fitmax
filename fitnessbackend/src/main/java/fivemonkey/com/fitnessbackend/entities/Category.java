@@ -15,10 +15,9 @@ import java.util.List;
 public class Category {
 
     @Id
-    @GeneratedValue(generator = "category_generator")
-    @GenericGenerator(name = "category_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.CategoryIdentifier")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    private String id;
+    private Long id;
 
     @Column(name = "category_name")
     private String name;

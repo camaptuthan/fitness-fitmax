@@ -91,15 +91,15 @@ public class PackageController {
                 } else {
                     listPackage = packageServices.getAllPackagesByCityAndSearch(cityname, keyword);
                 }
-            case "ROLE0006":
-                listCity.add(cityService.getCityByCityManager(userDetail.getUser().getEmail()));
-                if ("".equals(keyword)){
-                    listPackage = packageServices.getAllPackagesByCity(cityService.getCityByCityManager(userDetail.getUser().getEmail()).getName());
-                }else {
-                    listPackage = packageServices.getAllPackagesByCityAndSearch(cityService.getCityByCityManager(userDetail.getUser().getEmail()).getName(), keyword);
-                }
-            case "ROLE0002":
-                listCity.add(cityService.getCityByAssistant(userDetail.getUser().getEmail()));
+//            case "ROLE0006":
+//                listCity.add(cityService.getCityByCityManager(userDetail.getUser().getEmail()));
+//                if ("".equals(keyword)){
+//                    listPackage = packageServices.getAllPackagesByCity(cityService.getCityByCityManager(userDetail.getUser().getEmail()).getName());
+//                }else {
+//                    listPackage = packageServices.getAllPackagesByCityAndSearch(cityService.getCityByCityManager(userDetail.getUser().getEmail()).getName(), keyword);
+//                }
+//            case "ROLE0002":
+//                listCity.add(cityService.getCityByAssistant(userDetail.getUser().getEmail()));
 
 
         }

@@ -56,16 +56,6 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Blog> blogs;
 
-    //user-studioManager relationship
-    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    private StudioManager studioManager;
-
-    //assistant-user relationship
-    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    private Assistant assistant;
-
     //trainee-user relationship
     @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
@@ -75,11 +65,6 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     private Trainer trainer;
-
-    //cityManager-user relationship
-    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    private CityManager cityManager;
 
     @Column(name = "verification_code")
     private String verificationCode;

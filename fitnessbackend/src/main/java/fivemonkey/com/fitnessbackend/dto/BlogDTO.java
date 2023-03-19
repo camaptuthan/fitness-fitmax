@@ -15,7 +15,7 @@ import java.util.List;
 @ToString
 public class BlogDTO {
 
-    private String id;
+    private Long id;
 
     private String title;
 

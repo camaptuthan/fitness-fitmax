@@ -10,9 +10,7 @@ public interface CityService {
 
     List<CityDTO> getAllCity();
 
-    CityDTO getCityByCityManager(String email);
 
     CityDTO getCityById(Long id);
 
-    CityDTO getCityByAssistant(String email);
 }

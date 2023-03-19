@@ -5,6 +5,8 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
@@ -43,8 +45,10 @@ public class Clazz {
     @Column(name = "created_date")
     private Date date;
 
+    @Min(value = 0)
+    @Max(value = 3)
     @Column(name = "status", nullable = false)
-    private boolean status;
+    private int status;
 
     //service-class relationship
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})

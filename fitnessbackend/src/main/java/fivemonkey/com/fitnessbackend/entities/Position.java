@@ -17,10 +17,9 @@ import java.util.List;
 public class Position {
 
     @Id
-    @GeneratedValue(generator = "position_generator")
-    @GenericGenerator(name = "position_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.PositionIdentifier")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "position_id")
-    private String id;
+    private Long id;
 
     @Column(name = "position_name")
     private String name;

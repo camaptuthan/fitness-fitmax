@@ -36,18 +36,19 @@ public class PackageServiceImpl implements PackageService {
     //get all packages
     @Override
     public List<PackageDTO> getAllPackagesByKeyword(String keyword) {
-        List<Package> packages = packageRepository.getAllInformationOfPackages(keyword);
-        return modelMapper.mapList(packages, PackageDTO.class);
+//        List<Package> packages = packageRepository.getAllInformationOfPackages(keyword);
+//        return modelMapper.mapList(packages, PackageDTO.class);
+        return null;
     }
 
     @Override
     public List<PackageDTO> getAllInforPackage() {
-        List<PackageDTO> list = new ArrayList<>();
-        List<Package> packages = packageRepository.getAllInformationOfPackage();
-        for (Package p : packages) {
-            list.add(modelMapper.map(p, PackageDTO.class));
-        }
-        return list;
+//        List<PackageDTO> list = new ArrayList<>();
+//        List<Package> packages = packageRepository.getAllInformationOfPackage();
+//        for (Package p : packages) {
+//            list.add(modelMapper.map(p, PackageDTO.class));
+//        }
+        return null;
     }
 
     //get package by id
@@ -65,10 +66,10 @@ public class PackageServiceImpl implements PackageService {
     public Package save(PackageDTO p) {
         Package aPackage = new Package();
         aPackage.setName(p.getName());
-        aPackage.setDuration(p.getDuration());
-        aPackage.setPrice(p.getPrice());
-        aPackage.setDes(p.getDes());
-        aPackage.setStatus(true);
+//        aPackage.setDuration(p.getDuration());
+//        aPackage.setPrice(p.getPrice());
+//        aPackage.setDes(p.getDes());
+//        aPackage.setStatus(true);
         return packageRepository.save(aPackage);
     }
 
@@ -78,9 +79,9 @@ public class PackageServiceImpl implements PackageService {
         try {
             Package aPackage = packageRepository.getById(p.getId());
             aPackage.setName(p.getName());
-            aPackage.setDuration(p.getDuration());
-            aPackage.setPrice(p.getPrice());
-            aPackage.setDes(p.getDes());
+//            aPackage.setDuration(p.getDuration());
+//            aPackage.setPrice(p.getPrice());
+//            aPackage.setDes(p.getDes());
             return packageRepository.save(aPackage);
         } catch (Exception e) {
             e.printStackTrace();
@@ -92,7 +93,7 @@ public class PackageServiceImpl implements PackageService {
     @Override
     public void disablePackageById(String id) {
         Package p = packageRepository.getById(id);
-        p.setStatus(false);
+//        p.setStatus(2);
         packageRepository.save(p);
     }
 
@@ -100,7 +101,7 @@ public class PackageServiceImpl implements PackageService {
     @Override
     public void enablePackageById(String id) {
         Package p = packageRepository.getById(id);
-        p.setStatus(true);
+//        p.setStatus(true);
         packageRepository.save(p);
     }
 
@@ -126,7 +127,8 @@ public class PackageServiceImpl implements PackageService {
 
     @Override
     public List<PackageDTO> getAllPackagesByCityAndSearch(String city_name, String keyword) {
-        return modelMapper.mapList(packageRepository.getPackageByCityAndSearch(city_name, keyword), PackageDTO.class);
+//        return modelMapper.mapList(packageRepository.getPackageByCityAndSearch(city_name, keyword), PackageDTO.class);
+        return null;
     }
 
 //    @Override

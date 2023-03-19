@@ -14,10 +14,9 @@ import java.util.List;
 public class TrackingDetail {
 
     @Id
-    @GeneratedValue(generator = "trackingdetail_generator")
-    @GenericGenerator(name = "trackingdetail_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.TrackingDetailIdentifier")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "trackingdetail_id")
-    private String id;
+    private Long id;
 
     @Column(name = "height")
     private Double height;

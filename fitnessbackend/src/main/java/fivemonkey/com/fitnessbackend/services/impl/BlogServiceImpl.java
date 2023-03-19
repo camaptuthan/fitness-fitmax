@@ -40,7 +40,7 @@ public class BlogServiceImpl implements BlogService {
 
     //find blog by id
     @Override
-    public BlogDTO findBlogById(String id) {
+    public BlogDTO findBlogById(Long id) {
         Blog blog = blogRepository.getById(id);
         BlogDTO blogDTO = new BlogDTO();
         ModelMapper mapper = new ModelMapper();
@@ -54,7 +54,7 @@ public class BlogServiceImpl implements BlogService {
         Blog blog = new Blog();
         blog.setTitle(b.getTitle());
         blog.setDescription(b.getDes());
-        blog.setStatus(true);
+        blog.setStatus(1);
         blog.setUser(userRepository.findByEmail(b.getUserEmail()).get());
         return blogRepository.save(blog);
     }
@@ -66,7 +66,7 @@ public class BlogServiceImpl implements BlogService {
             blog.setTitle(b.getTitle());
             blog.setDescription(b.getDes());
             blog.setThumbnail(b.getImage());
-            blog.setStatus(true);
+            blog.setStatus(1);
             blog.setDate(b.getCreated_date());
             blog.setUser(new User(b.getUserEmail()));
             blog.setCategory(b.getCategory());
@@ -78,21 +78,21 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public void disableBlogById(String id) {
+    public void disableBlogById(Long id) {
         Blog blog = blogRepository.getById(id);
-        blog.setStatus(false);
+        blog.setStatus(2);
         blogRepository.save(blog);
     }
 
     @Override
-    public void enableBlogById(String id) {
+    public void enableBlogById(Long id) {
         Blog blog = blogRepository.getById(id);
-        blog.setStatus(true);
+        blog.setStatus(1);
         blogRepository.save(blog);
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(Long id) {
 
     }
 }

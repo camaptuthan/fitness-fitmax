@@ -21,8 +21,6 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Autowired
     private ClassRepository classRepository;
     @Autowired
-    private PersonalTrainingRepository personalTrainingRepository;
-    @Autowired
     private PackageRepository packageRepository;
 
     @Autowired
@@ -66,9 +64,9 @@ public class RegistrationServiceImpl implements RegistrationService {
                 itemId = packag3.getId();
                 itemName = packag3.getName();
             } else {
-                PersonalTraining personalTraining = service.getPersonalTraining();
-                itemId = personalTraining.getId();
-                itemName = personalTraining.getName();
+//                PersonalTraining personalTraining = service.getPersonalTraining();
+//                itemId = personalTraining.getId();
+//                itemName = personalTraining.getName();
             }
         }
 
@@ -93,9 +91,9 @@ public class RegistrationServiceImpl implements RegistrationService {
             if (packag3 != null) {
                 services = packag3.getServices();
             } else {
-                PersonalTraining personalTraining = personalTrainingRepository.findById(itemId).orElse(null);
-                assert personalTraining != null;
-                services = personalTraining.getServices();
+//                PersonalTraining personalTraining = personalTrainingRepository.findById(itemId).orElse(null);
+//                assert personalTraining != null;
+//                services = personalTraining.getServices();
             }
         }
         return services;
@@ -150,8 +148,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 //        return registrationRepository.getRegistrationByManager(studioId);
 //    }
 
-    @Override
-    public List<Registration> getRegistrationByAssistant(String email) {
-        return registrationRepository.getRegistrationByAssistant(email);
-    }
+//    @Override
+//    public List<Registration> getRegistrationByAssistant(String email) {
+//        return registrationRepository.getRegistrationByAssistant(email);
+//    }
 }

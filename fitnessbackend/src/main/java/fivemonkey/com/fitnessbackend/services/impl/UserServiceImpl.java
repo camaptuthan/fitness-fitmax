@@ -296,8 +296,9 @@ public class UserServiceImpl implements UserService {
 //    }
     @Override
     public List<UserDTO> listByManager(String studioId) {
-        List<User> userList = userRepository.listByManager(studioId);
-        return modelMapperConfiguration.mapList(userList,UserDTO.class);
+//        List<User> userList = userRepository.listByManager(studioId);
+//        return modelMapperConfiguration.mapList(userList,UserDTO.class);
+        return null;
     }
 
     @Override
@@ -309,8 +310,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> listByAssistant(String studioId) {
-        List<User> userList = userRepository.listByAssistant(studioId);
-        return modelMapperConfiguration.mapList(userList,UserDTO.class);
+//        List<User> userList = userRepository.listByAssistant(studioId);
+//        return modelMapperConfiguration.mapList(userList,UserDTO.class);
+        return null;
     }
 
     @Override

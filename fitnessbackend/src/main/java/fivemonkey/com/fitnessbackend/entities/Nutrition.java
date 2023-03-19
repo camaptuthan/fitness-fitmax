@@ -17,8 +17,7 @@ import java.util.List;
 public class Nutrition {
 
     @Id
-    @GeneratedValue(generator = "nutrition_generator")
-    @GenericGenerator(name = "nutrition_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.NutritionIdentifier")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "nutrition_id")
     private String id;
 
