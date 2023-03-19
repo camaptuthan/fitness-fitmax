@@ -69,7 +69,7 @@ public class Services {
     //registration-service relationship
     @OneToMany(mappedBy = "services")
     private List<Registration> registrations;
-    
+
     //service-class relationship
     @OneToOne(mappedBy = "services")
     private Clazz clazz;

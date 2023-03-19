@@ -15,7 +15,7 @@ import java.util.List;
 @ToString
 public class ClassDTO {
 
-    private String id;
+    private Long id;
     private String name;
     private Date date;
 

@@ -16,15 +16,21 @@ public class ServicesDTO {
 
     private String name;
 
-    private boolean status;
+    private String image;
+
+    private String des;
+
+    private Float price;
+
+    private int status;
 
     private Date date;
 
-    private StudioDTO studioDTO;
+    private String studioId;
 
-    private String categoryId;
+    private int categoryId;
 
-    private String serviceTypeId;
+    private int serviceTypeId;
 
     private Long cityId;
 
