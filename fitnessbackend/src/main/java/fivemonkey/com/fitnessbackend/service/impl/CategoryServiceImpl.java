@@ -22,11 +22,6 @@ public class CategoryServiceImpl implements CategoryService {
     private ModelMapperConfiguration<Category, CategoryDTO> modelMapper;
 
     @Override
-    public List<CategoryDTO> getAllCategories() {
-        return modelMapper.mapList(categoryRepository.findAll(), CategoryDTO.class);
-    }
-
-    @Override
     public List<CategoryDTO> getAllCategoriesByType(String type) {
         return modelMapper.mapList(categoryRepository.findCategoriesByType(type), CategoryDTO.class);
     }
@@ -34,5 +29,20 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDTO getCategoryById(Long id) {
         return modelMapper.map(categoryRepository.findCategoryById(id), CategoryDTO.class);
+    }
+
+    @Override
+    public List<Category> findAllCategories() {
+        return categoryRepository.findAll();
+    }
+
+    @Override
+    public Category save(CategoryDTO c) {
+        return null;
+    }
+
+    @Override
+    public Category update(CategoryDTO c) {
+        return null;
     }
 }

@@ -8,10 +8,15 @@ import java.util.List;
 
 @Service
 public interface CategoryService {
-
-    List<CategoryDTO> getAllCategories();
     List<CategoryDTO> getAllCategoriesByType(String type);
 
     CategoryDTO getCategoryById(Long id);
+
+    public List<Category> findAllCategories();
+
+    public Category save(CategoryDTO c);
+
+    public Category update(CategoryDTO c);
+
 
 }
