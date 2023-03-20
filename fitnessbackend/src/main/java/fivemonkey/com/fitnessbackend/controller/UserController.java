@@ -185,7 +185,7 @@ public class UserController {
     public String resetPassword(@ModelAttribute("userDTO") User user, @RequestParam String repassword, @RequestParam String password, Model model) {
         String path = "reset_password";
         if (password.equals(repassword) && password.length() >= 6) {
-            userService.resetPassword(user.getEmail(), user.getPassword());
+            userService.resetPassword(user.getEmail(), password);
             model.addAttribute("message", "Password reset successful");
             path = "reset_password";
         }
