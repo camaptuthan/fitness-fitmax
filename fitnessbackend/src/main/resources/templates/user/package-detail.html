@@ -45,7 +45,7 @@
 <!-- ============= HEADER-TITLE END ============= -->
 
 <!-- ============== S-ABOUT-PROGRAM ============== -->
-<section class="s-about"  >
+<section class="s-about">
     <div class="container">
 
         <img class="about-effect-tringle" th:src="@{/img/tringle-about-top.svg}" alt="img">
@@ -150,44 +150,46 @@
         <h2 class="title-decor">Package <span>List</span></h2>
         <p class="slogan">Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor
             tincidunt lorem ut, venenatis dapibus miq.</p>
-        <div class="carousel-inner overflow-visible row">
-            <th:block th:each="item,iter : ${packages}">
-                <div class="carousel-item col-12 p-2" th:classappend="${iter.index == 0} ? active : '' ">
-                    <div class="row">
-                        <th:block th:each="package : ${item.value}">
-                            <div class="col-md-4 club-card-col">
-                                <div class="club-card-item"
-                                     th:style="'background-image: url(' + ${package.image} + ');'">
-                                    <div class="price-cover">
-                                        <div class="price" th:text="${package.price}">price</div>
-                                        <div class="date"><span th:text="${package.duration}"></span>months</div>
+        <div id="carousel-package" class="carousel slide">
+            <div class="carousel-inner overflow-visible row">
+                <th:block th:each="item,iter : ${packages}">
+                    <div class="carousel-item col-12 p-2" th:classappend="${iter.index == 0} ? active : '' ">
+                        <div class="row">
+                            <th:block th:each="package : ${item.value}">
+                                <div class="col-md-4 club-card-col">
+                                    <div class="club-card-item"
+                                         th:style="'background-image: url(' + ${package.image} + ');'">
+                                        <div class="price-cover">
+                                            <div class="price" th:text="${package.price}">price</div>
+                                            <div class="date"><span th:text="${package.duration}"></span>months</div>
+                                        </div>
+                                        <ul class="list">
+                                            <li></li>
+                                            <li></li>
+                                            <li></li>
+                                            <li th:text="${package.des}" style="color:yellow"></li>
+                                            <li></li>
+                                            <li></li>
+                                            <li></li>
+                                        </ul>
+                                        <a th:href="@{'/service/packages/package-detail/' + ${package.id}}" class="btn">order
+                                            now</a>
                                     </div>
-                                    <ul class="list">
-                                        <li></li>
-                                        <li></li>
-                                        <li></li>
-                                        <li th:text="${package.des}" style="color:yellow"></li>
-                                        <li></li>
-                                        <li></li>
-                                        <li></li>
-                                    </ul>
-                                    <a th:href="@{'/service/packages/package-detail/' + ${package.id}}" class="btn">order
-                                        now</a>
                                 </div>
-                            </div>
-                        </th:block>
+                            </th:block>
+                        </div>
                     </div>
-                </div>
-            </th:block>
+                </th:block>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-package" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel-package" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carousel-package" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carousel-package" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
     </div>
 </section>
 <style>
