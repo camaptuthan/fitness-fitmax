@@ -63,10 +63,10 @@
                 </div>
             </div>
             <div class="col-md-7 about-info-cover">
-                <h2 class="title-decor">About <span th:text="*{name}"></span>
+                <h2 class="title-decor">About <span th:text="*{servicesName}"></span>
                     <!-- Button trigger modal -->
                     <form th:action="@{/registration/make}" method="post" th:if="${hasRegistered == false}">
-                        <input type="hidden" th:value="*{id}" id="class_id" th:name="item_id">
+                        <input type="hidden" th:value="*{servicesId}" id="class_id" th:name="item_id">
                         <button type="submit" class="btn">
                             Enroll now
                         </button>
@@ -80,8 +80,8 @@
                         labore et dolore magna aliqua. Ut <a href="contacts.html">enim ad minim</a> veniam, quis nostrud
                         exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
                         reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                    <p th:text="*{des}">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut <a href="" th:text="*{duration}">enim ad
+                    <p th:text="*{servicesDes}">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                        incididunt ut labore et dolore magna aliqua. Ut <a href="" th:text="*{servicesDuration}">enim ad
                             minim</a> veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
                         consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
                         fugiat nulla pariatur.</p>
@@ -159,8 +159,8 @@
                                 <div class="col-md-4 club-card-col">
                                     <div class="club-card-item">
                                         <div class="price-cover">
-                                            <div class="price" th:text="${class.price}">price</div>
-                                            <div class="date"><span th:text="${class.name}">99</span>3 months</div>
+                                            <div class="price" th:text="${class.servicesPrice}">price</div>
+                                            <div class="date"><span th:text="${class.servicesName}">99</span>3 months</div>
                                         </div>
                                         <ul class="list">
                                             <li>Maecenas consequat</li>
@@ -169,7 +169,7 @@
                                             <li class="item-excluded">Morbi dolor dolortin</li>
                                             <li class="item-excluded">lorem ut, venenatis dapibus mi</li>
                                         </ul>
-                                        <a th:href="@{/class/{id} (id=${class.id})}" class="btn">order now</a>
+                                        <a th:href="@{/class/{id} (id=${class.servicesId})}" class="btn">order now</a>
                                     </div>
                                 </div>
                             </th:block>
@@ -201,7 +201,7 @@
 <!-- ============ S-OUR-PROGRAMS END ============ -->
 
 <!-- =========== S-TRAINING-SCHEDULE =========== -->
-<div th:include="management/ScheduleManagement/schedule_table" th:if="*{status}"></div>
+<div th:include="management/ScheduleManagement/schedule_table" th:if="*{servicesStatus == 1}"></div>
 <!-- ========= S-TRAINING-SCHEDULE END ========= -->
 
 <!-- ================ S-CONTACTS ================ -->

@@ -20,14 +20,17 @@
                     <button type="submit" class="search-form__submit"><i class="fa fa-search" aria-hidden="true"></i>
                     </button>
                 </form>
-                <div class="btn-group mx-2" sec:authorize="isAuthenticated()">
+                <div class="btn-group mx-2">
                     <a class="btn-sm dropdown-toggle p-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-user"></i>
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" sec:authorize="isAuthenticated()">
                         <li><a class="dropdown-item" href="/user/profile">Profile</a></li>
                         <li><a class="dropdown-item" href="#">Another action</a></li>
                         <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                    </ul>
+                    <ul class="dropdown-menu" sec:authorize="!isAuthenticated()">
+                        <li><a class="dropdown-item" href="/login">Login</a></li>
                     </ul>
                 </div>
                 <div class="btn-group mx-2" sec:authorize="!isAuthenticated()">
@@ -48,8 +51,8 @@
             <nav class="nav-menu">
                 <ul class="nav-list">
                     <li><a href="/" class="logo"><img th:src="@{/img/logo.svg}" alt="logo"></a></li>
-                    <li><a href="/homepage/studio">Studio</a> </li>
-                    <li ><a href="/homepage/service">Services </i></a>
+                    <li><a href="/homepage/studio">Studio</a></li>
+                    <li><a href="/homepage/service">Services </i></a>
                     </li>
                     <li class="dropdown">
                         <a href="#">Trainer <i class="fa fa-caret-down"></i></a>
