@@ -54,7 +54,7 @@
                 <option th:value="0">All</option>
                 <th:block th:each="category : ${categoryList}">
                     <option th:value="${category.id}" th:text="${category.name}"
-                            th:selected="${category.id == currentCategory}"></option>
+                            th:selected="${currentCategory.equals(''+category.id)}"></option>
                 </th:block>
             </select>
             </div>
