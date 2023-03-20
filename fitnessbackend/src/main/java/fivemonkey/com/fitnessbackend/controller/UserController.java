@@ -13,6 +13,7 @@ import fivemonkey.com.fitnessbackend.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -123,35 +124,28 @@ public class UserController {
     }
 
     @PostMapping("/changepassword")
-    public String passwordUpdate(@RequestParam("cpassword") String cpassword, @RequestParam("npassword") String npassword, @RequestParam("cnpassword") String cnpassword, @AuthenticationPrincipal UserDetail userDetail, Model model, RedirectAttributes ra) {
-        String path = "redirect:/user/profile";
+    public String passwordUpdate(@RequestParam("cPassword") String cpassword, @RequestParam("nPassword") String npassword, @RequestParam("cnPassword") String cnpassword, @AuthenticationPrincipal UserDetail userDetail, Model model, RedirectAttributes ra) {
+        String path = "redirect:/user/profilechangepassword";
         try {
-
-            if (cpassword.equals(userDetail.getUser().getPassword()) && npassword.length() >= 6) {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            if (passwordEncoder.matches(cpassword,userDetail.getPassword()) && npassword.equals(cnpassword)) {
                 ra.addFlashAttribute("success", "Change your password successfully! Please login again!");
                 userDetail.getUser().setPassword(npassword);
                 userService.updateUserPassword(userDetail.getUser());
-                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
-
-            } else if (npassword.length() < 6) {
-                ra.addFlashAttribute("fail", "New password must be longer than 8 characters! Please enter new password again!");
-                model.addAttribute("npassword", npassword);
-                model.addAttribute("cnpassword", cnpassword);
-                model.addAttribute("cpassword", cpassword);
-                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
-
-            } else if (!cpassword.equals(userDetail.getPassword())) {
+                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cnpassword + "New: " + npassword + "Confirm New" + cnpassword);
+                path = "redirect:/logout";
+            } else if (!passwordEncoder.matches(cpassword,userDetail.getPassword())) {
                 ra.addFlashAttribute("fail", "Current password is wrong! Please enter your password again!");
-                model.addAttribute("npassword", npassword);
-                model.addAttribute("cnpassword", cnpassword);
-                model.addAttribute("cpassword", cpassword);
-                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
+                model.addAttribute("nPassword", npassword);
+                model.addAttribute("cnPassword", cnpassword);
+                model.addAttribute("cPassword", cpassword);
+                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cnpassword + "New: " + npassword + "Confirm New" + cnpassword);
 
             } else {
                 ra.addFlashAttribute("fail", "Confirm new password must be different from new password! Please enter confirm new password again!");
-                model.addAttribute("npassword", npassword);
-                model.addAttribute("cnpassword", cnpassword);
-                model.addAttribute("cpassword", cpassword);
+                model.addAttribute("nPassword", npassword);
+                model.addAttribute("cnPassword", cnpassword);
+                model.addAttribute("cPassword", cpassword);
                 System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
             }
         } catch (Exception e) {
@@ -161,7 +155,6 @@ public class UserController {
         System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
         return path;
     }
-
 
     @PostMapping("/reset-password")
     public String resetPassGetOtp(@ModelAttribute("userDTO") User user, Model model, RedirectAttributes attributes) throws MessagingException, UnsupportedEncodingException {
@@ -189,11 +182,21 @@ public class UserController {
     }
 
     @PostMapping("/reset-password-result")
-    public ModelAndView resetPassword(@RequestParam String email, @RequestParam String password) {
-        userService.resetPassword(email, password);
-        ModelAndView mav = new ModelAndView("reset_password");
-        mav.addObject("message", "Password reset successful");
-        return mav;
+    public String resetPassword(@ModelAttribute("userDTO") User user, @RequestParam String repassword, @RequestParam String password, Model model) {
+        String path = "reset_password";
+        if (password.equals(repassword) && password.length() >= 6) {
+            userService.resetPassword(user.getEmail(), user.getPassword());
+            model.addAttribute("message", "Password reset successful");
+            path = "reset_password";
+        }
+        if (!password.equals(repassword)) {
+            model.addAttribute("invalid", "Password not matches ");
+            path = "changepass";
+        } else if (password.length() < 6 || repassword.length() < 6) {
+            model.addAttribute("invalid", "Password must have length > 6");
+            path = "changepass";
+        }
+        return path;
     }
 
     @GetMapping("/profile")
