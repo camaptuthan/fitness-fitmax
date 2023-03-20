@@ -5,10 +5,7 @@ import fivemonkey.com.fitnessbackend.dto.CityDTO;
 import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
 import fivemonkey.com.fitnessbackend.dto.StudioDTO;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
-import fivemonkey.com.fitnessbackend.service.service.CategoryService;
-import fivemonkey.com.fitnessbackend.service.service.CityService;
-import fivemonkey.com.fitnessbackend.service.service.ServicesService;
-import fivemonkey.com.fitnessbackend.service.service.StudioService;
+import fivemonkey.com.fitnessbackend.service.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -36,6 +33,8 @@ public class ServicesController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private RegistrationService registrationService;
 
     //view all packages(user)
     @RequestMapping(value = "/packages", method = {RequestMethod.GET, RequestMethod.POST})
@@ -106,6 +105,13 @@ public class ServicesController {
     @GetMapping("/packages/package-detail/{id}")
     public String viewPackageDetail(@AuthenticationPrincipal UserDetail userDetail, @PathVariable(name = "id") String id, Model model){
         ServicesDTO s = servicesService.getServiceById(id);
+        boolean hasRegistered = false;
+        if (userDetail != null) {
+            hasRegistered = registrationService.hasRegistration(s.getId(), userDetail.getUser().getEmail());
+        }
+
+        model.addAttribute("hasRegistered", hasRegistered);
+
         model.addAttribute("package", s);
         return "user/package-detail";
     }
