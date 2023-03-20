@@ -2,9 +2,7 @@ package fivemonkey.com.fitnessbackend.service.impl;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.CategoryDTO;
-import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
 import fivemonkey.com.fitnessbackend.entities.Category;
-import fivemonkey.com.fitnessbackend.entities.Services;
 import fivemonkey.com.fitnessbackend.repository.CategoryRepository;
 import fivemonkey.com.fitnessbackend.service.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
