@@ -102,7 +102,7 @@ public class ServicesServiceImpl implements ServicesService {
 
     @Override
     public ServicesDTO getServiceById(String id) {
-        return null;
+        return modelMapper.map(serviceRepository.getById(id),ServicesDTO.class);
     }
 
     @Override

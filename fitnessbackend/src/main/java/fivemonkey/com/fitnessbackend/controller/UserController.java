@@ -49,7 +49,7 @@ public class UserController {
     public String search(Model model, @Param("keyword") String keyword) {
         List<UserDTO> userList = userService.findAllUser(keyword);
         model.addAttribute("list", userList);
-        return "management/usermanagement/userlist";
+        return "management/UserManagement/UserList";
     }
 
     @RequestMapping("/management/avataruser/{email}")
