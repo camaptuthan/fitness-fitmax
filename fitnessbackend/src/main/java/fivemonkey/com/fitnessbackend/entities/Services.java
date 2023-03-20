@@ -34,9 +34,6 @@ public class Services {
     @Column(name = "duration")
     private int duration;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by", referencedColumnName = "email")
-    private User user;
     @Min(value = 1, message = "{Size.Field.Price}")
     @Column(name = "price")
     private Float price;
@@ -79,5 +76,9 @@ public class Services {
     @JoinColumn(name = "service_type_id", referencedColumnName = "service_type_id")
     private ServiceType serviceType;
 
+    //user-service realtionship
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by", referencedColumnName = "user_id", nullable = true)
+    private User user;
 }
 

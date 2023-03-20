@@ -49,7 +49,8 @@ public class ServicesController {
         List<CategoryDTO> listCategory = categoryService.getAllCategoriesByType("service");
         Map<String, List<ServicesDTO>> packagesMapList = new HashMap<>();
         List<Services> listPKG1 = servicesService.getPackagesBy3Fields(keyword, cityname, category);
-        System.out.println("HAPH" + listPKG1);
+        List<ServicesDTO> list = servicesService.getAllPackages();
+        System.out.println("HAPH" + list);
         List<ServicesDTO> listPKG = modelMapper.mapList(listPKG1, ServicesDTO.class);
         for (int i = 0; i < (listPKG.size() / 3) + 1; i++) {
             List<ServicesDTO> value = new ArrayList<>();

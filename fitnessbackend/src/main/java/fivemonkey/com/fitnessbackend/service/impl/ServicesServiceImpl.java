@@ -67,7 +67,7 @@ public class ServicesServiceImpl implements ServicesService {
 
     @Override
     public List<Services> getPackagesBy4Fields(@Param("keyword") String keyword,
-                                               @Param("cityname") String cityname,
+                                               @Param("city") String cityname,
                                                @Param("studio") String studio,
                                                @Param("category") String category) {
         Session session = sessionFactory.openSession();
