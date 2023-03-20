@@ -292,10 +292,7 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    @Override
-    public void resetPassword(String email, String password) {
-        
-    }
+
 
     private String generateOTP() {
         // generate a random 6-digit OTP
@@ -304,13 +301,13 @@ public class UserServiceImpl implements UserService {
         return String.valueOf(otp);
     }
 
-//    @Override
-//    public void resetPassword(String email,String password) {
-//        User user = userRepository.findByEmailUser(email);
-//        BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
-//        user.setPassword(passwordEncoder.encode(password));
-//        userRepository.save(user);
-//    }
+    @Override
+    public void resetPassword(String email,String password) {
+        User user = userRepository.findUserByEmail(email);
+        BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+    }
 
     @Override
     public long countTrainer(String roleId) {
