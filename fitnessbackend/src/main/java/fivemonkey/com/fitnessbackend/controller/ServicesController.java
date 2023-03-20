@@ -40,7 +40,7 @@ public class ServicesController {
     //view all packages(user)
     @RequestMapping(value = "/packages", method = {RequestMethod.GET, RequestMethod.POST})
     public String getAllPackages(Model model, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
-                                 @RequestParam(value = "cityname", required = false, defaultValue = "All") String cityname,
+                                 @RequestParam(value = "city", required = false, defaultValue = "All") String cityname,
                                  @RequestParam(value = "category", required = false, defaultValue = "0") String category) {
         List<CityDTO> listCity = cityService.getAllCities();
         List<CategoryDTO> listCategory = categoryService.getAllCategoriesByType("service");

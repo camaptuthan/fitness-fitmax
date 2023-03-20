@@ -49,9 +49,9 @@ public class ServicesServiceImpl implements ServicesService {
     }
 
     @Override
-    public List<ServicesDTO> getPackagesBy3Fields(String keyword,
-                                                  String cityname,
-                                                  Long category) {
+    public List<ServicesDTO> getPackagesBy3Fields(@Param("keyword") String keyword,
+                                                  @Param("cityname") String cityname,
+                                                  @Param("category") Long category) {
         Session session = sessionFactory.openSession();
         String query = "select s from Services s where s.serviceType.id = 1 ";
         if (!"".equals(keyword)) {
@@ -68,10 +68,10 @@ public class ServicesServiceImpl implements ServicesService {
     }
 
     @Override
-    public List<ServicesDTO> getPackagesBy4Fields(String keyword,
-                                                  String cityname,
-                                                  String studio,
-                                                  Long category) {
+    public List<ServicesDTO> getPackagesBy4Fields(@Param("keyword") String keyword,
+                                                  @Param("cityname") String cityname,
+                                                  @Param("studio") String studio,
+                                                  @Param("category") Long category) {
         Session session = sessionFactory.openSession();
         String sql = "select s from Services s where s.serviceType.id = 1 ";
         if (!"".equals(keyword)) {
