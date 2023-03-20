@@ -18,7 +18,7 @@ public interface RegistrationRepository extends JpaRepository<Registration, Stri
 
    // List<Registration> getRegistrationByTrainee(Trainee trainee);
 
-    @Query(value = "select r from Registration r where r.trainee.email = :email")
+    @Query(value = "select r from Registration r where r.trainee.email = :email order by r.services.date desc")
     List<Registration> getRegistrationByTrainee(String email);
 
     @Query(value = "SELECT r FROM Registration r join Services s where r.id = s.id and s.studio.id = :studioId")
@@ -29,5 +29,5 @@ public interface RegistrationRepository extends JpaRepository<Registration, Stri
     @Query(value = "select r from Registration r where r.services.user.email = :email")
     List<Registration> getRegistrationByAssistant(String email);
     @Query(value = "select r from Registration r where r.services.id = :id and r.trainee.email = :traineeEmail")
-    Registration findRegistrationByIdAndTrainee(String id, String traineeEmail);
+    Registration findRegistrationByServicesAndTrainee(String id, String traineeEmail);
 }

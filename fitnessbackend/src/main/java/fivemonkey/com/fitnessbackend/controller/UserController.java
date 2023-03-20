@@ -4,11 +4,10 @@ package fivemonkey.com.fitnessbackend.controller;
 import fivemonkey.com.fitnessbackend.configuration.Utility;
 import fivemonkey.com.fitnessbackend.dto.RegistrationDTO;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
-import fivemonkey.com.fitnessbackend.entities.Role;
-import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
+import fivemonkey.com.fitnessbackend.service.service.RegistrationService;
 import fivemonkey.com.fitnessbackend.service.service.RoleService;
 import fivemonkey.com.fitnessbackend.service.service.StudioService;
 import fivemonkey.com.fitnessbackend.service.service.UserService;
@@ -44,6 +43,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RegistrationService registrationService;
 
     @RequestMapping("/search")
     public String search(Model model, @Param("keyword") String keyword) {
@@ -114,6 +115,7 @@ public class UserController {
         model.addAttribute("title", title);
         return "/verify_status";
     }
+
     //Change Password
     @GetMapping("/profilechangepassword")
     public String changePassword(@AuthenticationPrincipal UserDetail userDetail, Model model) {
@@ -162,15 +164,11 @@ public class UserController {
     }
 
 
-
-
-
-
     @PostMapping("/reset-password")
-    public String resetPassGetOtp(@ModelAttribute("userDTO") User user, Model model,RedirectAttributes attributes) throws MessagingException, UnsupportedEncodingException {
+    public String resetPassGetOtp(@ModelAttribute("userDTO") User user, Model model, RedirectAttributes attributes) throws MessagingException, UnsupportedEncodingException {
         //validate email not exist
         List<Object> userPresentObj = userService.isUserPresent(user);
-        if((Boolean) userPresentObj.get(0)){
+        if ((Boolean) userPresentObj.get(0)) {
             userService.sendOTP(user.getEmail());
             model.addAttribute("email", user.getEmail());
             return "verifyOTP";
@@ -179,6 +177,7 @@ public class UserController {
         return "redirect:/reset-password";
 
     }
+
     @PostMapping("/verifyOTP")
     public String verifyOTP(@RequestParam String email, @RequestParam String otp, Model model) {
         if (userService.verifyOTP(email, otp)) {
@@ -189,14 +188,21 @@ public class UserController {
             return "verifyOTP";
         }
     }
+
     @PostMapping("/reset-password-result")
-    public ModelAndView resetPassword(@RequestParam String email,@RequestParam String password) {
-        userService.resetPassword(email,password);
+    public ModelAndView resetPassword(@RequestParam String email, @RequestParam String password) {
+        userService.resetPassword(email, password);
         ModelAndView mav = new ModelAndView("reset_password");
         mav.addObject("message", "Password reset successful");
         return mav;
     }
 
+    @GetMapping("/profile")
+    public String myProfile(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+        model.addAttribute("registrations", registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail()));
+        model.addAttribute("user", userDetail.getUser());
+        return "user/profile";
+    }
 
 
 }
