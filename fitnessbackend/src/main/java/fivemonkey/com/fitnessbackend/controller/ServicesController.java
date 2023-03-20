@@ -105,13 +105,28 @@ public class ServicesController {
     @GetMapping("/packages/package-detail/{id}")
     public String viewPackageDetail(@AuthenticationPrincipal UserDetail userDetail, @PathVariable(name = "id") String id, Model model){
         ServicesDTO s = servicesService.getServiceById(id);
+        List<ServicesDTO> listPKG = servicesService.getAllPackages();
+        Map<String, List<ServicesDTO>> packagesMapList = new HashMap<>();
+        int size = listPKG.size() % 3 == 0 ? listPKG.size() / 3 : (listPKG.size() / 3 + 1);
+        List<ServicesDTO> value = null;
+        for (int i = 0; i < size; i++) {
+            value = new ArrayList<>();
+            for (int j = 0; j < 3; j++) {
+                if (i * 3 + j < listPKG.size()) {
+                    value.add(listPKG.get(i * 3 + j));
+                }
+            }
+            packagesMapList.put("PKG-" + (i + 1), value);
+        }
+
+        model.addAttribute("packages", packagesMapList);
         boolean hasRegistered = false;
         if (userDetail != null) {
             hasRegistered = registrationService.hasRegistration(s.getId(), userDetail.getUser().getEmail());
         }
 
         model.addAttribute("hasRegistered", hasRegistered);
-
+        model.addAttribute("packages", packagesMapList);
         model.addAttribute("package", s);
         return "user/package-detail";
     }
