@@ -34,4 +34,10 @@ public class Slider {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
+
+    @Column(name="title")
+    private String title;
+
+
+
 }

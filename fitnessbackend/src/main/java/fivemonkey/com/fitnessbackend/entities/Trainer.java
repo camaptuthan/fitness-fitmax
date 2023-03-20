@@ -47,7 +47,7 @@ public class Trainer {
 
     //trainer-user relationship
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "trainer_email", referencedColumnName = "email", unique = true)
+    @JoinColumn(name = "trainer_id", referencedColumnName = "user_id", unique = true)
     private User user;
 
     //trainer-registration relationship
@@ -55,3 +55,4 @@ public class Trainer {
     @OneToMany(mappedBy = "trainer", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Registration> registrations;
 }
+

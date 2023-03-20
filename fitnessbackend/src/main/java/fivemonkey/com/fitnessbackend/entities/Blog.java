@@ -42,7 +42,7 @@ public class Blog {
 
     //user-blog relationship
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "writer_id", referencedColumnName = "user_id")
     private User user;
 
     //blog-category relationship
@@ -51,3 +51,4 @@ public class Blog {
     private Category category;
 
 }
+

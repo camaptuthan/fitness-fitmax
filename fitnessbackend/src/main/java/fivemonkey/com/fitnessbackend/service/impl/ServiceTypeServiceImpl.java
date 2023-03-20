@@ -7,13 +7,10 @@ import fivemonkey.com.fitnessbackend.repository.ServiceTypeRepository;
 import fivemonkey.com.fitnessbackend.service.service.ServiceTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ServiceTypeServiceImpl implements ServiceTypeService {
-
     @Autowired
     ModelMapperConfiguration<ServiceType, ServiceTypeDTO> modelMapper;
     @Autowired
@@ -21,11 +18,6 @@ public class ServiceTypeServiceImpl implements ServiceTypeService {
 
     @Override
     public List<ServiceTypeDTO> getAll() {
-        List<ServiceTypeDTO> list = new ArrayList<>();
-        List<ServiceType> serviceTypes = serviceTypeRepository.findAll();
-        for (ServiceType s : serviceTypes) {
-            list.add(modelMapper.map(s, ServiceTypeDTO.class));
-        }
-        return list;
+        return modelMapper.mapList(serviceTypeRepository.findAll(), ServiceTypeDTO.class);
     }
 }

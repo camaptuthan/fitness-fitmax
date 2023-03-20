@@ -3,12 +3,10 @@ package fivemonkey.com.fitnessbackend.controller;
 import fivemonkey.com.fitnessbackend.dto.CityDTO;
 import fivemonkey.com.fitnessbackend.dto.ServiceTypeDTO;
 import fivemonkey.com.fitnessbackend.dto.StudioDTO;
+import fivemonkey.com.fitnessbackend.entities.Slider;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
-import fivemonkey.com.fitnessbackend.service.service.CityService;
-import fivemonkey.com.fitnessbackend.service.service.ServiceTypeService;
-import fivemonkey.com.fitnessbackend.service.service.StudioService;
-import fivemonkey.com.fitnessbackend.service.service.UserService;
+import fivemonkey.com.fitnessbackend.service.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -34,13 +32,16 @@ public class HomeController {
     UserService userService;
     @Autowired
     StudioService studioService;
-
+    @Autowired
+    SliderService sliderService;
     @GetMapping("/")
     public String getAllServiceType( Model model) {
         List<ServiceTypeDTO> listServiceType = serviceTypeService.getAll();
+        List<Slider> sliderList=sliderService.getAllSlider();
         String role = "ROLE04";
 //        List<User> listAllTrainer = userService.listAllTrainer(role);
         model.addAttribute("listServiceType", listServiceType);
+        model.addAttribute("listSlider",sliderList);
 //        model.addAttribute("listAllTrainer", listAllTrainer);
         return "index";
     }
@@ -118,4 +119,7 @@ public class HomeController {
         model.addAttribute("studios", studioMapList);
         return "/studio";
     }
+
+
+
 }

@@ -171,7 +171,6 @@ public class UserServiceImpl implements UserService {
         user.setDate(new Date());
         user.setStatus(false);
         Trainee trainee= new Trainee();
-        trainee.setEmail(user.getEmail());
         trainee.setUser(user);
         user.setTrainee(trainee);
         //set random ver code
