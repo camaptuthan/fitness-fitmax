@@ -15,39 +15,39 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query("Select u from User u where u.email like %?1%" +
             "or u.address like %?1%" +
             "or u.role.name like %?1%" +
-//            "or u.studio.name like %?1%" +
+//            "or u.studioManager.studio.id like %?1%" +
             "or u.firstName like %?1%" +
-            "or u.lastName like %?1%" )
+            "or u.lastName like %?1%" +
+            "and u.role.id not in('ROLE0001')"
+    )
     List<User> findAllUser(String keyword);
+
+    @Query("select u from User u where u.role.id not in('ROLE0001') ")
+    List<User> listUserByAdmin();
+
     @Query("SELECT u FROM User u WHERE u.email=?1")
     Optional<User> findByEmail(String email);
-    @Query("SELECT u FROM User u WHERE u.phone=?1")
-    Optional<User> findByMobile(String phone);
 
-    @Query("SELECT u FROM User u where u.email LIKE %?1%")
-    List<User> findAllUserNameContaining(String email);
+    @Query("SELECT u FROM User u WHERE u.id=?1")
+    Optional<User> findUserById(Long id);
+
+    @Query("SELECT u FROM User u WHERE u.email =?1")
+   User getUserByEmail(String email);
+
+    @Query("SELECT u FROM User u WHERE u.id=?1")
+    User findUsersById(Long id);
+
 
     @Query("select u from User u where u.verificationCode=?1")
     User findByVerificationCode(String code);
+
+
 
     //count trainer
     @Query("SELECT COUNT(u) FROM User u WHERE u.role.id=?1 ")
     long getCountOfTrainer(String role);
 
-    @Query("select u from User u where u.role.id not in ('ROLE0001','ROLE0006') and u.city.name=?1")
 
-    List<User>listByCityAdmin(String city);
-//    @Query("select u from User u where u.role.id not in ('ROLE0001','ROLE0003','ROLE0002','ROLE0006') and u.studioManager.studio.id = ?1")
-//    List<User>listByAssistant(String studioId);
     @Query("SELECT u FROM User u where u.role.id=?1")
     List<User> listAllTrainer(String role);
-
-    @Query("SELECT u.email FROM User u where u.role.name='Studio Manager' and u.studio.id=?1")
-    String listManagerByStudio(String studioId);
-
-
-    @Query("SELECT u FROM User u where u.role.id=?1 order by  u.date")
-    List<User> findTop4User(String role);
-    @Query("SELECT u FROM User u WHERE u.email=?1")
-    User findByEmailUser(String email);
 }

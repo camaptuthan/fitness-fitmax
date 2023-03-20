@@ -12,6 +12,7 @@ import java.util.Date;
 @Setter
 @ToString
 public class UserDTO {
+    private Long id;
     private String email;
     private String password;
     @NotNull(message = "Required not null")
@@ -31,6 +32,7 @@ public class UserDTO {
 
     private String studioId;
     private String vericode;
+
 
 
 }

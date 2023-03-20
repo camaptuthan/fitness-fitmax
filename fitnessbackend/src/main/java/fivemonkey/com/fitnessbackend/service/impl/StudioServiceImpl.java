@@ -23,16 +23,23 @@ public class StudioServiceImpl implements StudioService {
     @Autowired
     private ModelMapperConfiguration<Studio, StudioDTO> modelMapper;
 
+//    @Override
+//    public List<StudioDTO> getAllStudios() {
+//        List<StudioDTO> studioDTOS = new ArrayList<>();
+//        studioRepository.findAll().forEach(studio -> {
+//            StudioDTO studioDTO = modelMapper.map(studio, StudioDTO.class);
+//            String managerEmail = userRepository.listManagerByStudio(studio.getId());
+//            studioDTO.setManagerEmail(managerEmail);
+//            studioDTOS.add(studioDTO);
+//        });
+//        return studioDTOS;
+//    }
+
+    //remove
     @Override
     public List<StudioDTO> getAllStudios() {
-        List<StudioDTO> studioDTOS = new ArrayList<>();
-        studioRepository.findAll().forEach(studio -> {
-            StudioDTO studioDTO = modelMapper.map(studio, StudioDTO.class);
-            String managerEmail = userRepository.listManagerByStudio(studio.getId());
-            studioDTO.setManagerEmail(managerEmail);
-            studioDTOS.add(studioDTO);
-        });
-        return studioDTOS;
+        List<StudioDTO> list= new ArrayList<>();
+        return list;
     }
 
     @Override
