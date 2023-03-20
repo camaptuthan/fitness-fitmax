@@ -31,18 +31,10 @@
                     </ul>
                     <ul class="dropdown-menu" sec:authorize="!isAuthenticated()">
                         <li><a class="dropdown-item" href="/login">Login</a></li>
-                    </ul>
-                </div>
-                <div class="btn-group mx-2" sec:authorize="!isAuthenticated()">
-                    <a class="btn-sm dropdown-toggle p-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-user"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/login">Login</a></li>
                         <li><a class="dropdown-item" href="/register">Register</a></li>
-
                     </ul>
                 </div>
+
             </div>
         </div>
     </div>
