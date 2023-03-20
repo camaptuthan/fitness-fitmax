@@ -38,35 +38,39 @@
         <h2 class="title-decor">Packages <span>List</span></h2>
         <p class="slogan">Below is a list of packages for free trainees. People can search by city, package name,
             price... Details are in each package.</p>
-        <form id="searchAndFilter" th:action="@{/package/packages}" method="get">
+        <form id="searchAndFilter" th:action="@{/service/packages}" method="get">
+            <div>
                 City: <select th:name="cityname" style="width:30%" onchange="submitForm()">
-                <option >All</option>
-                <th:block th:each="city : ${cities}">
-                    <option th:value="${city.name}" th:text="${city.name}" th:selected="${city.name == currentCity }"  ></option>
+                <option>All</option>
+                <th:block th:each="city : ${cityList}">
+                    <option th:value="${city.name}" th:text="${city.name}"
+                            th:selected="${city.name == currentCity}"></option>
                 </th:block>
             </select>
+                &nbsp
+            </div>
             <div>
-                Filter: <input type="text" th:name="keyword" style="color:red"/>
+                Category: <select th:name="category" style="width:30%" onchange="submitForm()">
+                <option>All</option>
+                <th:block th:each="category : ${categoryList}">
+                    <option th:value="${category.id}" th:text="${category.name}"
+                            th:selected="${category.id == currentCategory}"></option>
+                </th:block>
+            </select>
+                &nbsp
+            </div>
+            <div>
+                Filter: <input type="text" th:name="keyword" style="color:red" th:value="${currentKeyword}"/>
                 &nbsp
                 <input id="btn-submit" type="submit" value="Search"/>
                 &nbsp
             </div>
         </form>
-
-        <!--            <script>-->
-        <!--                $("#dropdown_city").append(`<li><a class="dropdown-item"  onclick="viewCity('ALL')">All</a></li>`)-->
-        <!--                $.get("http://localhost:8080/address/city", (result) => {-->
-        <!--                    result.forEach(item => {-->
-        <!--                        $("#dropdown_city").append(`<li><a class="dropdown-item" href="" onclick="viewCity('${item.name}')">${item.name}</a></li>`)-->
-        <!--                    })-->
-        <!--                })-->
-        <!--                const viewCity = (city_name) => {-->
-
-        <!--                    $("#city_name").html(city_name);-->
-        <!--                }-->
-        <!--            </script>-->
-
         <div id="carousel-package" class="carousel slide">
+            <div th:if="${size} == 0">
+                <h2>There are no packages available at the moment. Please contact us via email or our hotline for more
+                    information.</h2>
+            </div>
             <div class="carousel-inner overflow-visible row">
                 <th:block th:each="item,iter : ${packages}">
                     <div class="carousel-item col-12 p-2" th:classappend="${iter.index == 0} ? active : '' ">

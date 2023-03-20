@@ -29,7 +29,7 @@ public class Trainee {
 
     //trainee-user relationship
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "trainee_email", referencedColumnName = "email", unique = true)
+    @JoinColumn(name = "trainee_id", referencedColumnName = "user_id", unique = true)
     private User user;
 
     //trainee-registration relationship

@@ -51,15 +51,15 @@ public class ServicesServiceImpl implements ServicesService {
                                                @Param("cityname") String cityname,
                                                @Param("category") String category) {
         Session session = sessionFactory.openSession();
-        String sql = "select s from Services s where s.serviceType.id = 1";
+        String sql = "select s from Services s where s.serviceType.id = 1 ";
         if (keyword != null) {
-            sql += "and concat(s.name,'',s.price,'',s.duration,'',s.des,'',s.date) like '%" + keyword + "%' ";
+            sql += " and concat(s.name,'',s.price,'',s.duration,'',s.des,'',s.date) like '%" + keyword + "%' ";
         }
         if (!"All".equals(cityname)) {
-            sql += "and s.city.name = '" + cityname + "' ";
+            sql += " and s.city.name = '" + cityname + "' ";
         }
         if (!"All".equals(category)) {
-            sql += "and s.category.id = '" + category + "' ";
+            sql += " and s.category.id = '" + category + "' ";
         }
         Query<Services> query = session.createQuery(sql, Services.class);
         return query.getResultList();
@@ -71,18 +71,18 @@ public class ServicesServiceImpl implements ServicesService {
                                                @Param("studio") String studio,
                                                @Param("category") String category) {
         Session session = sessionFactory.openSession();
-        String sql = "select s from Services s where s.serviceType.id = 1";
+        String sql = "select s from Services s where s.serviceType.id = 1 ";
         if (keyword != null) {
-            sql += "and concat(s.name,'',s.price,'',s.duration,'',s.des,'',s.date) like '%" + keyword + "%' ";
+            sql += " and concat(s.name,'',s.price,'',s.duration,'',s.des,'',s.date) like '%" + keyword + "%' ";
         }
         if (!"All".equals(cityname)) {
-            sql += "and s.city.name = '" + cityname + "' ";
+            sql += " and s.city.name = '" + cityname + "' ";
         }
         if (!"All".equals(studio)) {
-            sql += "and s.studio.id = '" + studio + "' ";
+            sql += " and s.studio.id = '" + studio + "' ";
         }
         if (!"All".equals(category)) {
-            sql += "and s.category.id = '" + category + "' ";
+            sql += " and s.category.id = '" + category + "' ";
         }
         Query<Services> query = session.createQuery(sql, Services.class);
         return query.getResultList();
