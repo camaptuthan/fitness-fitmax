@@ -11,10 +11,12 @@ import java.util.List;
 public interface StudioService {
 
     List<StudioDTO> getAllStudios();
-
+    List<Studio> getAllStudio();
     StudioDTO getStudioByStudioManager(String email);
 
     StudioDTO getStudioById(String id);
+
+    Studio getStudioByManagerId(String id);
 
     List<StudioDTO> getAllStudiosByCity(String cityname);
 

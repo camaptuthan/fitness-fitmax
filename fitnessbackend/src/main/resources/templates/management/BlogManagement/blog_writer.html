@@ -51,7 +51,7 @@
         <div class="row">
             <div class="col-12 col-lg-9 blog-cover">
                 <div class="post-item-cover">
-                    <form id="blog_writer_form"  action="" th:action="@{/blog/writer}" th:object="${blogDTO}" method="post"
+                    <form id="blog_writer_form"  action="" th:action="@{/blog/management/writer}" th:object="${blogDTO}" method="post"
                           class="search-form d-block">
                         <fieldset disabled>
                             <div class="mb-3 row">
@@ -85,7 +85,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="blog_content" class="form-label">Blog textarea</label>
-                            <textarea id="blog_content" style="width: 100%" th:field="${blogDTO.des}"
+                            <textarea id="blog_content" style="width: 100%" th:field="${blogDTO.description}"
                             ></textarea>
                         </div>
                         <button type="submit" class="btn-form w-100" style="border-radius: unset">

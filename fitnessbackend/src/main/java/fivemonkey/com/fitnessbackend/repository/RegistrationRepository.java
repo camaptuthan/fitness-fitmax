@@ -30,4 +30,6 @@ public interface RegistrationRepository extends JpaRepository<Registration, Stri
     List<Registration> getRegistrationByAssistant(String email);
     @Query(value = "select r from Registration r where r.services.id = :id and r.trainee.email = :traineeEmail")
     Registration findRegistrationByIdAndTrainee(String id, String traineeEmail);
+
+
 }

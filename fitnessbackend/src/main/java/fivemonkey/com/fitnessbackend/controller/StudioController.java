@@ -16,12 +16,23 @@ import org.springframework.web.bind.annotation.*;
 public class StudioController {
     @Autowired
     private StudioService studioService;
-//    list studio in main
 
+//    list studio in homepage
     @GetMapping("/studio-details/{id}")
     public String homepageStudioDetail(@PathVariable("id") String id, Model model) {
         StudioDTO s=  studioService.getStudioById(id);
         model.addAttribute("studio",s);
         return "/studio_details";
     }
+
+    @GetMapping("management/studios")
+    public String listStudios(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+        if (userDetail.getUser().getRole().getName().equals("Admin")) {
+            model.addAttribute("studios", studioService.getAllStudios());
+        } else if (userDetail.getUser().getRole().getName().equals("Studio Manager")) {
+            model.addAttribute("studio", studioService.getStudioByManagerId(userDetail.getUser().getStudio().getId()));
+        }
+        return "management/StudioManagement/studios";
+    }
+
 }
