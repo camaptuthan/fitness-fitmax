@@ -7,7 +7,6 @@
     <div class="container">
         <h2 class="title-decor">Our <span>Service</span></h2>
         <p class="slogan">Phù hợp với tất cả mọi người
-
             Lịch tập và chương trình của chúng tôi được thiết kế và điều chỉnh thường xuyên để phù hợp với nhu cầu và thời gian của mọi hội viên.</p>
         <div class="row">
 
@@ -21,7 +20,7 @@
                     <div class="program-item-back" th:style="'background-image: url(' + ${list.image} + ');'">
                         <div class="program-item-inner">
                             <h3 th:text="${list.type}"></h3>
-                            <span th:if="${list.id == 1}"><a th:href="@{'/package/packages'}"
+                            <span th:if="${list.id == 1}"><a th:href="@{'/service/packages'}"
                                                              class="btn">More</a></span>
                         </div>
                     </div>
