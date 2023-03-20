@@ -43,4 +43,9 @@ public class CategoryServiceImpl implements CategoryService {
     public Category update(CategoryDTO c) {
         return null;
     }
+
+    @Override
+    public List<Category> findBlogCategories() {
+        return categoryRepository.findCategoriesByType("blog");
+    }
 }
