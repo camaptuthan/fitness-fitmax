@@ -165,12 +165,12 @@ public class UserServiceImpl implements UserService {
         //register auto role trainee
         r.setId("ROLE05");
         user.setRole(r);
-        Studio s = new Studio();
-        s.setId("STU001");
 //        user.setStudio(s);
         user.setDate(new Date());
         user.setStatus(false);
+        //save to trainee table
         Trainee trainee= new Trainee();
+        trainee.setEmail(user.getEmail());
         trainee.setUser(user);
         user.setTrainee(trainee);
         //set random ver code
@@ -301,7 +301,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void resetPassword(String email,String password) {
-        User user = userRepository.getById(email);
+        User user = userRepository.findByEmailUser(email);
         BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
