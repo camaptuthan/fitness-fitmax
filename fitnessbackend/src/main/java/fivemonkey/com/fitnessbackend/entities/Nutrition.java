@@ -19,7 +19,7 @@ public class Nutrition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "nutrition_id")
-    private String id;
+    private Long id;
 
     @Column(name = "nutrition_name")
     private String name;

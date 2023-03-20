@@ -51,7 +51,7 @@
             <div>&nbsp</div>
             <div>
                 Category: <select th:name="category" style="width:30%" onchange="submitForm()">
-                <option>All</option>
+                <option th:value="0">All</option>
                 <th:block th:each="category : ${categoryList}">
                     <option th:value="${category.id}" th:text="${category.name}"
                             th:selected="${category.id == currentCategory}"></option>
@@ -92,7 +92,7 @@
                                             <li></li>
                                             <li></li>
                                         </ul>
-                                        <a th:href="@{'/package/package_detail/' + ${package.id}}" class="btn">order
+                                        <a th:href="@{'/service/packages/package-detail/' + ${package.id}}" class="btn">order
                                             now</a>
                                     </div>
                                 </div>

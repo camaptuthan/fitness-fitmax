@@ -37,7 +37,7 @@ public class Services {
     @Min(value = 1, message = "{Size.Field.Price}")
     @Column(name = "price")
     private Float price;
-    @Column(name = "description", columnDefinition = "longtext")
+    @Column(name = "[description]", columnDefinition = "longtext")
     private String des;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")

@@ -1,6 +1,6 @@
 package fivemonkey.com.fitnessbackend.services.impl;
 
-import fivemonkey.com.fitnessbackend.repository.ServiceRepository;
+import fivemonkey.com.fitnessbackend.repository.ServicesRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ class ServiceServiceImplTest {
     @Autowired
 //    ServiceService serviceService;
 
-    ServiceRepository serviceRepository;
+    ServicesRepository serviceRepository;
     @BeforeEach
 //    void setUp() {
 //        serviceService= new ServiceServiceImpl();

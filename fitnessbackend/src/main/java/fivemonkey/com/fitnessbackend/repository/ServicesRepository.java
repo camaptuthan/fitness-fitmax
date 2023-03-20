@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ServiceRepository extends JpaRepository<Services, String> {
+public interface ServicesRepository extends JpaRepository<Services, String> {
 
-    @Query("select s from Services s where s.serviceType.id = 1")
+    @Query("select s from Services s where s.serviceType.id = 1 ")
     List<Services> getServicesByPackage();
 
     @Query("select s from Services s where s.serviceType.id = 2")

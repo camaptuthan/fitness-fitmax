@@ -32,6 +32,11 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
+    public CityDTO getCityByAssistant(String email) {
+        return modelMapper.map(cityRepository.getCityByStudioManager(email), CityDTO.class);
+    }
+
+    @Override
     public CityDTO getCityByStudioManager(String email) {
         return modelMapper.map(cityRepository.getCityByStudioManager(email), CityDTO.class);
     }

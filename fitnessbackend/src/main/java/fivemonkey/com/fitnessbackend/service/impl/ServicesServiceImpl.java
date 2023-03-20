@@ -3,7 +3,8 @@ package fivemonkey.com.fitnessbackend.service.impl;
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
 import fivemonkey.com.fitnessbackend.entities.Services;
-import fivemonkey.com.fitnessbackend.repository.ServiceRepository;
+
+import fivemonkey.com.fitnessbackend.repository.ServicesRepository;
 import fivemonkey.com.fitnessbackend.service.service.ServicesService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,11 +22,10 @@ public class ServicesServiceImpl implements ServicesService {
     private ModelMapperConfiguration<Services, ServicesDTO> modelMapper;
 
     @Autowired
-    private ServiceRepository serviceRepository;
+    private ServicesRepository serviceRepository;
 
     @Autowired
     private SessionFactory sessionFactory;
-
 
 
     @Override
@@ -49,33 +49,32 @@ public class ServicesServiceImpl implements ServicesService {
     }
 
     @Override
-    public List<Services> getPackagesBy3Fields(@Param("keyword") String keyword,
-                                               @Param("cityname") String cityname,
-                                               @Param("category") Long category) {
+    public List<ServicesDTO> getPackagesBy3Fields(String keyword,
+                                                  String cityname,
+                                                  Long category) {
         Session session = sessionFactory.openSession();
         String query = "select s from Services s where s.serviceType.id = 1 ";
-        if (keyword != null) {
+        if (!"".equals(keyword)) {
             query += " and concat(s.name,'',s.price,'',s.duration,'',s.des,'',s.date) like '%" + keyword + "%' ";
         }
         if (!"All".equals(cityname)) {
-            query += " and s.services.city.name = '" + cityname + "' ";
+            query += " and s.city.name = '" + cityname + "' ";
         }
-        if (!"All".equals(category)) {
-            query += " and s.services.category.id = " + category + " ";
+        if (category != 0L) {
+            query += " and s.category.id = " + category + " ";
         }
-        System.out.println(query);
         Query<Services> query1 = session.createQuery(query, Services.class);
-        return query1.getResultList();
+        return modelMapper.mapList(query1.getResultList(), ServicesDTO.class);
     }
 
     @Override
-    public List<Services> getPackagesBy4Fields(@Param("keyword") String keyword,
-                                               @Param("city") String cityname,
-                                               @Param("studio") String studio,
-                                               @Param("category") Long category) {
+    public List<ServicesDTO> getPackagesBy4Fields(String keyword,
+                                                  String cityname,
+                                                  String studio,
+                                                  Long category) {
         Session session = sessionFactory.openSession();
         String sql = "select s from Services s where s.serviceType.id = 1 ";
-        if (keyword != null) {
+        if (!"".equals(keyword)) {
             sql += " and concat(s.name,'',s.price,'',s.duration,'',s.des,'',s.date) like %'" + keyword + "'% ";
         }
         if (!"All".equals(cityname)) {
@@ -84,20 +83,20 @@ public class ServicesServiceImpl implements ServicesService {
         if (!"All".equals(studio)) {
             sql += " and s.studio.id = '" + studio + "' ";
         }
-        if (!"All".equals(category)) {
+        if (category != 0L) {
             sql += " and s.category.id = " + category + " ";
         }
         Query<Services> query = session.createQuery(sql, Services.class);
-        return query.getResultList();
+        return modelMapper.mapList(query.getResultList(), ServicesDTO.class);
     }
 
     @Override
-    public List<Services> getClassesByFields(String keyword, String cityname, String studio, String category) {
+    public List<Services> getClassesByFields(String keyword, String cityname, String studio, Long category) {
         return null;
     }
 
     @Override
-    public List<Services> getPTsByFields(String keyword, String cityname, String studio, String category) {
+    public List<Services> getPTsByFields(String keyword, String cityname, String studio, Long category) {
         return null;
     }
 
