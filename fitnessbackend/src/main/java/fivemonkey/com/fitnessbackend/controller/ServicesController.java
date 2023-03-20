@@ -44,13 +44,13 @@ public class ServicesController {
     @RequestMapping(value = "/packages", method = {RequestMethod.GET, RequestMethod.POST})
     public String getAllPackages(Model model, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
                                  @RequestParam(value = "cityname", required = false, defaultValue = "All") String cityname,
-                                 @RequestParam(value = "category", required = false, defaultValue = "All") String category) {
+                                 @RequestParam(value = "category", required = false, defaultValue = "All") Long category) {
         List<CityDTO> listCity = cityService.getAllCities();
         List<CategoryDTO> listCategory = categoryService.getAllCategoriesByType("service");
         Map<String, List<ServicesDTO>> packagesMapList = new HashMap<>();
         List<Services> listPKG1 = servicesService.getPackagesBy3Fields(keyword, cityname, category);
         List<ServicesDTO> list = servicesService.getAllPackages();
-        System.out.println("HAPH" + list);
+       // System.out.println("HAPH" + listPKG1);
         List<ServicesDTO> listPKG = modelMapper.mapList(listPKG1, ServicesDTO.class);
         for (int i = 0; i < (listPKG.size() / 3) + 1; i++) {
             List<ServicesDTO> value = new ArrayList<>();

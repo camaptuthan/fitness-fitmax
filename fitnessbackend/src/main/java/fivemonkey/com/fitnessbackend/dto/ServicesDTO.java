@@ -20,6 +20,8 @@ public class ServicesDTO {
 
     private String des;
 
+    private int duration;
+
     private Float price;
 
     private int status;

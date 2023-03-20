@@ -26,6 +26,8 @@ public class ServicesServiceImpl implements ServicesService {
     @Autowired
     private SessionFactory sessionFactory;
 
+
+
     @Override
     public List<ServicesDTO> getAllServices() {
         return modelMapper.mapList(serviceRepository.findAll(), ServicesDTO.class);
@@ -49,31 +51,32 @@ public class ServicesServiceImpl implements ServicesService {
     @Override
     public List<Services> getPackagesBy3Fields(@Param("keyword") String keyword,
                                                @Param("cityname") String cityname,
-                                               @Param("category") String category) {
+                                               @Param("category") Long category) {
         Session session = sessionFactory.openSession();
-        String sql = "select s from Services s where s.serviceType.id = 1 ";
+        String query = "select s from Services s where s.serviceType.id = 1 ";
         if (keyword != null) {
-            sql += " and concat(s.name,'',s.price,'',s.duration,'',s.des,'',s.date) like '%" + keyword + "%' ";
+            query += " and concat(s.name,'',s.price,'',s.duration,'',s.des,'',s.date) like '%" + keyword + "%' ";
         }
         if (!"All".equals(cityname)) {
-            sql += " and s.city.name = '" + cityname + "' ";
+            query += " and s.services.city.name = '" + cityname + "' ";
         }
         if (!"All".equals(category)) {
-            sql += " and s.category.id = '" + category + "' ";
+            query += " and s.services.category.id = " + category + " ";
         }
-        Query<Services> query = session.createQuery(sql, Services.class);
-        return query.getResultList();
+        System.out.println(query);
+        Query<Services> query1 = session.createQuery(query, Services.class);
+        return query1.getResultList();
     }
 
     @Override
     public List<Services> getPackagesBy4Fields(@Param("keyword") String keyword,
                                                @Param("city") String cityname,
                                                @Param("studio") String studio,
-                                               @Param("category") String category) {
+                                               @Param("category") Long category) {
         Session session = sessionFactory.openSession();
         String sql = "select s from Services s where s.serviceType.id = 1 ";
         if (keyword != null) {
-            sql += " and concat(s.name,'',s.price,'',s.duration,'',s.des,'',s.date) like '%" + keyword + "%' ";
+            sql += " and concat(s.name,'',s.price,'',s.duration,'',s.des,'',s.date) like %'" + keyword + "'% ";
         }
         if (!"All".equals(cityname)) {
             sql += " and s.city.name = '" + cityname + "' ";
@@ -82,7 +85,7 @@ public class ServicesServiceImpl implements ServicesService {
             sql += " and s.studio.id = '" + studio + "' ";
         }
         if (!"All".equals(category)) {
-            sql += " and s.category.id = '" + category + "' ";
+            sql += " and s.category.id = " + category + " ";
         }
         Query<Services> query = session.createQuery(sql, Services.class);
         return query.getResultList();
