@@ -2,9 +2,9 @@ package fivemonkey.com.fitnessbackend.service.impl;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.BlogDTO;
-import fivemonkey.com.fitnessbackend.entities.Blog;
-import fivemonkey.com.fitnessbackend.entities.User;
+import fivemonkey.com.fitnessbackend.entities.*;
 import fivemonkey.com.fitnessbackend.repository.BlogRepository;
+import fivemonkey.com.fitnessbackend.repository.CategoryRepository;
 import fivemonkey.com.fitnessbackend.repository.UserRepository;
 import fivemonkey.com.fitnessbackend.service.service.BlogService;
 import org.modelmapper.ModelMapper;
@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -28,6 +29,8 @@ public class BlogServiceImpl implements BlogService {
     private UserRepository userRepository;
     @Autowired
     private ModelMapperConfiguration<Blog, BlogDTO> modelMapper;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     //get all blogs
     @Override
@@ -51,14 +54,26 @@ public class BlogServiceImpl implements BlogService {
         return blogDTO;
     }
 
+
+    private Blog makeBlog(User user, Category category) {
+        Blog blog = new Blog();
+        blog.setUser(userRepository.getUserByEmail(user.getEmail()));
+        blog.setCategory(categoryRepository.getById(category.getId()));
+        blog.setStatus(1);
+        blog.setDate(new Date());
+       return blog;
+    }
+    @Override
+    public BlogDTO doBlog(User user, Category category) {
+        return modelMapper.map(blogRepository.save(makeBlog(user, category)), BlogDTO.class);
+    }
     //add new blog
     @Override
     public Blog save(BlogDTO b) {
         Blog blog = new Blog();
         blog.setTitle(b.getTitle());
         blog.setDescription(b.getDescription());
-        blog.setStatus(1);
-//        blog.setUser(userRepository.findByEmail(b.getUserEmail()).get());
+//      blog.setUser(userRepository.findByEmail(b.getUserEmail()).get());
         return blogRepository.save(blog);
     }
 

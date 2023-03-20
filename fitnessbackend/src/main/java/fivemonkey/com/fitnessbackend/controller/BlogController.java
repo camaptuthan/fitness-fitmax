@@ -1,6 +1,7 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.dto.BlogDTO;
+import fivemonkey.com.fitnessbackend.dto.CategoryDTO;
 import fivemonkey.com.fitnessbackend.entities.Blog;
 import fivemonkey.com.fitnessbackend.entities.Category;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
@@ -47,17 +48,29 @@ public class BlogController {
         return "/blog";
     }
     @GetMapping("/management/writer")
-    public String blogWriter(Model model) {
+    public String blogWriter(@AuthenticationPrincipal UserDetail userDetail,Model model) {
         model.addAttribute("blogDTO", new BlogDTO());
+        List<Category> categoryList = categoryService.findBlogCategories();
+        model.addAttribute("catelist", categoryList);
         return "management/BlogManagement/blog_writer";
     }
 
     @PostMapping("/management/writer")
-    public String blogWriter(@ModelAttribute("blogDTO") @Valid BlogDTO blogDTO, @AuthenticationPrincipal UserDetail userDetail, BindingResult result, RedirectAttributes attributes) {
-//        blogDTO.setUserEmail(userDetail.getUser().getEmail());
-        blogService.save(blogDTO);
-        System.out.println("Huy: " + blogDTO.getDescription());
-        return "redirect:/";
+    public String blogWriter(@ModelAttribute("blogDTO") @Valid BlogDTO blogDTO,
+                             @AuthenticationPrincipal UserDetail userDetail,
+                             BindingResult result,
+                             RedirectAttributes attributes,
+                             @RequestParam("category_id") String cateId) {
+//        blogDTO.setUser(userDetail.getUser());
+//        CategoryDTO category = categoryService.getCategoryById(Long.parseLong(cateId));
+        Category category = new Category();
+        category.setId(Long.parseLong(cateId));
+        blogDTO.setCategory(category);
+        if (result.hasErrors()) {
+            return "management/BlogManagement/blog_writer";
+        }
+        blogService.doBlog(userDetail.getUser(), category);
+        return "redirect:/blog";
     }
 
     @GetMapping("/management/blogs")

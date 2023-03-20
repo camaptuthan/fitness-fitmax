@@ -18,5 +18,6 @@ public interface CategoryService {
 
     public Category update(CategoryDTO c);
 
+    public List<Category> findBlogCategories();
 
 }
