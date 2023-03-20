@@ -309,12 +309,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public long countTrainer(String roleId) {
-        return userRepository.getCountOfTrainer("ROLE0004");
+        return userRepository.getCountOfTrainer("ROLE04");
     }
 
     @Override
     public List<User> listAllTrainer(String role) {
-        return userRepository.listAllTrainer(role);
+        return userRepository.findTop4User(role);
     }
 
 

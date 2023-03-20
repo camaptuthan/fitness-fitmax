@@ -2387,9 +2387,9 @@ blockquote:before {
   padding-top: 128px;
   padding-bottom: 10px;
 }
-.s-related-posts.home-related-posts .related-post-col:nth-child(2n) {
-  top: 40px;
-}
+/*.s-related-posts.home-related-posts .related-post-col:nth-child(2n) {*/
+/*  top: 40px;*/
+/*}*/
 .s-related-posts .related-post-col {
   margin-bottom: 30px;
 }

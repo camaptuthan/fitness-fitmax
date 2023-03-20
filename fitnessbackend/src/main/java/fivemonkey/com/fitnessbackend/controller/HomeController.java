@@ -39,10 +39,10 @@ public class HomeController {
         List<ServiceTypeDTO> listServiceType = serviceTypeService.getAll();
         List<Slider> sliderList=sliderService.getAllSlider();
         String role = "ROLE04";
-//        List<User> listAllTrainer = userService.listAllTrainer(role);
+        List<User> listAllTrainer = userService.listAllTrainer(role);
         model.addAttribute("listServiceType", listServiceType);
         model.addAttribute("listSlider",sliderList);
-//        model.addAttribute("listAllTrainer", listAllTrainer);
+        model.addAttribute("listAllTrainer", listAllTrainer);
         return "index";
     }
 
