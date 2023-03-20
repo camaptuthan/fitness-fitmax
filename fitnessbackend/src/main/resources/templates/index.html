@@ -40,7 +40,7 @@
 
 <section class="s-crossfit-slider">
     <div class="crossfit-slider">
-        <div class="crossfit-slide">
+        <div class="crossfit-slide" th:each="l:${listSlider}">
             <div class="crossfit-slider-effect effect-1">
                 <div data-hover-only="true" class="scene">
                     <span class="scene-item" data-depth="0.2" style="background-image: url(/img/effect-1.svg);"></span>
@@ -51,49 +51,11 @@
                     <span class="scene-item" data-depth="0.4" style="background-image: url(/img/effect-2.svg);"></span>
                 </div>
             </div>
-            <div class="crossfit-slide-bg" style="background-image: url(/img/slide-1.jpg)";></div>
+            <div class="crossfit-slide-bg" th:style="'background-image: url(' + ${l.image} + ');'";></div>
             <div class="container">
                 <div class="crossfit-slide-cover">
                     <h2 class="title">push <span>yourself</span></h2>
-                    <p>Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor tincidunt lorem ut, venenatis dapibus mi. Nunc venenatis sollicitudin nisl vel auctor.</p>
-                </div>
-            </div>
-        </div>
-        <div class="crossfit-slide">
-            <div class="crossfit-slider-effect effect-1">
-                <div data-hover-only="true" class="scene">
-                    <span class="scene-item" data-depth="0.2" style="background-image: url(/static/img/effect-1.svg);"></span>
-                </div>
-            </div>
-            <div class="crossfit-slider-effect effect-2">
-                <div data-hover-only="true" class="scene">
-                    <span class="scene-item" data-depth="0.4" style="background-image: url(/static/img/effect-2.svg);"></span>
-                </div>
-            </div>
-            <div class="crossfit-slide-bg" style="background-image: url(/static/img/slide-2.jpg);"></div>
-            <div class="container">
-                <div class="crossfit-slide-cover">
-                    <h2 class="title">push <span>yourself</span></h2>
-                    <p>Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor tincidunt lorem ut, venenatis dapibus mi. Nunc venenatis sollicitudin nisl vel auctor.</p>
-                </div>
-            </div>
-        </div>
-        <div class="crossfit-slide">
-            <div class="crossfit-slider-effect effect-1">
-                <div data-hover-only="true" class="scene">
-                    <span class="scene-item" data-depth="0.2" style="background-image: url(/img/effect-1.svg);"></span>
-                </div>
-            </div>
-            <div class="crossfit-slider-effect effect-2">
-                <div data-hover-only="true" class="scene">
-                    <span class="scene-item" data-depth="0.4" style="background-image: url(/static/img/effect-2.svg);"></span>
-                </div>
-            </div>
-            <div class="crossfit-slide-bg" style="background-image: url(/static/img/slide-3.jpg);"></div>
-            <div class="container">
-                <div class="crossfit-slide-cover">
-                    <h2 class="title">push <span>yourself</span></h2>
-                    <p>Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor tincidunt lorem ut, venenatis dapibus mi. Nunc venenatis sollicitudin nisl vel auctor.</p>
+                    <p th:text="${l.des}" ></p>
                 </div>
             </div>
         </div>
@@ -157,38 +119,9 @@
 <!-- ============== S-CROSSFIT END ============== -->
 
 <!-- ============== S-OUR-PROGRAMS ============== -->
-<!--<th:block th:insert="fragments/home_program"></th:block>-->
-<!--<div th:include="management/home_program.html"></div>-->
+<th:block th:insert="fragments/home_program"></th:block>
 
-<div class="s-our-programs" style="background-image: url(/img/bg-programs.jpg);">
-    <div class="mask"></div>
-    <div class="our-programs-effect" style="background-image: url(/img/bg-programs.svg);"></div>
-    <div class="container">
-        <h2 class="title-decor">Our <span>Service</span></h2>
-        <p class="slogan">Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor,
-            auctor
-            tincidunt lorem ut, venenatis dapibus miq.</p>
-        <div class="row">
 
-            <div th:each="list: ${listServiceType}" class="col-sm-6 col-md-4 program-col">
-                <div class="program-item">
-                    <div class="program-item-front" th:style="'background-image: url(' + ${list.image} + ');'">
-                        <div class="program-item-inner">
-                            <h3 th:text="${list.type}"></h3>
-                        </div>
-                    </div>
-                    <div class="program-item-back" th:style="'background-image: url(' + ${list.image} + ');'">
-                        <div class="program-item-inner">
-                            <h3 th:text="${list.type}"></h3>
-                            <span th:if="${list.id == 1}"><a th:href="@{'/service/packages'}"
-                                                             class="btn">More</a></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- ============ S-OUR-PROGRAMS END ============ -->
 
 <!-- =============== S-OUT-TRAINER =============== -->
@@ -207,181 +140,11 @@
 <!-- ========== S-CROSSFIT-BANNER END ========== -->
 
 <!-- ============== S-TESTIMONIALS ============== -->
-<section class="s-testimonials" style="background-image: url(/static/img/bg-testimonials.jpg);">
-    <div class="mask"></div>
-    <img class="testimonials-effect" src="@{/img/bg-testimonials.svg" alt="effect">
-    <div class="container">
-        <div class="testimonials-slider">
-            <div class="testimonial-slide">
-                <p>“Phasellus vestibulum nec dolor quis varius. Lorem ipsum dolor sit amet, consectetur adipiscing
-                    elit.
-                    Phasellus gravida magna sit amet euismod lacinia. Lorem ipsum dolor sit amet, consectetur
-                    adipiscing
-                    elit”</p>
-                <img src="@{/img/testimonials-1.png}" alt="img">
-                <h3 class="name">Anna Piters</h3>
-                <div class="prof">our client</div>
-            </div>
-            <div class="testimonial-slide">
-                <p>“Phasellus vestibulum nec dolor quis varius. Lorem ipsum dolor sit amet, consectetur adipiscing
-                    elit.
-                    Phasellus gravida magna sit amet euismod lacinia. Lorem ipsum dolor sit amet, consectetur
-                    adipiscing
-                    elit”</p>
-                <img src="@{/img/testimonials-2.png}" alt="img">
-                <h3 class="name">Mark Klark</h3>
-                <div class="prof">our client</div>
-            </div>
-            <div class="testimonial-slide">
-                <p>“Phasellus vestibulum nec dolor quis varius. Lorem ipsum dolor sit amet, consectetur adipiscing
-                    elit.
-                    Phasellus gravida magna sit amet euismod lacinia. Lorem ipsum dolor sit amet, consectetur
-                    adipiscing
-                    elit”</p>
-                <img src="@{/img/testimonials-3.png}" alt="img">
-                <h3 class="name">Kat Smith</h3>
-                <div class="prof">our client</div>
-            </div>
-        </div>
-    </div>
-</section>
+
 <!-- ============ S-TESTIMONIALS END ============ -->
 
 <!--================ RELATED POSTS ================-->
-<section class="s-related-posts home-related-posts">
-    <div class="container">
-        <h2 class="title-decor">Latest <span>News</span></h2>
-        <p class="slogan">Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor,
-            auctor
-            tincidunt lorem ut, venenatis dapibus miq.</p>
-        <div class="row">
-            <div class="col-md-6 related-post-col">
-                <div class="post-item-cover">
-                    <div class="post-header">
-                        <div class="related-post-categ">fitness</div>
-                        <div class="post-thumbnail">
-                            <a href="single-blog.html"><img class="rx-lazy" src="@{/img/placeholder-all.png}"
-                                                            data-src="img/blog-4.jpg" alt="img"></a>
-                        </div>
-                    </div>
-                    <div class="post-content">
-                        <div class="meta">
-                                <span class="post-date"><i class="fa fa-calendar" aria-hidden="true"></i>October 31,
-                                    2019</span>
-                        </div>
-                        <h3 class="title"><a href="single-blog.html">Sed ut perspiciatis unde omnis</a></h3>
-                        <div class="text">
-                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                                laudantium, totam rem...</p>
-                        </div>
-                    </div>
-                    <div class="post-footer">
-                        <div class="meta">
-                                <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a href="#">By
-                                        Rovadex</a></span>
-                            <span class="post-comment"><i class="fa fa-comment" aria-hidden="true"></i><a href="#">2
-                                        Comments(s)</a></span>
-                        </div>
-                        <a href="single-blog.html" class="btn"><span>read more</span></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 related-post-col">
-                <div class="post-item-cover">
-                    <div class="post-header">
-                        <div class="related-post-categ">lifting</div>
-                        <div class="post-thumbnail">
-                            <a href="single-blog.html"><img class="rx-lazy" src="@{/img/placeholder-all.png}"
-                                                            data-src="img/blog-1.jpg" alt="img"></a>
-                        </div>
-                    </div>
-                    <div class="post-content">
-                        <div class="meta">
-                                <span class="post-date"><i class="fa fa-calendar" aria-hidden="true"></i>October 31,
-                                    2019</span>
-                        </div>
-                        <h3 class="title"><a href="single-blog.html">Sed ut perspiciatis unde omnis</a></h3>
-                        <div class="text">
-                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                                laudantium, totam rem...</p>
-                        </div>
-                    </div>
-                    <div class="post-footer">
-                        <div class="meta">
-                                <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a href="#">By
-                                        Rovadex</a></span>
-                            <span class="post-comment"><i class="fa fa-comment" aria-hidden="true"></i><a href="#">2
-                                        Comments(s)</a></span>
-                        </div>
-                        <a href="single-blog.html" class="btn"><span>read more</span></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 related-post-col">
-                <div class="post-item-cover">
-                    <div class="post-header">
-                        <div class="related-post-categ">fitness</div>
-                        <div class="post-thumbnail">
-                            <a href="single-blog.html"><img class="rx-lazy" src="@{/img/placeholder-all.png}"
-                                                            data-src="img/blog-3.jpg" alt="img"></a>
-                        </div>
-                    </div>
-                    <div class="post-content">
-                        <div class="meta">
-                                <span class="post-date"><i class="fa fa-calendar" aria-hidden="true"></i>October 31,
-                                    2019</span>
-                        </div>
-                        <h3 class="title"><a href="single-blog.html">Sed ut perspiciatis unde omnis</a></h3>
-                        <div class="text">
-                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                                laudantium, totam rem...</p>
-                        </div>
-                    </div>
-                    <div class="post-footer">
-                        <div class="meta">
-                                <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a href="#">By
-                                        Rovadex</a></span>
-                            <span class="post-comment"><i class="fa fa-comment" aria-hidden="true"></i><a href="#">2
-                                        Comments(s)</a></span>
-                        </div>
-                        <a href="single-blog.html" class="btn"><span>read more</span></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 related-post-col">
-                <div class="post-item-cover">
-                    <div class="post-header">
-                        <div class="related-post-categ">lifting</div>
-                        <div class="post-thumbnail">
-                            <a href="single-blog.html"><img class="rx-lazy" src="@{/img/placeholder-all.png}"
-                                                            data-src="img/blog-2.jpg" alt="img"></a>
-                        </div>
-                    </div>
-                    <div class="post-content">
-                        <div class="meta">
-                                <span class="post-date"><i class="fa fa-calendar" aria-hidden="true"></i>October 31,
-                                    2019</span>
-                        </div>
-                        <h3 class="title"><a href="single-blog.html">Sed ut perspiciatis unde omnis</a></h3>
-                        <div class="text">
-                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                                laudantium, totam rem...</p>
-                        </div>
-                    </div>
-                    <div class="post-footer">
-                        <div class="meta">
-                                <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a href="#">By
-                                        Rovadex</a></span>
-                            <span class="post-comment"><i class="fa fa-comment" aria-hidden="true"></i><a href="#">2
-                                        Comments(s)</a></span>
-                        </div>
-                        <a href="single-blog.html" class="btn"><span>read more</span></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
 <!--============== RELATED POSTS END ==============-->
 
 <!-- =========== S-TRAINING-SCHEDULE =========== -->

@@ -1084,8 +1084,8 @@ textarea {
   height: 44px;
   padding: 0 10px;
   font-family: "Poppins", sans-serif !important;
-  border: 2px solid transparent;
-  border-bottom-color: #f23849;
+  border: 0.5px solid transparent;
+  border-color: #ffff00;
   color: #fff;
   font-weight: 400;
   transition: 0.25s ease-in;

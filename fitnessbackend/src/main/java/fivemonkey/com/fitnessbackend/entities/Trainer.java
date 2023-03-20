@@ -55,3 +55,4 @@ public class Trainer {
     @OneToMany(mappedBy = "trainer", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Registration> registrations;
 }
+

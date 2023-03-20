@@ -1,10 +1,8 @@
 package fivemonkey.com.fitnessbackend.security;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,8 +18,8 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 
 import javax.sql.DataSource;
 
-//@Configuration
-//@EnableWebSecurity
+@Configuration
+@EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -38,16 +36,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    @Bean
-    public PasswordEncoder passwordDecoder() {
-        return NoOpPasswordEncoder.getInstance();
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
     }
-
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
-//    }
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     @Override
@@ -67,7 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable();
         // Author for manager
-        http.authorizeRequests().antMatchers("/user/management/**").hasAnyAuthority("ROLE0002","ROLE0001","ROLE0006","ROLE0003");
+        http.authorizeRequests().antMatchers("/user/management/**").hasAnyAuthority("ROLE02","ROLE01","ROLE05","ROLE03");
 //        http.authorizeRequests().antMatchers("/user/**").authenticated();
         http.authorizeRequests().anyRequest().permitAll();
         // When the user has logged in as XX.

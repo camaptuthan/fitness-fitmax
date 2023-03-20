@@ -7,5 +7,7 @@ import java.util.List;
 
 @Service
 public interface ServiceTypeService {
+
     List<ServiceTypeDTO> getAll();
+
 }

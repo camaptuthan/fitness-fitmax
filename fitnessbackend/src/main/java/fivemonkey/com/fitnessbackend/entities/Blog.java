@@ -51,3 +51,4 @@ public class Blog {
     private Category category;
 
 }
+

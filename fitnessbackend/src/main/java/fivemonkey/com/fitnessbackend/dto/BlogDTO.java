@@ -25,11 +25,10 @@ public class BlogDTO {
 
     private Date date;
 
-    private boolean status;
+    private int status;
 
     private Category category;
 
-    private String userEmail;
     private User user;
 
 
