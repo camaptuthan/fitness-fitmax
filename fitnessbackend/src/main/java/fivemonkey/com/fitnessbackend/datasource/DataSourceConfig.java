@@ -17,7 +17,7 @@ import java.util.Objects;
 
 @Configuration
 public class DataSourceConfig {
-	@Autowired
+    @Autowired
     private final Environment env;
 
     public DataSourceConfig(Environment env) {
@@ -36,7 +36,7 @@ public class DataSourceConfig {
     @Bean
     public DataSource dataSourceBuilder() {
         List<String> passList = new ArrayList<>(Arrays.asList("spring.huydt.password", "spring.haph.password",
-                "spring.tuandb.password", "spring.ducnv.password","spring.anhcv.password"));
+                "spring.tuandb.password", "spring.ducnv.password", "spring.anhcv.password"));
         for (String pass : passList) {
             try (Connection connection = dataSourceConfig(pass).getConnection()) {
                 return dataSourceConfig(pass);

@@ -60,5 +60,5 @@ public interface UserService {
 
     List<User> listAllTrainer(String role);
 
-
+    List<User> getUserByRoleId(String roleId);
 }
