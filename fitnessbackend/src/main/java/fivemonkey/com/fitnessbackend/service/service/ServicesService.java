@@ -13,6 +13,8 @@ public interface ServicesService {
 
     List<ServicesDTO> getAllPackages();
 
+    ServicesDTO getPackageById(String id);
+
     List<ServicesDTO> getAllClasses();
 
     List<ServicesDTO> getAllPTs();
@@ -26,13 +28,8 @@ public interface ServicesService {
 
     ServicesDTO getServiceById(String id);
 
-    Services save(ServicesDTO s);
+    Services addNewPackage(ServicesDTO s);
 
-    Services update(Services s);
-
-    void disableService(String id);
-
-    void enableService(String id);
-
+    Services update(ServicesDTO s);
 
 }

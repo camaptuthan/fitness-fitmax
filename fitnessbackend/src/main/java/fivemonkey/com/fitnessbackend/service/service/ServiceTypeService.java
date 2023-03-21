@@ -1,6 +1,7 @@
 package fivemonkey.com.fitnessbackend.service.service;
 
 import fivemonkey.com.fitnessbackend.dto.ServiceTypeDTO;
+import fivemonkey.com.fitnessbackend.entities.ServiceType;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,4 +11,5 @@ public interface ServiceTypeService {
 
     List<ServiceTypeDTO> getAll();
 
+    ServiceTypeDTO getServiceTypeById(Long id);
 }

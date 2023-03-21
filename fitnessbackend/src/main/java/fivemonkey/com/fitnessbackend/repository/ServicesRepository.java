@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface ServicesRepository extends JpaRepository<Services, String> {
 
-    @Query("select s from Services s where s.serviceType.id = 1 ")
+    @Query("select s from Services s where s.serviceType.id = 1")
     List<Services> getServicesByPackage();
 
     @Query("select s from Services s where s.serviceType.id = 2")
@@ -19,4 +19,6 @@ public interface ServicesRepository extends JpaRepository<Services, String> {
     @Query("select s from Services s where s.serviceType.id = 3")
     List<Services> getServicesByClass();
 
+    @Query("select s from Services s where s.serviceType.id = 1 and s.id = ?1")
+    Services getPackageById(String id);
 }

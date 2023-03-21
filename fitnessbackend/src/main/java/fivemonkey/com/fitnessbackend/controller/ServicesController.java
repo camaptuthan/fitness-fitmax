@@ -1,16 +1,18 @@
 package fivemonkey.com.fitnessbackend.controller;
 
-import fivemonkey.com.fitnessbackend.dto.CategoryDTO;
-import fivemonkey.com.fitnessbackend.dto.CityDTO;
-import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
-import fivemonkey.com.fitnessbackend.dto.StudioDTO;
+import fivemonkey.com.fitnessbackend.dto.*;
+import fivemonkey.com.fitnessbackend.entities.ServiceType;
+import fivemonkey.com.fitnessbackend.entities.Status;
+import fivemonkey.com.fitnessbackend.repository.ServiceTypeRepository;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.service.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +37,12 @@ public class ServicesController {
 
     @Autowired
     private RegistrationService registrationService;
+
+    @Autowired
+    private ServiceTypeService serviceTypeService;
+
+    @Autowired
+    private StatusService statusService;
 
     //view all packages(user)
     @RequestMapping(value = "/packages", method = {RequestMethod.GET, RequestMethod.POST})
@@ -67,8 +75,38 @@ public class ServicesController {
         return "user/package";
     }
 
+    //view package detail(user)
+    @GetMapping("/packages/package-detail/{id}")
+    public String viewPackageDetail(@AuthenticationPrincipal UserDetail userDetail, @PathVariable(name = "id") String id, Model model){
+        ServicesDTO s = servicesService.getServiceById(id);
+        List<ServicesDTO> listPKG = servicesService.getAllPackages();
+        Map<String, List<ServicesDTO>> packagesMapList = new HashMap<>();
+        int size = listPKG.size() % 3 == 0 ? listPKG.size() / 3 : (listPKG.size() / 3 + 1);
+        List<ServicesDTO> value = null;
+        for (int i = 0; i < size; i++) {
+            value = new ArrayList<>();
+            for (int j = 0; j < 3; j++) {
+                if (i * 3 + j < listPKG.size()) {
+                    value.add(listPKG.get(i * 3 + j));
+                }
+            }
+            packagesMapList.put("PKG-" + (i + 1), value);
+        }
+
+        model.addAttribute("packages", packagesMapList);
+        boolean hasRegistered = false;
+        if (userDetail != null) {
+            hasRegistered = registrationService.hasRegistration(s.getId(), userDetail.getUser().getEmail());
+        }
+
+        model.addAttribute("hasRegistered", hasRegistered);
+        model.addAttribute("packages", packagesMapList);
+        model.addAttribute("package", s);
+        return "user/package-detail";
+    }
+
     //view all packages in dashboard
-    @RequestMapping(value = "management/packages", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/management/packages", method = {RequestMethod.GET, RequestMethod.POST})
     public String getAllPackages(Model model, @AuthenticationPrincipal UserDetail userDetail,
                                  @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
                                  @RequestParam(value = "cityname", required = false, defaultValue = "All") String cityname,
@@ -101,33 +139,60 @@ public class ServicesController {
         return "management/PackageManagement/package-list";
     }
 
-    //view package detail
-    @GetMapping("/packages/package-detail/{id}")
-    public String viewPackageDetail(@AuthenticationPrincipal UserDetail userDetail, @PathVariable(name = "id") String id, Model model){
-        ServicesDTO s = servicesService.getServiceById(id);
-        List<ServicesDTO> listPKG = servicesService.getAllPackages();
-        Map<String, List<ServicesDTO>> packagesMapList = new HashMap<>();
-        int size = listPKG.size() % 3 == 0 ? listPKG.size() / 3 : (listPKG.size() / 3 + 1);
-        List<ServicesDTO> value = null;
-        for (int i = 0; i < size; i++) {
-            value = new ArrayList<>();
-            for (int j = 0; j < 3; j++) {
-                if (i * 3 + j < listPKG.size()) {
-                    value.add(listPKG.get(i * 3 + j));
-                }
+
+    //add new package
+    @GetMapping("/management/add-package")
+    public String addPackage(Model model){
+        model.addAttribute("packagenew",new ServicesDTO());
+        return "management/PackageManagement/package-add";
+    }
+
+    //save new package
+    @PostMapping("/management/save-package")
+    public String savePackage(@ModelAttribute("packagenew") ServicesDTO packagenew, BindingResult result, RedirectAttributes attributes) {
+        try {
+            if (result.hasErrors()) {
+                attributes.addFlashAttribute("fail", "Add fail!");
+                return "management/PackageManagement/package-add";
+            } else {
+                servicesService.addNewPackage(packagenew);
+                attributes.addFlashAttribute("success", "Add successful!");
             }
-            packagesMapList.put("PKG-" + (i + 1), value);
+        }catch (Exception e) {
+            e.printStackTrace();
+            attributes.addFlashAttribute("fail", "Add fail!");
         }
+        return "redirect:/service/management/packages";
+    }
 
-        model.addAttribute("packages", packagesMapList);
-        boolean hasRegistered = false;
-        if (userDetail != null) {
-            hasRegistered = registrationService.hasRegistration(s.getId(), userDetail.getUser().getEmail());
+    //update package b1
+    @GetMapping("/management/update-package/{id}")
+    public String getDetail(@PathVariable("id") String id, Model model){
+        ServicesDTO servicesDTO = servicesService.getPackageById(id);
+        ServiceTypeDTO serviceTypeDTO = serviceTypeService.getServiceTypeById(1L);
+        List<Status> statusList = statusService.getStatusByService();
+        model.addAttribute("package", servicesDTO);
+        model.addAttribute("servicetype",serviceTypeDTO);
+        model.addAttribute("statusList", statusList);
+        return "management/PackageManagement/package-update";
+    }
+
+    //update package b2
+    @PostMapping("/management/update-package/{id}")
+    public String PackageUpdate(@PathVariable("id") String id, BindingResult result,
+                                @ModelAttribute("package") ServicesDTO servicesDTO, RedirectAttributes attributes){
+        try {
+            if (result.hasErrors()) {
+                attributes.addFlashAttribute("fail", "Add fail!");
+                return "management/PackageManagement/package-update";
+            } else {
+                servicesService.update(servicesDTO);
+                attributes.addFlashAttribute("success", "Add successful!");
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            attributes.addFlashAttribute("fail", "Add fail!");
         }
-
-        model.addAttribute("hasRegistered", hasRegistered);
-        model.addAttribute("packages", packagesMapList);
-        model.addAttribute("package", s);
-        return "user/package-detail";
+        return "redirect:/service/management/packages";
     }
 }

@@ -362,4 +362,9 @@ insert into session(session_id,session_name,created_date,happened_date,class_id,
 insert into session(session_id,session_name,created_date,happened_date,class_id,schedule_id,trainer_email) values ('SES20230033','Power Yoga',CURDATE(),'2023-03-23',1,'SCHE08','ducnvhe141646@fpt.edu.vn');
 insert into session(session_id,session_name,created_date,happened_date,class_id,schedule_id,trainer_email) values ('SES20230034','Hip Opening',CURDATE(),'2023-03-24',1,'SCHE08','ducnvhe141646@fpt.edu.vn');
 
+/*select * from status;*/
+insert into status(type_id, status) values (1,'Rejected');
+insert into status(type_id, status) values (1,'Waiting');
+insert into status(type_id, status) values (1,'Processing');
+insert into status(type_id, status) values (1,'Expired');
 
