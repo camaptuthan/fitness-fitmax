@@ -38,8 +38,7 @@ public class StudioServiceImpl implements StudioService {
     //remove
     @Override
     public List<StudioDTO> getAllStudios() {
-        List<StudioDTO> list= new ArrayList<>();
-        return list;
+        return modelMapper.mapList(studioRepository.findAll(), StudioDTO.class);
     }
 
     @Override

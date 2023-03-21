@@ -257,7 +257,7 @@ public class UserServiceImpl implements UserService {
         String content = "Dear ,<br>"
                 + "This is your otp please verify otp now :<br>"
                 + "<h3>" + otp +"</h3> <br>"
-                +"<a>"+"It's expired time after "+OTP_EXPIRATION_TIME_MINUTES+ "minutes </a><br>"
+                +"<a>"+"It's expired time after "+OTP_EXPIRATION_TIME_MINUTES+ " minutes </a><br>"
                 + "Thank you,<br>"
                 + "From FSM.";
 
