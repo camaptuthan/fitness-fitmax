@@ -17,15 +17,23 @@ public class SessionServiceImpl implements SessionService {
     private SessionRepository sessionRepository;
 
     @Autowired
-    private ModelMapperConfiguration<Session, SessionDTO> modelMapperConfiguration;
+    private ModelMapperConfiguration<Session, SessionDTO> modelMapper;
 
     @Override
     public List<SessionDTO> getRegisteredSessionByScheduleIdBetweenTimes(String scheduleId, Date startTime, Date endTime) {
-        return modelMapperConfiguration.mapList(sessionRepository.getSessionsByScheduleAndHappenedDateBetween(scheduleId, startTime, endTime), SessionDTO.class);
+        return modelMapper.mapList(sessionRepository.getSessionsByScheduleAndHappenedDateBetween(scheduleId, startTime, endTime), SessionDTO.class);
     }
 
     @Override
     public List<SessionDTO> getSessionByScheduleIdAndClassIdBetweenTimes(String scheduleId, String serviceId, Date formatTime, Date formatTime1) {
-        return modelMapperConfiguration.mapList(sessionRepository.getSessionsByScheduleAndClassAndHappenedDateBetween(scheduleId, serviceId, formatTime, formatTime1), SessionDTO.class);
+        return modelMapper.mapList(sessionRepository.getSessionsByScheduleAndClassAndHappenedDateBetween(scheduleId, serviceId, formatTime, formatTime1), SessionDTO.class);
+    }
+
+    @Override
+    public SessionDTO save(SessionDTO sessionDTO) {
+        Session session = sessionRepository.findById(sessionDTO.getId()).orElse(new Session());
+        session.setName(sessionDTO.getName());
+        session.setHappenedDate(sessionDTO.getHappenedDate());
+        return modelMapper.map(sessionRepository.save(session), SessionDTO.class);
     }
 }

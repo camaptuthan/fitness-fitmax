@@ -44,7 +44,7 @@
 <script>
     $(document).ready(function () {
         $.ajax({
-            url: `${origin_path}/registration/user/profile`,
+            url: `${origin_path}/registration/api/profile`,
             type: "GET",
             success: function (data) {
                 console.log(data);
@@ -54,23 +54,52 @@
                     <th>Service Name</th>
                     <th>Registration Date</th>
                     <th>Status</th>
+                    <th>action</th>
                     </thead>
                     <tbody>`;
                 data.forEach((registration, index) => {
                     body += `<tr>
-                            <td>${registration.id}</td>
+                            <td>${registration.servicesId}</td>
                             <td>
                                 <h4>
-                                    <a href="${registration.path}">${registration.itemName}</a>
+                                    <a href="${registration.path}">${registration.servicesName}</a>
                                 </h4>
                             </td>
                             <td>
-                                <div class="date">${registration.date}</div>
+                                <div class="date">${registration.date.slice(0, 10)}</div>
                             </td>
                             <td>
                                 <div class="name text-light">
                                     ${registration.status ? 'Current' : 'Expired'}
                                 </div>
+                            </td>
+                            <td>
+                               <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${registration.servicesId}staticBackdrop">
+                              view
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="${registration.servicesId}staticBackdrop"
+                                data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                aria-labelledby="${registration.servicesId}staticBackdropLabel"
+                                aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 66rem; ">
+                                <div class="modal-content h-100">
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="${registration.servicesId}staticBackdropLabel">Your Registration: ${registration.servicesId}</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn">Understood</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                             </td>
                         </tr>`;
                 });

@@ -15,4 +15,6 @@ public interface SessionService {
 
     //get all sessions by schedule id and class id between start time and end time
     List<SessionDTO> getSessionByScheduleIdAndClassIdBetweenTimes(String scheduleId, String classId, Date formatTime, Date formatTime1);
+
+    SessionDTO save(SessionDTO sessionDTO);
 }
