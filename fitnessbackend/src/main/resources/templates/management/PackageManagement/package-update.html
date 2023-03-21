@@ -44,15 +44,15 @@
             <label class="col-md-4 control-label" for="name">Name</label>
             <div class="col-md-4">
                 <input id="type" name="type" th:value="${package.serviceTypeId}"
-                       th:text="${servicetype.type}" class="form-control input-md" type="text" readonly>
+                        class="form-control input-md" type="text" readonly>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-4 control-label" for="des">Description</label>
             <div class="col-md-4">
-                <textarea id="des" name="des" th:value="${package.des}" placeholder=" Description"
-                       class="form-control input-md" type="text"/>
+                <textarea id="des" name="des" th:text="${package.des}"
+                          class="form-control input-md" type="text"></textarea>
             </div>
         </div>
         <!-- Text input-->
@@ -74,13 +74,26 @@
             </div>
         </div>
         <!-- Text input-->
-
         <div class="form-group">
-            <label class="col-md-4 control-label" for="filebutton">Img</label>
-            <div class="col-md-4">
-                <input id="filebutton" name="filebutton" class="input-file" type="file">
+            <label class="col-md-4 control-label" >Status</label>
+            <div class="col-md-4 ">
+                <select th:name="status_type_id" style="width:30%">
+                    <th:block th:each="status : ${statusList}">
+                        <option th:value="${status.type_id}" th:selected="${currentStatus == status.type_id}" th:text="${status.statusName}"></option>
+                    </th:block>
+                </select>
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" >Image</label>
+            <img th:src="${package.image}">
+        </div>
+<!--        <div class="form-group">-->
+<!--            <label class="col-md-4 control-label" for="filebutton">Img</label>-->
+<!--            <div class="col-md-4">-->
+<!--                <input id="filebutton" name="filebutton" class="input-file" type="file">-->
+<!--            </div>-->
+<!--        </div>-->
 
         <!-- Button -->
         <div class="form-group">

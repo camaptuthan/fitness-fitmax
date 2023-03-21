@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface StatusRepository extends JpaRepository<Status, Long> {
 
-    @Query("select s from Status s where s.type_id = 1")
-    List<Status> getStatusByServices();
+    @Query("select s from Status s where s.type = 'service'")
+    List<Status> getStatusByPackage();
+
 }

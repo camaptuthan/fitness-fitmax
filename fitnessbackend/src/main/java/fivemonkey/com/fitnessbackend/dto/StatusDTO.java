@@ -11,7 +11,9 @@ public class StatusDTO {
 
     private Long id;
 
+    private String type;
+
     private int type_id;
 
-    private String status;
+    private String statusName;
 }

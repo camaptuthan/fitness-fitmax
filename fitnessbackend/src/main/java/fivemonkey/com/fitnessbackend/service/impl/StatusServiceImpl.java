@@ -15,7 +15,7 @@ public class StatusServiceImpl implements StatusService {
     private StatusRepository statusRepository;
 
     @Override
-    public List<Status> getStatusByService() {
-        return statusRepository.getStatusByServices();
+    public List<Status> getStatusByPackage() {
+        return statusRepository.getStatusByPackage();
     }
 }

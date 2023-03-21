@@ -17,12 +17,15 @@ public class Status {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "setting_id")
+    @Column(name = "status_id")
     private Long id;
+
+    @Column(name = "type")
+    private String type;
 
     @Column(name = "type_id")
     private int type_id;
 
-    @Column(name = "status")
-    private String status;
+    @Column(name = "status_name")
+    private String statusName;
 }

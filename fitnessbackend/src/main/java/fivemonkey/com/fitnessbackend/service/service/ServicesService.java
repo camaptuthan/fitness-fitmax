@@ -13,7 +13,9 @@ public interface ServicesService {
 
     List<ServicesDTO> getAllPackages();
 
-    ServicesDTO getPackageById(String id);
+    ServicesDTO getPackageDTOById(String id);
+
+    Services getPackageById(String id);
 
     List<ServicesDTO> getAllClasses();
 
@@ -29,7 +31,5 @@ public interface ServicesService {
     ServicesDTO getServiceById(String id);
 
     Services addNewPackage(ServicesDTO s);
-
-    Services update(ServicesDTO s);
 
 }

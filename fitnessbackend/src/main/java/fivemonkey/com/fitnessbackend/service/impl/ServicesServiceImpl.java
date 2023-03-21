@@ -43,8 +43,13 @@ public class ServicesServiceImpl implements ServicesService {
     }
 
     @Override
-    public ServicesDTO getPackageById(String id) {
+    public ServicesDTO getPackageDTOById(String id) {
         return modelMapper.map(serviceRepository.getPackageById(id), ServicesDTO.class);
+    }
+
+    @Override
+    public Services getPackageById(String id) {
+        return serviceRepository.getPackageById(id);
     }
 
     @Override
@@ -62,7 +67,7 @@ public class ServicesServiceImpl implements ServicesService {
                                                   @Param("cityname") String cityname,
                                                   @Param("category") Long category) {
         Session session = sessionFactory.openSession();
-        String query = "select s from Services s where s.serviceType.id = 1 ";
+        String query = "select s from Services s where s.serviceType.id = 1 and s.status = 2 ";
         if (!"".equals(keyword)) {
             query += " and concat(s.name,'',s.price,'',s.duration,'',s.des,'',s.date) like '%" + keyword + "%' ";
         }
@@ -84,7 +89,7 @@ public class ServicesServiceImpl implements ServicesService {
         Session session = sessionFactory.openSession();
         String sql = "select s from Services s where s.serviceType.id = 1 ";
         if (!"".equals(keyword)) {
-            sql += " and concat(s.name,'',s.price,'',s.duration,'',s.des,'',s.date) like %'" + keyword + "'% ";
+            sql += " and concat(s.name,'',s.price,'',s.duration,'',s.des,'',s.date) like '%" + keyword + "%' ";
         }
         if (!"All".equals(cityname)) {
             sql += " and s.city.name = '" + cityname + "' ";
@@ -125,19 +130,6 @@ public class ServicesServiceImpl implements ServicesService {
         services.setDate(s.getDate());
         services.setStatus(s.getStatus());
         services.setServiceType(serviceTypeRepository.getServiceTypeById(1L));
-        return serviceRepository.save(services);
-    }
-
-    @Override
-    public Services update(ServicesDTO s) {
-        Services services = serviceRepository.getById(s.getId());
-        services.setId(s.getId());
-        services.setName(s.getName());
-        services.setImage(s.getImage());
-        services.setDes(s.getDes());
-        services.setPrice(s.getPrice());
-        services.setDate(s.getDate());
-        services.setStatus(s.getStatus());
         return serviceRepository.save(services);
     }
 
