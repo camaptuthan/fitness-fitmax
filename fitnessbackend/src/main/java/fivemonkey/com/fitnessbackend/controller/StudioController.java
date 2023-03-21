@@ -20,7 +20,7 @@ public class StudioController {
 //    list studio in homepage
     @GetMapping("/studio-details/{id}")
     public String homepageStudioDetail(@PathVariable("id") String id, Model model) {
-        StudioDTO s=  studioService.getStudioById(id);
+        StudioDTO s=  studioService.getStudioDTOById(id);
         model.addAttribute("studio",s);
         return "/studio_details";
     }

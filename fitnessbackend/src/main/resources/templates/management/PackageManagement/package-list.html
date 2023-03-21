@@ -190,7 +190,7 @@
                         <option>All</option>
                         <th:block th:each="studio : ${studioList}">
                             <option th:value="${studio.id}" th:text="${studio.name}"
-                                    th:selected="${currentStudio.equals(''  +studio.id)}"></option>
+                                    th:selected="${studio.id == currentStudio}"></option>
                         </th:block>
                     </select>
                     </div>

@@ -14,8 +14,9 @@ public interface StudioService {
     List<Studio> getAllStudio();
     StudioDTO getStudioByStudioManager(String email);
 
-    StudioDTO getStudioById(String id);
+    StudioDTO getStudioDTOById(String id);
 
+    Studio getStudioById(String id);
     Studio getStudioByManagerId(String id);
 
     List<StudioDTO> getAllStudiosByCity(String cityname);
