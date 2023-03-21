@@ -10,7 +10,9 @@ import java.util.List;
 public interface CategoryService {
     List<CategoryDTO> getAllCategoriesByType(String type);
 
-    CategoryDTO getCategoryById(Long id);
+    CategoryDTO getCategoryDTOById(Long id);
+
+    Category getCategoryById(Long id);
 
     public List<Category> findAllCategories();
 

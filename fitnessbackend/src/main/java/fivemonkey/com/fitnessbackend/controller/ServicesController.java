@@ -174,29 +174,99 @@ public class ServicesController {
 
     //update package b1
     @GetMapping("/management/update-package/{id}")
-    public String getDetail(@PathVariable("id") String id, Model model) {
+    public String getDetail(@PathVariable("id") String id, @AuthenticationPrincipal UserDetail userDetail, Model model,
+                            @RequestParam(value = "city", required = false) String cityname,
+                            @RequestParam(value = "studio", required = false) String studio,
+                            @RequestParam(value = "category", required = false) String category) {
         ServicesDTO servicesDTO = servicesService.getPackageDTOById(id);
+        cityname = servicesDTO.getCityName();
+        if(servicesDTO.getStudioId() != null){
+            studio = servicesDTO.getStudioId() + "";
+        }
+        else studio.equals("All");
+        category = servicesDTO.getCategoryId().toString();
+        List<StudioDTO> listStudio = studioService.getAllStudiosByCity(cityname);
+        List<CategoryDTO> listCategory = categoryService.getAllCategoriesByType("service");
         ServiceTypeDTO serviceTypeDTO = serviceTypeService.getServiceTypeById(1L);
         List<Status> statusList = statusService.getStatusByPackage();
+        List<CityDTO> listCity = new ArrayList<>();
+        switch (userDetail.getUser().getRole().getId()) {
+            case "ROLE01":
+                listCity = cityService.getAllCities();
+                break;
+            case "ROLE02":
+                listCity.add(cityService.getCityByStudioManager(userDetail.getUser().getEmail()));
+                break;
+            case "ROLE03":
+                listCity.add(cityService.getCityByAssistant(userDetail.getUser().getEmail()));
+                break;
+        }
         model.addAttribute("package", servicesDTO);
+        model.addAttribute("user_role", userDetail.getUser().getRole().getId());
         model.addAttribute("servicetype", serviceTypeDTO);
+        model.addAttribute("cityList", listCity);
+        model.addAttribute("studioList", listStudio);
+        model.addAttribute("categoryList", listCategory);
         model.addAttribute("currentStatus", servicesDTO.getStatus());
+        model.addAttribute("currentCity", cityname);
+        model.addAttribute("currentStudio", studio);
+        model.addAttribute("currentCategory", category);
         model.addAttribute("statusList", statusList);
         return "management/PackageManagement/package-update";
     }
 
     //update package b2
     @PostMapping("/management/update-package/{id}")
-    public String PackageUpdate(@PathVariable("id") String id, @RequestParam(value = "status_type_id", required = false) String status_type_id,
+    public String PackageUpdate(@PathVariable("id") String id, @AuthenticationPrincipal UserDetail userDetail,
+                                @RequestParam(value = "status_type_id", required = false) String status_type_id,
+                                @RequestParam(value = "city", required = false) String cityname,
+                                @RequestParam(value = "studio", required = false) String studio,
+                                @RequestParam(value = "category", required = false) String category,
                                 @ModelAttribute("package") ServicesDTO servicesDTO) {
         Services s = servicesService.getPackageById(id);
-        s.setId(servicesDTO.getId());
-        s.setName(servicesDTO.getName());
-        s.setDes(servicesDTO.getDes());
-        s.setPrice(servicesDTO.getPrice());
-        s.setDate(servicesDTO.getDate());
-        s.setStatus(Integer.parseInt(status_type_id));
-        servicesRepository.save(s);
+        status_type_id = "" + s.getStatus();
+        switch (userDetail.getUser().getRole().getId()) {
+            case "ROLE01":
+                s.setId(servicesDTO.getId());
+                s.setName(servicesDTO.getName());
+                s.setDes(servicesDTO.getDes());
+                s.setPrice(servicesDTO.getPrice());
+                s.setDate(servicesDTO.getDate());
+                s.setStatus(Integer.parseInt(status_type_id));
+                s.setCity(cityService.getCityByName(cityname));
+                s.setStudio(studioService.getStudioById(studio));
+                s.setCategory(categoryService.getCategoryById(Long.parseLong(category)));
+                servicesRepository.save(s);
+                break;
+            case "ROLE02":
+                s.setId(servicesDTO.getId());
+                s.setName(servicesDTO.getName());
+                s.setDes(servicesDTO.getDes());
+                s.setPrice(servicesDTO.getPrice());
+                s.setDate(servicesDTO.getDate());
+                if (s.getStudio() == null || s.getStudio().getId() != userDetail.getUser().getStudio().getId()) {
+                    s.setStatus(1);
+                }
+                s.setCity(cityService.getCityByName(cityname));
+                s.setStudio(studioService.getStudioById(studio));
+                s.setCategory(categoryService.getCategoryById(Long.parseLong(category)));
+                servicesRepository.save(s);
+                break;
+            case "ROLE03":
+                s.setId(servicesDTO.getId());
+                s.setName(servicesDTO.getName());
+                s.setDes(servicesDTO.getDes());
+                s.setPrice(servicesDTO.getPrice());
+                s.setDate(servicesDTO.getDate());
+                if (s.getStudio().getId() != userDetail.getUser().getStudio().getId()) {
+                    s.setStatus(1);
+                }
+                s.setCity(cityService.getCityByName(cityname));
+                s.setStudio(studioService.getStudioById(studio));
+                s.setCategory(categoryService.getCategoryById(Long.parseLong(category)));
+                servicesRepository.save(s);
+                break;
+        }
         return "redirect:/service/management/packages";
     }
 }

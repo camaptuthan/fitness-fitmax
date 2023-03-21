@@ -54,8 +54,13 @@ public class StudioServiceImpl implements StudioService {
     }
 
     @Override
-    public StudioDTO getStudioById(String id) {
+    public StudioDTO getStudioDTOById(String id) {
         return modelMapper.map(studioRepository.findStudioById(id), StudioDTO.class);
+    }
+
+    @Override
+    public Studio getStudioById(String id) {
+        return studioRepository.findStudioById(id);
     }
 
     @Override
