@@ -34,15 +34,13 @@ public class HomeController {
     StudioService studioService;
     @Autowired
     SliderService sliderService;
+
     @GetMapping("/")
-    public String getAllServiceType( Model model) {
+    public String getAllServiceType(Model model) {
         List<ServiceTypeDTO> listServiceType = serviceTypeService.getAll();
         List<Slider> sliderList=sliderService.getAllSlider();
-//        String role = "ROLE04";
-//        List<User> listAllTrainer = userService.listAllTrainer(role);
         model.addAttribute("listServiceType", listServiceType);
         model.addAttribute("listSlider",sliderList);
-//        model.addAttribute("listAllTrainer", listAllTrainer);
         return "index";
     }
 
@@ -119,7 +117,6 @@ public class HomeController {
         model.addAttribute("studios", studioMapList);
         return "/studio";
     }
-
 
 
 }

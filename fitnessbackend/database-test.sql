@@ -48,8 +48,7 @@ insert into studio(studio_id,district_id,contact,studio_name,status,created_date
 insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU015',15,'','Gym Da Nang E',1,CURDATE());
 
 /*select * from user*/
-insert into user(email,password,first_name,last_name,role_id,status,created_date) values ('fivemonkeys.co@gmail.com','123456','Monkey','Five','ROLE01',1,CURDATE());
-
+insert into user(email,password,first_name,last_name,role_id,status,created_date) values ('fivemonkey.co@gmail.com','123456','Monkey','Five','ROLE01',1,CURDATE());
 insert into user(email,password,first_name,last_name,role_id,city_id,status,studio_id,created_date) values ('hungha19156@gmail.com','hungha1915','Ha','Pham','ROLE02',1,1,'STU001',CURDATE());
 insert into user(email,password,first_name,last_name,role_id,city_id,status,studio_id,created_date) values ('tuanduong144@gmail.com','123456','Tuan','Duong','ROLE02',1,1,'STU004',CURDATE());
 insert into user(email,password,first_name,last_name,role_id,city_id,status,studio_id,created_date) values ('huy191101@gmail.com','123456','Huy','Duong','ROLE02',1,1,'STU007',CURDATE());
@@ -363,5 +362,11 @@ insert into session(session_id,session_name,created_date,happened_date,class_id,
 insert into session(session_id,session_name,created_date,happened_date,class_id,schedule_id,trainer_email) values ('SES20230032','Yoga Basic',CURDATE(),'2023-03-22',1,'SCHE08','ducnvhe141646@fpt.edu.vn');
 insert into session(session_id,session_name,created_date,happened_date,class_id,schedule_id,trainer_email) values ('SES20230033','Power Yoga',CURDATE(),'2023-03-23',1,'SCHE08','ducnvhe141646@fpt.edu.vn');
 insert into session(session_id,session_name,created_date,happened_date,class_id,schedule_id,trainer_email) values ('SES20230034','Hip Opening',CURDATE(),'2023-03-24',1,'SCHE08','ducnvhe141646@fpt.edu.vn');
+
+/*select * from status;*/
+insert into status(type,type_id,status_name) values ('service',0,'Rejected');
+insert into status(type,type_id,status_name) values ('service',1,'Waiting');
+insert into status(type,type_id,status_name) values ('service',2,'In Progress');
+insert into status(type,type_id,status_name) values ('service',3,'Expired');
 
 

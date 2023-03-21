@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -17,7 +18,8 @@ public class SliderController {
     SliderService sliderService;
 
     @GetMapping("/add")
-    public String addSlider(){
+    public String addSlider(Model model){
+        model.addAttribute("slider",new Slider());
         return "/management/SliderManagement/add-slider";
     }
     @GetMapping("/management")
@@ -26,4 +28,8 @@ public class SliderController {
         model.addAttribute("listSlider",sliderList);
         return "/management/SliderManagement/slider-list";
     }
+
+
+
+
 }

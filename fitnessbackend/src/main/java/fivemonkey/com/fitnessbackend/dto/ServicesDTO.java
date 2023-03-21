@@ -36,5 +36,8 @@ public class ServicesDTO {
 
     private Long cityId;
 
+    //status
+    private int type_id;
 
+    private String statusName;
 }

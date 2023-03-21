@@ -13,4 +13,6 @@ import java.util.List;
 @Repository
 public interface ServiceTypeRepository extends JpaRepository<ServiceType, Long> {
 
+    @Query("select s from ServiceType s where s.id = ?1")
+    ServiceType getServiceTypeById(Long id);
 }
