@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{../css/font-awesome.min.css}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
+</head>
+
+<!-- Mirrored from educhamp.themetrades.com/demo/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Feb 2019 13:08:15 GMT -->
+<th:block th:insert="/fragments/admin_fragment/head"></th:block>
+<th:block th:insert="/fragments/admin_fragment/header"></th:block>
+<body class="ttr-opened-sidebar ttr-pinned-sidebar">
+<th:block th:insert="/fragments/admin_fragment/sidebar_fragment"></th:block>
+<!-- Left sidebar menu end -->
+<!--Main container start -->
+<main class="ttr-wrapper">
+    <div class="container-fluid">
+        <div class="db-breadcrumb">
+            <h4 class="breadcrumb-title">Slider</h4>
+            <ul class="db-breadcrumb-list">
+                <li><a href="#"><i class="fa fa-home"></i>Home</a></li>
+                <li>Slider</li>
+                <li>Slider Details</li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 m-b30">
+                <form method="POST" th:action="@{/slider/add}" th:object="${slider}">
+                    <div class="form-group">
+                        <input
+                                class="form-control"
+                                hidden="true"
+                                name="title"
+                                type="text"
+                        />
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-4">
+                            <h8>Slider Title</h8>
+                            <input
+                                    class="form-control"
+                                    name="title"
+                                    placeholder="Enter Title"
+                                    required=""
+
+                                    type="text"
+                            />
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-4">
+                            <h8>Slider Content</h8>
+                            <input
+                                    class="form-control"
+                                    name="content"
+                                    placeholder="Enter Content"
+                                    required=""
+                                    type="text"
+                            />
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-4">
+                            <h8>Slider Image</h8>
+                            <input
+                                    class="form-control"
+                                    name="image"
+                                    type="file"
+                            />
+                        </div>
+
+                    </div>
+
+
+                    <div class="box-footer">
+                        <button type="submit">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+
+
+                <div class="widget-inner">
+
+
+                    <div id="pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+<div class="ttr-overlay"></div>
+<th:block th:insert="/fragments/admin_fragment/script"></th:block>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+</body>
+</html>

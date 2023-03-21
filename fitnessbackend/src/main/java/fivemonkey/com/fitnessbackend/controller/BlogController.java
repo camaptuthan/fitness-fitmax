@@ -89,6 +89,11 @@ public class BlogController {
         return null;
     }
 
+    @GetMapping("/management")
+    public String blogDashboard(){
+        return "/management/Dashboard/service";
+    }
+
 
 
 
