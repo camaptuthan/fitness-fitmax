@@ -4,9 +4,7 @@ package fivemonkey.com.fitnessbackend.controller;
 import fivemonkey.com.fitnessbackend.configuration.Utility;
 import fivemonkey.com.fitnessbackend.dto.*;
 import fivemonkey.com.fitnessbackend.entities.Role;
-import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
-import fivemonkey.com.fitnessbackend.entities.Trainer;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
@@ -20,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
@@ -92,7 +89,8 @@ public class UserController {
 
 
     @RequestMapping(value = "/listpt", method = {RequestMethod.GET, RequestMethod.POST})
-    public String getPT(Model model, @RequestParam(value = "studioId", required = false, defaultValue = "") String studioId) {
+    public String getPT(Model model, @RequestParam(value = "studioId", required = false, defaultValue = "All") String studioId
+                                   ,@RequestParam(value = "cityName", required = false, defaultValue = "All") String cityName) {
 
         Map<String, List<TrainerDTO>> trainerMapList = new HashMap<>();
         List<TrainerDTO> listPT = trainerService.getListPT(studioId);
@@ -108,11 +106,14 @@ public class UserController {
             }
             trainerMapList.put("PT-" + (i + 1), value);
         }
-        model.addAttribute("studiolist", studioService.getAllStudio());
+        model.addAttribute("listCity", addressService.getCities());
+        model.addAttribute("listStudio", addressService.getStudioByCity(cityName));
+        model.addAttribute("currentStudio", studioId);
+        model.addAttribute("currentCity", cityName);
         model.addAttribute("studioName", studioId);
         model.addAttribute("list", trainerMapList);
         model.addAttribute("size", trainerMapList.size());
-        return "testlistPT";
+        return "listPT";
     }
 
     @RequestMapping(value = "/management/enableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
@@ -142,12 +143,10 @@ public class UserController {
     @RequestMapping("/management/updateuser/{email}")
     public String getInformationUser(@PathVariable("email") String email, Model model) {
         List<Role> roleList = roleService.getRoleAdmin();
-//        List<Studio> studioList = studioService.getAllStudios();
         UserDTO userDTO = userService.getUserByEmail(email);
 
         model.addAttribute("user", userDTO);
         model.addAttribute("listRole", roleList);
-//        model.addAttribute("listStudio", studioList);
         return "management/UserManagement/UserUpdate";
     }
 

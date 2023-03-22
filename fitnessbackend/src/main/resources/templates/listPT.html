@@ -41,13 +41,32 @@
 
     <div>
       <form id="searchFilter"th:action="@{/user/listpt}" method="get">
-        Studio: <select id="studioId"  name="studioId" style="width:30%" onchange="submitForm()">
-        <option>---All---</option>
-        <th:block th:each="studio : ${studiolist}">
-        <option  th:text="${studio.name}" th:value="${studio.id}"
-                th:selected="${studio.id == studioName}"></option>
-        </th:block>
-      </select>
+<!--        Studio: <select id="studioId"  name="studioId" style="width:30%" onchange="submitForm()">-->
+<!--        <option>-&#45;&#45;All-&#45;&#45;</option>-->
+<!--        <th:block th:each="studio : ${studiolist}">-->
+<!--        <option  th:text="${studio.name}" th:value="${studio.id}"-->
+<!--                th:selected="${studio.id == studioName}"></option>-->
+<!--        </th:block>-->
+<!--      </select>-->
+        <div class="col-md-4">
+          City: <select th:name="cityName" style="width:50%" onchange="submitForm()">
+          <option>All</option>
+          <th:block th:each="city : ${listCity}">
+            <option th:value="${city.name}" th:text="${city.name}"
+                    th:selected="${city.name == currentCity}"></option>
+          </th:block>
+        </select>
+        </div>
+        <div>&nbsp</div>
+        <div class="col-md-4">
+          Studio: <select th:name="studioId" style="width:50%" onchange="submitForm()">
+          <option>All</option>
+          <th:block th:each="studio : ${listStudio}">
+            <option th:value="${studio.id}" th:text="${studio.name}"
+                    th:selected="${studio.id == currentStudio}"></option>
+          </th:block>
+        </select>
+        </div>
       </form>
     </div>
 
