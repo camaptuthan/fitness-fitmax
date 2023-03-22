@@ -2,14 +2,14 @@ package fivemonkey.com.fitnessbackend.controller;
 
 
 import fivemonkey.com.fitnessbackend.configuration.Utility;
+import fivemonkey.com.fitnessbackend.dto.*;
+import fivemonkey.com.fitnessbackend.entities.Role;
+import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
-import fivemonkey.com.fitnessbackend.service.service.RegistrationService;
-import fivemonkey.com.fitnessbackend.service.service.RoleService;
-import fivemonkey.com.fitnessbackend.service.service.StudioService;
-import fivemonkey.com.fitnessbackend.service.service.UserService;
+import fivemonkey.com.fitnessbackend.service.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,7 +27,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -42,20 +45,130 @@ public class UserController {
     private RoleService roleService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private TrainerService trainerService;
 
     @Autowired
     private RegistrationService registrationService;
 
-    @RequestMapping("/search")
-    public String search(Model model, @Param("keyword") String keyword) {
-        List<UserDTO> userList = userService.findAllUser(keyword);
-        model.addAttribute("list", userList);
+
+    @Autowired
+    private AddressService addressService;
+
+    @Autowired
+    private  CityService cityService;
+
+    @GetMapping("/management/listusers")
+    public String listUser(Model model, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword
+            , @RequestParam(value = "cityName", required = false, defaultValue = "All") String cityName
+            , @RequestParam(value = "roleId", required = false, defaultValue = "All") String roleId
+            , @RequestParam(value = "studioId", required = false, defaultValue = "All") String studioId
+            , @AuthenticationPrincipal UserDetail userDetail) {
+        switch (userDetail.getUser().getRole().getId()) {
+
+            case "ROLE01":
+                model.addAttribute("listCity",addressService.getCities());
+                model.addAttribute("listStudio",addressService.getStudioByCity(cityName));
+                model.addAttribute("listRole", roleService.getRoleAdmin());
+                model.addAttribute("list", userService.getUserBy4Fields(keyword, cityName, roleId, studioId));
+                model.addAttribute("size", userService.getUserBy4Fields(keyword, cityName, roleId, studioId).size());
+                break;
+            case "ROLE02":
+                model.addAttribute("list", userService.listUserByManage(userDetail.getUser().getStudio().getId()));
+                model.addAttribute("size", userService.listUserByManage(userDetail.getUser().getStudio().getId()).size());
+                break;
+            case "ROLE04":
+                model.addAttribute("list", userService.listUserByAssistant(userDetail.getUser().getStudio().getId()));
+                model.addAttribute("size", userService.listUserByAssistant(userDetail.getUser().getStudio().getId()).size());
+                break;
+        }
+        model.addAttribute("currentStudio",studioId);
+        model.addAttribute("currentKeyword", keyword);
+        model.addAttribute("currentCity", cityName);
+        model.addAttribute("currentRole", roleId);
         return "management/UserManagement/UserList";
     }
 
+
+    @RequestMapping(value = "/listpt", method = {RequestMethod.GET, RequestMethod.POST})
+    public String getPT(Model model, @RequestParam(value = "studioId", required = false, defaultValue = "") String studioId) {
+
+        Map<String, List<TrainerDTO>> trainerMapList = new HashMap<>();
+        List<TrainerDTO> listPT = trainerService.getListPT(studioId);
+
+        int size = listPT.size() % 3 == 0 ? listPT.size() / 3 : (listPT.size() / 3 + 1);
+        List<TrainerDTO> value = null;
+        for (int i = 0; i < size; i++) {
+            value = new ArrayList<>();
+            for (int j = 0; j < 3; j++) {
+                if (i * 3 + j < listPT.size()) {
+                    value.add(listPT.get(i * 3 + j));
+                }
+            }
+            trainerMapList.put("PT-" + (i + 1), value);
+        }
+        model.addAttribute("studiolist", studioService.getAllStudio());
+        model.addAttribute("studioName", studioId);
+        model.addAttribute("list", trainerMapList);
+        model.addAttribute("size", trainerMapList.size());
+        return "testlistPT";
+    }
+
+    @RequestMapping(value = "/management/enableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String enableUser(@PathVariable("email") String email) {
+        try {
+            userService.enableById(email);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return "redirect:/user/management/listusers";
+    }
+
+    @RequestMapping(value = "/management/disableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String disableUser(@PathVariable("email") String email) {
+        try {
+            userService.disableUser(email);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return "redirect:/user/management/listusers";
+    }
+
+    @RequestMapping("/management/updateuser/{email}")
+    public String getInformationUser(@PathVariable("email") String email, Model model) {
+        List<Role> roleList = roleService.getRoleAdmin();
+//        List<Studio> studioList = studioService.getAllStudios();
+        UserDTO userDTO = userService.getUserByEmail(email);
+
+        model.addAttribute("user", userDTO);
+        model.addAttribute("listRole", roleList);
+//        model.addAttribute("listStudio", studioList);
+        return "management/UserManagement/UserUpdate";
+    }
+
+    @PostMapping("/management/updateuser/{email}")
+    public String userUpdate(@PathVariable("email") String email, @ModelAttribute("user") UserDTO userDTO) {
+        try {
+            userService.update(userDTO);
+            System.out.println(userDTO);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return "redirect:/user/management/listusers";
+
+
+    }
+
+
     @RequestMapping("/management/avataruser/{email}")
     public String getInformationUserAvatar(@PathVariable("email") String email, Model model) {
-        UserDTO userDTO = userService.getUserById(email);
+        UserDTO userDTO = userService.getUserByEmail(email);
         model.addAttribute("user", userDTO);
         return "pro";
     }
@@ -75,7 +188,7 @@ public class UserController {
 
     @RequestMapping("/management/updateprofile/{email}")
     public String getInformationUserPro5(@PathVariable("email") String email, Model model) {
-        UserDTO userDTO = userService.getUserById(email);
+        UserDTO userDTO = userService.getUserByEmail(email);
         model.addAttribute("user", userDTO);
         return "myprofile";
     }

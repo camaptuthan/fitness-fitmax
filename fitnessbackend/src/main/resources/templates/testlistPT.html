@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Fitmax</title>
+  <!-- =================== META =================== -->
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <th:block th:replace="fragments/head :: head"></th:block>
+
+</head>
+<body>
+<!--================ PRELOADER ================-->
+<div class="preloader-cover">
+  <div id="cube-loader">
+    <div class="caption">
+      <div class="cube-loader">
+        <div class="cube loader-1"></div>
+        <div class="cube loader-2"></div>
+        <div class="cube loader-4"></div>
+        <div class="cube loader-3"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--============== PRELOADER END ==============-->
+
+<!-- ================= HEADER ================= -->
+
+<div th:include="fragments/header.html"></div>
+<!-- =============== HEADER END =============== -->
+<section class="s-club-cards">
+  <div class="container">
+    <h2 class="title-decor">Personnal Training <span>List</span></h2>
+    <p class="slogan">Below is a list of Personnal Training for  trainees. Trainees can find by city, studio
+       Details are in each PT.</p>
+
+    <div>
+      <form id="searchFilter"th:action="@{/user/listpt}" method="get">
+        Studio: <select id="studioId"  name="studioId" style="width:30%" onchange="submitForm()">
+        <option>---All---</option>
+        <th:block th:each="studio : ${studiolist}">
+        <option  th:text="${studio.name}" th:value="${studio.id}"
+                th:selected="${studio.id == studioName}"></option>
+        </th:block>
+      </select>
+      </form>
+    </div>
+
+  <div>&nbsp</div>
+
+
+    <div id="carousel-package" class="carousel slide">
+      <div th:if="${size} == 0">
+        <h2>There are no packages available at the moment. Please contact us via email or our hotline for more
+          information.</h2>
+      </div>
+      <div class="carousel-inner overflow-visible row">
+        <th:block th:each="item,iter : ${list}">
+          <div class="carousel-item col-12 p-2" th:classappend="${iter.index == 0} ? active : '' ">
+            <div class="row">
+              <th:block th:each="trainer : ${item.value}">
+                <div class="col-md-4 club-card-col">
+                  <div class="club-card-item">
+
+                    <div class="price-cover">
+                      <div><img th:src="${trainer.userAvatar}"></div>
+                    </div>
+                    <ul class="list">
+                      <li th:text="${trainer.userFirstName}+' '+${trainer.userLastName}"></li>
+                      <li th:text="${trainer.philosophy}" style="color:yellow"></li>
+                    </ul>
+
+                  </div>
+                </div>
+              </th:block>
+            </div>
+          </div>
+        </th:block>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carousel-package" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carousel-package" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    <style>
+      .carousel-control-prev {
+        left: -13rem;
+      }
+
+      .carousel-control-next {
+        right: -13rem;
+      }
+    </style>
+  </div>
+</section>
+<script type="text/javascript" src="slick/slick.min.js"></script>
+<div th:include="fragments/footer.html"></div>
+<!-- ================ FOOTER END ================ -->
+
+<!--=================== TO TOP ===================-->
+<a class="to-top" href="#home">
+  <i class="fa fa-chevron-up" aria-hidden="true"></i>
+</a>
+<!--================= TO TOP END =================-->
+
+<!--=================== SCRIPT	===================-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+<script th:src="@{/js/slick.min.js}"></script>
+<script th:src="@{/js/rx-lazy.js}"></script>
+<script th:src="@{/js/parallax.min.js}"></script>
+<script th:src="@{/js/scripts.js}"></script>
+<script type="text/javascript">
+  function submitForm() {
+    document.getElementById("searchFilter").submit();
+  }
+</script>
+</body>
+</html>

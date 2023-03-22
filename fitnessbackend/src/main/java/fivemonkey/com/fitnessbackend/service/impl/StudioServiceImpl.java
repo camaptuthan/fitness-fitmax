@@ -63,6 +63,11 @@ public class StudioServiceImpl implements StudioService {
 
 
     @Override
+    public List<StudioDTO> getAllStudio() {
+        return modelMapper.mapList(studioRepository.findAll(), StudioDTO.class);
+    }
+
+    @Override
     public Studio getStudioById(String id) {
         return studioRepository.findStudioById(id);
     }

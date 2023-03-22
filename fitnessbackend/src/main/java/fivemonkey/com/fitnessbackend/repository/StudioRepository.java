@@ -25,11 +25,13 @@ public interface StudioRepository extends JpaRepository<Studio, String> {
 
     @Query("select s from Studio s where s.id = ?1")
     Studio findStudioById(String id);
+
     //count studio
     @Query("SELECT COUNT(s) FROM Studio s  ")
     long countStudio();
-    @Query("select s from Studio s where s.district.city.id= ?1")
-    List<Studio> getStudioByCity(Long cityId);
+
+    @Query("select s from Studio s where s.district.city.name= ?1")
+    List<Studio> getStudioByCity(String cityName);
 
     //get studio by id
     @Query("SELECT s FROM Studio s WHERE s.id = ?1")

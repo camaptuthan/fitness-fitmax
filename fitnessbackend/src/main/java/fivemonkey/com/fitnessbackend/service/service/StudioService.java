@@ -27,4 +27,6 @@ public interface StudioService {
 
     StudioDTO getStudioDTOById(String id);
 
+    List<StudioDTO> getAllStudio();
+
 }
