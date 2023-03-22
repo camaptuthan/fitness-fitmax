@@ -319,6 +319,11 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    @Override
+    public List<User> getUserByRoleId(String roleId) {
+        return userRepository.listAllTrainer(roleId);
+    }
+
 //    @Override
 //    public List<User> listAllTrainer(String role) {
 //        return userRepository.findTop4User(role);

@@ -112,6 +112,7 @@ public class HomeController {
             }
             studioMapList.put("STU-" + (i + 1), value);
         }
+        model.addAttribute("size", studioMapList.size());
         model.addAttribute("cities", listCity);
         model.addAttribute("currentCity", cityname);
         model.addAttribute("studios", studioMapList);

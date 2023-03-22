@@ -55,17 +55,20 @@ public class BlogServiceImpl implements BlogService {
     }
 
 
-    private Blog makeBlog(User user, Category category) {
+    private Blog makeBlog(BlogDTO blogDTO, User user, Category category) {
         Blog blog = new Blog();
         blog.setUser(userRepository.getUserByEmail(user.getEmail()));
         blog.setCategory(categoryRepository.getById(category.getId()));
         blog.setStatus(1);
+        blog.setTitle(blogDTO.getTitle());
+        blog.setDescription(blogDTO.getDescription());
+        blog.setThumbnail(blogDTO.getThumbnail());
         blog.setDate(new Date());
        return blog;
     }
     @Override
-    public BlogDTO doBlog(User user, Category category) {
-        return modelMapper.map(blogRepository.save(makeBlog(user, category)), BlogDTO.class);
+    public BlogDTO doBlog(BlogDTO blogDTO,User user, Category category) {
+        return modelMapper.map(blogRepository.save(makeBlog(blogDTO, user, category)), BlogDTO.class);
     }
     //add new blog
     @Override

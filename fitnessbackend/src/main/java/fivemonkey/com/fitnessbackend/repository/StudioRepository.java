@@ -1,5 +1,6 @@
 package fivemonkey.com.fitnessbackend.repository;
 
+import fivemonkey.com.fitnessbackend.dto.StudioDTO;
 import fivemonkey.com.fitnessbackend.entities.District;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import org.springframework.data.domain.Page;
@@ -33,5 +34,9 @@ public interface StudioRepository extends JpaRepository<Studio, String> {
     //get studio by id
     @Query("SELECT s FROM Studio s WHERE s.id = ?1")
     Studio getStudioById(String id);
+
+
+    @Query("select s.id, s.name from Studio s where s.district.id = ?1")
+    Studio findCityStudioByDistrict(Long id);
 
 }

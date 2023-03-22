@@ -60,10 +60,11 @@
                         <table class="table table-hover table-bordered sortable" id="studio_table">
                             <thead>
                             <tr>
-                                <th>#</th>
+                                <th>ID</th>
                                 <th>Name</th>
                                 <th>City</th>
                                 <th>District</i></th>
+                                <th>Road</i></th>
                                 <th>Manager</i></th>
                                 <th>Description</th>
                                 <th>Contact</i></th>
@@ -76,8 +77,9 @@
                             <tr th:each="s: ${studios}">
                                 <td th:text="${s.id}"></td>
                                 <td th:text="${s.name}"></td>
-                                <td th:text="${s.district.city.name}"></td>
-                                <td th:text="${s.district.name}"></td>
+                                <td th:text="${s.city}"></td>
+                                <td th:text="${s.districtName}"></td>
+                                <td th:text="${s.districtRoad}"></td>
                                 <td th:text="${s.getManagerEmail()}"></td>
                                 <td th:text="${s.des}"></td>
                                 <td th:text="${s.contact}"></td>

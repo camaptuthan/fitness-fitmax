@@ -47,6 +47,7 @@ public class BlogController {
         model.addAttribute("totalPages", list.getTotalPages());
         return "/blog";
     }
+
     @GetMapping("/management/writer")
     public String blogWriter(@AuthenticationPrincipal UserDetail userDetail,Model model) {
         model.addAttribute("blogDTO", new BlogDTO());
@@ -55,21 +56,19 @@ public class BlogController {
         return "management/BlogManagement/blog_writer";
     }
 
+    // Create new blog
     @PostMapping("/management/writer")
     public String blogWriter(@ModelAttribute("blogDTO") @Valid BlogDTO blogDTO,
                              @AuthenticationPrincipal UserDetail userDetail,
                              BindingResult result,
-                             RedirectAttributes attributes,
                              @RequestParam("category_id") String cateId) {
-//        blogDTO.setUser(userDetail.getUser());
-//        CategoryDTO category = categoryService.getCategoryById(Long.parseLong(cateId));
         Category category = new Category();
         category.setId(Long.parseLong(cateId));
         blogDTO.setCategory(category);
         if (result.hasErrors()) {
             return "management/BlogManagement/blog_writer";
         }
-        blogService.doBlog(userDetail.getUser(), category);
+        blogService.doBlog(blogDTO,userDetail.getUser(), category);
         return "redirect:/blog";
     }
 
@@ -89,13 +88,11 @@ public class BlogController {
         return null;
     }
 
+
     @GetMapping("/management")
     public String blogDashboard(){
         return "/management/Dashboard/service";
     }
-
-
-
 
 
 }

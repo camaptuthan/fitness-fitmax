@@ -18,7 +18,7 @@ public interface BlogService {
 
     public BlogDTO findBlogById(Long id);
 
-    BlogDTO doBlog(User user, Category category);
+    BlogDTO doBlog(BlogDTO blogDTO,User user, Category category);
 
     public Blog save(BlogDTO b);
 

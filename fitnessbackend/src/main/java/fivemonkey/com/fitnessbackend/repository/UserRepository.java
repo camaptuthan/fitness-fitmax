@@ -41,6 +41,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query("select u from User u where u.verificationCode=?1")
     User findByVerificationCode(String code);
 
+    @Query("SELECT u.email FROM User u where u.role.name='Studio Manager' and u.studio.id=?1")
+    String listManagerByStudio(String studioId);
 
 
     //count trainer
