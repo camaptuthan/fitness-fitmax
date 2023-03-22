@@ -168,26 +168,34 @@
 </head>
 <main class="ttr-wrapper">
     <div class="container-fluid">
+        <div class="db-breadcrumb">
+            <h4 class="breadcrumb-title">Service</h4>
+            <ul class="db-breadcrumb-list">
+                <li><a href="#"><i class="fa fa-home"></i>Home</a></li>
+                <li>Service</li>
+                <li>Service Details</li>
+            </ul>
+        </div>
         <div class="row">
             <div class="col-lg-12 m-b30">
+                <div class="widget-box">
+                    <div class="wc-title row">
+                        <h4>Studio List</h4>
+                        <div class="btn-light btn-outline-success ml-auto mr-3 row col-2"><a
+                                th:href="@{/package/add-package}">
+                            <i class="fa fa-plus-circle" style="font-size:18px"></i>
+                            <spam clas="mb-5">Add new studio</spam>
+                        </a>
+                        </div>
+                    </div>
                 <div class="container-xl">
                     <div class="table-responsive">
                         <div class="table-wrapper">
                             <div class="table-title">
-                                <div class="row">
-                                    <div class="col-sm-8"><h2>Package <b>List</b></h2></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-5">
-                                        <a th:href="@{/package/add-package}">
-                                            <button type="button" class="btn btn-danger"> Add package</button>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div>&nbsp</div>
                                 <form id="searchAndFilterDashboard" th:action="@{/service/management/packages}" method="get">
-                                    <div>
-                                        City: <select th:name="city" style="width:30%" onchange="submitFormDashboard()">
+                                    <div class="row">
+                                    <div class="col-md-4">
+                                        City: <br><select  th:name="city" style="width:50%" onchange="submitFormDashboard()">
                                         <option>All</option>
                                         <th:block th:each="city : ${cityList}">
                                             <option th:value="${city.name}" th:text="${city.name}"
@@ -195,19 +203,19 @@
                                         </th:block>
                                     </select>
                                     </div>
-                                    <div>&nbsp</div>
-                                    <div>
-                                        Studio: <select th:name="studio" style="width:30%" onchange="submitFormDashboard()">
+
+                                    <div class="col-md-4">
+                                        Studio: <br><select th:name="studio" style="width:50%" onchange="submitFormDashboard()">
                                         <option>All</option>
                                         <th:block th:each="studio : ${studioList}">
                                             <option th:value="${studio.id}" th:text="${studio.name}"
                                                     th:selected="${studio.id == currentStudio}"></option>
                                         </th:block>
                                     </select>
-                                    </div>
-                                    <div>&nbsp</div>
-                                    <div>
-                                        Category: <select th:name="category" style="width:30%" onchange="submitFormDashboard()">
+                                    </div >
+
+                                    <div class="col-md-4">
+                                        Category:<br> <select th:name="category" style="width:50%" onchange="submitFormDashboard()">
                                         <option th:value="0">All</option>
                                         <th:block th:each="category : ${categoryList}">
                                             <option th:value="${category.id}" th:text="${category.name}"
@@ -215,10 +223,10 @@
                                         </th:block>
                                     </select>
                                     </div>
-                                    <div>&nbsp</div>
+                                    </div>
+                                    <div> &nbsp</div>
                                     <div>
-                                        Filter: <input type="text" th:name="keyword" style="color:red" th:value="${currentKeyword}"/>
-                                        &nbsp
+                                        Filter:<br> <input type="text" th:name="keyword" style="color:red" th:value="${currentKeyword}"/>
                                         <input id="btn-submit" type="submit" value="Search"/>
                                         &nbsp
                                     </div>
@@ -261,6 +269,7 @@
                         </div>
                     </div>
                 </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -271,7 +280,16 @@
 <script>
     $(document).ready(function () {
         $('#PackageTable').DataTable({
-            "searching": false
+            "searching": false,
+            columnDefs: [{
+                target: 0,
+                visible: false,
+                searchable: false
+            }],
+            pagingType:'full_numbers',
+            bLengthChange: false,
+            pageLength: 5,
+            searching: false,
         });
         $('[data-toggle="tooltip"]').tooltip();
     });
