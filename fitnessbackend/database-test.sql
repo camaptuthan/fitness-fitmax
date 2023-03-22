@@ -369,4 +369,3 @@ insert into status(type,type_id,status_name) values ('service',1,'Waiting');
 insert into status(type,type_id,status_name) values ('service',2,'In Progress');
 insert into status(type,type_id,status_name) values ('service',3,'Expired');
 
-
