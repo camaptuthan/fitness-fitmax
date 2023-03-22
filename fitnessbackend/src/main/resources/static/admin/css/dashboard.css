@@ -816,7 +816,7 @@
 	height: 100%;
 }
 .widget-box .widget-inner{
-	padding:30px;
+	padding-top:30px;
 }
 .widget-box .wc-title{
 	border-bottom:1px solid rgba(0,0,0,0.05);

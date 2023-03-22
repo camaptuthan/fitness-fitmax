@@ -1,16 +1,17 @@
 package fivemonkey.com.fitnessbackend.service.impl;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
+import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
-import fivemonkey.com.fitnessbackend.entities.Role;
-import fivemonkey.com.fitnessbackend.entities.Studio;
-import fivemonkey.com.fitnessbackend.entities.Trainee;
-import fivemonkey.com.fitnessbackend.entities.User;
+import fivemonkey.com.fitnessbackend.entities.*;
 import fivemonkey.com.fitnessbackend.repository.RoleRepository;
 import fivemonkey.com.fitnessbackend.repository.StudioRepository;
 import fivemonkey.com.fitnessbackend.repository.UserRepository;
 import fivemonkey.com.fitnessbackend.service.service.UserService;
 import net.bytebuddy.utility.RandomString;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -37,6 +38,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Autowired
     ModelMapperConfiguration<User, UserDTO> modelMapperConfiguration;
@@ -66,19 +69,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User update(UserDTO u) {
         try {
-            User user = userRepository.getById(u.getEmail());
+            User user = userRepository.getUserByEmail(u.getEmail());
             Studio studio = new Studio();
             studio.setId(u.getStudioId());
-
             Role role = new Role();
-
             role.setId(u.getRoleId());
-
-
             user.setRole(role);
-//            user.setStudio(studio);
-            System.out.println("==================================" + user);
-
 
             return userRepository.save(user);
         } catch (Exception e) {
@@ -89,25 +85,31 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void disableUser(String email) {
-        User user = userRepository.getById(email);
+        User user = userRepository.getUserByEmail(email);
         user.setStatus(false);
         userRepository.save(user);
     }
 
     @Override
     public void enableById(String email) {
-        User user = userRepository.getById(email);
+        User user = userRepository.getUserByEmail(email);
         user.setStatus(true);
         userRepository.save(user);
 
     }
 
     @Override
-    public UserDTO getUserById(String email) {
-        User user = userRepository.getById(email);
+    public UserDTO getUserByEmail(String email) {
+        User user = userRepository.getUserByEmail(email);
         ModelMapper mapper = new ModelMapper();
         UserDTO userDTO = mapper.map(user, UserDTO.class);
         return userDTO;
+    }
+
+    @Override
+    public List<UserDTO> listUserByAdmin() {
+        List<User> userList = userRepository.listUserByAdmin();
+        return modelMapperConfiguration.mapList(userList, UserDTO.class);
     }
 
 
@@ -131,7 +133,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(UserDTO userDTO) {
 
-        User user1 = userRepository.getById(userDTO.getEmail());
+        User user1 = userRepository.getUserByEmail(userDTO.getEmail());
         user1.setFirstName(userDTO.getFirstName());
         user1.setLastName(userDTO.getLastName());
         user1.setPhone(userDTO.getPhone());
@@ -142,7 +144,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUserAvatar(UserDTO userDTO) {
 
-        User user2 = userRepository.getById(userDTO.getEmail());
+        User user2 = userRepository.getUserByEmail(userDTO.getEmail());
         user2.setAvatar(userDTO.getAvatar());
 
         userRepository.save(user2);
@@ -277,20 +279,7 @@ public class UserServiceImpl implements UserService {
         return storedOTP != null && storedOTP.equals(otp);
     }
 
-    @Override
-    public List<UserDTO> listByManager(String studioId) {
-        return null;
-    }
 
-    @Override
-    public List<UserDTO> listByCityAdmin(String city) {
-        return null;
-    }
-
-    @Override
-    public List<UserDTO> listByAssistant(String studioId) {
-        return null;
-    }
 
 
 
@@ -320,14 +309,69 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserDTO> listUserByManage(String studioId) {
+        List<User> userList = null;
+        List<Registration> registrationList = null;
+        List<Services> listServices = userRepository.listServicesID(studioId);
+        for (Services s : listServices) {
+            registrationList = userRepository.getRegistration(s.getId());
+            if (registrationList != null) {
+                for (Registration r : registrationList) {
+                    userList = userRepository.getUserByManage(r.getTrainee().getEmail());
+                }
+            }
+        }
+        return modelMapperConfiguration.mapList(userList, UserDTO.class);
+    }
+
+    @Override
+    public List<UserDTO> listUserByAssistant(String studioId) {
+        List<User> userList = null;
+        List<Registration> registrationList = null;
+        List<Services> listServices = userRepository.listServicesID(studioId);
+        for (Services s : listServices) {
+            registrationList = userRepository.getRegistration(s.getId());
+            if (registrationList != null) {
+                for (Registration r : registrationList) {
+                    userList = userRepository.getUserByAssistant(r.getTrainee().getEmail());
+                }
+            }
+        }
+        return modelMapperConfiguration.mapList(userList, UserDTO.class);
+    }
+
     public List<User> getUserByRoleId(String roleId) {
         return userRepository.listAllTrainer(roleId);
+
     }
 
 //    @Override
-//    public List<User> listAllTrainer(String role) {
-//        return userRepository.findTop4User(role);
+//    public List<UserDTO> getListPT(String studioId) {
+//        List<User> userList = userRepository.getListPT(studioId);
+//
+//        return modelMapperConfiguration.mapList(userList, UserDTO.class);
 //    }
+
+    @Override
+    public List<UserDTO> getUserBy4Fields(String keyword, String cityName ,String roleId, String studioId) {
+        Session session = sessionFactory.openSession();
+        String query = "select u from User u where u.email is not null ";
+        if (!"".equals(keyword)) {
+            query += " and concat(u.email,'',u.firstName,'',u.lastName,'',u.role.name,'',u.studio.name) like '%" + keyword + "%' ";
+        }
+        if (!"All".equals(cityName)) {
+            query += " and u.city.name = '" + cityName + "' ";
+        }
+        if (!"All".equals(roleId)) {
+            query += " and u.role.id = '" + roleId + "' ";
+        }
+        if (!"All".equals(studioId)) {
+            query += " and u.studio.id = '" + studioId + "' ";
+        }
+        Query<User> query1 = session.createQuery(query, User.class);
+        return modelMapperConfiguration.mapList(query1.getResultList(), UserDTO.class);
+    }
+
 
 
 }

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface SliderService {
     List<Slider> getAllSlider();
+
+    void insertSlider(Slider slider);
 }

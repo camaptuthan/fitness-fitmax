@@ -61,6 +61,12 @@ public class StudioServiceImpl implements StudioService {
         return modelMapper.map(studioRepository.findStudioById(id), StudioDTO.class);
     }
 
+
+    @Override
+    public List<StudioDTO> getAllStudio() {
+        return modelMapper.mapList(studioRepository.findAll(), StudioDTO.class);
+    }
+
     @Override
     public Studio getStudioById(String id) {
         return studioRepository.findStudioById(id);
@@ -102,5 +108,7 @@ public class StudioServiceImpl implements StudioService {
     public Long countStudio() {
         return studioRepository.countStudio();
     }
+
+
 
 }

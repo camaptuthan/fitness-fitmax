@@ -15,6 +15,7 @@ import java.util.List;
 @Table(name = "trainer", schema = "dbo")
 public class Trainer {
 
+
     @Id
     @Column(name = "trainer_email")
     private String email;
@@ -22,8 +23,22 @@ public class Trainer {
     @Column(name = "certificate")
     private String certi;
 
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "qualification")
+    private String qualification;
+
+    @Column(name = "specialication")
+    private String specialication;
+
+    @Column(name = "achievement")
+    private String achievement;
+
+    @Column(name = "philosophy")
+    private String philosophy;
     @Column(name = "experience")
-    private String exp;
+    private String experience;
 
     @Column(name = "status", nullable = false)
     private boolean status;
@@ -46,7 +61,7 @@ public class Trainer {
     private List<Tracking> trackings;
 
     //trainer-user relationship
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "trainer_id", referencedColumnName = "user_id", unique = true)
     private User user;
 

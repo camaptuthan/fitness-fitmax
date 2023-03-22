@@ -87,4 +87,12 @@ public class BlogController {
         model.addAttribute("newblog", new BlogDTO());
         return null;
     }
+
+
+    @GetMapping("/management")
+    public String blogDashboard(){
+        return "/management/Dashboard/service";
+    }
+
+
 }

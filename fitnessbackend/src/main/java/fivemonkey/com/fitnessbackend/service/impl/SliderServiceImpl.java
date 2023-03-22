@@ -6,6 +6,7 @@ import fivemonkey.com.fitnessbackend.service.service.SliderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,4 +18,14 @@ public class SliderServiceImpl implements SliderService {
     public List<Slider> getAllSlider() {
         return sliderRepository.findAll();
     }
+
+    @Override
+    public void insertSlider(Slider slider) {
+        slider= new Slider();
+        slider.setDate(new Date());
+        slider.getUser().setId(1L);
+        sliderRepository.save(slider);
+    }
+
+
 }

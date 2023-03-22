@@ -38,12 +38,9 @@ public class HomeController {
     @GetMapping("/")
     public String getAllServiceType(Model model) {
         List<ServiceTypeDTO> listServiceType = serviceTypeService.getAll();
-        List<Slider> sliderList = sliderService.getAllSlider();
-        String role = "ROLE04";
-        List<User> listAllTrainer = userService.listAllTrainer(role);
+        List<Slider> sliderList=sliderService.getAllSlider();
         model.addAttribute("listServiceType", listServiceType);
-        model.addAttribute("listSlider", sliderList);
-        model.addAttribute("listAllTrainer", listAllTrainer);
+        model.addAttribute("listSlider",sliderList);
         return "index";
     }
 
@@ -115,6 +112,7 @@ public class HomeController {
             }
             studioMapList.put("STU-" + (i + 1), value);
         }
+        model.addAttribute("size", studioMapList.size());
         model.addAttribute("cities", listCity);
         model.addAttribute("currentCity", cityname);
         model.addAttribute("studios", studioMapList);

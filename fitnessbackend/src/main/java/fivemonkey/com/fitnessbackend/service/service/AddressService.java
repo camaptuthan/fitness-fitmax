@@ -13,5 +13,5 @@ public interface AddressService {
 
     List<DistrictDTO> getDistrictsByCityId(Long cityId);
 
-    List<StudioDTO> getStudioByCity(Long cityId);
+    List<StudioDTO> getStudioByCity(String cityName);
 }
