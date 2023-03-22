@@ -24,16 +24,11 @@ public class AddressController {
         return addressService.getCities();
     }
 
-//    @ResponseBody
-//    @GetMapping("/district/{city}")
-//    public List<DistrictDTO> getDistrictsByCityId(@PathVariable("city") Long cityId) {
-//        return addressService.getDistrictsByCityId(cityId);
-//    }
 
     @ResponseBody
     @GetMapping("/studio/{city}")
-    public List<StudioDTO> getStudioByCityId(@PathVariable("city") Long cityId) {
-        return addressService.getStudioByCity(cityId);
+    public List<StudioDTO> getStudioByCityId(@PathVariable("city") String cityName) {
+        return addressService.getStudioByCity(cityName);
     }
 
 

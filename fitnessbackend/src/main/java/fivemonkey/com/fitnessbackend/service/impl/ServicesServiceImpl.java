@@ -75,7 +75,7 @@ public class ServicesServiceImpl implements ServicesService {
         Session session = sessionFactory.openSession();
         String sql = "select s from Services s where s.serviceType.id = 1 ";
         if (!"".equals(keyword)) {
-            sql += " and concat(s.name,'',s.price,'',s.duration,'',s.des,'',s.date) like %'" + keyword + "'% ";
+            sql += " and concat(s.name,'',s.price,'',s.duration,'',s.des,'',s.date) like '%" + keyword + "%' ";
         }
         if (!"All".equals(cityname)) {
             sql += " and s.city.name = '" + cityname + "' ";

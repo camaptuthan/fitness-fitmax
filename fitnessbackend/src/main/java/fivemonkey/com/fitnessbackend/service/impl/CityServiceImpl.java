@@ -21,6 +21,7 @@ public class CityServiceImpl implements CityService {
     @Autowired
     private ModelMapperConfiguration<City, CityDTO> modelMapper;
 
+
     @Override
     public List<CityDTO> getAllCities() {
         return modelMapper.mapList(cityRepository.findAll(), CityDTO.class);
@@ -44,5 +45,9 @@ public class CityServiceImpl implements CityService {
     @Override
     public CityDTO getCityByUser(String email) {
         return modelMapper.map(cityRepository.getCityByUser(email), CityDTO.class);
+    }
+    @Override
+    public List<CityDTO> getCities() {
+        return modelMapper.mapList(cityRepository.findAll(), CityDTO.class);
     }
 }

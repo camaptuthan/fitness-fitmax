@@ -47,7 +47,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public List<StudioDTO> getStudioByCity(Long cityId) {
-        return modelMapperStudio.mapList(studioRepository.getStudioByCity(cityId), StudioDTO.class);
+    public List<StudioDTO> getStudioByCity(String cityName) {
+        return modelMapperStudio.mapList(studioRepository.getStudioByCity(cityName), StudioDTO.class);
     }
 }

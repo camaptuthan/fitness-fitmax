@@ -17,4 +17,6 @@ public interface CityService {
     CityDTO getCityByStudioManager(String email);
 
     CityDTO getCityByUser(String email);
+
+    List<CityDTO> getCities();
 }

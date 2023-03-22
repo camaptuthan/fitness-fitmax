@@ -1,294 +1,166 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>List Users</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css"/>
-    <script th:src="@{https://code.jquery.com/jquery-3.5.1.min.js}"></script>
-    <script th:src="@{https://cdn.jsdelivr.net/npm/popper.js/1.16.0/dist/umd/popper.min.js}"></script>
-    <script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js}"></script>
-
-    <style>
-        body {
-            color: #566787;
-            background: #f5f5f5;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        .table-responsive {
-            margin: 30px 0;
-        }
-
-        .table-wrapper {
-            min-width: 1000px;
-            background: #fff;
-            padding: 20px;
-            box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
-        }
-
-        .table-title {
-            padding-bottom: 10px;
-            margin: 0 0 10px;
-            min-width: 100%;
-        }
-
-        .table-title h2 {
-            margin: 8px 0 0;
-            font-size: 22px;
-        }
-
-        table.table tr th, table.table tr td {
-            border-color: #e9e9e9;
-        }
-
-        table.table-striped tbody tr:nth-of-type(odd) {
-            background-color: #fcfcfc;
-        }
-
-        table.table-striped.table-hover tbody tr:hover {
-            background: #f5f5f5;
-        }
-
-        table.table th i {
-            font-size: 13px;
-            margin: 0 5px;
-            cursor: pointer;
-        }
-
-        table.table td:last-child {
-            width: 130px;
-        }
-
-        table.table td a {
-            color: #a0a5b1;
-            display: inline-block;
-            margin: 0 5px;
-        }
-
-        table.table td a.view {
-            color: #03A9F4;
-        }
-
-        table.table td a.edit {
-            color: #FFC107;
-        }
-
-        table.table td a.delete {
-            color: #E34724;
-        }
-
-        table.table td i {
-            font-size: 19px;
-        }
-
-        .pagination {
-            float: right;
-            margin: 0 0 5px;
-        }
-
-        .pagination li a {
-            border: none;
-            font-size: 95%;
-            width: 30px;
-            height: 30px;
-            color: #999;
-            margin: 0 2px;
-            line-height: 30px;
-            border-radius: 30px !important;
-            text-align: center;
-            padding: 0;
-        }
-
-        .pagination li a:hover {
-            color: #666;
-        }
-
-        .pagination li.active a {
-            background: #03A9F4;
-        }
-
-        .pagination li.active a:hover {
-            background: #0397d6;
-        }
-
-        .pagination li.disabled i {
-            color: #ccc;
-        }
-
-        .pagination li i {
-            font-size: 16px;
-            padding-top: 6px
-        }
-
-        .hint-text {
-            float: left;
-            margin-top: 6px;
-            font-size: 95%;
-        }
-    </style>
-
-    <script>
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-    </script>
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
+    <base href="/">
 </head>
-<body>
-<div class="container-xl">
-    <div class="table-responsive">
-        <div class="table-wrapper">
-            <div class="table-title">
-                <div class="row">
-                    <div class="col-sm-8" style="text-align: center"><h1>User <b>List</b></h1></div>
-                </div>
+<th:block th:insert="/fragments/admin_fragment/header"></th:block>
+<!-- Mirrored from educhamp.themetrades.com/demo/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Feb 2019 13:08:15 GMT -->
+<th:block th:insert="/fragments/admin_fragment/head"></th:block>
+<body class="ttr-opened-sidebar ttr-pinned-sidebar">
+<th:block th:insert="/fragments/admin_fragment/sidebar_fragment"></th:block>
+<!-- Left sidebar menu end -->
 
-            </div>
-            <div>
-                <div th:if="${success}">
-                    <p style="color: green" th:text="${success}"></p>
-                </div>
-                <div th:if="${fail}">
-                    <p style="color: red" th:text="${fail}"></p>
-                </div>
-            </div>
-
-            <div th:if="${size}==0">
-                <h1>No User</h1>
-            </div>
-            <div>&nbsp</div>
-
-            <div>
-                <form th:action="@{/user/management/listusers}">
-                    Filter: <input type="text" name="keyword" th:value="${keyword}" required/>
-                    &nbsp
-                    <input id="btn-submit" type="submit" value="Search"/>
-                    &nbsp
-                    <input type="button" value="Clear" onclick="clearFilter()"/>
-                    &nbsp
-
-                </form>
-            </div>
-            <div>&nbsp</div>
-            <div>
-                <form id="searchFilter" th:action="@{/user/management/listusers}">
-                    Role: <select name="keyword" style="width:30%" onchange="submitForm()">
-                    <option>---All---</option>
-                    <option th:each="role : ${listRole}" th:text="${role.name}" th:value="${role.name}"
-                            th:selected="${role.name==keyword}"></option>
-                </select>
-                </form>
-            </div>
+<!--Main container start -->
+<main class="ttr-wrapper">
+    <div class="container-fluid">
+        <div class="db-breadcrumb">
+            <h4 class="breadcrumb-title">User Manager</h4>
+            <ul class="db-breadcrumb-list">
+                <li><a href="#"><i class="fa fa-home"></i>Home</a></li>
+                <li>User Manager</li>
+            </ul>
         </div>
-        <div>&nbsp</div>
-        <div>
-            <select class="form-select" aria-label="Default select example" id="city_selector">
-                <option selected>Open this select menu</option>
-            </select>
-            <select class="form-select" aria-label="Default select example" id="district_selector">
-                <option selected>Open this select menu</option>
-            </select>
-            <script>
-                const origin_path = window.location.origin;
-                $.get(`${origin_path}/address/city`, (results) => {
-                    results.forEach(result => {
-                        console.log(result.name)
-                        $("#city_selector").append(`<option value="${result.id}">${result.name}</option>`);
-                    })
-                })
 
-                $("#city_selector").on("change", (e) => {
-                    getDistrict(e.target.value);
-                })
+        <div class="row">
+            <!-- Your Profile Views Chart -->
+            <div class="col-lg-12 m-b30">
+                <div class="widget-box">
 
-                const getDistrict = (cityId) => {
-                    $("#district_selector").html('  <option selected>Open this select menu</option>');
-                    $.get(`${origin_path}/address/district/${cityId}`, (results) => {
-                        results.forEach(result => {
-                            console.log(result.name)
-                            $("#district_selector").append(`<option value="${result.id}">${result.name}</option>`);
-                        })
-                    })
-                }
-            </script>
-            <div>&nbsp</div>
-        </div>
-        <div>
-            <table id="user_list" class="table table-striped table-hover table-bordered" th:if="${size>0}">
-                <thead class="thead-dark">
-                <th>Avata</th>
-                <th>Email</th>
-                <th>Adress</th>
-                <th>Full Name</th>
-                <th>Status</th>
-                <th>Role</th>
-                <th>Studio</th>
-                <th>Update</th>
-                </thead>
-                <tbody>
-                <th:block th:each="user : ${list}">
-                    <tr>
-                        <td style="width:70% ; height: 70%"><img style="width: 70%; height: 70%"
-                                                                 th:src="${user.avatar}"/></td>
-                        <td th:text="${user.email}"></td>
-                        <td th:text="${user.address}"></td>
-                        <td th:text="${user.firstName}+' '+${user.lastName}"></td>
-                        <td th:text="${user.status}"></td>
-                        <td th:text="${user.roleName}"></td>
-                        <td th:text="${user.studioName}"></td>
-                        <td>
+                    <div class="wc-title row">
+                        <h4>User List</h4>
+                        <div class="btn-light btn-outline-success ml-auto mr-4 row col-4">
+                            <form id="searchFilter" th:action="@{/user/management/listusers}">
+                                <div>
+                                Filter: <input type="text" th:name="keyword" th:value="${currentKeyword}" required/>
+                                &nbsp
+                                <input id="btn-submit" type="submit" value="Search"/>
+                                &nbsp
+                                </div>
+                            </form>
+                        </div>
+                    </div>
 
-                            <a th:href="@{/user/management/updateuser/{email} (email=${user.email})}" class="edit"
-                               title="Edit" data-toggle="tooltip">Update &nbsp;</a><a
-                                th:href="@{/user/management/updateprofile/{email} (email=${user.email})}"><i
-                                class="material-icons">&#xE254; </i></a>
-                            <!--                        <button type="button" class="btn btn-danger">Danger</button>-->
+                    <div class="container-fluid row ml-3 mt-7">
+                        <div>
+                            <form id="searchFilter1" th:action="@{/user/management/listusers}">
+                                <div>
+                                    Role: <select th:name="roleId" style="width:30%" onchange="submitForm()">
+                                    <option>All</option>
+                                    <th:block th:each="role : ${listRole}">
+                                        <option  th:text="${role.name}" th:value="${role.id}"
+                                                 th:selected="${role.name == currentRole}"></option>
+                                    </th:block>
+                                </select>
+                                </div>
+                                <div>
+                                    City: <select th:name="cityName" style="width:30%" onchange="submitForm()">
+                                    <option>All</option>
+                                    <th:block th:each="city : ${listCity}">
+                                        <option th:value="${city.name}" th:text="${city.name}"
+                                                th:selected="${city.name == currentCity}"></option>
+                                    </th:block>
+                                </select>
+                                </div>
+                                <div>
+                                    Studio: <select th:name="studioId" style="width:30%" onchange="submitForm()">
+                                    <option>All</option>
+                                    <th:block th:each="studio : ${listStudio}">
+                                        <option th:value="${studio.id}" th:text="${studio.name}"
+                                                th:selected="${studio.name == currentStudio}"></option>
+                                    </th:block>
+                                </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div>&nbsp</div>
 
-                            <a th:if="${user.status==false}"
-                               th:href="@{/user/management/enableuser/{id} (id=${user.id})}" class="enable"
-                               title="Enable" data-toggle="tooltip">
 
-                                <button onclick="return confirm('Are you sure you want to enable class')" type="button"
-                                        class="btn btn-warning">Enable
-                                </button>
+                        <div class="widget-inner">
+                            <table class="table table-hover table-bordered sortable" id="user_list">
+                                <thead>
+                                <tr>
+                                    <th>Avata</th>
+                                    <th>Email</th>
+                                    <th>Adress</th>
+                                    <th>Full Name</th>
+                                    <th>Role</th>
+                                    <th>Studio</th>
+                                    <th>City</th>
+                                    <th>Status</th>
+                                    <th>Update</th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                            </a>
+                                <tr th:each="user : ${list}">
+                                    <td style="height: 100%" class="">
+                                        <img class="img-fluid" style="width: 100%; aspect-ratio: 1/1;"
+                                             th:src="${user.avatar}"/>
+                                    </td>
+                                    <td th:text="${user.email}"></td>
+                                    <td th:text="${user.address}"></td>
+                                    <td th:text="${user.firstName}+' '+${user.lastName}"></td>
+                                    <td th:text="${user.roleName}"></td>
+                                    <td th:text="${user.studioName}"></td>
+                                    <td th:text="${user.cityName}"></td>
+                                    <span th:if="${user.status == true}">
+                        <td>Active</td>
+                    </span>
+                                    <span th:if="${user.status == false}">
+                    <td>Deactive</td>
+                    </span>
+                                    <td>
+                                        <a class="edit" data-toggle="tooltip"
+                                           th:href="@{/user/management/updateuser/{email} (email=${user.email})}"
+                                           title="Edit"><i class="material-icons fa">&#xf044;</i></a>
+                                        <a class="active" th:if="${user.status == true}" data-toggle="tooltip"
+                                           th:href="@{/user/management/disableuser/{email} (email=${user.email})}"
+                                           onclick="return confirm('Are you sure you want to change this user status?')"><i
+                                                class="material-icons fa fa-toggle-on color-skins"></i></a>
+                                        <a class="active" th:if="${user.status == false}" data-toggle="tooltip"
+                                           th:href="@{/user/management/enableuser/{email} (email=${user.email})}"
+                                           onclick="return confirm('Are you sure you want to change this user status?')"><i
+                                                class="material-icons fa fa-toggle-off color-skins"></i></a>
+                                        <a onclick="return confirm('ok?')"
+                                           th:href="@{/user/management/updateprofile/{email} (email=${user.email})}"
+                                           title="Delete"><i
+                                                class="material-icons fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div id="pagination"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                            <a th:if="${user.status==false}"
-                               th:href="@{/user/management/enableuser/{id} (id=${user.id})}" class="enable"
-                               title="Enable" data-toggle="tooltip">
-
-                                <button onclick="return confirm('Are you sure you want to enable class')" type="button"
-                                        class="btn btn-warning">Enable
-                                </button>
-
-                            </a>
-                        </td>
-                    </tr>
-
-                </th:block>
-
-                </tbody>
-
-            </table>
         </div>
     </div>
-</div>
-</div>
+</main>
+<div class="ttr-overlay"></div>
 
+<!-- External JavaScripts -->
+<th:block th:insert="/fragments/admin_fragment/script"></th:block>
 </body>
 <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function () {
         $('#user_list').DataTable({
-                searching: false,
-            }
-        );
-
+            // dom: 'rtip',
+            columnDefs: [{
+                target: 0,
+                visible: false,
+                searchable: false
+            }],
+            pagingType: 'full_numbers',
+            bLengthChange: false,
+            pageLength: 10,
+            searching: false,
+        });
     });
 </script>
 <script type="text/javascript">
@@ -298,6 +170,7 @@
 
     function submitForm() {
         document.getElementById("searchFilter").submit();
+        document.getElementById("searchFilter1").submit();
     }
 
 

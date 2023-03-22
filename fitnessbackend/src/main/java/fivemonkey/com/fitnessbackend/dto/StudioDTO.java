@@ -10,11 +10,12 @@ import java.util.Date;
 @Setter
 @ToString
 public class StudioDTO {
+
     private String id;
     private String name;
     private String city;
 
-    private District district;
+    private DistrictDTO district;
 
     private String contact;
 
