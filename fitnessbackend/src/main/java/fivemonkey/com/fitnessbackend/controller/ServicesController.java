@@ -175,16 +175,17 @@ public class ServicesController {
     //update package b1
     @GetMapping("/management/update-package/{id}")
     public String getDetail(@PathVariable("id") String id, @AuthenticationPrincipal UserDetail userDetail, Model model,
+                            @RequestParam(value = "status_type_id", required = false) String status_type_id,
                             @RequestParam(value = "city", required = false) String cityname,
                             @RequestParam(value = "studio", required = false, defaultValue = "All") String studio,
                             @RequestParam(value = "category", required = false) String category) {
         ServicesDTO servicesDTO = servicesService.getPackageDTOById(id);
+        status_type_id = servicesDTO.getStatus() + "";
         cityname = servicesDTO.getCityName();
         System.out.println("HAPH" + servicesDTO.getStudioId());
-        if(null != servicesDTO.getStudioId()){
+        if (null != servicesDTO.getStudioId()) {
             studio = servicesDTO.getStudioId();
-        }
-        else studio.equals("All");
+        } else studio.equals("All");
         category = servicesDTO.getCategoryId().toString();
         List<StudioDTO> listStudio = studioService.getAllStudiosByCity(cityname);
         List<CategoryDTO> listCategory = categoryService.getAllCategoriesByType("service");
@@ -225,7 +226,6 @@ public class ServicesController {
                                 @RequestParam(value = "category", required = false) String category,
                                 @ModelAttribute("package") ServicesDTO servicesDTO) {
         Services s = servicesService.getPackageById(id);
-        status_type_id = "" + s.getStatus();
         switch (userDetail.getUser().getRole().getId()) {
             case "ROLE01":
                 s.setId(servicesDTO.getId());
