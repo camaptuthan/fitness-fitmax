@@ -48,8 +48,7 @@ insert into studio(studio_id,district_id,contact,studio_name,status,created_date
 insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU015',15,'','Gym Da Nang E',1,CURDATE());
 
 /*select * from user*/
-insert into user(email,password,first_name,last_name,role_id,status,created_date) values ('fivemonkeys.co@gmail.com','123456','Monkey','Five','ROLE01',1,CURDATE());
-
+insert into user(email,password,first_name,last_name,role_id,status,created_date) values ('fivemonkey.co@gmail.com','123456','Monkey','Five','ROLE01',1,CURDATE());
 insert into user(email,password,first_name,last_name,role_id,city_id,status,studio_id,created_date) values ('hungha19156@gmail.com','hungha1915','Ha','Pham','ROLE02',1,1,'STU001',CURDATE());
 insert into user(email,password,first_name,last_name,role_id,city_id,status,studio_id,created_date) values ('tuanduong144@gmail.com','123456','Tuan','Duong','ROLE02',1,1,'STU004',CURDATE());
 insert into user(email,password,first_name,last_name,role_id,city_id,status,studio_id,created_date) values ('huy191101@gmail.com','123456','Huy','Duong','ROLE02',1,1,'STU007',CURDATE());
@@ -209,6 +208,8 @@ insert into blog(title,writer_id,thumbnail,description,status,created_date,categ
 insert into blog(title,writer_id,thumbnail,description,status,created_date,category_id) values ('Advertise 3',7,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_blog_thumbnail_3.jpg?alt=media&token=5d0aa508-d507-44e9-8c8a-a64bc919fcc5','Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque. Ultricies tristique nulla aliquet enim tortor. Ultricies tristique nulla aliquet enim tortor. Arcu bibendum at varius vel pharetra vel turpis nunc eget. Et leo duis ut diam quam nulla. Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque.',1,CURDATE(),5);
 insert into blog(title,writer_id,thumbnail,description,status,created_date,category_id) values ('Advertise 4',7,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_blog_thumbnail_4.jpg?alt=media&token=15505224-9b3d-4bf2-ba5d-52dcff4bfa3c','Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque. Ultricies tristique nulla aliquet enim tortor. Ultricies tristique nulla aliquet enim tortor. Arcu bibendum at varius vel pharetra vel turpis nunc eget. Et leo duis ut diam quam nulla. Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque.',1,CURDATE(),5);
 
+
+
 /*select * from schedule;*/
 insert into schedule(schedule_id,start_time,end_time) values ('SCHE01','05:00:00','07:00:00');
 insert into schedule(schedule_id,start_time,end_time) values ('SCHE02','07:00:00','09:00:00');
@@ -363,4 +364,9 @@ insert into session(session_id,session_name,created_date,happened_date,class_id,
 insert into session(session_id,session_name,created_date,happened_date,class_id,schedule_id,trainer_email) values ('SES20230033','Power Yoga',CURDATE(),'2023-03-23',1,'SCHE08','ducnvhe141646@fpt.edu.vn');
 insert into session(session_id,session_name,created_date,happened_date,class_id,schedule_id,trainer_email) values ('SES20230034','Hip Opening',CURDATE(),'2023-03-24',1,'SCHE08','ducnvhe141646@fpt.edu.vn');
 
+/*select * from status;*/
+insert into status(type,type_id,status_name) values ('service',0,'Rejected');
+insert into status(type,type_id,status_name) values ('service',1,'Waiting');
+insert into status(type,type_id,status_name) values ('service',2,'In Progress');
+insert into status(type,type_id,status_name) values ('service',3,'Expired');
 

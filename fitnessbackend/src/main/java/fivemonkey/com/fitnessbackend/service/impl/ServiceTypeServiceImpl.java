@@ -20,4 +20,9 @@ public class ServiceTypeServiceImpl implements ServiceTypeService {
     public List<ServiceTypeDTO> getAll() {
         return modelMapper.mapList(serviceTypeRepository.findAll(), ServiceTypeDTO.class);
     }
+
+    @Override
+    public ServiceTypeDTO getServiceTypeById(Long id) {
+        return modelMapper.map(serviceTypeRepository.getServiceTypeById(id), ServiceTypeDTO.class);
+    }
 }

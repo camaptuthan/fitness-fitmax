@@ -38,15 +38,17 @@ public class StudioServiceImpl implements StudioService {
     //remove
     @Override
     public List<StudioDTO> getAllStudios() {
-        List<StudioDTO> list= new ArrayList<>();
-        return list;
+        List<StudioDTO> studioDTOS = new ArrayList<>();
+        studioRepository.findAll().forEach(studio -> {
+            StudioDTO studioDTO = modelMapper.map(studio, StudioDTO.class);
+            String managerEmail = userRepository.listManagerByStudio(studio.getId());
+            studioDTO.setManagerEmail(managerEmail);
+            studioDTOS.add(studioDTO);
+        });
+        return studioDTOS;
     }
 
-    @Override
-    public List<Studio> getAllStudio() {
-
-        return studioRepository.findAll();
-    }
+    //remove
 
     @Override
     public StudioDTO getStudioByStudioManager(String email) {
@@ -55,8 +57,23 @@ public class StudioServiceImpl implements StudioService {
     }
 
     @Override
-    public StudioDTO getStudioById(String id) {
+    public StudioDTO getStudioDTOById(String id) {
         return modelMapper.map(studioRepository.findStudioById(id), StudioDTO.class);
+    }
+
+    @Override
+    public List<StudioDTO> getAllStudio() {
+        return modelMapper.mapList(studioRepository.findAll(), StudioDTO.class);
+    }
+
+    @Override
+    public Studio getStudioById(String id) {
+        return studioRepository.findStudioById(id);
+    }
+
+    @Override
+    public Studio getStudioByStudioId(String id) {
+        return studioRepository.findStudioById(id);
     }
 
     @Override
@@ -67,6 +84,18 @@ public class StudioServiceImpl implements StudioService {
     @Override
     public List<StudioDTO> getAllStudiosByCity(String cityname) {
         return modelMapper.mapList(studioRepository.findStudioByCityName(cityname), StudioDTO.class);
+    }
+
+    @Override
+    public StudioDTO getStudioDTOByStudioId(String id) {
+            StudioDTO studioDTO = modelMapper.map(studioRepository.getStudioById(id), StudioDTO.class);
+            String managerEmail = userRepository.listManagerByStudio(studioDTO.getId());
+            studioDTO.setManagerEmail(managerEmail);
+        return studioDTO;
+    }
+    @Override
+    public Studio saveStudio(Studio studio) {
+        return studioRepository.save(studio);
     }
 
     @Override

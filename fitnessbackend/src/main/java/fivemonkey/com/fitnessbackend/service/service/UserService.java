@@ -72,5 +72,5 @@ public interface UserService {
 
 
 
-
+    List<User> getUserByRoleId(String roleId);
 }

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SliderRepository extends JpaRepository<Slider, String> {
+public interface SliderRepository extends JpaRepository<Slider, Long> {
 
 }

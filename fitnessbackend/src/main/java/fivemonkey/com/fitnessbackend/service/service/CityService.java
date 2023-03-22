@@ -1,6 +1,7 @@
 package fivemonkey.com.fitnessbackend.service.service;
 
 import fivemonkey.com.fitnessbackend.dto.CityDTO;
+import fivemonkey.com.fitnessbackend.entities.City;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,8 @@ public interface CityService {
     List<CityDTO> getAllCities();
 
     CityDTO getCityById(Long id);
+
+    City getCityByName(String name);
 
     CityDTO getCityByAssistant(String email);
 

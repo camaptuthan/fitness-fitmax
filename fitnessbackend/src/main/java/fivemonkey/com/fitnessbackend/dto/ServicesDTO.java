@@ -34,7 +34,13 @@ public class ServicesDTO {
 
     private Long serviceTypeId;
 
+    private String serviceTypeType;
+
     private Long cityId;
 
+    private String cityName;
+    //status
+    private int type_id;
 
+    private String statusName;
 }

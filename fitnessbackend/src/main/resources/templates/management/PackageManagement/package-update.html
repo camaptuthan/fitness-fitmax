@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- =================== META =================== -->
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link th:href="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css}" rel="stylesheet"
+          id="bootstrap-css">
+    <script th:src="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js}"></script>
+    <script th:src="@{//code.jquery.com/jquery-1.11.1.min.js}"></script>
+</head>
+
+<!------ Include the above in your HEAD tag ---------->
+<body>
+<form class="form-horizontal"
+      th:action="@{/service/management/update-package/{id} (id=${package.id})}" method="post"
+      th:object="${package}">
+    <fieldset>
+
+        <!-- Form Name -->
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label">Update Package</label>
+
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="name">Name</label>
+            <div class="col-md-4">
+                <input id="name" name="name" th:field="*{name}" th:value="${package.name}" placeholder=" Name"
+                       class="form-control input-md" type="text">
+                <div class="alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="name">Type</label>
+            <div class="col-md-4">
+                <input id="type" name="type" th:value="${package.serviceTypeType}"
+                       class="form-control input-md" type="text" readonly>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="des">Description</label>
+            <div class="col-md-4">
+                <textarea id="des" name="des" th:text="${package.des}"
+                          class="form-control input-md" type="text"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="price">Price</label>
+            <div class="col-md-4">
+                <input id="price" th:field="*{price}" th:value="${package.price}" name="price" placeholder="Price"
+                       class="form-control input-md" type="number">
+                <div class="alert-warning" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="duration">Duration</label>
+            <div class="col-md-4">
+                <input id="duration" th:field="*{duration}" th:value="${package.duration}" name="duration"
+                       placeholder="Duration"
+                       class="form-control input-md" type="number">
+                <div class="alert-warning" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></div>
+            </div>
+        </div>
+        <div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">City</label>
+            <div class="col-md-4 ">
+                <select th:name="city" class="form-select" id="city_selector">
+                    <th:block th:each="city : ${cityList}">
+                        <option th:value="${city.name}" th:text="${city.name}"
+                                th:selected="${city.name == currentCity}"></option>
+                    </th:block>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Studio</label>
+            <div class="col-md-4 ">
+                <select th:name="studio" class="form-select" id="studio_selector">
+                    <option>All</option>
+                    <th:block th:each="studio : ${studioList}">
+                        <option th:value="${studio.id}" th:text="${studio.name}"
+                                th:selected="${studio.id == currentStudio}"></option>
+                    </th:block>
+                </select>
+            </div>
+        </div>
+        <script>
+            const origin_path = window.location.origin;
+            $("#city_selector").on("change", (e) => {
+                getStudio(e.target.value);
+            })
+
+            const getStudio = (cityName) => {
+                $("#studio_selector").html('<option>All</option>');
+                $.get(`${origin_path}/address/studio/${cityName}`, (results) => {
+                    results.forEach(result => {
+                        console.log(result.name)
+                        $("#studio_selector").append(`<option value="${result.id}">${result.name}</option>`);
+                    })
+                })
+            }
+        </script>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Category</label>
+            <div class="col-md-4 ">
+                <select th:name="category" style="width:30%">
+                    <th:block th:each="category : ${categoryList}">
+                        <option th:value="${category.id}" th:text="${category.name}"></option>
+                    </th:block>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Status</label>
+            <div class="col-md-4 ">
+                <select th:name="status_type_id" style="width:30%">
+                    <th:block th:each="status : ${statusList}">
+                        <option th:value="${status.type_id}" th:selected="${currentStatus == status.type_id}"
+                                th:text="${status.statusName}"
+                                th:disabled="${!#authentication.principal.user.role.id.equals('ROLE01')}"></option>
+                    </th:block>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Image</label>
+            <img th:src="${package.image}" width="700" height="500">
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="singlebutton"></label>
+            <div class="col-md-4">
+                <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+</body>
+</html>

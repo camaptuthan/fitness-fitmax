@@ -259,7 +259,7 @@ public class UserServiceImpl implements UserService {
         String content = "Dear ,<br>"
                 + "This is your otp please verify otp now :<br>"
                 + "<h3>" + otp +"</h3> <br>"
-                +"<a>"+"It's expired time after "+OTP_EXPIRATION_TIME_MINUTES+ "minutes </a><br>"
+                +"<a>"+"It's expired time after "+OTP_EXPIRATION_TIME_MINUTES+ " minutes </a><br>"
                 + "Thank you,<br>"
                 + "From FSM.";
 
@@ -338,6 +338,11 @@ public class UserServiceImpl implements UserService {
             }
         }
         return modelMapperConfiguration.mapList(userList, UserDTO.class);
+    }
+
+    public List<User> getUserByRoleId(String roleId) {
+        return userRepository.listAllTrainer(roleId);
+
     }
 
 //    @Override
