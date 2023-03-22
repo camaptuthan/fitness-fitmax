@@ -176,12 +176,13 @@ public class ServicesController {
     @GetMapping("/management/update-package/{id}")
     public String getDetail(@PathVariable("id") String id, @AuthenticationPrincipal UserDetail userDetail, Model model,
                             @RequestParam(value = "city", required = false) String cityname,
-                            @RequestParam(value = "studio", required = false) String studio,
+                            @RequestParam(value = "studio", required = false, defaultValue = "All") String studio,
                             @RequestParam(value = "category", required = false) String category) {
         ServicesDTO servicesDTO = servicesService.getPackageDTOById(id);
         cityname = servicesDTO.getCityName();
-        if(servicesDTO.getStudioId() != null){
-            studio = servicesDTO.getStudioId() + "";
+        System.out.println("HAPH" + servicesDTO.getStudioId());
+        if(null != servicesDTO.getStudioId()){
+            studio = servicesDTO.getStudioId();
         }
         else studio.equals("All");
         category = servicesDTO.getCategoryId().toString();
