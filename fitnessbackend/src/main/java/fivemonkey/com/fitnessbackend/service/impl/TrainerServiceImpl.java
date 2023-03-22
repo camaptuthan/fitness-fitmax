@@ -22,9 +22,12 @@ public class TrainerServiceImpl implements TrainerService {
     UserRepository userRepository;
     @Override
     public List<TrainerDTO> getListPT(String studioId) {
-        List<Trainer> trainerList = trainerRepository.getListPT(studioId);
+        return modelMapperConfiguration.mapList(trainerRepository.getListPT(studioId),TrainerDTO.class);
 
-        return modelMapperConfiguration.mapList(trainerList,TrainerDTO.class);
+    }
 
+    @Override
+    public TrainerDTO getTrainerByEmail(String email) {
+        return modelMapperConfiguration.map(trainerRepository.getTrainerByEmail(email),TrainerDTO.class);
     }
 }

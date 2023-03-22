@@ -20,7 +20,7 @@ public class TrainerDTO {
     private String description;
     private String qualification;
 
-
+    private String userStudioName;
     private String specialication;
 
 
