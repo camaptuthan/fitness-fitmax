@@ -6,6 +6,7 @@ import fivemonkey.com.fitnessbackend.dto.*;
 import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
+import fivemonkey.com.fitnessbackend.entities.Trainer;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
@@ -56,7 +57,7 @@ public class UserController {
     private AddressService addressService;
 
     @Autowired
-    private  CityService cityService;
+    private CityService cityService;
 
     @GetMapping("/management/listusers")
     public String listUser(Model model, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword
@@ -67,8 +68,8 @@ public class UserController {
         switch (userDetail.getUser().getRole().getId()) {
 
             case "ROLE01":
-                model.addAttribute("listCity",addressService.getCities());
-                model.addAttribute("listStudio",addressService.getStudioByCity(cityName));
+                model.addAttribute("listCity", addressService.getCities());
+                model.addAttribute("listStudio", addressService.getStudioByCity(cityName));
                 model.addAttribute("listRole", roleService.getRoleAdmin());
                 model.addAttribute("list", userService.getUserBy4Fields(keyword, cityName, roleId, studioId));
                 model.addAttribute("size", userService.getUserBy4Fields(keyword, cityName, roleId, studioId).size());
@@ -82,7 +83,7 @@ public class UserController {
                 model.addAttribute("size", userService.listUserByAssistant(userDetail.getUser().getStudio().getId()).size());
                 break;
         }
-        model.addAttribute("currentStudio",studioId);
+        model.addAttribute("currentStudio", studioId);
         model.addAttribute("currentKeyword", keyword);
         model.addAttribute("currentCity", cityName);
         model.addAttribute("currentRole", roleId);
@@ -184,6 +185,14 @@ public class UserController {
         userService.updateUserAvatar(userDTO);
 
         return "redirect:/user/management/listusers";
+
+
+    }
+    @RequestMapping("/ptdetail/{email}")
+    public String getInformationPtDetail(@PathVariable("email") String email, Model model) {
+        TrainerDTO trainerDTO = trainerService.getTrainerByEmail(email);
+        model.addAttribute("trainer", trainerDTO);
+        return "ptDetail";
     }
 
     @RequestMapping("/management/updateprofile/{email}")
@@ -192,6 +201,7 @@ public class UserController {
         model.addAttribute("user", userDTO);
         return "myprofile";
     }
+
 
     @PostMapping("/management/updateprofile/{email}")
     public String userUpdateAll(@ModelAttribute("user") UserDTO userDTO, Model model) throws IOException {
@@ -241,13 +251,13 @@ public class UserController {
         String path = "redirect:/user/profilechangepassword";
         try {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            if (passwordEncoder.matches(cpassword,userDetail.getPassword()) && npassword.equals(cnpassword)) {
+            if (passwordEncoder.matches(cpassword, userDetail.getPassword()) && npassword.equals(cnpassword)) {
                 ra.addFlashAttribute("success", "Change your password successfully! Please login again!");
                 userDetail.getUser().setPassword(npassword);
                 userService.updateUserPassword(userDetail.getUser());
                 System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cnpassword + "New: " + npassword + "Confirm New" + cnpassword);
                 path = "redirect:/logout";
-            } else if (!passwordEncoder.matches(cpassword,userDetail.getPassword())) {
+            } else if (!passwordEncoder.matches(cpassword, userDetail.getPassword())) {
                 ra.addFlashAttribute("fail", "Current password is wrong! Please enter your password again!");
                 model.addAttribute("nPassword", npassword);
                 model.addAttribute("cnPassword", cnpassword);
