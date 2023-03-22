@@ -38,9 +38,9 @@
         <h2 class="title-decor">Packages <span>List</span></h2>
         <p class="slogan">Below is a list of packages for free trainees. People can search by city, package name,
             price... Details are in each package.</p>
-        <form id="searchAndFilter" th:action="@{/service/packages}" method="get">
+        <form id="searchAndFilterPackage" th:action="@{/service/packages}" method="get">
             <div>
-                City: <select th:name="city" style="width:30%" onchange="submitForm()">
+                City: <select th:name="city" style="width:30%" onchange="submitFormPackage()">
                 <option>All</option>
                 <th:block th:each="city : ${cityList}">
                     <option th:value="${city.name}" th:text="${city.name}"
@@ -50,7 +50,7 @@
             </div>
             <div>&nbsp</div>
             <div>
-                Category: <select th:name="category" style="width:30%" onchange="submitForm()">
+                Category: <select th:name="category" style="width:30%" onchange="submitFormPackage()">
                 <option th:value="0">All</option>
                 <th:block th:each="category : ${categoryList}">
                     <option th:value="${category.id}" th:text="${category.name}"
@@ -140,8 +140,8 @@
 <script th:src="@{/js/parallax.min.js}"></script>
 <script th:src="@{/js/scripts.js}"></script>
 <script type="text/javascript">
-    function submitForm() {
-        document.getElementById("searchAndFilter").submit();
+    function submitFormPackage() {
+        document.getElementById("searchAndFilterPackage").submit();
     }
 </script>
 </body>

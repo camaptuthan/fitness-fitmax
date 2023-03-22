@@ -35,6 +35,9 @@ public class ServicesController {
     private CityService cityService;
 
     @Autowired
+    private ClassService classService;
+
+    @Autowired
     private StudioService studioService;
 
     @Autowired
@@ -108,6 +111,41 @@ public class ServicesController {
         model.addAttribute("packages", packagesMapList);
         model.addAttribute("package", s);
         return "user/package-detail";
+    }
+
+    //view all classes(user)
+    @RequestMapping(value = "/classes", method = {RequestMethod.GET, RequestMethod.POST})
+    public String getAllClasses(Model model, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+                                @RequestParam(value = "city", required = false, defaultValue = "All") String cityname,
+                                @RequestParam(value = "studio", required = false, defaultValue = "All") String studio,
+                                @RequestParam(value = "category", required = false, defaultValue = "0") String category) {
+
+        List<CityDTO> listCity = cityService.getAllCities();
+        List<StudioDTO> listStudio = studioService.getAllStudiosByCity(cityname);
+        List<CategoryDTO> listCategory = categoryService.getAllCategoriesByType("service");
+        Map<String, List<ClassDTO>> classesMapList = new HashMap<>();
+        List<ClassDTO> listClass = classService.getClassesBy4Fields(keyword, cityname, studio, Long.parseLong(category));
+        int size = listClass.size() % 3 == 0 ? listClass.size() / 3 : (listClass.size() / 3 + 1);
+        List<ClassDTO> value = null;
+        for (int i = 0; i < size; i++) {
+            value = new ArrayList<>();
+            for (int j = 0; j < 3; j++) {
+                if (i * 3 + j < listClass.size()) {
+                    value.add(listClass.get(i * 3 + j));
+                }
+            }
+            classesMapList.put("PKG-" + (i + 1), value);
+        }
+        model.addAttribute("classes", classesMapList);
+        model.addAttribute("size", classesMapList.size());
+        model.addAttribute("cityList", listCity);
+        model.addAttribute("studioList", listStudio);
+        model.addAttribute("categoryList", listCategory);
+        model.addAttribute("currentCity", cityname);
+        model.addAttribute("currentStudio", studio);
+        model.addAttribute("currentKeyword", keyword);
+        model.addAttribute("currentCategory", category);
+        return "user/class";
     }
 
     //view all packages in dashboard

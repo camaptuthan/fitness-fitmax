@@ -60,4 +60,6 @@ public class ClassController {
 
         return "class/profile";
     }
+
+
 }

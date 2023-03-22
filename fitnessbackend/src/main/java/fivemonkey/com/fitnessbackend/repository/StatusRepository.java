@@ -13,4 +13,6 @@ public interface StatusRepository extends JpaRepository<Status, Long> {
     @Query("select s from Status s where s.type = 'service'")
     List<Status> getStatusByPackage();
 
+    @Query("select s from Status s where s.type = 'service'")
+    List<Status> getStatusByClass();
 }
