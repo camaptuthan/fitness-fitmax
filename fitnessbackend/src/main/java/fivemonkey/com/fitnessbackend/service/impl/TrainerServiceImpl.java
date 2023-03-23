@@ -30,4 +30,15 @@ public class TrainerServiceImpl implements TrainerService {
     public TrainerDTO getTrainerByEmail(String email) {
         return modelMapperConfiguration.map(trainerRepository.getTrainerByEmail(email),TrainerDTO.class);
     }
+
+    @Override
+    public List<TrainerDTO> listAllPT() {
+        return modelMapperConfiguration.mapList(trainerRepository.findAll(),TrainerDTO.class);
+    }
+
+    @Override
+    public List<TrainerDTO> getListPTByCity(String cityName) {
+        System.out.println("vanh"+trainerRepository.getListPTByCity(cityName));
+        return modelMapperConfiguration.mapList(trainerRepository.getListPTByCity(cityName),TrainerDTO.class);
+    }
 }
