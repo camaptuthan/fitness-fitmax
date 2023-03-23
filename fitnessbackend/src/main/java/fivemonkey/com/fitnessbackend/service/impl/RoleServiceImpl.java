@@ -19,7 +19,16 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<Role> getRoleAdmin() {
-        System.out.println(roleRepository.getRoleAdmin());
         return roleRepository.getRoleAdmin();
+    }
+
+    @Override
+    public List<Role> getRoleManager() {
+        return roleRepository.getRoleManager();
+    }
+
+    @Override
+    public List<Role> getRoleAssistant() {
+        return roleRepository.getRoleAssistant();
     }
 }

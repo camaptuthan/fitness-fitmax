@@ -17,7 +17,8 @@ public interface TrainerRepository extends JpaRepository<Trainer,String > {
     @Query("SELECT t FROM Trainer t WHERE t.email =?1")
     Trainer getTrainerByEmail(String email);
 
-    // get trainer home page
+    @Query(value = "select * from trainer t join user u on u.email = t.trainer_email join city c on u.city_id = c.city_id where c.city_name = ?1", nativeQuery = true)
+    List<Trainer> getListPTByCity(String cityName);
 
 
 }

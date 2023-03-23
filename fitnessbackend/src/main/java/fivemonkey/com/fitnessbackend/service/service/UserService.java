@@ -59,17 +59,27 @@ public interface UserService {
     long countTrainer(String roleId);
 
     List<User> listAllTrainer(String role);
-    public List<UserDTO> listUserByManage(String studioId);
-    public List<UserDTO> listUserByAssistant(String studioId);
-//    List<UserDTO> getListPT(String studioId);
+    public List<UserDTO> listUserByManage(String studioId,String keyword,String roleId);
+    public List<UserDTO> listUserByAssistant(String studioId,String keyword,String roleId);
 
-    List<UserDTO> getUserBy4Fields(@Param("keyword") String keyword,
+
+    List<UserDTO> getUserByFieldsByAdmin(
+                                   @Param("keyword") String keyword,
                                    @Param("cityName") String cityName,
                                    @Param("roleId") String roleId,
                                    @Param("studioId") String studioId);
 
-//    List<User> findAllUser(String keyword,String roleId, String cityName, String studioId);
 
+    List<UserDTO> getUserByFieldsByManager(
+            @Param("email") String email,
+            @Param("keyword") String keyword,
+            @Param("roleId") String roleId);
+
+
+    List<UserDTO> getUserByFieldsByAssistant(
+            @Param("email") String email,
+            @Param("keyword") String keyword,
+            @Param("roleId") String roleId);
 
 
     List<User> getUserByRoleId(String roleId);

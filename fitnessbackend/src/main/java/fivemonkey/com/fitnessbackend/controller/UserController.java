@@ -68,16 +68,20 @@ public class UserController {
                 model.addAttribute("listCity", addressService.getCities());
                 model.addAttribute("listStudio", addressService.getStudioByCity(cityName));
                 model.addAttribute("listRole", roleService.getRoleAdmin());
-                model.addAttribute("list", userService.getUserBy4Fields(keyword, cityName, roleId, studioId));
-                model.addAttribute("size", userService.getUserBy4Fields(keyword, cityName, roleId, studioId).size());
+                model.addAttribute("list", userService.getUserByFieldsByAdmin(keyword, cityName, roleId, studioId));
+                model.addAttribute("size", userService.getUserByFieldsByAdmin(keyword, cityName, roleId, studioId).size());
                 break;
             case "ROLE02":
-                model.addAttribute("list", userService.listUserByManage(userDetail.getUser().getStudio().getId()));
-                model.addAttribute("size", userService.listUserByManage(userDetail.getUser().getStudio().getId()).size());
+                List<UserDTO> userDTOList = userService.listUserByManage(userDetail.getUser().getStudio().getId(),keyword,roleId);
+                model.addAttribute("listRole", roleService.getRoleManager());
+                model.addAttribute("list", userDTOList);
+                model.addAttribute("size", userDTOList == null ? 0 : userDTOList.size());
                 break;
             case "ROLE04":
-                model.addAttribute("list", userService.listUserByAssistant(userDetail.getUser().getStudio().getId()));
-                model.addAttribute("size", userService.listUserByAssistant(userDetail.getUser().getStudio().getId()).size());
+                List<UserDTO> userDTOList1 = userService.listUserByAssistant(userDetail.getUser().getStudio().getId(),keyword,roleId);
+                model.addAttribute("listRole", roleService.getRoleAssistant());
+                model.addAttribute("list", userDTOList1);
+                model.addAttribute("size", userDTOList1 == null ? 0 : userDTOList1.size());
                 break;
         }
         model.addAttribute("currentStudio", studioId);
@@ -93,7 +97,13 @@ public class UserController {
                                    ,@RequestParam(value = "cityName", required = false, defaultValue = "All") String cityName) {
 
         Map<String, List<TrainerDTO>> trainerMapList = new HashMap<>();
-        List<TrainerDTO> listPT = trainerService.getListPT(studioId);
+        List<TrainerDTO> listPT = null;
+        if(("All").equals(cityName)){
+           listPT = trainerService.listAllPT();
+        } else if (("All").equals(studioId)) {
+            listPT = trainerService.getListPTByCity(cityName);
+        } else {
+       listPT = trainerService.getListPT(studioId);}
 
         int size = listPT.size() % 3 == 0 ? listPT.size() / 3 : (listPT.size() / 3 + 1);
         List<TrainerDTO> value = null;
@@ -106,11 +116,12 @@ public class UserController {
             }
             trainerMapList.put("PT-" + (i + 1), value);
         }
-        model.addAttribute("listCity", addressService.getCities());
-        model.addAttribute("listStudio", addressService.getStudioByCity(cityName));
         model.addAttribute("currentStudio", studioId);
         model.addAttribute("currentCity", cityName);
-        model.addAttribute("studioName", studioId);
+        model.addAttribute("listCity", addressService.getCities());
+        model.addAttribute("listStudio", addressService.getStudioByCity(cityName));
+
+
         model.addAttribute("list", trainerMapList);
         model.addAttribute("size", trainerMapList.size());
         return "listPT";
