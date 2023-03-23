@@ -36,7 +36,7 @@
 
 <section class="s-related-posts home-related-posts">
     <div class="container">
-        <h2 class="title-decor" th:object="${studio}"><span th:text="${studio.name}"></span></h2>
+        <h2 class="title-decor" th:object="${studios}"><span th:text="${studios.name}"></span></h2>
         <p class="slogan">Fitmax's mission is to bring the right awareness to the community in physical training to have great health and spirit, always firmly overcome all challenges in life.</p>
 
     </div>
@@ -47,7 +47,82 @@
 <!-- ========= S-TRAINING-SCHEDULE END ========= -->
 
 <!-- ================== FOOTER ================== -->
-<th:block th:insert="/fragments/home_program"></th:block>
+<div class="s-our-programs" style="background-image: url(/img/bg-programs.jpg);">
+    <div class="mask"></div>
+    <div class="our-programs-effect" style="background-image: url(/img/bg-programs.svg);"></div>
+    <div class="container">
+        <h2 class="title-decor">Our <span>Service</span></h2>
+        <p class="slogan" style="font-size: 20px">Here are the services that our system provides for you.
+            Including Packages for individuals who want to practice freely.
+            Personal Training is a list of trainers that trainees can book to practice 1-1 with a training and nutrition regimen that really suits your body conditions.
+            Finally, Classes like Yoga, KickBoxing, Cycling... help you approach new subjects professionally.</p>
+        <form id="searchAndFilter" th:object="${studios}" th:action="@{/studio/studio-details/{id} (id=${studios.id})}" method="get">
+            <div >
+                <div>
+                    Category:<br> <select th:name="category" style="width:30%" onchange="submitForm()">
+                    <option th:value="0" th:text="All">0</option>
+                    <th:block th:each="category : ${categoryList}">
+                        <option th:value="${category.id}" th:text="${category.name}"
+                                th:selected="${currentCategory.equals(category.id)}"></option>
+                    </th:block>
+                </select>
+                </div>
+            </div>
+        </form>
+        <div id="carousel-package" class="carousel slide">
+            <div th:if="${size} == 0">
+                <h2>There are no packages available at the moment. </h2>
+            </div>
+            <div class="carousel-inner overflow-visible row">
+                <th:block th:each="item,iter : ${listServiceOfStudio}">
+                    <div class="carousel-item col-12 p-2" th:classappend="${iter.index == 0} ? active : '' ">
+                        <div class="row">
+                            <th:block th:each="list : ${item.value}">
+                                <div class="col-md-4 club-card-col">
+                                    <div class="club-card-item"
+                                         th:style="'background-image: url(' + ${list.image} + ');'">
+                                        <div class="price-cover">
+                                            <div class="price" th:text="${list.price}">price</div>
+                                            <div class="date"><span th:text="${list.duration}"></span>months</div>
+                                        </div>
+                                        <ul class="list">
+                                            <li></li>
+                                            <li></li>
+                                            <li></li>
+                                            <li th:text="${list.name}" style="color:yellow"></li>
+                                            <li></li>
+                                            <li></li>
+                                            <li></li>
+                                        </ul>
+                                        <a th:href="@{'/service/packages/package-detail/' + ${list.id}}" class="btn">order
+                                            now</a>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-package" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel-package" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <style>
+            .carousel-control-prev {
+                left: -13rem;
+            }
+
+            .carousel-control-next {
+                right: -13rem;
+            }
+        </style>
+    </div>
+</div>
 <!-- ================== FOOTER ================== -->
 
 <!-- ================== FOOTER ================== -->
@@ -67,7 +142,11 @@
 <script th:src="@{/js/rx-lazy.js}"></script>
 <script th:src="@{/js/parallax.min.js}"></script>
 <script th:src="@{/js/scripts.js}"></script>
-
+<script type="text/javascript">
+    function submitForm() {
+        document.getElementById("searchAndFilter").submit();
+    }
+</script>
 </body>
 
 </html>

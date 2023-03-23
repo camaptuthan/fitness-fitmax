@@ -12,4 +12,6 @@ import java.util.List;
 public interface TrainerService {
     List<TrainerDTO> getListPT(String studioId);
     TrainerDTO getTrainerByEmail(String email);
+
+
 }

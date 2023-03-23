@@ -30,4 +30,6 @@ public class TrainerServiceImpl implements TrainerService {
     public TrainerDTO getTrainerByEmail(String email) {
         return modelMapperConfiguration.map(trainerRepository.getTrainerByEmail(email),TrainerDTO.class);
     }
+
+
 }

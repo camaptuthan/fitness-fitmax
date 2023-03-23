@@ -83,7 +83,7 @@
                             <table class="table table-hover table-bordered sortable" id="user_list">
                                 <thead>
                                 <tr>
-                                    <th>Avata</th>
+                                    <th hidden=""> Avata</th>
                                     <th>Email</th>
                                     <th>Adress</th>
                                     <th>Full Name</th>
@@ -97,7 +97,7 @@
                                 <tbody>
 
                                 <tr th:each="user : ${list}">
-                                    <td style="height: 100%" class="">
+                                    <td style="height: 100%;" class="" hidden="">
                                         <img class="img-fluid" style="width: 100%; aspect-ratio: 1/1;"
                                              th:src="${user.avatar}"/>
                                     </td>
@@ -121,15 +121,16 @@
                                            th:href="@{/user/management/disableuser/{email} (email=${user.email})}"
                                            onclick="return confirm('Are you sure you want to change this user status?')"><i
                                                 class="material-icons fa fa-toggle-on color-skins"></i></a>
-                                        <a class="active" th:if="${user.status == false}" data-toggle="tooltip"
+
+                                        <a  class="active" th:if="${user.status == false}" data-toggle="tooltip"
                                            th:href="@{/user/management/enableuser/{email} (email=${user.email})}"
                                            onclick="return confirm('Are you sure you want to change this user status?')"><i
                                                 class="material-icons fa fa-toggle-off color-skins"></i></a>
-                                        <a onclick="return confirm('ok?')"
-                                           th:href="@{/user/management/updateprofile/{email} (email=${user.email})}"
-                                           title="Delete"><i
-                                                class="material-icons fa fa-trash"></i>
-                                        </a>
+<!--                                        <a onclick="return confirm('ok?')"-->
+<!--                                           th:href="@{/user/management/updateprofile/{email} (email=${user.email})}"-->
+<!--                                           title="Delete"><i-->
+<!--                                                class="material-icons fa fa-trash"></i>-->
+<!--                                        </a>-->
                                     </td>
                                 </tr>
                                 </tbody>

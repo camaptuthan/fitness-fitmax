@@ -5,14 +5,14 @@
     <p class="slogan">
       Working out with a personal trainer is the fastest and most effective way for you to achieve your health and fitness goals. We design programs to suit the most common needs of our members, and we also create personalized workouts to suit each person's fitness and needs.</p>
     <div class="row">
-      <th:block th:each="list: ${listAllTrainer}">
+      <th:block th:each="list: ${trainerList}">
       <div class="col-md-6 out-trainer-col">
         <div class="out-trainer-item">
-          <a href="/trainer" class="out-trainer-img"><img th:src="${list.avatar}" alt="img"></a>
+          <a href="/trainer" class="out-trainer-img"><img th:src="${list.userAvatar}" alt="img"></a>
           <div class="out-trainer-info">
-            <h3><a href="/trainer" th:text="${list.firstName}+' '+${list.lastName}"></a></h3>
+            <h3><a href="/trainer" th:text="${list.userFirstName}+' '+${list.userLastName}"></a></h3>
             <div class="prof">Weightlifting</div>
-            <p th:text="${list.address}+' '+${list.phone}"></p>
+            <p th:text="${list.philosophy}+' '+${list.achievement}"></p>
             <ul class="social-list">
               <li><a target="_blank" href="https://www.facebook.com/rovadex"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
               <li><a target="_blank" href="https://twitter.com/RovadexStudio"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>

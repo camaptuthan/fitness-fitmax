@@ -39,8 +39,9 @@
         <p class="slogan">Below is a list of packages for free trainees. People can search by city, package name,
             price... Details are in each package.</p>
         <form id="searchAndFilter" th:action="@{/service/packages}" method="get">
+            <div >
             <div>
-                City: <select th:name="city" style="width:30%" onchange="submitForm()">
+                City: <br><select th:name="city" style="width:30%" onchange="submitForm()">
                 <option>All</option>
                 <th:block th:each="city : ${cityList}">
                     <option th:value="${city.name}" th:text="${city.name}"
@@ -50,7 +51,7 @@
             </div>
             <div>&nbsp</div>
             <div>
-                Category: <select th:name="category" style="width:30%" onchange="submitForm()">
+                Category:<br> <select th:name="category" style="width:30%" onchange="submitForm()">
                 <option th:value="0">All</option>
                 <th:block th:each="category : ${categoryList}">
                     <option th:value="${category.id}" th:text="${category.name}"
@@ -60,10 +61,10 @@
             </div>
             <div>&nbsp</div>
             <div>
-                Filter: <input type="text" th:name="keyword" style="color:red" th:value="${currentKeyword}"/>
+                Filter:<br> <input type="text" th:name="keyword" style="color:red;width: 40%" th:value="${currentKeyword}"/>
+                <input  id="btn-submit" type="submit" value="Search"/>
                 &nbsp
-                <input id="btn-submit" type="submit" value="Search"/>
-                &nbsp
+            </div>
             </div>
         </form>
         <div id="carousel-package" class="carousel slide">

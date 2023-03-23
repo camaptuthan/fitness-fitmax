@@ -24,6 +24,10 @@
                             <h3 th:text="${list.type}"></h3>
                             <span th:if="${list.id == 1}"><a th:href="@{'/service/packages'}"
                                                              class="btn">More</a></span>
+                            <span th:if="${list.id == 2}"><a th:href="@{'/user/listpt'}"
+                                                             class="btn">More</a></span>
+                            <span th:if="${list.id == 3}"><a
+                                                             class="btn">More</a></span>
                         </div>
                     </div>
                 </div>
