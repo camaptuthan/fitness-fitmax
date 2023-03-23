@@ -30,17 +30,14 @@ public class BlogController {
     private CategoryService categoryService;
 
     @GetMapping("")
-    public String category(Model model,  String keyword,@RequestParam(name = "page", defaultValue = "0") int pageNumber){
+    public String category(Model model,String keyword, @RequestParam(name = "page", defaultValue = "0") int pageNumber) {
         List<Category> categoryList = categoryService.findAllCategories();
-        Page<Blog> list = blogService.findBlogByKeyword(keyword,pageNumber);
-        List<BlogDTO> listAll=blogService.findAllBlogs();
-        List<Blog> listNewestBlog=blogService.findTop3NewestBlogs();
-        if(keyword==null){
-            model.addAttribute("listBlog", listAll);
-        }else{
-            model.addAttribute("listBlog", list);
-            model.addAttribute("size", list.getSize());
+        Page<Blog> list = blogService.findBlogByKeyword("", pageNumber);
+        if(keyword!=null){
+            list = blogService.findBlogByKeyword(keyword, pageNumber);
         }
+        List<Blog> listNewestBlog = blogService.findTop3NewestBlogs();
+        model.addAttribute("listBlog", list);model.addAttribute("size", list.getSize());
         model.addAttribute("listNewestBlog", listNewestBlog);
         model.addAttribute("catelist", categoryList);
         model.addAttribute("currentPage", pageNumber);
@@ -49,7 +46,7 @@ public class BlogController {
     }
 
     @GetMapping("/management/writer")
-    public String blogWriter(@AuthenticationPrincipal UserDetail userDetail,Model model) {
+    public String blogWriter(@AuthenticationPrincipal UserDetail userDetail, Model model) {
         model.addAttribute("blogDTO", new BlogDTO());
         List<Category> categoryList = categoryService.findBlogCategories();
         model.addAttribute("catelist", categoryList);
@@ -68,7 +65,7 @@ public class BlogController {
         if (result.hasErrors()) {
             return "management/BlogManagement/blog_writer";
         }
-        blogService.doBlog(blogDTO,userDetail.getUser(), category);
+        blogService.doBlog(blogDTO, userDetail.getUser(), category);
         return "redirect:/blog";
     }
 
@@ -90,7 +87,7 @@ public class BlogController {
 
 
     @GetMapping("/management")
-    public String blogDashboard(){
+    public String blogDashboard() {
         return "/management/Dashboard/service";
     }
 
