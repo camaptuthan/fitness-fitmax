@@ -41,6 +41,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private SessionFactory sessionFactory;
 
+
     @Autowired
     ModelMapperConfiguration<User, UserDTO> modelMapperConfiguration;
 
@@ -309,53 +310,65 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> listUserByManage(String studioId) {
-        List<User> userList = null;
+    public List<UserDTO> listUserByManage(String studioId,String keyword,String roleId) {
+        List<UserDTO> userList = null;
         List<Registration> registrationList = null;
         List<Services> listServices = userRepository.listServicesID(studioId);
+
         for (Services s : listServices) {
             registrationList = userRepository.getRegistration(s.getId());
             if (registrationList != null) {
                 for (Registration r : registrationList) {
-                    userList = userRepository.getUserByManage(r.getTrainee().getEmail());
+
+                        userList = getUserByFieldsByManager(r.getTrainee().getEmail(),keyword,roleId);
                 }
             }
         }
-        return modelMapperConfiguration.mapList(userList, UserDTO.class);
+        return userList;
     }
 
     @Override
-    public List<UserDTO> listUserByAssistant(String studioId) {
-        List<User> userList = null;
+    public List<UserDTO> listUserByAssistant(String studioId,String keyword,String roleId) {
+        List<UserDTO> userList = null;
         List<Registration> registrationList = null;
         List<Services> listServices = userRepository.listServicesID(studioId);
+
         for (Services s : listServices) {
             registrationList = userRepository.getRegistration(s.getId());
             if (registrationList != null) {
                 for (Registration r : registrationList) {
-                    userList = userRepository.getUserByAssistant(r.getTrainee().getEmail());
+                    userList = getUserByFieldsByAssistant(r.getTrainee().getEmail(),keyword,roleId);
                 }
             }
         }
-        return modelMapperConfiguration.mapList(userList, UserDTO.class);
+        return userList;
     }
+//    @Override
+//    public List<UserDTO> listUserByAssistant(String studioId,String keyword, String cityName ,String roleId) {
+//        List<User> userList = null;
+//        List<Registration> registrationList = null;
+//        List<Services> listServices = userRepository.listServicesID(studioId);
+//        for (Services s : listServices) {
+//            registrationList = userRepository.getRegistration(s.getId());
+//            if (registrationList != null) {
+//                for (Registration r : registrationList) {
+//                   userList = userRepository.getUserByAssistant(r.getTrainee().getEmail());
+//                }
+//            }
+//        }
+//        return modelMapperConfiguration.mapList(userList, UserDTO.class);
+//    }
 
     public List<User> getUserByRoleId(String roleId) {
         return userRepository.listAllTrainer(roleId);
 
     }
 
-//    @Override
-//    public List<UserDTO> getListPT(String studioId) {
-//        List<User> userList = userRepository.getListPT(studioId);
-//
-//        return modelMapperConfiguration.mapList(userList, UserDTO.class);
-//    }
 
     @Override
-    public List<UserDTO> getUserBy4Fields(String keyword, String cityName ,String roleId, String studioId) {
+    public List<UserDTO> getUserByFieldsByAdmin( String keyword, String cityName ,String roleId, String studioId) {
         Session session = sessionFactory.openSession();
-        String query = "select u from User u where u.email is not null ";
+        String query = "select u from User u where u.role.id not in('ROLE01') ";
         if (!"".equals(keyword)) {
             query += " and concat(u.email,'',u.firstName,'',u.lastName,'',u.role.name,'',u.studio.name) like '%" + keyword + "%' ";
         }
@@ -368,6 +381,45 @@ public class UserServiceImpl implements UserService {
         if (!"All".equals(studioId)) {
             query += " and u.studio.id = '" + studioId + "' ";
         }
+        Query<User> query1 = session.createQuery(query, User.class);
+        return modelMapperConfiguration.mapList(query1.getResultList(), UserDTO.class);
+    }
+
+
+    @Override
+    public List<UserDTO> getUserByFieldsByManager(String email, String keyword,String roleId) {
+        Session session = sessionFactory.openSession();
+        String query = "select u from User u where u.role.id not in('ROLE01','ROLE02') ";
+        if (!"".equals(email)) {
+            query += " and u.email = '" + email + "' ";
+        }
+        if (!"".equals(keyword)) {
+            query += " and concat(u.email,'',u.firstName,'',u.lastName,'',u.role.name,'',u.studio.name) like '%" + keyword + "%' ";
+        }
+
+        if (!"All".equals(roleId)) {
+            query += " and u.role.id = '" + roleId + "' ";
+        }
+
+        Query<User> query1 = session.createQuery(query, User.class);
+        return modelMapperConfiguration.mapList(query1.getResultList(), UserDTO.class);
+    }
+
+    @Override
+    public List<UserDTO> getUserByFieldsByAssistant(String email, String keyword,String roleId) {
+        Session session = sessionFactory.openSession();
+        String query = "select u from User u where u.role.id not in('ROLE01','ROLE02','ROLE03') ";
+        if (!"".equals(email)) {
+            query += " and u.email = '" + email + "' ";
+        }
+        if (!"".equals(keyword)) {
+            query += " and concat(u.email,'',u.firstName,'',u.lastName,'',u.role.name,'',u.studio.name) like '%" + keyword + "%' ";
+        }
+
+        if (!"All".equals(roleId)) {
+            query += " and u.role.id = '" + roleId + "' ";
+        }
+
         Query<User> query1 = session.createQuery(query, User.class);
         return modelMapperConfiguration.mapList(query1.getResultList(), UserDTO.class);
     }

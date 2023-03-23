@@ -21,4 +21,13 @@ public interface ServicesRepository extends JpaRepository<Services, String> {
 
     @Query("select s from Services s join Status st on st.type = 'service' and s.status = st.type_id where s.serviceType.id = 1 and s.id = ?1")
     Services getPackageById(String id);
+
+
+    @Query("select s from Services s where s.studio.id = ?1 and s.category.id = ?2")
+    List<Services> getServicesByStudioIdAndCateId(String id,Long cat);
+
+    @Query("select s from Services s where s.studio.id = ?1")
+    List<Services> getServicesByStudio(String id);
+
+
 }

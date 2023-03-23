@@ -4,9 +4,7 @@ package fivemonkey.com.fitnessbackend.controller;
 import fivemonkey.com.fitnessbackend.configuration.Utility;
 import fivemonkey.com.fitnessbackend.dto.*;
 import fivemonkey.com.fitnessbackend.entities.Role;
-import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
-import fivemonkey.com.fitnessbackend.entities.Trainer;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
@@ -20,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
@@ -71,16 +68,20 @@ public class UserController {
                 model.addAttribute("listCity", addressService.getCities());
                 model.addAttribute("listStudio", addressService.getStudioByCity(cityName));
                 model.addAttribute("listRole", roleService.getRoleAdmin());
-                model.addAttribute("list", userService.getUserBy4Fields(keyword, cityName, roleId, studioId));
-                model.addAttribute("size", userService.getUserBy4Fields(keyword, cityName, roleId, studioId).size());
+                model.addAttribute("list", userService.getUserByFieldsByAdmin(keyword, cityName, roleId, studioId));
+                model.addAttribute("size", userService.getUserByFieldsByAdmin(keyword, cityName, roleId, studioId).size());
                 break;
             case "ROLE02":
-                model.addAttribute("list", userService.listUserByManage(userDetail.getUser().getStudio().getId()));
-                model.addAttribute("size", userService.listUserByManage(userDetail.getUser().getStudio().getId()).size());
+                List<UserDTO> userDTOList = userService.listUserByManage(userDetail.getUser().getStudio().getId(),keyword,roleId);
+                model.addAttribute("listRole", roleService.getRoleManager());
+                model.addAttribute("list", userDTOList);
+                model.addAttribute("size", userDTOList == null ? 0 : userDTOList.size());
                 break;
             case "ROLE04":
-                model.addAttribute("list", userService.listUserByAssistant(userDetail.getUser().getStudio().getId()));
-                model.addAttribute("size", userService.listUserByAssistant(userDetail.getUser().getStudio().getId()).size());
+                List<UserDTO> userDTOList1 = userService.listUserByAssistant(userDetail.getUser().getStudio().getId(),keyword,roleId);
+                model.addAttribute("listRole", roleService.getRoleAssistant());
+                model.addAttribute("list", userDTOList1);
+                model.addAttribute("size", userDTOList1 == null ? 0 : userDTOList1.size());
                 break;
         }
         model.addAttribute("currentStudio", studioId);
@@ -92,10 +93,17 @@ public class UserController {
 
 
     @RequestMapping(value = "/listpt", method = {RequestMethod.GET, RequestMethod.POST})
-    public String getPT(Model model, @RequestParam(value = "studioId", required = false, defaultValue = "") String studioId) {
+    public String getPT(Model model, @RequestParam(value = "studioId", required = false, defaultValue = "All") String studioId
+                                   ,@RequestParam(value = "cityName", required = false, defaultValue = "All") String cityName) {
 
         Map<String, List<TrainerDTO>> trainerMapList = new HashMap<>();
-        List<TrainerDTO> listPT = trainerService.getListPT(studioId);
+        List<TrainerDTO> listPT = null;
+        if(("All").equals(cityName)){
+           listPT = trainerService.listAllPT();
+        } else if (("All").equals(studioId)) {
+            listPT = trainerService.getListPTByCity(cityName);
+        } else {
+       listPT = trainerService.getListPT(studioId);}
 
         int size = listPT.size() % 3 == 0 ? listPT.size() / 3 : (listPT.size() / 3 + 1);
         List<TrainerDTO> value = null;
@@ -108,11 +116,15 @@ public class UserController {
             }
             trainerMapList.put("PT-" + (i + 1), value);
         }
-        model.addAttribute("studiolist", studioService.getAllStudio());
-        model.addAttribute("studioName", studioId);
+        model.addAttribute("currentStudio", studioId);
+        model.addAttribute("currentCity", cityName);
+        model.addAttribute("listCity", addressService.getCities());
+        model.addAttribute("listStudio", addressService.getStudioByCity(cityName));
+
+
         model.addAttribute("list", trainerMapList);
         model.addAttribute("size", trainerMapList.size());
-        return "testlistPT";
+        return "listPT";
     }
 
     @RequestMapping(value = "/management/enableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
@@ -142,12 +154,10 @@ public class UserController {
     @RequestMapping("/management/updateuser/{email}")
     public String getInformationUser(@PathVariable("email") String email, Model model) {
         List<Role> roleList = roleService.getRoleAdmin();
-//        List<Studio> studioList = studioService.getAllStudios();
         UserDTO userDTO = userService.getUserByEmail(email);
 
         model.addAttribute("user", userDTO);
         model.addAttribute("listRole", roleList);
-//        model.addAttribute("listStudio", studioList);
         return "management/UserManagement/UserUpdate";
     }
 

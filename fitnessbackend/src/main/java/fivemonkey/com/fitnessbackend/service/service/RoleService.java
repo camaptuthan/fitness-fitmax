@@ -7,4 +7,8 @@ import java.util.List;
 public interface RoleService {
     List<Role> getAll();
     List<Role> getRoleAdmin();
+
+    List<Role> getRoleManager();
+
+    List<Role> getRoleAssistant();
 }

@@ -133,4 +133,14 @@ public class ServicesServiceImpl implements ServicesService {
         return serviceRepository.save(services);
     }
 
+    @Override
+    public List<ServicesDTO> getServiceOfStudio(String id,Long idC) {
+        return modelMapper.mapList(serviceRepository.getServicesByStudioIdAndCateId(id,idC), ServicesDTO.class);
+    }
+
+    @Override
+    public List<ServicesDTO> getAllServiceOfStudio(String id) {
+        return modelMapper.mapList(serviceRepository.getServicesByStudio(id), ServicesDTO.class);
+    }
+
 }

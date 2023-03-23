@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <title>Fitmax</title>
     <!-- =================== META =================== -->
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 
     <th:block th:replace="fragments/head :: head"></th:block>
 
@@ -38,103 +38,104 @@
         <h2 class="title-decor">Packages <span>List</span></h2>
         <p class="slogan">Below is a list of packages for free trainees. People can search by city, package name,
             price... Details are in each package.</p>
-        <form id="searchAndFilterPackage" th:action="@{/service/packages}" method="get">
+        <form id="searchAndFilterPackage" method="get" th:action="@{/service/packages}">
             <div>
-                City: <select th:name="city" style="width:30%" onchange="submitFormPackage()">
+                City: <select onchange="submitFormPackage()" style="width:30%" th:name="city">
                 <option>All</option>
                 <th:block th:each="city : ${cityList}">
-                    <option th:value="${city.name}" th:text="${city.name}"
-                            th:selected="${city.name == currentCity}"></option>
+                    <option th:selected="${city.name == currentCity}" th:text="${city.name}"
+                            th:value="${city.name}"></option>
                 </th:block>
             </select>
             </div>
             <div>&nbsp</div>
             <div>
-                Category: <select th:name="category" style="width:30%" onchange="submitFormPackage()">
+                Category: <select onchange="submitFormPackage()" style="width:30%" th:name="category">
                 <option th:value="0">All</option>
                 <th:block th:each="category : ${categoryList}">
-                    <option th:value="${category.id}" th:text="${category.name}"
-                            th:selected="${currentCategory.equals(''  +category.id)}"></option>
+                    <option th:selected="${currentCategory.equals(''  +category.id)}" th:text="${category.name}"
+                            th:value="${category.id}"></option>
                 </th:block>
             </select>
             </div>
             <div>&nbsp</div>
             <div>
-                Filter: <input type="text" th:name="keyword" style="color:red" th:value="${currentKeyword}"/>
-                &nbsp
+                Filter:<br> <input style="color:red;width: 40%" th:name="keyword" th:value="${currentKeyword}"
+                                   type="text"/>
                 <input id="btn-submit" type="submit" value="Search"/>
                 &nbsp
             </div>
         </form>
-        <div id="carousel-package" class="carousel slide">
-            <div th:if="${size} == 0">
-                <h2>There are no packages available at the moment. Please contact us via email or our hotline for more
-                    information.</h2>
-            </div>
-            <div class="carousel-inner overflow-visible row">
-                <th:block th:each="item,iter : ${packages}">
-                    <div class="carousel-item col-12 p-2" th:classappend="${iter.index == 0} ? active : '' ">
-                        <div class="row">
-                            <th:block th:each="package : ${item.value}">
-                                <div class="col-md-4 club-card-col">
-                                    <div class="club-card-item"
-                                         th:style="'background-image: url(' + ${package.image} + ');'">
-                                        <div class="price-cover">
-                                            <div class="price" th:text="${package.price}">price</div>
-                                            <div class="date"><span th:text="${package.duration}"></span>months</div>
-                                        </div>
-                                        <ul class="list">
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                            <li th:text="${package.name}" style="color:yellow"></li>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                        </ul>
-                                        <a th:href="@{'/service/packages/package-detail/' + ${package.id}}" class="btn">order
-                                            now</a>
-                                    </div>
-                                </div>
-                            </th:block>
-                        </div>
-                    </div>
-                </th:block>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-package" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel-package" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+    </div>
+    <div class="carousel slide" id="carousel-package">
+        <div th:if="${size} == 0">
+            <h2>There are no packages available at the moment. Please contact us via email or our hotline for more
+                information.</h2>
         </div>
-        <style>
-            .carousel-control-prev {
-                left: -13rem;
-            }
+        <div class="carousel-inner overflow-visible row">
+            <th:block th:each="item,iter : ${packages}">
+                <div class="carousel-item col-12 p-2" th:classappend="${iter.index == 0} ? active : '' ">
+                    <div class="row">
+                        <th:block th:each="package : ${item.value}">
+                            <div class="col-md-4 club-card-col">
+                                <div class="club-card-item"
+                                     th:style="'background-image: url(' + ${package.image} + ');'">
+                                    <div class="price-cover">
+                                        <div class="price" th:text="${package.price}">price</div>
+                                        <div class="date"><span th:text="${package.duration}"></span>months</div>
+                                    </div>
+                                    <ul class="list">
+                                        <li></li>
+                                        <li></li>
+                                        <li></li>
+                                        <li style="color:yellow" th:text="${package.name}"></li>
+                                        <li></li>
+                                        <li></li>
+                                        <li></li>
+                                    </ul>
+                                    <a class="btn" th:href="@{'/service/packages/package-detail/' + ${package.id}}">order
+                                        now</a>
+                                </div>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+        <button class="carousel-control-prev" data-bs-slide="prev" data-bs-target="#carousel-package" type="button">
+            <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" data-bs-slide="next" data-bs-target="#carousel-package" type="button">
+            <span aria-hidden="true" class="carousel-control-next-icon"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <style>
+        .carousel-control-prev {
+            left: -13rem;
+        }
 
-            .carousel-control-next {
-                right: -13rem;
-            }
-        </style>
+        .carousel-control-next {
+            right: -13rem;
+        }
+    </style>
     </div>
 </section>
-<script type="text/javascript" src="slick/slick.min.js"></script>
+<script src="slick/slick.min.js" type="text/javascript"></script>
 <div th:include="fragments/footer.html"></div>
 <!-- ================ FOOTER END ================ -->
 
 <!--=================== TO TOP ===================-->
 <a class="to-top" href="#home">
-    <i class="fa fa-chevron-up" aria-hidden="true"></i>
+    <i aria-hidden="true" class="fa fa-chevron-up"></i>
 </a>
 <!--================= TO TOP END =================-->
 
 <!--=================== SCRIPT	===================-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+<script crossorigin="anonymous"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script th:src="@{/js/slick.min.js}"></script>
 <script th:src="@{/js/rx-lazy.js}"></script>
 <script th:src="@{/js/parallax.min.js}"></script>
