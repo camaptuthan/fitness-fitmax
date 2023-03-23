@@ -17,6 +17,8 @@ public class SessionDTO {
     private String weekDay;
     private String name;
     private String classId;
+
+    private TrainerDTO trainer;
     private Date happenedDate;
 
     public String getWeekDay() {

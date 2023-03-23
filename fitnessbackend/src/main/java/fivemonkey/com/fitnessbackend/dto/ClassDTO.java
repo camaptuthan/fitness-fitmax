@@ -45,7 +45,16 @@ public class ClassDTO {
 
     private String servicesStatusStatus;
 
-    private String trainerId;
+    private String trainerName;
+
+    public String getTrainerName() {
+        if (sessions.isEmpty()) {
+            return "Not assigned yet!";
+        }
+        return sessions.get(0).getTrainer().getUserFirstName() + " " + sessions.get(0).getTrainer().getUserLastName();
+    }
 
     private List<SessionDTO> sessions;
+
+
 }

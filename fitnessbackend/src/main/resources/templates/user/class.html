@@ -2,157 +2,184 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Fitmax</title>
-  <!-- =================== META =================== -->
-  <meta name="keywords" content="">
-  <meta name="description" content="">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <th:block th:replace="fragments/head :: head"></th:block>
-
+    <meta charset="UTF-8">
+    <title>Fitmax - Blog</title>
+    <!-- =================== META =================== -->
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <th:block th:replace="fragments/head :: head"></th:block>
 </head>
-<body>
+
+<body id="home">
 <!--================ PRELOADER ================-->
 <div class="preloader-cover">
-  <div id="cube-loader">
-    <div class="caption">
-      <div class="cube-loader">
-        <div class="cube loader-1"></div>
-        <div class="cube loader-2"></div>
-        <div class="cube loader-4"></div>
-        <div class="cube loader-3"></div>
-      </div>
+    <div id="cube-loader">
+        <div class="caption">
+            <div class="cube-loader">
+                <div class="cube loader-1"></div>
+                <div class="cube loader-2"></div>
+                <div class="cube loader-4"></div>
+                <div class="cube loader-3"></div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <!--============== PRELOADER END ==============-->
 
 <!-- ================= HEADER ================= -->
-
 <div th:include="fragments/header.html"></div>
 <!-- =============== HEADER END =============== -->
-<section class="s-club-cards">
-  <div class="container">
-    <h2 class="title-decor">Classes <span>List</span></h2>
-    <p class="slogan">Below is a list of packages for free trainees. People can search by city, package name,
-      price... Details are in each package.</p>
-    <form id="searchAndFilterClass" th:action="@{/service/classes}" method="get">
-      <div>
-        City: <select th:name="city" style="width:30%" onchange="submitFormClass()">
-        <option>All</option>
-        <th:block th:each="city : ${cityList}">
-          <option th:value="${city.name}" th:text="${city.name}"
-                  th:selected="${city.name == currentCity}"></option>
-        </th:block>
-      </select>
-      </div>
-      <div>&nbsp</div>
-      <div>
-        Studio: <select th:name="studio" style="width:30%" onchange="submitFormClass()">
-        <option>All</option>
-        <th:block th:each="studio : ${studioList}">
-          <option th:value="${studio.id}" th:text="${studio.name}"
-                  th:selected="${currentStudio.equals('' +currentStudio)}"></option>
-        </th:block>
-      </select>
-      </div>
-      <div>&nbsp</div>
-      <div>
-        Category: <select th:name="category" style="width:30%" onchange="submitFormClass()">
-        <option th:value="0">All</option>
-        <th:block th:each="category : ${categoryList}">
-          <option th:value="${category.id}" th:text="${category.name}"
-                  th:selected="${currentCategory.equals(''  +category.id)}"></option>
-        </th:block>
-      </select>
-      </div>
-      <div>&nbsp</div>
-      <div>
-        Filter: <input type="text" th:name="keyword" style="color:red" th:value="${currentKeyword}"/>
-        &nbsp
-        <input id="btn-submit" type="submit" value="Search"/>
-        &nbsp
-      </div>
-    </form>
-    <div id="carousel-package" class="carousel slide">
-      <div th:if="${size} == 0">
-        <h2>There are no packages available at the moment. Please contact us via email or our hotline for more
-          information.</h2>
-      </div>
-      <div class="carousel-inner overflow-visible row">
-        <th:block th:each="item,iter : ${classes}">
-          <div class="carousel-item col-12 p-2" th:classappend="${iter.index == 0} ? active : '' ">
-            <div class="row">
-              <th:block th:each="class : ${item.value}">
-                <div class="col-md-4 club-card-col">
-                  <div class="club-card-item"
-                       th:style="'background-image: url(' + ${class.servicesImage} + ');'">
-                    <div class="price-cover">
-                      <div class="price" th:text="${class.servicesPrice}">price</div>
-                      <div class="date"><span th:text="${class.servicesDuration}"></span>months</div>
-                    </div>
-                    <ul class="list">
-                      <li></li>
-                      <li></li>
-                      <li></li>
-                      <li th:text="${class.servicesName}" style="color:yellow"></li>
-                      <li></li>
-                      <li></li>
-                      <li></li>
-                    </ul>
-                    <a th:href="@{'/service/packages/package-detail/' + ${class.id}}" class="btn">order
-                      now</a>
-                  </div>
-                </div>
-              </th:block>
-            </div>
-          </div>
-        </th:block>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carousel-package" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carousel-package" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-    <style>
-      .carousel-control-prev {
-        left: -13rem;
-      }
 
-      .carousel-control-next {
-        right: -13rem;
-      }
-    </style>
-  </div>
+<!-- =============== HEADER-TITLE =============== -->
+<section class="s-header-title" style="background-image: url(/img/bg-1-min.png);">
+    <div class="container">
+        <h1 class="title">Class List</h1>
+        <ul class="breadcrambs">
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/service/classes}">Class</a></li>
+        </ul>
+    </div>
 </section>
-<script type="text/javascript" src="slick/slick.min.js"></script>
+<!-- ============= HEADER-TITLE END ============= -->
+
+<!--===================== S-NEWS =====================-->
+<section class="s-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-9 blog-cover">
+                <div class="post-item-cover" th:each="class:${classes}">
+                    <div class="post-header">
+                        <div class="post-thumbnail">
+                            <a th:href="@{/service/class/{id} (id=${class.servicesId})}">
+                                <img alt="img" th:src="${class.servicesImage}">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <div class="meta">
+                            <span class="post-by"><i aria-hidden="true" class="fa fa-user"></i><a
+                                    th:text="${class.getTrainerName()}"></a></span>
+                            <span class="post-date"><i class="fa fa-calendar"></i><a
+                                    th:text="${#dates.format(class.servicesDate, 'dd-MM-yyyy')}"></a></span>
+                            <span class="post-category"><i class="fa fa-tag"></i><a
+                                    th:text="${class.servicesCategoryName}"></a></span>
+                        </div>
+                        <h2 class="title"><a th:href="@{/service/class/{id} (id=${class.servicesId})}"
+                                             th:text="${class.servicesName}"></a></h2>
+                        <div class="text">
+                            <p th:text="${class.servicesDes}"></p>
+                        </div>
+                        <div class="text">
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <a class="btn" th:href="@{/service/class/{id} (id=${class.servicesId})}"><span>read more</span></a>
+                    </div>
+                </div>
+
+                <div class="pagination-cover">
+                    <ul class="pagination">
+                        <li class="pagination-item item-prev"><a href="#"><i aria-hidden="true"
+                                                                             class="fa fa-angle-left"></i></a></li>
+                        <li class="pagination-item active"><a href="#">1</a></li>
+                        <li class="pagination-item"><a href="#">2</a></li>
+                        <li class="pagination-item"><a href="#">3</a></li>
+                        <li class="pagination-item"><a href="#">4</a></li>
+                        <li class="pagination-item"><a href="#">5</a></li>
+                        <li class="pagination-item item-next"><a href="#"><i aria-hidden="true"
+                                                                             class="fa fa-angle-right"></i></a></li>
+                    </ul>
+                </div>
+
+
+            </div>
+            <!--================= SIDEBAR =================-->
+            <div class="col-12 col-lg-3 sidebar">
+                <ul class="widgets">
+                    <!--=========== WIDGET-SEARCH ===========-->
+                    <li class="widget widget-search">
+                        <h3 class="title">Search</h3>
+                        <form class="search-form" method="get" th:action="@{/service/classes}">
+                            <input class="inp-form" placeholder="Search" th:name="keyword" th:value="${currentKeyword}"
+                                   type="text">
+                            <input name="city" th:value="${currentCity}" type="hidden">
+                            <input name="studio" th:value="${currentStudio}" type="hidden">
+                            <input name="category" th:value="${currentCategory}" type="hidden">
+                            <button class="btn-form" type="submit"><i aria-hidden="true" class="fa fa-search"></i>
+                            </button>
+
+                        </form>
+                    </li>
+                    <!--========= WIDGET-SEARCH END =========-->
+                    <!--========= WIDGET-CATEGORIES =========-->
+                    <li class="widget widget-categories">
+                        <h3 class="title">Categories</h3>
+                        <ul>
+                            <li><a th:href="@{/service/classes(keyword=${currentKeyword},city=${currentCity},studio=${currentStudio})}">All</a></li>
+                            <th:block th:each="category: ${categoryList}">
+                                <li><a th:href="@{/service/classes(keyword=${currentKeyword},category=${category.id},city=${currentCity},studio=${currentStudio})}"
+                                       th:text="${category.name} "></a></li>
+                            </th:block>
+                        </ul>
+                    </li>
+                    <!--======= WIDGET-CATEGORIES END =======-->
+                    <li class="widget widget-categories">
+                        <ul>
+                            <h3 class="title">City</h3>
+                            <ul>
+                                <li><a th:href="@{/service/classes(keyword=${currentKeyword},category=${currentCategory})}">All</a></li>
+                                <th:block th:each="city : ${cityList}">
+                                    <li><a th:href="@{/service/classes(keyword=${currentKeyword},category=${currentCategory},city=${city.name})}"
+                                           th:text="${city.name} "></a></li>
+                                </th:block>
+                            </ul>
+                        </ul>
+                        &nbsp;
+                        <ul>
+                            <h3 class="title">Studio</h3>
+                            <ul th:name="studio">
+                                <li>
+                                    <a th:href="@{/service/classes(keyword=${currentKeyword},category=${currentCategory},city=${currentCity})}">All</a>
+                                </li>
+                                <th:block th:each="studio: ${studioList}">
+                                    <li>
+                                        <a th:href="@{/service/classes(keyword=${currentKeyword},category=${currentCategory},city=${currentCity},studio=${studio.id})}"
+                                           th:text="${studio.name} "></a></li>
+                                </th:block>
+                            </ul>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!--=============== SIDEBAR END ===============-->
+        </div>
+    </div>
+</section>
+
+<!--=================== S-NEWS END ===================-->
+
+<!-- ================== FOOTER ================== -->
 <div th:include="fragments/footer.html"></div>
 <!-- ================ FOOTER END ================ -->
 
 <!--=================== TO TOP ===================-->
 <a class="to-top" href="#home">
-  <i class="fa fa-chevron-up" aria-hidden="true"></i>
+    <i aria-hidden="true" class="fa fa-chevron-up"></i>
 </a>
 <!--================= TO TOP END =================-->
 
 <!--=================== SCRIPT	===================-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
+
 <script th:src="@{/js/slick.min.js}"></script>
 <script th:src="@{/js/rx-lazy.js}"></script>
 <script th:src="@{/js/parallax.min.js}"></script>
 <script th:src="@{/js/scripts.js}"></script>
-<script type="text/javascript">
-  function submitFormClass() {
-    document.getElementById("searchAndFilterClass").submit();
-  }
-</script>
+<script crossorigin="anonymous"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

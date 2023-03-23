@@ -57,7 +57,7 @@ public class ClassServiceImpl implements ClassService {
         Session session = sessionFactory.openSession();
         String query = "select c from Clazz c where c.services.serviceType.id = 3 and c.services.status = 1 ";
         if (!"".equals(keyword)) {
-            query += " concat(c.services.name,'',c.services.price,'',c.services.duration,'',c.services.des,'',c.services.date) like '%" + keyword + "%' ";
+            query += " and concat(c.services.name,'',c.services.price,'',c.services.duration,'',c.services.des,'',c.services.date) like '%" + keyword + "%' ";
         }
         if (!"All".equals(cityname)) {
             query += " and c.services.city.name = '" + cityname + "' ";

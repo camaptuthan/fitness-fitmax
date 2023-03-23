@@ -14,7 +14,6 @@ import java.util.Date;
 public class UserDTO {
     private Long id;
     private String email;
-    private String password;
     @NotNull(message = "Required not null")
     private String firstName;
     @NotNull(message = "Required not null")

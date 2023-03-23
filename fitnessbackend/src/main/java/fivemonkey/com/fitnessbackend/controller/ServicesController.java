@@ -123,21 +123,9 @@ public class ServicesController {
         List<CityDTO> listCity = cityService.getAllCities();
         List<StudioDTO> listStudio = studioService.getAllStudiosByCity(cityname);
         List<CategoryDTO> listCategory = categoryService.getAllCategoriesByType("service");
-        Map<String, List<ClassDTO>> classesMapList = new HashMap<>();
         List<ClassDTO> listClass = classService.getClassesBy4Fields(keyword, cityname, studio, Long.parseLong(category));
-        int size = listClass.size() % 3 == 0 ? listClass.size() / 3 : (listClass.size() / 3 + 1);
-        List<ClassDTO> value = null;
-        for (int i = 0; i < size; i++) {
-            value = new ArrayList<>();
-            for (int j = 0; j < 3; j++) {
-                if (i * 3 + j < listClass.size()) {
-                    value.add(listClass.get(i * 3 + j));
-                }
-            }
-            classesMapList.put("PKG-" + (i + 1), value);
-        }
-        model.addAttribute("classes", classesMapList);
-        model.addAttribute("size", classesMapList.size());
+        model.addAttribute("classes", listClass);
+        model.addAttribute("size", listClass.size());
         model.addAttribute("cityList", listCity);
         model.addAttribute("studioList", listStudio);
         model.addAttribute("categoryList", listCategory);
