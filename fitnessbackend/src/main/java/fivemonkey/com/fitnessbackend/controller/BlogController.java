@@ -30,11 +30,11 @@ public class BlogController {
     private CategoryService categoryService;
 
     @GetMapping("")
-    public String category(Model model,String keyword, @RequestParam(name = "page", defaultValue = "0") int pageNumber) {
+    public String blogInformation(Model model,String keyword, @RequestParam(name = "page", defaultValue = "0") int pageNumber) {
         List<Category> categoryList = categoryService.findAllCategories();
         Page<Blog> list = blogService.findBlogByKeyword("", pageNumber);
         if(keyword!=null){
-            list = blogService.findBlogByKeyword(keyword, pageNumber);
+             list = blogService.findBlogByKeyword(keyword, pageNumber);
         }
         List<Blog> listNewestBlog = blogService.findTop3NewestBlogs();
         model.addAttribute("listBlog", list);model.addAttribute("size", list.getSize());
