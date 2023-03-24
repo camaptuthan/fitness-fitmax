@@ -59,7 +59,7 @@ public class UserController {
     @GetMapping("/management/listusers")
     public String listUser(Model model, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword
             , @RequestParam(value = "cityName", required = false, defaultValue = "All") String cityName
-            , @RequestParam(value = "roleId", required = false, defaultValue = "All") String roleId
+            , @RequestParam(value = "ROLE04", required = false, defaultValue = "All") String roleId
             , @RequestParam(value = "studioId", required = false, defaultValue = "All") String studioId
             , @AuthenticationPrincipal UserDetail userDetail) {
         switch (userDetail.getUser().getRole().getId()) {
@@ -68,8 +68,8 @@ public class UserController {
                 model.addAttribute("listCity", addressService.getCities());
                 model.addAttribute("listStudio", addressService.getStudioByCity(cityName));
                 model.addAttribute("listRole", roleService.getRoleAdmin());
-                model.addAttribute("list", userService.getUserByFieldsByAdmin(keyword, cityName, roleId, studioId));
-                model.addAttribute("size", userService.getUserByFieldsByAdmin(keyword, cityName, roleId, studioId).size());
+                model.addAttribute("list", userService.getUserByFieldsByAdmin(keyword, cityName, "ROLE04", studioId));
+                model.addAttribute("size", userService.getUserByFieldsByAdmin(keyword, cityName, "ROLE04", studioId).size());
                 break;
             case "ROLE02":
                 List<UserDTO> userDTOList = userService.listUserByManage(userDetail.getUser().getStudio().getId(),keyword,roleId);
@@ -105,13 +105,13 @@ public class UserController {
         } else {
        listPT = trainerService.getListPT(studioId);}
 
-        int size = listPT.size() % 3 == 0 ? listPT.size() / 3 : (listPT.size() / 3 + 1);
+        int size = listPT.size() % 4 == 0 ? listPT.size() / 4 : (listPT.size() / 4 + 1);
         List<TrainerDTO> value = null;
         for (int i = 0; i < size; i++) {
             value = new ArrayList<>();
-            for (int j = 0; j < 3; j++) {
-                if (i * 3 + j < listPT.size()) {
-                    value.add(listPT.get(i * 3 + j));
+            for (int j = 0; j < 4; j++) {
+                if (i * 4 + j < listPT.size()) {
+                    value.add(listPT.get(i * 4 + j));
                 }
             }
             trainerMapList.put("PT-" + (i + 1), value);
@@ -124,7 +124,7 @@ public class UserController {
 
         model.addAttribute("list", trainerMapList);
         model.addAttribute("size", trainerMapList.size());
-        return "listPT";
+        return "testListPT";
     }
 
     @RequestMapping(value = "/management/enableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
@@ -202,7 +202,7 @@ public class UserController {
     public String getInformationPtDetail(@PathVariable("email") String email, Model model) {
         TrainerDTO trainerDTO = trainerService.getTrainerByEmail(email);
         model.addAttribute("trainer", trainerDTO);
-        return "ptDetail";
+        return "ptDetails";
     }
 
     @RequestMapping("/management/updateprofile/{email}")

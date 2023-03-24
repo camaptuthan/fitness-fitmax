@@ -12,4 +12,6 @@ public interface TrainerService {
     List<TrainerDTO> listAllPT();
 
     List<TrainerDTO> getListPTByCity(String cityName);
+
+    List<TrainerDTO> getRandomPT();
 }

@@ -36,13 +36,15 @@ public class HomeController {
     @Autowired
     private SliderService sliderService;
 
+
     @GetMapping("/")
     public String getAllServiceType(Model model) {
         List<ServiceTypeDTO> listServiceType = serviceTypeService.getAll();
         List<Slider> sliderList=sliderService.getAllSlider();
+        List<TrainerDTO> getRandomPT = trainerService.getRandomPT();
         model.addAttribute("listServiceType", listServiceType);
         model.addAttribute("listSlider",sliderList);
-
+        model.addAttribute("listRandomPT",getRandomPT);
         return "index";
     }
 
