@@ -1,6 +1,7 @@
 package fivemonkey.com.fitnessbackend.service.impl;
 
 import fivemonkey.com.fitnessbackend.entities.Slider;
+import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.repository.SliderRepository;
 import fivemonkey.com.fitnessbackend.service.service.SliderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,18 @@ public class SliderServiceImpl implements SliderService {
     public void insertSlider(Slider slider) {
         slider= new Slider();
         slider.setDate(new Date());
-        slider.getUser().setId(1L);
         sliderRepository.save(slider);
+    }
+
+    @Override
+    public void deleteSlider(Long id) {
+        sliderRepository.deleteById(id);
+    }
+
+    @Override
+    public Slider findById(Long id) {
+        return sliderRepository.findById(id).get();
+
     }
 
 

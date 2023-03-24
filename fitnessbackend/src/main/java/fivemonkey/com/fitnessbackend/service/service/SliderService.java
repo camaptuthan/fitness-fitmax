@@ -8,4 +8,8 @@ public interface SliderService {
     List<Slider> getAllSlider();
 
     void insertSlider(Slider slider);
+
+    void deleteSlider(Long id);
+
+    Slider findById(Long id);
 }

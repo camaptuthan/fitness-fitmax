@@ -56,11 +56,11 @@
                                 <td th:text="${s.title}"></td>
                                 <td th:text="${#dates.format(s.date, 'dd-MM-yyyy')}"></td>
                                 <td>
-                                        <a  style="padding: 20px 20px" data-toggle="modal" href="">
+                                        <a  style="padding: 20px 20px"  th:href="@{'/slider/edit/' + ${s.id}}">
                                            Edit
                                         </a>
 
-                                        <a  data-toggle="modal" href="#delete_modal" >
+                                        <a   th:href="@{'/slider/delete/' + ${s.id}}" >
                                              Delete
                                         </a>
                                 </td>
