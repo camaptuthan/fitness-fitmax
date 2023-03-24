@@ -27,7 +27,7 @@
 
 .mfp-wrap {
     z-index: 1000000;
-    outline: 0!important;
+    outline: 0 !important;
     -webkit-backface-visibility: hidden
 }
 
@@ -109,7 +109,7 @@
 }
 
 .mfp-hide {
-    display: none!important
+    display: none !important
 }
 
 .mfp-preloader {
@@ -268,14 +268,14 @@ img.mfp-img {
 .mfp-arrow-left .mfp-a,
 .mfp-arrow-left:after {
     font-size: 28px;
-	content: "\e629";
-	font-family: themify;
-	color: #fff;
+    content: "\e629";
+    font-family: themify;
+    color: #fff;
 }
 
 .mfp-arrow-left .mfp-b,
 .mfp-arrow-left:before {
-    border-right:0
+    border-right: 0
 }
 
 .mfp-arrow-right {
@@ -284,15 +284,15 @@ img.mfp-img {
 
 .mfp-arrow-right .mfp-a,
 .mfp-arrow-right:after {
-   font-size: 28px;
-	content: "\e628";
-	font-family: themify;
-	color: #fff;
+    font-size: 28px;
+    content: "\e628";
+    font-family: themify;
+    color: #fff;
 }
 
 .mfp-arrow-right .mfp-b,
 .mfp-arrow-right:before {
-    border-left:0;
+    border-left: 0;
 }
 
 .mfp-iframe-holder {
@@ -391,23 +391,26 @@ img.mfp-img {
     cursor: pointer
 }
 
-@media screen and (max-width:800px) and (orientation:landscape),
-screen and (max-height:300px) {
+@media screen and (max-width: 800px) and (orientation: landscape), screen and (max-height: 300px) {
     .mfp-img-mobile .mfp-image-holder {
         padding-left: 0;
         padding-right: 0
     }
+
     .mfp-img-mobile img.mfp-img {
         padding: 0
     }
+
     .mfp-img-mobile .mfp-figure:after {
         top: 0;
         bottom: 0
     }
+
     .mfp-img-mobile .mfp-figure small {
         display: inline;
         margin-left: 5px
     }
+
     .mfp-img-mobile .mfp-bottom-bar {
         background: rgba(0, 0, 0, .6);
         bottom: 0;
@@ -419,13 +422,16 @@ screen and (max-height:300px) {
         -moz-box-sizing: border-box;
         box-sizing: border-box
     }
+
     .mfp-img-mobile .mfp-bottom-bar:empty {
         padding: 0
     }
+
     .mfp-img-mobile .mfp-counter {
         right: 5px;
         top: 3px
     }
+
     .mfp-img-mobile .mfp-close {
         top: 0;
         right: 0;
@@ -439,19 +445,22 @@ screen and (max-height:300px) {
     }
 }
 
-@media all and (max-width:900px) {
+@media all and (max-width: 900px) {
     .mfp-arrow {
         -webkit-transform: scale(.75);
         transform: scale(.75)
     }
+
     .mfp-arrow-left {
         -webkit-transform-origin: 0;
         transform-origin: 0
     }
+
     .mfp-arrow-right {
         -webkit-transform-origin: 100%;
         transform-origin: 100%
     }
+
     .mfp-container {
         padding-left: 6px;
         padding-right: 6px

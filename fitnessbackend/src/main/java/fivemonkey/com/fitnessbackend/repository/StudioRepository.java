@@ -36,6 +36,8 @@ public interface StudioRepository extends JpaRepository<Studio, String> {
     //get studio by id
     @Query("SELECT s FROM Studio s WHERE s.id = ?1")
     Studio getStudioById(String id);
+    @Query("select s, d.city.name from Studio s join District d where 1=1 and concat(s.contact,'',s.name,'',s.des,'',s.date) like '%\" + keyword + \"%' and s.district.id in (select d.id from District d where d.city.id = 1)")
+    Studio findByName(String name);
 
 
     @Query("select s.id, s.name from Studio s where s.district.id = ?1")

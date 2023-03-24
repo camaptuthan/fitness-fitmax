@@ -23,4 +23,9 @@ public class StatusServiceImpl implements StatusService {
     public List<Status> getStatusByClass() {
         return statusRepository.getStatusByClass();
     }
+
+    @Override
+    public List<Status> getStatusByRegistration() {
+        return statusRepository.getStatusByRegistration();
+    }
 }

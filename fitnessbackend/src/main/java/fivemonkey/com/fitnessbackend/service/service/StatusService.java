@@ -10,5 +10,8 @@ public interface StatusService {
 
     List<Status> getStatusByPackage();
 
+    List<Status> getStatusByRegistration();
+
     List<Status> getStatusByClass();
+
 }
