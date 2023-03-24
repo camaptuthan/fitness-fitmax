@@ -16,7 +16,7 @@ public class SessionDTO {
     private String id;
     private String name;
     private String description;
-    private String classId;
+    private Long classId;
     private Date createdDate;
     private String scheduleId;
     private Date happenedDate;
