@@ -147,7 +147,7 @@ const getSession = () => {
         let api_path;
         api_path = !classId ? `${origin_path}/api/v1/schedule/session/${schedule_id}?start=${start_time}&end=${end_time}` :
             `${origin_path}/api/v1/schedule/session/${schedule_id}/${classId}?start=${start_time}&end=${end_time}`;
-        
+
         if (schedule_exist) {
             $.get(api_path, (result) => {
                 const data = result;

@@ -31,7 +31,7 @@ public class Registration {
     private Date startDate;
 
     @Column(name = "status", nullable = false)
-    private boolean status;
+    private int status;
 
     @Column(name = "approved_by")
     private String approvedBy;
