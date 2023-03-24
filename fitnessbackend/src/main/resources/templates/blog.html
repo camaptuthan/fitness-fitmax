@@ -78,9 +78,9 @@
 
                 <div class="pagination-cover">
                     <ul class="pagination">
-                        <li th:classappend="${currentPage==0} ? 'disabled':''" class="pagination-item item-prev"><a th:href="@{/blog(page=${currentPage -1 },keyword=${keyword})}"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
-                        <li th:each="i: ${#numbers.sequence(1,totalPages,1)}" th:classappend="${currentPage+1==i}? 'active' :'' " class="pagination-item "><a th:href="@{/blog(page=${i -1 },keyword=${keyword})}" th:text="${i}"></a></li>
-                        <li th:classappend="${currentPage+1 == totalPages}  ? 'disabled':''" class="pagination-item item-next"><a th:href="@{/blog(page=${currentPage + 1 },keyword=${keyword})}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                        <li th:if="${currentPage>0}" th:classappend="${currentPage==0} ? 'disabled':''" class="pagination-item item-prev"><a th:href="@{/blog(page=${currentPage -1 },keyword=${keyword})}"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+                        <li th:each="i: ${#numbers.sequence(1,totalPages)}" th:classappend="${currentPage+1==i}? 'active' :'' " class="pagination-item "><a th:href="@{/blog(page=${i -1 },keyword=${keyword})}" th:text="${i}"></a></li>
+                        <li th:if="${currentPage<totalPages - 1}" th:classappend="${currentPage+1 == totalPages}  ? 'disabled':''" class="pagination-item item-next"><a th:href="@{/blog(page=${currentPage + 1 },keyword=${keyword})}"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                     </ul>
                 </div>
             </div>

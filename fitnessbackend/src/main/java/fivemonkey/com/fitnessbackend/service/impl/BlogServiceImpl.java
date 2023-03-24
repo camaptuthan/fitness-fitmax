@@ -126,7 +126,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Page<Blog> findBlogByKeyword(String keyword,int pageNumber) {
 
-        Pageable pageable = PageRequest.of(pageNumber , 2);
+        Pageable pageable = PageRequest.of(pageNumber , 1);
 
         return blogRepository.findBlogByKeyword(keyword, pageable);
     }
