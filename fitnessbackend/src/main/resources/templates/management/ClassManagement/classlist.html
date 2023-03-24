@@ -2,12 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
-    <link href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" rel="stylesheet">
-    <base href="/">
+    <th:block th:insert="/fragments/admin_fragment/head"></th:block>
+    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/js/richtexteditor/rte_theme_default.css}">
 </head>
 <th:block th:insert="/fragments/admin_fragment/header"></th:block>
 <!-- Mirrored from educhamp.themetrades.com/demo/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Feb 2019 13:08:15 GMT -->
-<th:block th:insert="/fragments/admin_fragment/head"></th:block>
+
 <body class="ttr-opened-sidebar ttr-pinned-sidebar">
 <th:block th:insert="/fragments/admin_fragment/sidebar_fragment"></th:block>
 <!-- Left sidebar menu end -->
@@ -57,14 +58,7 @@
 
                     <div class="widget-inner">
                         <table class="table table-hover table-bordered sortable" id="class_table">
-
-                        </table>
-                        <script th:hidden="true" th:inline="javascript">
-                            /*<![CDATA[*/
-                            var list = /*[[${list}]]*/ [];
-
-
-                            let body = ` <thead>
+                            <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
@@ -77,289 +71,27 @@
                                 <th>Actions</th>
                             </tr>
                             </thead>
-                            <tbody>`;
-                            list.forEach(item => {
-                                // language=HTML format=false
-                                body += `
-                                    <tr>
-                                        <td>${item.id}</td>
-                                        <td>${item.servicesName}</td>
-                                        <td>${item.servicesPrice}</td>
-                                        <td>${item.servicesDes}</td>
-                                        <td>${item.servicesStudioId}</td>
-                                        <td>${item.servicesId}</td>
-                                        <td>${item.servicesStatus}</td>
-                                        <td>${item.servicesStatus}</td>
-                                        <td>                           <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#${item.servicesId}staticBackdrop">
-                                                View
-                                            </button>
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="${item.servicesId}staticBackdrop"
-                                                 data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                                 aria-labelledby="${item.servicesId}staticBackdropLabel"
-                                                 aria-hidden="true"
-                                                 style="overflow: unset;"
-                                                 >
-                                                <div
-                                                      class="modal-dialog modal-dialog-centered"
-                                                      style="max-width: 115rem;">
-
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title fs-5"
-                                                                id="${item.servicesId}staticBackdropLabel">Class:
-                                                                ${item.servicesName}</h1>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="container-fluid">
-                                                                <div class="row">
-
-                                                                    <div class="col-5">
-                                                                    <form id="class-form-${item.servicesId}" oninput="ifChange('class-form-${item.servicesId}')">
-                                                                    <input type="hidden" name="id" value="${item.id}">
-                                                                        <div class="container-fluid">
-                                                                         <div class="row">
-                                                                                <div class="col-6">
-                                                                                    <div class="input-group mb-3">
-                                                                            <span class="input-group-text"
-                                                                                  id="${item.servicesDate}basic-addon1">Created At:</span>
-                                                                                        <input type="text"
-                                                                                               disabled
-                                                                                               class="form-control"
-                                                                                               value="${new Date(item.servicesDate).toLocaleString()}"
-                                                                                               aria-label="${item.servicesDate}"
-                                                                                               aria-describedby="${item.servicesDate}basic-addon1">
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-6">
-                                                                                    <div class="input-group mb-3">
-                                                                            <span class="input-group-text"
-                                                                                  id="${item.servicesDate}basic-addon1">Last Updated At:</span>
-                                                                                        <input type="text"
-                                                                                                disabled
-                                                                                               class="form-control"
-                                                                                               name="servicesUpdatedDate"
-                                                                                               value="${new Date(item.servicesDate).toLocaleString()}"
-                                                                                               aria-label="${item.servicesDate}"
-                                                                                               aria-describedby="${item.servicesDate}basic-addon1">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="row">
-                                                                            <div class="col-6">
-                                                                            <div class="row">
-                                                                                <div class="col-12">
-                                                                                    <div class="input-group mb-3">
-                                                                            <span class="input-group-text"
-                                                                                  id="${item.servicesId}basic-addon1">Service Id</span>
-                                                                                        <input type="text"
-                                                                                               disabled
-                                                                                               class="form-control"
-                                                                                               name="servicesId"
-                                                                                               value="${item.servicesId}"
-                                                                                               aria-label="${item.servicesId}"
-                                                                                               aria-describedby="${item.servicesId}basic-addon1">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="row">
-                                                                                <div class="col-12">
-                                                                                    <div class="input-group mb-3">
-                                                                                    <span class="input-group-text"
-                                                                                        id="${item.servicesName}basic-addon1">Name</span>
-                                                                                        <input type="text"
-                                                                                               class="form-control"
-                                                                                               name="servicesName"
-                                                                                               value="${item.servicesName}"
-                                                                                               aria-label="${item.servicesName}"
-                                                                                               aria-describedby="${item.servicesName}basic-addon1">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            </div>
-                                                                            <div class="col-6">
-                                                                                image here
-                                                                            </div>
-                                                                            </div>
-
-                                                                            <div class="row">
-                                                                                        <div class="col-6 row">
-                                                                                            <div class="input-group mb-3 col-6">
-                                                                                                <span class="input-group-text"
-                                                                                                      id="${item.servicesPrice}basic-addon1">Price</span>
-                                                                                                            <input type="text"
-                                                                                                                   class="form-control"
-                                                                                                                   name="servicesPrice"
-                                                                                                                   value="${item.servicesPrice}"
-                                                                                                                   aria-label="${item.servicesPrice}"
-                                                                                                                   aria-describedby="${item.servicesPrice}basic-addon1">
-                                                                                            </div>
-                                                                                            <div class="input-group mb-3 col-6">
-                                                                                             <span class="input-group-text"
-                                                                                                  id="${item.servicesDuration}basic-addon1">Duration</span>
-                                                                                                        <input type="text"
-                                                                                                         disabled
-                                                                                                               class="form-control"
-                                                                                                               name="servicesDuration"
-                                                                                                               value="${item.sessions.length}"
-                                                                                                               aria-label="${item.sessions.length}"
-                                                                                                               aria-describedby="${item.sessions.length}basic-addon1">
-                                                                                            </div>
-                                                                                        </div>
-                                                                            </div>
-                                                                            <div class="row">
-                                                                                <div class="col-12">
-                                                                                     <div class="form-floating">
-                                                                                          <textarea class="form-control"   placeholder="Leave a Description here" name="servicesDes" id="servicesDes" style="height: 430px">${item.servicesDes}</textarea>
-                                                                                          <label for="floatingTextarea2">Description</label>
-                                                                                        </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        </form>
-                                                                    </div>
-
-
-                                                                    <div class="col-7">
-
-                                                                        <div>
-                                                                        <div> <span class="ttr-icon"><i class="ti-settings" onclick="sessionGenerator('${item.servicesId}')"></i></span></div>
-                                                                            <div id="session-accordion-${item.servicesId}" style="overflow: auto; height: 40rem">
-
-                                                                                ${item.sessions.map((session, index) => {
-                                    return `<form id="sessions-form-${session.id}-${item.servicesId}" oninput="ifChange('sessions-form-${session.id}-${item.servicesId}')">
-                                                                                            <div class="card">
-                                                                                                <div class="card-header" id="heading-${session.id}-${item.servicesId}">
-                                                                                                  <h5 class="mb-0">
-                                                                                                    <button class="btn btn-link" style="color: white;" type="button" data-toggle="collapse" data-target="#collapse-${session.id}-${item.servicesId}" aria-expanded="true" aria-controls="#collapse-${session.id}-${item.servicesId}">
-                                                                                                      Collapsible Group Item #${session.id}
-                                                                                                    </button>
-                                                                                                  </h5>
-                                                                                                </div>
-                                                                                                <div id="collapse-${session.id}-${item.servicesId}" class="collapse ${index === 0 ? 'show' : ''}" aria-labelledby="heading-${session.id}-${item.servicesId}" data-parent="#session-accordion-${item.servicesId}">
-                                                                                                  <div class="card-body">
-                                                                                                     <div class="form-floating">
-                                                                                                      <input name="id" type="hidden" value="${session.id}">
-                                                                                                      <input name="happenedDate" type="hidden" value="${session.happenedDate}">
-                                                                                                      <textarea class="form-control"  placeholder="Leave a Description here" name="name" id="session-${session.id}" style="height: 400px">${session.name}</textarea>
-                                                                                                      <label for="floatingTextarea2">Description</label>
-                                                                                                    </div>
-                                                                                                  </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                         </form>`;
-                                }).toString().replaceAll(',', '')}
-
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" style="color: white;" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Close
-                                                            </button>
-                                                            <button type="button" style="color: white;"  class="btn btn-primary"
-                                                                    onclick="updateClass('${item.servicesId}')">Save
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>`;
-                            });
-                            body += `</tbody>`;
-                            $('#class_table').append(body);
-                            let originLength = 0;
-                            const origin_path = window.location.origin;
-                            const updateClass = (id) => {
-                                const classFormEle = $(`form#class-form-${id}`);
-                                    $.ajax({
-                                        url: `${origin_path}/class/management/update`,
-                                        type: 'POST',
-                                        data: getFormData(classFormEle),
-                                        contentType: 'application/json',
-                                        success: function (data) {
-                                            console.log(data);
-                                            const sessions = data.sessions;
-                                            sessions.forEach(session => {
-                                                const sessionFormEle = $(`form#sessions-form-${session.id}-${id}`);
-                                                if (sessionFormEle.data('changed')) {
-                                                    $.ajax({
-                                                        url: `${origin_path}/class/management/update/session`,
-                                                        type: 'POST',
-                                                        data: getFormData(sessionFormEle),
-                                                        contentType: 'application/json',
-                                                        success: function (data) {
-                                                            console.log(data);
-                                                            sessionFormEle.data('changed', false);
-                                                        },
-                                                        error: function (error) {
-                                                            console.log(error);
-                                                        }
-                                                    })
-                                                }
-
-                                            })
-                                        },
-                                        error: function (error) {
-                                            console.log(error);
-                                        }
-                                    })
-
-                                    function getFormData($form) {
-                                        var unindexed_array = $form.serializeArray();
-                                        var indexed_array = {};
-                                        $.map(unindexed_array, function (n, i) {
-                                            indexed_array[n['name']] = n['value'];
-                                        });
-                                        return JSON.stringify(indexed_array);
-                                    }
-
-                            }
-
-                            const ifChange = (id) => {
-                                const $form = $(`#${id}`);
-                                console.log($form.serialize().length);
-                                if (originLength === 0) {
-                                    originLength = $form.serialize().length - 1;
-                                }
-                                $form.data('changed', true);
-                                if ($form.serialize().length === originLength) {
-                                    $form.data('changed', false);
-                                }
-                            }
-
-                            let i = 0;
-                            const sessionGenerator = (id) => {
-                                const session = $(`#session-accordion-${id}`);
-                                const size = event.target.value;
-                                console.log(size);
-                                session.append(`
-                                     <div class="card">
-                                        <div class="card-header" id="heading-${i}-${id}">
-                                          <h5 class="mb-0">
-                                            <button class="btn btn-link" style="color: white;" type="button" data-toggle="collapse" data-target="#collapse-${i}-${id}" aria-expanded="true" aria-controls="#collapse-${i}-${id}">
-                                              Collapsible Group Item #${i}
-                                            </button>
-                                          </h5>
-                                        </div>
-                                        <div id="collapse-${i}-${id}" class="collapse ${session.children().length === 0 ? 'show' : ''}" aria-labelledby="heading-${i}-${id}" data-parent="#session-accordion-${id}">
-                                          <div class="card-body">
-                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                          </div>
-                                        </div>
-                                      </div>
-                                    `);
-                                i++;
-
-                            }
-                            /*]]>*/
-                        </script>
+                            <tbody>
+                            <th:block th:each="item : ${list}">
+                                <tr>
+                                    <td th:text=" ${item.id}"></td>
+                                    <td th:text=" ${item.servicesName}"></td>
+                                    <td th:text=" ${item.servicesPrice}"></td>
+                                    <td th:text=" ${item.servicesDes}"></td>
+                                    <td th:text="${item.servicesStudioId}"></td>
+                                    <td th:text="${item.servicesId}"></td>
+                                    <td th:text="${item.servicesStatus}"></td>
+                                    <td th:text="${item.servicesStatus}"></td>
+                                    <td>
+                                        <a class="btn btn-primary"
+                                           th:href="@{/class/management/classes/{id}(id=${item.servicesId})}">
+                                            View
+                                        </a>
+                                    </td>
+                                </tr>
+                            </th:block>
+                            </tbody>
+                        </table>
                         <div id="pagination"></div>
                     </div>
                 </div>
@@ -378,9 +110,10 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-<script>
+
+<script th:hidden="true" th:inline="javascript">
     $(document).ready(function () {
-        $('.table').DataTable({
+        $('#class_table').DataTable({
             // dom: 'rtip',
             columnDefs: [{
                 target: 0,
@@ -391,6 +124,7 @@
             bLengthChange: false,
             pageLength: 5,
             searching: false,
+            stateSave: true
         });
     });
 </script>

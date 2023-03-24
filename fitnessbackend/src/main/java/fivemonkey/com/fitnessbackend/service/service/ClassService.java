@@ -15,4 +15,6 @@ public interface ClassService {
     List<ClassDTO> getByUserRole(User user);
 
     ClassDTO save(ClassDTO classDTO, User user);
+
+    ClassDTO saveThumbnail(String thumbNail, String serviceId);
 }

@@ -14,7 +14,7 @@ public class StudioDTO {
     private String name;
     private String city;
 
-    private District district;
+    private DistrictDTO district;
 
     private String contact;
 

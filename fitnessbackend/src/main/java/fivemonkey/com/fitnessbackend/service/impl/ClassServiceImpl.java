@@ -5,19 +5,26 @@ import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.entities.Clazz;
 import fivemonkey.com.fitnessbackend.entities.Services;
 import fivemonkey.com.fitnessbackend.entities.User;
+import fivemonkey.com.fitnessbackend.repository.CityRepository;
 import fivemonkey.com.fitnessbackend.repository.ClassRepository;
+import fivemonkey.com.fitnessbackend.repository.StudioRepository;
 import fivemonkey.com.fitnessbackend.service.service.ClassService;
 import fivemonkey.com.fitnessbackend.service.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class ClassServiceImpl implements ClassService {
     @Autowired
     ClassRepository classRepository;
+
+    @Autowired
+    private CityRepository cityRepository;
+
+    @Autowired
+    private StudioRepository studioRepository;
     @Autowired
     private ModelMapperConfiguration<Clazz, ClassDTO> modelMapper;
 
@@ -43,12 +50,21 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public ClassDTO save(ClassDTO classDTO, User user) {
-        Clazz clazz = classRepository.findById(classDTO.getId()).orElse(new Clazz());
+        Clazz clazz = classRepository.findByServicesId(classDTO.getServicesId()).orElse(new Clazz());
         Services services = clazz.getServices();
+        services.setCity(cityRepository.getCityById(classDTO.getServicesCityId()));
+        services.setStudio(studioRepository.getStudioById(classDTO.getServicesStudioId()));
         services.setName(classDTO.getServicesName());
         services.setDes(classDTO.getServicesDes());
         services.setStatus(classDTO.getServicesStatus());
-        System.out.println(Arrays.toString(clazz.getSessions().toArray()));
-        return modelMapper.map(classRepository.save(clazz),ClassDTO.class);
+        return modelMapper.map(classRepository.save(clazz), ClassDTO.class);
+    }
+
+    @Override
+    public ClassDTO saveThumbnail(String thumbNail, String serviceId) {
+        if (thumbNail.isBlank()) return null;
+        Clazz clazz = classRepository.findByServicesId(serviceId).orElse(new Clazz());
+        clazz.getServices().setImage(thumbNail);
+        return modelMapper.map(classRepository.save(clazz), ClassDTO.class);
     }
 }

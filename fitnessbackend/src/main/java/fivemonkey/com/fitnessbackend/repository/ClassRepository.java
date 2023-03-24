@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ClassRepository extends JpaRepository<Clazz, Long> {
@@ -19,4 +20,6 @@ public interface ClassRepository extends JpaRepository<Clazz, Long> {
     List<Clazz> getClazzByUserEmail(String studioManagerEmail);
 
 
+    @Query("select c from Clazz c where c.services.id = ?1")
+    Optional<Clazz> findByServicesId(String servicesId);
 }
