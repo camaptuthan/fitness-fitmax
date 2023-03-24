@@ -39,9 +39,8 @@
         <p class="slogan">Below is a list of packages for free trainees. People can search by city, package name,
             price... Details are in each package.</p>
         <form id="searchAndFilter" th:action="@{/service/packages}" method="get">
-            <div >
             <div>
-                City: <br><select th:name="city" style="width:30%" onchange="submitForm()">
+                City: <select th:name="city" style="width:30%" onchange="submitForm()">
                 <option>All</option>
                 <th:block th:each="city : ${cityList}">
                     <option th:value="${city.name}" th:text="${city.name}"
@@ -51,20 +50,20 @@
             </div>
             <div>&nbsp</div>
             <div>
-                Category:<br> <select th:name="category" style="width:30%" onchange="submitForm()">
+                Category: <select th:name="category" style="width:30%" onchange="submitForm()">
                 <option th:value="0">All</option>
                 <th:block th:each="category : ${categoryList}">
                     <option th:value="${category.id}" th:text="${category.name}"
-                            th:selected="${currentCategory.equals(''  +category.id)}"></option>
+                            th:selected="${currentCategory.equals(''+category.id)}"></option>
                 </th:block>
             </select>
             </div>
             <div>&nbsp</div>
             <div>
-                Filter:<br> <input type="text" th:name="keyword" style="color:red;width: 40%" th:value="${currentKeyword}"/>
-                <input  id="btn-submit" type="submit" value="Search"/>
+                Filter: <input type="text" th:name="keyword" style="color:red" th:value="${currentKeyword}"/>
                 &nbsp
-            </div>
+                <input id="btn-submit" type="submit" value="Search"/>
+                &nbsp
             </div>
         </form>
         <div id="carousel-package" class="carousel slide">
@@ -88,7 +87,7 @@
                                             <li></li>
                                             <li></li>
                                             <li></li>
-                                            <li th:text="${package.name}" style="color:yellow"></li>
+                                            <li th:text="${package.des}" style="color:yellow"></li>
                                             <li></li>
                                             <li></li>
                                             <li></li>

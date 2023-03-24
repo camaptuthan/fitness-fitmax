@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/class")
+@RequestMapping("/service/class")
 public class ClassController {
 
 
@@ -60,4 +60,6 @@ public class ClassController {
 
         return "class/profile";
     }
+
+
 }
