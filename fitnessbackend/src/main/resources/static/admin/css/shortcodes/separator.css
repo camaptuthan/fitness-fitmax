@@ -1,6 +1,7 @@
 .ttr-separator-outer {
     overflow: hidden;
 }
+
 .ttr-separator {
     display: inline-block;
     height: 2px;
@@ -8,15 +9,18 @@
     margin-bottom: 10px;
     position: relative;
 }
+
 .ttr-separator.style-liner {
     width: 20px;
 }
+
 .ttr-separator.style-icon {
     width: 30px;
     height: auto;
     text-align: center;
     font-size: 20px;
 }
+
 .ttr-separator[class*="style-"]:after,
 .ttr-separator[class*="style-"]:before {
     content: "";
@@ -30,10 +34,12 @@
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 }
+
 .ttr-separator[class*="style-"]:before {
     left: auto;
     right: 40px;
 }
+
 .ttr-separator.style-skew {
     width: 15px;
     height: 10px;
@@ -45,6 +51,7 @@
     -ms-transform: skewX(-10deg);
     transform: skewX(-10deg);
 }
+
 .ttr-separator.style-skew[class*="style-"]:after,
 .ttr-separator.style-skew[class*="style-"]:before {
     width: 80px;
@@ -56,32 +63,38 @@
     -ms-transform: translateY(-50%) skewX(-10deg);
     transform: translateY(-50%) skewX(-10deg);
 }
+
 .ttr-separator.style-skew[class*="style-"]:before {
     right: 20px;
     left: auto;
 }
-.ttr-separator.bnr-title{
-	height:1px;
-	width: 155px;
-	opacity: 0.5;
+
+.ttr-separator.bnr-title {
+    height: 1px;
+    width: 155px;
+    opacity: 0.5;
 }
+
 .ttr-separator.bnr-title:before {
     height: inherit;
     right: -80px;
     width: 25px;
 }
+
 .ttr-separator.bnr-title:after {
     height: inherit;
     right: -90px;
     top: 0;
     width: 6px;
 }
+
 .ttr-separator.bnr-title:before,
-.ttr-separator.bnr-title:after{
-	position:absolute;
-	content:"";
-	background-color:inherit;
+.ttr-separator.bnr-title:after {
+    position: absolute;
+    content: "";
+    background-color: inherit;
 }
+
 .ttr-separator.bnr-title i {
     background-color: inherit;
     display: block;

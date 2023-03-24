@@ -47,49 +47,50 @@
                                 <th>Service Name</th>
                                 <th>Service Type</th>
                                 <th>Service Price</th>
-                                <th>Customer Email</th>
-                                <th>Registration Date</i></th>
-                                <th>Started Date</i></th>
+                                <th>Customer Information</th>
+                                <th>Customer Phone</th>
+                                <th>Started Date</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
 
-                            <tr th:each="registraion: ${registrations}">
-                                <td th:text="${registraion.id}"></td>
-                                <td th:text="${registraion.services.name}"></td>
-                                <td th:text="${registraion.services.serviceType.type}"></td>
-                                <td><a class="active" onclick="return confirm('Are you sure you want to change this Studio status?')"
-                                       th:if="${registraion.services.serviceType.type == 'Classes'}"
-                                       th:text="${registraion.services.clazz.price}"><i
-                                ></i></a></td>
-                                <td th:text="${registraion.trainee.email}"></td>
-                                <td th:text="${registraion.date}"></td>
-                                <td th:text="${registraion.startDate}"></td>
-                                <span th:if="${registraion.status == true}">
-                        <td>Active</td>
+                            <tr th:each="registration: ${registrations}">
+                                <td th:text="${registration.id}"></td>
+                                <td th:text="${registration.services.name}"></td>
+                                <td th:text="${registration.services.serviceType.type}"></td>
+                                <td th:text="${registration.services.price}"></td>
+                                <td th:text="${registration.trainee.email + registration.services.user.firstName + registration.services.user.lastName}" ></td>
+                                <td th:text="${registration.services.studio.name}"></td>
+                                <td th:text="${registration.startDate}"></td>
+                                <span th:if="${registration.status ==0}">
+                        <td>Pending</td>
                     </span>
-                                <span th:if="${registraion.status == false}">
-                    <td>Inactive</td>
+                                <span th:if="${registration.status == 1}">
+                    <td>In Progress</td>
+</span>
+                                    <span th:if="${registration.status == 2}">
+                    <td>Rejected</td>
+</span>
+                                        <span th:if="${registration.status == 3}">
+                    <td>Expired</td>
                     </span>
+
                                 <td>
                                     <a class="edit" data-toggle="tooltip"
-                                       th:href="@{management/registrationsedit/{id} (id=${registraion.id})}"
+                                       th:href="@{/management/registrationsedit/{id} (id=${registration.id})}"
                                        title="Edit"><i class="material-icons fa">&#xf044;</i></a>
-                                    <a class="active" data-toggle="tooltip" onclick="return confirm('Are you sure you want to change this Studio status?')"
-                                       th:href="@{/statusstudios/{id}/{status} (status=${registraion.status}, id=${registraion.id} )}"
-                                       th:if="${registraion.status == true}"><i
-                                            class="material-icons fa fa-toggle-on color-skins"></i></a>
-                                    <a class="active" data-toggle="tooltip" onclick="return confirm('Are you sure you want to change this Studio status?')"
-                                       th:href="@{/statusstudios/{id}/{status} (status=${registraion.status}, id=${registraion.id} )}"
-                                       th:if="${registraion.status == false}"><i
-                                            class="material-icons fa fa-toggle-off color-skins"></i></a>
-                                    <a onclick="return confirm('Are you sure you want to delete this Studio?')"
-                                       th:href="@{/studios/{id}(id=${registraion.id})}" title="Delete"><i
-                                            class="material-icons fa fa-trash"></i>
-                                    </a>
+                                    <a class="active" data-toggle="tooltip" onclick="return confirm('Are you sure you want to approve Registration?')"
+                                       th:href="@{/registration/management/statusregistrations/{id}/{status} (status=${2}, id=${registration.id} )}"
+                                       th:if="${registration.status == 0}"><i
+                                            class="material-icons fa fa-arrow-circle-up"></i></a>
+                                    <a class="active" data-toggle="tooltip" onclick="return confirm('Are you sure you want to reject this Registration?')"
+                                       th:href="@{/registration/management/statusregistrations/{id}/{status} (status=${0}, id=${registration.id} )}"
+                                       th:if="${registration.status == 0}"><i
+                                            class="material-icons fa fa-arrow-circle-down"></i></a>
                                 </td>
+
                             </tr>
                             </tbody>
                         </table>

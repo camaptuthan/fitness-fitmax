@@ -3,6 +3,7 @@ package fivemonkey.com.fitnessbackend.controller;
 import fivemonkey.com.fitnessbackend.dto.BlogDTO;
 import fivemonkey.com.fitnessbackend.dto.CategoryDTO;
 import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
+import fivemonkey.com.fitnessbackend.dto.CityDTO;
 import fivemonkey.com.fitnessbackend.dto.StudioDTO;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
@@ -26,6 +27,8 @@ public class StudioController {
     private StudioService studioService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private CityService cityService;
 
     @Autowired
     private CategoryService categoryService;
@@ -65,13 +68,26 @@ public class StudioController {
         return "/studio_details";
     }
 
-    @GetMapping("management/studios")
-    public String listStudios(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+    @RequestMapping(value = "management/studios", method = {RequestMethod.GET, RequestMethod.POST})
+    public String listStudios(@AuthenticationPrincipal UserDetail userDetail, Model model,
+                              @RequestParam(value = "city", required = false, defaultValue = "") String city,
+                              @RequestParam(value = "status", required = false, defaultValue = "") String status,
+                              @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
+        List<CityDTO> listCity = new ArrayList<>();
         if (userDetail.getUser().getRole().getName().equals("Admin")) {
-            model.addAttribute("studios", studioService.getAllStudios());
+            listCity = cityService.getAllCities();
+            List<StudioDTO> listStudio = studioService.getAllStudiosByFilter(keyword,city, status);
+            model.addAttribute("studios", listStudio);
         } else if (userDetail.getUser().getRole().getName().equals("Studio Manager")) {
             model.addAttribute("studio", studioService.getStudioByManagerId(userDetail.getUser().getStudio().getId()));
+
         }
+
+        model.addAttribute("cityList", listCity);
+        model.addAttribute("currentCity", city);
+        model.addAttribute("status", status);
+        model.addAttribute("keyword", keyword);
+
         return "management/StudioManagement/studios";
     }
 
