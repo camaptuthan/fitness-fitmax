@@ -1,7 +1,6 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.dto.BlogDTO;
-import fivemonkey.com.fitnessbackend.dto.CategoryDTO;
 import fivemonkey.com.fitnessbackend.entities.Blog;
 import fivemonkey.com.fitnessbackend.entities.Category;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -30,14 +28,15 @@ public class BlogController {
     private CategoryService categoryService;
 
     @GetMapping("")
-    public String category(Model model,String keyword, @RequestParam(name = "page", defaultValue = "0") int pageNumber) {
+    public String category(Model model, String keyword, @RequestParam(name = "page", defaultValue = "0") int pageNumber) {
         List<Category> categoryList = categoryService.findAllCategories();
         Page<Blog> list = blogService.findBlogByKeyword("", pageNumber);
-        if(keyword!=null){
+        if (keyword != null) {
             list = blogService.findBlogByKeyword(keyword, pageNumber);
         }
         List<Blog> listNewestBlog = blogService.findTop3NewestBlogs();
-        model.addAttribute("listBlog", list);model.addAttribute("size", list.getSize());
+        model.addAttribute("listBlog", list);
+        model.addAttribute("size", list.getSize());
         model.addAttribute("listNewestBlog", listNewestBlog);
         model.addAttribute("catelist", categoryList);
         model.addAttribute("currentPage", pageNumber);
