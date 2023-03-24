@@ -168,8 +168,8 @@
                                                            name="classFileImage"
                                                            onchange="imagePreview()"
                                                            type="file">
-                                                    <img class="img-fluid" th:alt="${item.servicesName}"
-                                                         id="image-preview"
+                                                    <img class="img-fluid" id="image-preview"
+                                                         th:alt="${item.servicesName}"
                                                          th:src="${item.servicesImage}">
                                                 </div>
                                             </div>
@@ -222,7 +222,8 @@
                                                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
                                                              style="max-width: 50rem;">
                                                             <div class="modal-content">
-                                                                <form th:id="${'sessions-form-' + sessionItem.id+'-'+item.servicesId}">
+                                                                <form onchange="ifChange()"
+                                                                      th:id="${'sessions-form-' + sessionItem.id+'-'+item.servicesId}">
                                                                     <div class="modal-header">
                                                                         <h1 class="modal-title fs-5"
                                                                             th:id="${'staticBackdropLabel' + sessionItem.id}"
@@ -254,9 +255,9 @@
                                                                                 </th>
                                                                                 <td>
                                                                                     <input class="form-control"
-                                                                                           id="session-name"
                                                                                            name="name"
                                                                                            placeholder="name@example.com"
+                                                                                           th:id="session-name- + ${sessionItem.id}"
                                                                                            th:value="${sessionItem.name}"
                                                                                            type="text">
                                                                                 </td>
@@ -384,8 +385,6 @@
     const origin_path = window.location.origin;
 
     const studioGenerator = (cityId) => {
-
-
         $.ajax({
             url: `${origin_path}/address/studio/${cityId}`,
             type: "GET",
@@ -413,6 +412,7 @@
             data: getFormData(classFormEle),
             contentType: 'application/json',
             success: function (data) {
+                console.log(data);
                 const imageFile = $('#classFileImage')[0].files[0];
                 if (imageFile) {
                     const form = new FormData();
@@ -434,7 +434,7 @@
                 sessions.forEach(session => {
                     const sessionFormEle = $(`form#sessions-form-${session.id}-${id}`);
                     if (sessionFormEle.data('changed')) {
-
+                        updateSession(`${session.id}-${id}`);
                     }
                 })
             },
@@ -442,14 +442,13 @@
                 console.log(error);
             }
         }).done(() => {
-            // location.reload();
+            location.reload();
         })
 
 
     }
     const updateSession = (id) => {
         const sessionFormEle = $(`form#sessions-form-${id}`);
-        console.log(getFormData(sessionFormEle));
         $.ajax({
             url: `${origin_path}/class/management/api/update/session`,
             type: 'POST',
@@ -469,7 +468,6 @@
 
     function getFormData($form) {
         var unindexed_array = $form.serializeArray();
-        console.log(unindexed_array);
         var indexed_array = {};
         $.map(unindexed_array, function (n, i) {
             indexed_array[n['name']] = n['value'];
@@ -479,16 +477,14 @@
 
     let originLength = 0;
 
-    const ifChange = (id) => {
-        const $form = $(`#${id}`);
+    const ifChange = () => {
+        const $form = $(`#${event.target.id}`).closest('form');
         if (originLength === 0) {
             originLength = $form.serialize().length - 1;
         }
         if ($form.serialize().length === originLength) {
             $form.data('changed', false);
-            $("#saving-btn").css('display', 'none');
         } else {
-            $("#saving-btn").removeProperty('display');
             $form.data('changed', true);
         }
     }
