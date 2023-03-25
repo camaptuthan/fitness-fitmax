@@ -39,17 +39,12 @@
     <p class="slogan">Below is a list of Personnal Training for  trainees. Trainees can find by city, studio
        Details are in each PT.</p>
 
+
+
     <div>
       <form id="searchFilter"th:action="@{/user/listpt}" method="get">
-<!--        Studio: <select id="studioId"  name="studioId" style="width:30%" onchange="submitForm()">-->
-<!--        <option>-&#45;&#45;All-&#45;&#45;</option>-->
-<!--        <th:block th:each="studio : ${studiolist}">-->
-<!--        <option  th:text="${studio.name}" th:value="${studio.id}"-->
-<!--                th:selected="${studio.id == studioName}"></option>-->
-<!--        </th:block>-->
-<!--      </select>-->
         <div class="col-md-4">
-          City: <select th:name="cityName" style="width:50%" onchange="submitForm()">
+          City    :<select th:name="cityName" style="width:50% ; background: #202020; color: whitesmoke" onchange="submitForm()">
           <option>All</option>
           <th:block th:each="city : ${listCity}">
             <option th:value="${city.name}" th:text="${city.name}"
@@ -59,7 +54,7 @@
         </div>
         <div>&nbsp</div>
         <div class="col-md-4">
-          Studio: <select th:name="studioId" style="width:50%" onchange="submitForm()">
+          Studio :<select th:name="studioId" style="width:50% ; background: #202020; color: whitesmoke" onchange="submitForm()">
           <option>All</option>
           <th:block th:each="studio : ${listStudio}">
             <option th:value="${studio.id}" th:text="${studio.name}"
@@ -86,16 +81,16 @@
                 <div class="col-md-4 club-card-col">
                   <div class="club-card-item">
                     <div class="price-cover">
-                      <div><img style="width:400px;height:300px;"
-                                th:src="${trainer.userAvatar}"/></div>
+                      <div><img id="img_choose" style="width:400px;height:300px;"
+                                th:src="${trainer.userAvatar}" onclick="submitForm1()"/></div>
                     </div>
                     <ul class="list">
                       <li th:text="${trainer.userFirstName}+' '+${trainer.userLastName}"></li>
                       <li th:text="${trainer.philosophy}" style="color:yellow"></li>
                     </ul>
                     </ul>
-                    <a th:href="@{/user/ptdetail/{email}(email=${trainer.email})}" class="btn">View</a>
-
+<!--                    <a th:href="@{/user/ptdetail/{email}(email=${trainer.email})}" class="btn">View</a>-->
+                    <form id="pt_details"th:action="@{/user/ptdetail/{email}(email=${trainer.email})}" method="get" hidden=""></form>
                   </div>
                 </div>
               </th:block>
@@ -145,6 +140,10 @@
   function submitForm() {
     document.getElementById("searchFilter").submit();
   }
+  function submitForm1() {
+    document.getElementById("img_choose").submit();
+  }
+
 </script>
 </body>
 </html>

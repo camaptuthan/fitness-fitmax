@@ -5,20 +5,21 @@
     <p class="slogan">
       Working out with a personal trainer is the fastest and most effective way for you to achieve your health and fitness goals. We design programs to suit the most common needs of our members, and we also create personalized workouts to suit each person's fitness and needs.</p>
     <div class="row">
-      <th:block th:each="list: ${trainerList}">
+      <th:block th:each="trainer: ${listRandomPT}">
       <div class="col-md-6 out-trainer-col">
         <div class="out-trainer-item">
-          <a href="/trainer" class="out-trainer-img"><img th:src="${list.userAvatar}" alt="img"></a>
+          <a  th:href="@{/user/ptdetail/{email}(email=${trainer.email})}" class="out-trainer-img"><img th:src="${trainer.userAvatar}"/></a>
           <div class="out-trainer-info">
-            <h3><a href="/trainer" th:text="${list.userFirstName}+' '+${list.userLastName}"></a></h3>
+            <h3><a th:href="@{/user/ptdetail/{email}(email=${trainer.email})}" th:text="${trainer.userFirstName}+' '+${trainer.userLastName}"></a></h3>
             <div class="prof">Weightlifting</div>
-            <p th:text="${list.philosophy}+' '+${list.achievement}"></p>
+            <p th:text="${trainer.philosophy}+' '+${trainer.achievement}"></p>
             <ul class="social-list">
               <li><a target="_blank" href="https://www.facebook.com/rovadex"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
               <li><a target="_blank" href="https://twitter.com/RovadexStudio"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
               <li><a target="_blank" href="https://www.youtube.com/"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
               <li><a target="_blank" href="https://www.instagram.com/rovadex"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
             </ul>
+
           </div>
         </div>
       </div>
