@@ -36,6 +36,7 @@ public class RegistrationController {
             path = "redirect:/login";
         }
         assert userDetail != null;
+
         registrationService.doRegistration(userDetail.getUser(), serviceId);
         return path;
     }
@@ -45,6 +46,7 @@ public class RegistrationController {
     public List<RegistrationDTO> registration(@AuthenticationPrincipal UserDetail userDetail) {
         return registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail());
     }
+
 
     //Get Registration List
 
