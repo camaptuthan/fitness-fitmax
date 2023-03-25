@@ -32,4 +32,6 @@ public interface ServicesService {
 
     Services addNewPackage(ServicesDTO s);
 
+    List<ServicesDTO> getServiceOfStudio(String id,Long cat);
+    List<ServicesDTO> getAllServiceOfStudio(String id);
 }

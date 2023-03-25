@@ -11,15 +11,14 @@ import java.util.List;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role,Long> {
-    @Query("SELECT r from Role r where r.id not in ('ROLE0001')")
+    @Query("SELECT r from Role r where r.id not in ('ROLE01')")
     List<Role> getRoleAdmin();
-    @Query("SELECT r from Role r where r.id not in ('ROLE0001','ROLE0006')")
-    List<Role> getRoleCityAdmin();
 
-    @Query("SELECT r from Role r where r.id not in ('ROLE0001','ROLE0006','ROLE0002')")
+
+    @Query("SELECT r from Role r where r.id not in ('ROLE01','ROLE02')")
     List<Role> getRoleManager();
 
-    @Query("SELECT r from Role r where r.id not in ('ROLE0001','ROLE0003','ROLE0002','ROLE0006')")
+    @Query("SELECT r from Role r where r.id not in ('ROLE01','ROLE03','ROLE02')")
     List<Role> getRoleAssistant();}
 
 

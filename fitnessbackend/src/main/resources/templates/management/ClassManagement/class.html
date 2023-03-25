@@ -554,7 +554,7 @@
     const updateClass = (id) => {
         const classFormEle = $(`form#class-form-${id}`);
         $.ajax({
-            url: `${origin_path}/class/management/api/update`,
+            url: `${origin_path}/service/class/management/api/update`,
             type: 'POST',
             data: getFormData(classFormEle),
             contentType: 'application/json',
@@ -565,7 +565,7 @@
                     const form = new FormData();
                     form.append('fileImage', imageFile);
                     $.ajax({
-                        url: `${origin_path}/class/management/api/update/${data.servicesId}`,
+                        url: `${origin_path}/service/class/management/api/update/${data.servicesId}`,
                         data: form,
                         cache: false,
                         contentType: false,
@@ -596,7 +596,7 @@
     const updateSession = (id) => {
         const sessionFormEle = $(`form#sessions-form-${id}`);
         $.ajax({
-            url: `${origin_path}/class/management/api/update/session`,
+            url: `${origin_path}/service/class/management/api/update/session`,
             type: 'POST',
             data: getFormData(sessionFormEle),
             contentType: 'application/json',

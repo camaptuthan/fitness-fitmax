@@ -17,6 +17,7 @@ public interface StudioService {
     Studio getStudioByManagerId(String id);
 
     List<StudioDTO> getAllStudiosByCity(String cityname);
+    List<StudioDTO> getAllStudiosByFilter(String keyword, String city, String status);
     Studio saveStudio(Studio studio);
 
     List<StudioDTO> getAllByCity(String cityname);
@@ -26,4 +27,7 @@ public interface StudioService {
     StudioDTO getStudioDTOByStudioId(String id);
 
     StudioDTO getStudioDTOById(String id);
+
+    List<StudioDTO> getAllStudio();
+
 }

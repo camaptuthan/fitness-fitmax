@@ -35,6 +35,9 @@ public class ServicesController {
     private CityService cityService;
 
     @Autowired
+    private ClassService classService;
+
+    @Autowired
     private StudioService studioService;
 
     @Autowired
@@ -108,6 +111,29 @@ public class ServicesController {
         model.addAttribute("packages", packagesMapList);
         model.addAttribute("package", s);
         return "user/package-detail";
+    }
+
+    //view all classes(user)
+    @RequestMapping(value = "/classes", method = {RequestMethod.GET, RequestMethod.POST})
+    public String getAllClasses(Model model, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+                                @RequestParam(value = "city", required = false, defaultValue = "All") String cityname,
+                                @RequestParam(value = "studio", required = false, defaultValue = "All") String studio,
+                                @RequestParam(value = "category", required = false, defaultValue = "0") String category) {
+
+        List<CityDTO> listCity = cityService.getAllCities();
+        List<StudioDTO> listStudio = studioService.getAllStudiosByCity(cityname);
+        List<CategoryDTO> listCategory = categoryService.getAllCategoriesByType("service");
+        List<ClassDTO> listClass = classService.getClassesBy4Fields(keyword, cityname, studio, Long.parseLong(category));
+        model.addAttribute("classes", listClass);
+        model.addAttribute("size", listClass.size());
+        model.addAttribute("cityList", listCity);
+        model.addAttribute("studioList", listStudio);
+        model.addAttribute("categoryList", listCategory);
+        model.addAttribute("currentCity", cityname);
+        model.addAttribute("currentStudio", studio);
+        model.addAttribute("currentKeyword", keyword);
+        model.addAttribute("currentCategory", category);
+        return "user/class";
     }
 
     //view all packages in dashboard

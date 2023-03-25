@@ -40,7 +40,7 @@ public class ServicesDTO {
 
     private String cityName;
     //status
-    private int type_id;
+    private int statusType_id;
 
-    private String statusName;
+    private String statusStatus;
 }

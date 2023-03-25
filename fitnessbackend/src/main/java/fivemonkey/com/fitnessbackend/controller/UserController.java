@@ -2,14 +2,13 @@ package fivemonkey.com.fitnessbackend.controller;
 
 
 import fivemonkey.com.fitnessbackend.configuration.Utility;
+import fivemonkey.com.fitnessbackend.dto.*;
+import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
-import fivemonkey.com.fitnessbackend.service.service.RegistrationService;
-import fivemonkey.com.fitnessbackend.service.service.RoleService;
-import fivemonkey.com.fitnessbackend.service.service.StudioService;
-import fivemonkey.com.fitnessbackend.service.service.UserService;
+import fivemonkey.com.fitnessbackend.service.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
@@ -27,7 +25,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -42,20 +43,143 @@ public class UserController {
     private RoleService roleService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private TrainerService trainerService;
 
     @Autowired
     private RegistrationService registrationService;
 
-    @RequestMapping("/search")
-    public String search(Model model, @Param("keyword") String keyword) {
-        List<UserDTO> userList = userService.findAllUser(keyword);
-        model.addAttribute("list", userList);
+
+    @Autowired
+    private AddressService addressService;
+
+    @Autowired
+    private CityService cityService;
+
+    @GetMapping("/management/listusers")
+    public String listUser(Model model, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword
+            , @RequestParam(value = "cityName", required = false, defaultValue = "All") String cityName
+            , @RequestParam(value = "ROLE04", required = false, defaultValue = "All") String roleId
+            , @RequestParam(value = "studioId", required = false, defaultValue = "All") String studioId
+            , @AuthenticationPrincipal UserDetail userDetail) {
+        switch (userDetail.getUser().getRole().getId()) {
+
+            case "ROLE01":
+                model.addAttribute("listCity", addressService.getCities());
+                model.addAttribute("listStudio", addressService.getStudioByCity(cityName));
+                model.addAttribute("listRole", roleService.getRoleAdmin());
+                model.addAttribute("list", userService.getUserByFieldsByAdmin(keyword, cityName, "ROLE04", studioId));
+                model.addAttribute("size", userService.getUserByFieldsByAdmin(keyword, cityName, "ROLE04", studioId).size());
+                break;
+            case "ROLE02":
+                List<UserDTO> userDTOList = userService.listUserByManage(userDetail.getUser().getStudio().getId(),keyword,roleId);
+                model.addAttribute("listRole", roleService.getRoleManager());
+                model.addAttribute("list", userDTOList);
+                model.addAttribute("size", userDTOList == null ? 0 : userDTOList.size());
+                break;
+            case "ROLE04":
+                List<UserDTO> userDTOList1 = userService.listUserByAssistant(userDetail.getUser().getStudio().getId(),keyword,roleId);
+                model.addAttribute("listRole", roleService.getRoleAssistant());
+                model.addAttribute("list", userDTOList1);
+                model.addAttribute("size", userDTOList1 == null ? 0 : userDTOList1.size());
+                break;
+        }
+        model.addAttribute("currentStudio", studioId);
+        model.addAttribute("currentKeyword", keyword);
+        model.addAttribute("currentCity", cityName);
+        model.addAttribute("currentRole", roleId);
         return "management/UserManagement/UserList";
     }
 
+
+    @RequestMapping(value = "/listpt", method = {RequestMethod.GET, RequestMethod.POST})
+    public String getPT(Model model, @RequestParam(value = "studioId", required = false, defaultValue = "All") String studioId
+                                   ,@RequestParam(value = "cityName", required = false, defaultValue = "All") String cityName) {
+
+        Map<String, List<TrainerDTO>> trainerMapList = new HashMap<>();
+        List<TrainerDTO> listPT = null;
+        if(("All").equals(cityName)){
+           listPT = trainerService.listAllPT();
+        } else if (("All").equals(studioId)) {
+            listPT = trainerService.getListPTByCity(cityName);
+        } else {
+       listPT = trainerService.getListPT(studioId);}
+
+        int size = listPT.size() % 4 == 0 ? listPT.size() / 4 : (listPT.size() / 4 + 1);
+        List<TrainerDTO> value = null;
+        for (int i = 0; i < size; i++) {
+            value = new ArrayList<>();
+            for (int j = 0; j < 4; j++) {
+                if (i * 4 + j < listPT.size()) {
+                    value.add(listPT.get(i * 4 + j));
+                }
+            }
+            trainerMapList.put("PT-" + (i + 1), value);
+        }
+        model.addAttribute("currentStudio", studioId);
+        model.addAttribute("currentCity", cityName);
+        model.addAttribute("listCity", addressService.getCities());
+        model.addAttribute("listStudio", addressService.getStudioByCity(cityName));
+
+
+        model.addAttribute("list", trainerMapList);
+        model.addAttribute("size", trainerMapList.size());
+        return "testListPT";
+    }
+
+    @RequestMapping(value = "/management/enableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String enableUser(@PathVariable("email") String email) {
+        try {
+            userService.enableById(email);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return "redirect:/user/management/listusers";
+    }
+
+    @RequestMapping(value = "/management/disableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String disableUser(@PathVariable("email") String email) {
+        try {
+            userService.disableUser(email);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return "redirect:/user/management/listusers";
+    }
+
+    @RequestMapping("/management/updateuser/{email}")
+    public String getInformationUser(@PathVariable("email") String email, Model model) {
+        List<Role> roleList = roleService.getRoleAdmin();
+        UserDTO userDTO = userService.getUserByEmail(email);
+
+        model.addAttribute("user", userDTO);
+        model.addAttribute("listRole", roleList);
+        return "management/UserManagement/UserUpdate";
+    }
+
+    @PostMapping("/management/updateuser/{email}")
+    public String userUpdate(@PathVariable("email") String email, @ModelAttribute("user") UserDTO userDTO) {
+        try {
+            userService.update(userDTO);
+            System.out.println(userDTO);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return "redirect:/user/management/listusers";
+
+
+    }
+
+
     @RequestMapping("/management/avataruser/{email}")
     public String getInformationUserAvatar(@PathVariable("email") String email, Model model) {
-        UserDTO userDTO = userService.getUserById(email);
+        UserDTO userDTO = userService.getUserByEmail(email);
         model.addAttribute("user", userDTO);
         return "pro";
     }
@@ -71,14 +195,23 @@ public class UserController {
         userService.updateUserAvatar(userDTO);
 
         return "redirect:/user/management/listusers";
+
+
+    }
+    @RequestMapping("/ptdetail/{email}")
+    public String getInformationPtDetail(@PathVariable("email") String email, Model model) {
+        TrainerDTO trainerDTO = trainerService.getTrainerByEmail(email);
+        model.addAttribute("trainer", trainerDTO);
+        return "ptDetails";
     }
 
     @RequestMapping("/management/updateprofile/{email}")
     public String getInformationUserPro5(@PathVariable("email") String email, Model model) {
-        UserDTO userDTO = userService.getUserById(email);
+        UserDTO userDTO = userService.getUserByEmail(email);
         model.addAttribute("user", userDTO);
         return "myprofile";
     }
+
 
     @PostMapping("/management/updateprofile/{email}")
     public String userUpdateAll(@ModelAttribute("user") UserDTO userDTO, Model model) throws IOException {
@@ -128,13 +261,13 @@ public class UserController {
         String path = "redirect:/user/profilechangepassword";
         try {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            if (passwordEncoder.matches(cpassword,userDetail.getPassword()) && npassword.equals(cnpassword)) {
+            if (passwordEncoder.matches(cpassword, userDetail.getPassword()) && npassword.equals(cnpassword)) {
                 ra.addFlashAttribute("success", "Change your password successfully! Please login again!");
                 userDetail.getUser().setPassword(npassword);
                 userService.updateUserPassword(userDetail.getUser());
                 System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cnpassword + "New: " + npassword + "Confirm New" + cnpassword);
                 path = "redirect:/logout";
-            } else if (!passwordEncoder.matches(cpassword,userDetail.getPassword())) {
+            } else if (!passwordEncoder.matches(cpassword, userDetail.getPassword())) {
                 ra.addFlashAttribute("fail", "Current password is wrong! Please enter your password again!");
                 model.addAttribute("nPassword", npassword);
                 model.addAttribute("cnPassword", cnpassword);

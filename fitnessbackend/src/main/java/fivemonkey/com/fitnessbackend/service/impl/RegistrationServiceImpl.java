@@ -4,6 +4,7 @@ import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.RegistrationDTO;
 import fivemonkey.com.fitnessbackend.entities.Registration;
 import fivemonkey.com.fitnessbackend.entities.Services;
+import fivemonkey.com.fitnessbackend.entities.Status;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.repository.ClassRepository;
 import fivemonkey.com.fitnessbackend.repository.RegistrationRepository;
@@ -82,14 +83,18 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
+    public List<Registration> getAllRegistrationByAdmin() {
+        return registrationRepository.getRegistrationByAdmin();
+    }
+
+    @Override
     public Registration getRegistrationById(String id) {
         return registrationRepository.getById(id);
     }
 
     @Override
     public void updateRegistration(Registration existingRegis) {
-
-
+        registrationRepository.save(existingRegis);
     }
 
     @Override
@@ -107,4 +112,5 @@ public class RegistrationServiceImpl implements RegistrationService {
     public List<Registration> getRegistrationByAssistant(String email) {
         return registrationRepository.getRegistrationByAssistant(email);
     }
+
 }

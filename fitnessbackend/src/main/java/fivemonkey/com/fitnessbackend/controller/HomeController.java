@@ -1,8 +1,6 @@
 package fivemonkey.com.fitnessbackend.controller;
 
-import fivemonkey.com.fitnessbackend.dto.CityDTO;
-import fivemonkey.com.fitnessbackend.dto.ServiceTypeDTO;
-import fivemonkey.com.fitnessbackend.dto.StudioDTO;
+import fivemonkey.com.fitnessbackend.dto.*;
 import fivemonkey.com.fitnessbackend.entities.Slider;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
@@ -29,21 +27,24 @@ public class HomeController {
     private CityService cityService;
 
     @Autowired
-    UserService userService;
+    private TrainerService trainerService;
+
     @Autowired
-    StudioService studioService;
+    private UserService userService;
     @Autowired
-    SliderService sliderService;
+    private StudioService studioService;
+    @Autowired
+    private SliderService sliderService;
+
 
     @GetMapping("/")
     public String getAllServiceType(Model model) {
         List<ServiceTypeDTO> listServiceType = serviceTypeService.getAll();
-        List<Slider> sliderList = sliderService.getAllSlider();
-        String role = "ROLE04";
-        List<User> listAllTrainer = userService.listAllTrainer(role);
+        List<Slider> sliderList=sliderService.getAllSlider();
+        List<TrainerDTO> getRandomPT = trainerService.getRandomPT();
         model.addAttribute("listServiceType", listServiceType);
-        model.addAttribute("listSlider", sliderList);
-        model.addAttribute("listAllTrainer", listAllTrainer);
+        model.addAttribute("listSlider",sliderList);
+        model.addAttribute("listRandomPT",getRandomPT);
         return "index";
     }
 
@@ -115,6 +116,7 @@ public class HomeController {
             }
             studioMapList.put("STU-" + (i + 1), value);
         }
+        model.addAttribute("size", studioMapList.size());
         model.addAttribute("cities", listCity);
         model.addAttribute("currentCity", cityname);
         model.addAttribute("studios", studioMapList);

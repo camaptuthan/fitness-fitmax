@@ -17,4 +17,6 @@ public class RegistrationDTO {
     private String servicesId;
     private String servicesName;
     private String path;
+    private String traineeEmail;
+
 }

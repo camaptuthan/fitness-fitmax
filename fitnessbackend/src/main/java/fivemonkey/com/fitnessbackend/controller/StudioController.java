@@ -1,20 +1,24 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.dto.BlogDTO;
+import fivemonkey.com.fitnessbackend.dto.CategoryDTO;
+import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
+import fivemonkey.com.fitnessbackend.dto.CityDTO;
 import fivemonkey.com.fitnessbackend.dto.StudioDTO;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
-import fivemonkey.com.fitnessbackend.service.service.CityService;
-import fivemonkey.com.fitnessbackend.service.service.StudioService;
-import fivemonkey.com.fitnessbackend.service.service.UserService;
+import fivemonkey.com.fitnessbackend.service.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/studio")
@@ -23,22 +27,67 @@ public class StudioController {
     private StudioService studioService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private CityService cityService;
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    ServicesService servicesService;
 
 //    list studio in homepage
     @GetMapping("/studio-details/{id}")
-    public String homepageStudioDetail(@PathVariable("id") String id, Model model) {
+    public String homepageStudioDetail(@RequestParam(value = "category", required = false, defaultValue = "0") Long category,@PathVariable("id") String id, Model model) {
         StudioDTO s=  studioService.getStudioDTOById(id);
-        model.addAttribute("studio",s);
+        List<CategoryDTO> listCategory = categoryService.getAllCategoriesByType("service");
+        Map<String, List<ServicesDTO>> packagesMapList = new HashMap<>();
+        List<ServicesDTO> servicesDTOList;
+        if(category==0){
+            servicesDTOList=servicesService.getAllServiceOfStudio(id);
+        }else{
+            servicesDTOList=servicesService.getServiceOfStudio(id,category);
+        }
+        int size = servicesDTOList.size() % 3 == 0 ? servicesDTOList.size() / 3 : (servicesDTOList.size() / 3 + 1);
+        List<ServicesDTO> value = null;
+        for (int i = 0; i < size; i++) {
+            value = new ArrayList<>();
+            for (int j = 0; j < 3; j++) {
+                if (i * 3 + j < servicesDTOList.size()) {
+                    value.add(servicesDTOList.get(i * 3 + j));
+                }
+            }
+            packagesMapList.put("PKG-" + (i + 1), value);
+        }
+        model.addAttribute("studios",s);
+        model.addAttribute("size", packagesMapList.size());
+        System.out.println("size is "+packagesMapList.size());
+        model.addAttribute("categoryList", listCategory);
+        model.addAttribute("listServiceOfStudio",packagesMapList);
+        model.addAttribute("currentCategory", category);
         return "/studio_details";
     }
 
-    @GetMapping("management/studios")
-    public String listStudios(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+    @RequestMapping(value = "management/studios", method = {RequestMethod.GET, RequestMethod.POST})
+    public String listStudios(@AuthenticationPrincipal UserDetail userDetail, Model model,
+                              @RequestParam(value = "city", required = false, defaultValue = "") String city,
+                              @RequestParam(value = "status", required = false, defaultValue = "") String status,
+                              @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
+        List<CityDTO> listCity = new ArrayList<>();
         if (userDetail.getUser().getRole().getName().equals("Admin")) {
-            model.addAttribute("studios", studioService.getAllStudios());
+            listCity = cityService.getAllCities();
+            List<StudioDTO> listStudio = studioService.getAllStudiosByFilter(keyword,city, status);
+            model.addAttribute("studios", listStudio);
         } else if (userDetail.getUser().getRole().getName().equals("Studio Manager")) {
             model.addAttribute("studio", studioService.getStudioByManagerId(userDetail.getUser().getStudio().getId()));
+
         }
+
+        model.addAttribute("cityList", listCity);
+        model.addAttribute("currentCity", city);
+        model.addAttribute("status", status);
+        model.addAttribute("keyword", keyword);
+
         return "management/StudioManagement/studios";
     }
 

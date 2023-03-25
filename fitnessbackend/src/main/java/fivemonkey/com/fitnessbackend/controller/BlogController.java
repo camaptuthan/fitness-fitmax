@@ -1,7 +1,6 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.dto.BlogDTO;
-import fivemonkey.com.fitnessbackend.dto.CategoryDTO;
 import fivemonkey.com.fitnessbackend.entities.Blog;
 import fivemonkey.com.fitnessbackend.entities.Category;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -30,17 +28,15 @@ public class BlogController {
     private CategoryService categoryService;
 
     @GetMapping("")
-    public String category(Model model,  String keyword,@RequestParam(name = "page", defaultValue = "0") int pageNumber){
+    public String blogInformation(Model model,String keyword, @RequestParam(name = "page", defaultValue = "0") int pageNumber) {
         List<Category> categoryList = categoryService.findAllCategories();
-        Page<Blog> list = blogService.findBlogByKeyword(keyword,pageNumber);
-        List<BlogDTO> listAll=blogService.findAllBlogs();
-        List<Blog> listNewestBlog=blogService.findTop3NewestBlogs();
-        if(keyword==null){
-            model.addAttribute("listBlog", listAll);
-        }else{
-            model.addAttribute("listBlog", list);
-            model.addAttribute("size", list.getSize());
+        Page<Blog> list = blogService.findBlogByKeyword("", pageNumber);
+        if(keyword!=null){
+             list = blogService.findBlogByKeyword(keyword, pageNumber);
         }
+        List<Blog> listNewestBlog = blogService.findTop3NewestBlogs();
+        model.addAttribute("listBlog", list);
+        model.addAttribute("size", list.getSize());
         model.addAttribute("listNewestBlog", listNewestBlog);
         model.addAttribute("catelist", categoryList);
         model.addAttribute("currentPage", pageNumber);
@@ -49,7 +45,7 @@ public class BlogController {
     }
 
     @GetMapping("/management/writer")
-    public String blogWriter(@AuthenticationPrincipal UserDetail userDetail,Model model) {
+    public String blogWriter(@AuthenticationPrincipal UserDetail userDetail, Model model) {
         model.addAttribute("blogDTO", new BlogDTO());
         List<Category> categoryList = categoryService.findBlogCategories();
         model.addAttribute("catelist", categoryList);
@@ -68,7 +64,7 @@ public class BlogController {
         if (result.hasErrors()) {
             return "management/BlogManagement/blog_writer";
         }
-        blogService.doBlog(blogDTO,userDetail.getUser(), category);
+        blogService.doBlog(blogDTO, userDetail.getUser(), category);
         return "redirect:/blog";
     }
 
@@ -87,4 +83,12 @@ public class BlogController {
         model.addAttribute("newblog", new BlogDTO());
         return null;
     }
+
+
+    @GetMapping("/management")
+    public String blogDashboard() {
+        return "/management/Dashboard/service";
+    }
+
+
 }

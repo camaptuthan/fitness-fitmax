@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/class")
+@RequestMapping("/service/class")
 public class ClassController {
 
 
@@ -92,7 +92,7 @@ public class ClassController {
         ClassDTO foundClass = classService.getByServiceId(serviceId);
         model.addAttribute("trainers", trainerService.getAllAvailableTrainers());
         model.addAttribute("cities", addressService.getCities());
-        model.addAttribute("studios", addressService.getStudioByCity(foundClass.getServicesCityId()));
+        model.addAttribute("studios", addressService.getStudioByCity(String.valueOf(foundClass.getServicesCityId())));
         model.addAttribute("schedules", scheduleService.getAll(null, null));
         model.addAttribute("item", foundClass);
         return path;

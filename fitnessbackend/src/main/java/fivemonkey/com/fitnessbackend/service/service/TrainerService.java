@@ -9,4 +9,12 @@ import java.util.List;
 public interface TrainerService {
 
     List<TrainerDTO> getAllAvailableTrainers();
+    List<TrainerDTO> getListPT(String studioId);
+    TrainerDTO getTrainerByEmail(String email);
+
+    List<TrainerDTO> listAllPT();
+
+    List<TrainerDTO> getListPTByCity(String cityName);
+
+    List<TrainerDTO> getRandomPT();
 }

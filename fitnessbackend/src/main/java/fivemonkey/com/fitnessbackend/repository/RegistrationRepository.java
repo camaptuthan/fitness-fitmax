@@ -17,19 +17,23 @@ public interface RegistrationRepository extends JpaRepository<Registration, Stri
 
     // List<Registration> getRegistrationByTrainee(Trainee trainee);
 
-    @Query(value = "select r from Registration r where r.trainee.email = :email order by r.services.date desc")
+
+    @Query(value = "select r from Registration r join Status st on st.type = 'service' and r.status = st.type_id where r.trainee.email = :email order by r.services.date desc")
     List<Registration> getRegistrationByTrainee(String email);
 
     @Query(value = "SELECT r FROM Registration r join Services s where r.id = s.id and s.studio.id = :studioId")
     List<Registration> getRegistrationByManager(String studioId);
 
-    //    @Query(value = "select r from Registration r where r.services.assistant.email = :email")
-//    List<Registration> getRegistrationByAssistant(String email);
-    @Query(value = "select r from Registration r where r.services.user.email = :email")
+    @Query(value = "select r from Registration r join Status st on st.type = 'service' and r.status = st.type_id where r.services.user.email = :email")
     List<Registration> getRegistrationByAssistant(String email);
 
     @Query(value = "select r from Registration r where r.services.id = :id and r.trainee.email = :traineeEmail")
     Registration findRegistrationByServicesAndTrainee(String id, String traineeEmail);
 
+    //change status
+    @Query(value = "update Registration r set r.status = :status where r.id = :id")
+    void updateStatus(String id, String status);
 
+    @Query(value = "select r from Registration r join Status st on st.type = 'service' and r.status = st.type_id")
+    List<Registration> getRegistrationByAdmin();
 }

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
+    <base href="/">
+</head>
+<th:block th:insert="/fragments/admin_fragment/header"></th:block>
+<!-- Mirrored from educhamp.themetrades.com/demo/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Feb 2019 13:08:15 GMT -->
+<th:block th:insert="/fragments/admin_fragment/head"></th:block>
+<body class="ttr-opened-sidebar ttr-pinned-sidebar">
+<th:block th:insert="/fragments/admin_fragment/sidebar_fragment"></th:block>
+<!-- Left sidebar menu end -->
+
+<!--Main container start -->
+<main class="ttr-wrapper">
+    <div class="container-fluid">
+        <div class="db-breadcrumb">
+            <h4 class="breadcrumb-title">User Manager</h4>
+            <ul class="db-breadcrumb-list">
+                <li><a href="#"><i class="fa fa-home"></i>Home</a></li>
+                <li>User Manager</li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <!-- Your Profile Views Chart -->
+            <div class="col-lg-12 m-b30">
+                <div class="widget-box">
+
+                    <div class="wc-title row">
+                        <h4>User List</h4>
+<!--                        <div class="btn-light btn-outline-success ml-auto mr-3 row col-2"><a-->
+<!--                                th:href="@{/studio/management/addstudio}">-->
+<!--                            <i class="fa fa-plus-circle" style="font-size:18px"></i>-->
+<!--                            <spam clas="mb-5">Add new studio</spam>-->
+<!--                        </a>-->
+<!--                        </div>-->
+                    </div>
+
+                    <div class="container-fluid row ml-5 mt-5">
+                        <div class="col-lg-12 col-12 col-md-12 col-sm-12 row">
+
+                            <!--                            <form class="col-12 row" action="list" method="GET" id="filter">-->
+
+                            <!--                                <div class="search-box col-lg-3 col-3 col-md-1 col-sm-1 d-inline">-->
+                            <!--                                    <i class="fa fa-search ml-3"></i>-->
+                            <!--                                    <input type="text" class="form-control" placeholder="Search&hellip;" name="search">-->
+                            <!--                                </div>-->
+                            <!--                                <div class="search-box col-lg-2 col-1 col-md-1 col-sm-1">-->
+                            <!--                                    <input class="btn pl-3 pr-3" type="submit" value="Search">-->
+                            <!--                                </div>-->
+
+                            <!--                            </form>-->
+                        </div>
+                    </div>
+
+                    <div class="widget-inner">
+
+                        <table class="table table-hover table-bordered sortable" id="user_list">
+                            <thead>
+                            <tr>
+                                <th>Avata</th>
+                                <th>Email</th>
+                                <th>Adress</th>
+                                <th>Full Name</th>
+                                <th>Role</th>
+                                <th>Studio</th>
+                                <th>Status</th>
+                                <th>Update</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr th:each="user : ${list}">
+                                <td><img th:src="${user.avatar}"/></td>
+                                <td th:text="${user.email}"></td>
+                                <td th:text="${user.address}"></td>
+                                <td th:text="${user.firstName}+' '+${user.lastName}"></td>
+                                <td th:text="${user.roleName}"></td>
+                                <td th:text="${user.studioName}"></td>
+                                <span th:if="${user.status == true}">
+                        <td>Active</td>
+                    </span>
+                                <span th:if="${user.status == false}">
+                    <td>Deactive</td>
+                    </span>
+                                <td>
+                                    <a class="edit" data-toggle="tooltip"
+                                       th:href="@{/user/management/updateuser/{email} (email=${user.email})}"
+                                       title="Edit"><i class="material-icons fa">&#xf044;</i></a>
+                                    <a class="active" th:if="${user.status == true}" data-toggle="tooltip"
+                                       th:href="@{/user/management/disableuser/{email} (email=${user.email})}"
+                                       onclick="return confirm('Are you sure you want to change this user status?')"><i
+                                            class="material-icons fa fa-toggle-on color-skins"></i></a>
+                                    <a class="active" th:if="${user.status == false}" data-toggle="tooltip"
+                                       th:href="@{/user/management/enableuser/{email} (email=${user.email})}"
+                                       onclick="return confirm('Are you sure you want to change this user status?')"><i
+                                            class="material-icons fa fa-toggle-off color-skins"></i></a>
+                                    <a onclick="return confirm('ok?')"
+                                       th:href="@{/user/management/updateprofile/{email} (email=${user.email})}" title="Delete"><i
+                                            class="material-icons fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div id="pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</main>
+<div class="ttr-overlay"></div>
+
+<!-- External JavaScripts -->
+<th:block th:insert="/fragments/admin_fragment/script"></th:block>
+</body>
+<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#user_list').DataTable({
+            // dom: 'rtip',
+            columnDefs: [{
+                target: 0,
+                visible: false,
+                searchable: false
+            }],
+            pagingType:'full_numbers',
+            bLengthChange: false,
+            pageLength: 10,
+            searching: false,
+        });
+    });
+</script>
+<script type="text/javascript">
+    function clearFilter(){
+        window.location="[[@{/user/management/listusers}]]";
+    }
+    function submitForm(){
+        document.getElementById("searchFilter").submit();
+    }
+
+
+</script>
+</html>

@@ -19,6 +19,7 @@ public class SessionDTO {
     private Long classId;
     private Date createdDate;
     private String scheduleId;
+
     private Date happenedDate;
 
     private String trainerEmail;

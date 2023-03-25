@@ -8,11 +8,12 @@
         <h2 class="title-decor">Our <span>Service</span></h2>
         <p class="slogan" style="font-size: 20px">Here are the services that our system provides for you.
             Including Packages for individuals who want to practice freely.
-            Personal Training is a list of trainers that trainees can book to practice 1-1 with a training and nutrition regimen that really suits your body conditions.
+            Personal Training is a list of trainers that trainees can book to practice 1-1 with a training and nutrition
+            regimen that really suits your body conditions.
             Finally, Classes like Yoga, KickBoxing, Cycling... help you approach new subjects professionally.</p>
         <div class="row">
 
-            <div th:each="list: ${listServiceType}" class="col-sm-6 col-md-4 program-col">
+            <div class="col-sm-6 col-md-4 program-col" th:each="list: ${listServiceType}">
                 <div class="program-item">
                     <div class="program-item-front" th:style="'background-image: url(' + ${list.image} + ');'">
                         <div class="program-item-inner">
@@ -22,8 +23,12 @@
                     <div class="program-item-back" th:style="'background-image: url(' + ${list.image} + ');'">
                         <div class="program-item-inner">
                             <h3 th:text="${list.type}"></h3>
-                            <span th:if="${list.id == 1}"><a th:href="@{'/service/packages'}"
-                                                             class="btn">More</a></span>
+                            <span th:if="${list.id == 1}"><a class="btn"
+                                                             th:href="@{'/service/packages'}">More</a></span>
+                            <span th:if="${list.id == 2}"><a class="btn"
+                                                             th:href="@{'/user/listpt'}">More</a></span>
+                            <span th:if="${list.id == 3}"><a class="btn"
+                                                             th:href="@{'/service/classes'}">More</a></span>
                         </div>
                     </div>
                 </div>

@@ -100,7 +100,7 @@
                   </div>
                   <div class="post-footer">
                       <div class="meta">
-                          <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a href="#" th:text="${s.district.city.name}+', '+${s.district.getName()}+', '+${s.district.getRoad()}"></a></span>
+                          <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a href="#" th:text="${s.getDistrictName()}+', '+${s.getDistrictRoad()}"></a></span>
                           <span th:text="${s.contact}" class="post-comment"><i class="fa fa-comment" aria-hidden="true"></i><a href="#">2 Comments(s)</a></span>
                       </div>
                       <a th:href="@{/studio/studio-details/{id} (id=${s.id})}" class="btn"><span>Detail</span></a>

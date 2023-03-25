@@ -10,7 +10,11 @@ import fivemonkey.com.fitnessbackend.repository.ClassRepository;
 import fivemonkey.com.fitnessbackend.repository.StudioRepository;
 import fivemonkey.com.fitnessbackend.service.service.ClassService;
 import fivemonkey.com.fitnessbackend.service.service.RegistrationService;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +22,7 @@ import java.util.List;
 @Service
 public class ClassServiceImpl implements ClassService {
     @Autowired
-    ClassRepository classRepository;
+    private ClassRepository classRepository;
 
     @Autowired
     private CityRepository cityRepository;
@@ -30,6 +34,9 @@ public class ClassServiceImpl implements ClassService {
 
     @Autowired
     private RegistrationService registrationService;
+
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
     public ClassDTO getByServiceId(String serviceId) {
@@ -66,5 +73,36 @@ public class ClassServiceImpl implements ClassService {
         Clazz clazz = classRepository.findByServicesId(serviceId).orElse(new Clazz());
         clazz.getServices().setImage(thumbNail);
         return modelMapper.map(classRepository.save(clazz), ClassDTO.class);
+    }
+    public ClassDTO getClassById(String id) {
+        return modelMapper.map(classRepository.getClassById(id), ClassDTO.class);
+    }
+
+    @Override
+    public List<ClassDTO> getAllClass() {
+        return modelMapper.mapList(classRepository.getAllClass(),ClassDTO.class);
+    }
+
+    @Override
+    public List<ClassDTO> getClassesBy4Fields(@Param("keyword") String keyword,
+                                              @Param("cityname") String cityname,
+                                              @Param("studio") String studio,
+                                              @Param("category") Long category) {
+        Session session = sessionFactory.openSession();
+        String query = "select c from Clazz c where c.services.serviceType.id = 3 and c.services.status = 1 ";
+        if (!"".equals(keyword)) {
+            query += " and concat(c.services.name,'',c.services.price,'',c.services.duration,'',c.services.des,'',c.services.date) like '%" + keyword + "%' ";
+        }
+        if (!"All".equals(cityname)) {
+            query += " and c.services.city.name = '" + cityname + "' ";
+        }
+        if (!"All".equals(studio)) {
+            query += " and c.services.studio.id = '" + studio + "' ";
+        }
+        if (category != 0L) {
+            query += " and c.services.category.id = " + category + " ";
+        }
+        Query<Clazz> query1 = session.createQuery(query, Clazz.class);
+        return modelMapper.mapList(query1.getResultList(), ClassDTO.class);
     }
 }
