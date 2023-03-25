@@ -123,7 +123,7 @@ public class ServicesController {
                                 @RequestParam(value = "studio", required = false, defaultValue = "All") String studio,
                                 @RequestParam(value = "category", required = false, defaultValue = "0") String category,
                                 @RequestParam(value = "pageNumber", required = false, defaultValue = "1") String pageNumber) {
-
+        int totalPage = classService.totalPageBy4Fields(keyword, cityname, studio, Long.parseLong(category));
         List<CityDTO> listCity = cityService.getAllCities();
         List<StudioDTO> listStudio = studioService.getAllStudiosByCity(cityname);
         List<CategoryDTO> listCategory = categoryService.getAllCategoriesByType("service");
@@ -138,7 +138,11 @@ public class ServicesController {
         model.addAttribute("currentKeyword", keyword);
         model.addAttribute("currentCategory", category);
         model.addAttribute("currentPage", Integer.parseInt(pageNumber));
-        model.addAttribute("totalPage", classService.totalPageBy4Fields(keyword, cityname, studio, Long.parseLong(category)));
+        if (totalPage == 0) {
+            model.addAttribute("totalPage", totalPage + 1);
+        }else {
+            model.addAttribute("totalPage",totalPage);
+        }
         return "user/class";
     }
 

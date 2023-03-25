@@ -14,7 +14,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -107,10 +106,7 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public int totalPageBy4Fields(@Param("keyword") String keyword,
-                                  @Param("cityname") String cityname,
-                                  @Param("studio") String studio,
-                                  @Param("category") Long category) {
+    public int totalPageBy4Fields(String keyword, String cityname, String studio, Long category) {
         int pageSize = 5;
         Session session = sessionFactory.openSession();
         String querycount = "select count(c.id) from Clazz c where c.services.serviceType.id = 3 and c.services.status = 1 ";
@@ -128,6 +124,10 @@ public class ClassServiceImpl implements ClassService {
         }
         Query queryCount = session.createQuery(querycount);
         Long countResult = (Long) queryCount.uniqueResult();
-        return (int) (Math.ceil(countResult / pageSize));
+        if ((int) (countResult % pageSize) != 0) {
+            return (int) (countResult / pageSize) + 1;
+        } else {
+            return (int) (countResult / pageSize);
+        }
     }
 }

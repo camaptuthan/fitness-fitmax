@@ -84,24 +84,75 @@
 
                     <div class="pagination-cover">
                         <ul class="pagination">
-                            <li th:if="${currentPage>0}" th:classappend="${currentPage==0} ? 'disabled':''"
-                                class="pagination-item item-prev"><a
-                                    th:href="@{/blog(page=${currentPage -1 },keyword=${keyword})}"><i
-                                        class="fa fa-angle-left" aria-hidden="true"></i></a></li>
-                            <li th:each="i: ${#numbers.sequence(1,totalPages)}"
-                                th:classappend="${currentPage+1==i}? 'active' :'' " class="pagination-item "><a
-                                    th:href="@{/blog(page=${i -1 },keyword=${keyword})}" th:text="${i}"></a></li>
-                            <li th:if="${currentPage<totalPages - 1}"
-                                th:classappend="${currentPage+1 == totalPages}  ? 'disabled':''"
-                                class="pagination-item item-next"><a
-                                    th:href="@{/blog(page=${currentPage + 1 },keyword=${keyword})}"><i
-                                        class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                            <li class="pagination-item item-prev"
+                                th:classappend="${currentPage -1 == 0} ? 'disabled':''" th:if="${currentPage -1 > 0}">
+                                <a th:href="@{/blog(pageNumber=${currentPage - 1},keyword=${currentKeyword},category=${currentCategory})}">
+                                    <i aria-hidden="true" class="fa fa-angle-left"></i>
+                                </a>
+                            </li>
+                            <li class="pagination-item " th:classappend="${currentPage == i}? 'active' :'' "
+                                th:each="i: ${#numbers.sequence(1,totalPage)}">
+                                <a th:href="@{/blog(pageNumber=${i},keyword=${currentKeyword},category=${currentCategory})}"
+                                   th:text="${i}"></a>
+                            </li>
+                            <li class="pagination-item item-next"
+                                th:classappend="${currentPage == totalPage}  ? 'disabled':''"
+                                th:if="${currentPage < totalPage}">
+                                <a th:href="@{/blog(pageNumber=${currentPage + 1},keyword=${currentKeyword},category=${currentCategory})}">
+                                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
                 <!--================= SIDEBAR =================-->
                 <div class="col-12 col-lg-3 sidebar">
-                    <div th:replace="fragments/widgets.html"></div>
+                    <ul class="widgets">
+                        <!--=========== WIDGET-SEARCH ===========-->
+                        <li class="widget widget-search">
+                            <h3 class="title">Search</h3>
+                            <form class="search-form" method="get" th:action="@{/blog}">
+                                <input class="inp-form" placeholder="Search" th:name="keyword"
+                                       th:value="${currentKeyword}"
+                                       type="text">
+                                <input name="category" th:value="${currentCategory}" type="hidden">
+                                <input name="pageName" th:value="${currentPage}" type="hidden">
+                                <button class="btn-form" type="submit"><i aria-hidden="true" class="fa fa-search"></i>
+                                </button>
+                            </form>
+                            <div>
+
+                            </div>
+                        </li>
+                        <!--========= WIDGET-SEARCH END =========-->
+                        <!--========= WIDGET-CATEGORIES =========-->
+                        <li class="widget widget-categories">
+                            <h3 class="title">Categories</h3>
+                            <ul>
+                                <li>
+                                    <a th:href="@{/blog(pageNumber=${currentPage},keyword=${currentKeyword})}">All</a>
+                                </li>
+                                <th:block th:each="category: ${catelist}">
+                                    <li>
+                                        <a th:href="@{/blog(pageNumber=${currentPage},keyword=${currentKeyword},category=${category.id})}"
+                                           th:text="${category.name} "></a></li>
+                                </th:block>
+                            </ul>
+                        </li>
+                        <!--======= WIDGET-CATEGORIES END =======-->
+                        <!--======== WIDGET-RECENT-POSTS ========-->
+                        <li class="widget widget-recent-posts">
+                            <h3 class="title">Recent Blog Posts</h3>
+                            <ul th:each="blogNew:${listNewestBlog}">
+                                <li>
+                                    <a href="#" th:text="${blogNew.title}"></a>
+                                    <div class="date" th:text="${#dates.format(blogNew.date, 'dd-MM-yyyy')}"><i
+                                            aria-hidden="true" class="fa fa-calendar"></i>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
                 <!--=============== SIDEBAR END ===============-->
             </div>
