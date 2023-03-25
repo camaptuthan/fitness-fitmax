@@ -112,7 +112,7 @@ const getSchedule = () => {
             const start_schedule = schedule.startTime.toString().substring(0, 5);
             const end_schedule = schedule.endTime.toString().substring(0, 5);
             scheduleBodyEle.append(
-                `<tr id="${schedule.id}" data-value="${start_schedule + '/' + end_schedule}" data-exist="${schedule.haveSessions}"style="height: 6rem;">
+                `<tr id="${schedule.id}" data-value="${start_schedule + '/' + end_schedule}" data-exist="${schedule.haveSessions}" style="height: 6rem;">
                     <td class='time-col'>${start_schedule}</td>
                     <td></td>
                     <td></td>

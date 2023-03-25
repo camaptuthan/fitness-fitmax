@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <title>Fitmax - Blog</title>
     <!-- =================== META =================== -->
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <th:block th:replace="fragments/head :: head"></th:block>
 </head>
 
@@ -53,52 +53,57 @@
                     <div class="post-header">
                         <div class="post-thumbnail">
                             <a href="single-blog.html">
-                                <img th:src="${blog.thumbnail}" alt="img">
+                                <img alt="img" th:src="${blog.thumbnail}">
                             </a>
                         </div>
                     </div>
-                    <div class="post-content">
-                        <div class="meta">
-                            <span class="post-by"><i class="fa fa-user" aria-hidden="true" ></i><a
-                                    href="#"  ></a></span>
-                            <span class="post-date" aria-hidden="true" th:text="${#dates.format(blog.date, 'dd-MM-yyyy')}"><i class="fa fa-calendar"
-                                                       ></i></span>
-                            <span class="post-category" ><i class="fa fa-tag" aria-hidden="true" th:text="${blog.category.name}"></i><a
+                    <div>
+                        <div class="post-content">
+                            <div class="meta">
+                            <span class="post-by"><i aria-hidden="true" class="fa fa-user"></i><a
                                     href="#"></a></span>
+                                <span aria-hidden="true" class="post-date"
+                                      th:text="${#dates.format(blog.date, 'dd-MM-yyyy')}"><i class="fa fa-calendar"
+                                ></i></span>
+                                <span class="post-category"><i aria-hidden="true" class="fa fa-tag"
+                                                               th:text="${blog.category.name}"></i><a
+                                        href="#"></a></span>
+                            </div>
+                            <h2 class="title"><a href="single-blog.html" th:text="${blog.title}"></a></h2>
+                            <div class="text">
+                                <p th:text="${#strings.length(blog.description) > 150 ? #strings.substring(blog.description, 0, 150) + '...' : blog.description}"></p>
+                            </div>
                         </div>
-                        <h2 class="title"><a href="single-blog.html" th:text="${blog.title}"></a></h2>
-                        <div class="text">
-                            <p th:text="${#strings.length(blog.description) > 150 ? #strings.substring(blog.description, 0, 150) + '...' : blog.description}"></p>
+                        <div class="post-footer">
+                            <a class="btn" href="single-blog.html"><span>read more</span></a>
                         </div>
-                    </div>
-                    <div class="post-footer">
-                        <a href="single-blog.html" class="btn"><span>read more</span></a>
                     </div>
                 </div>
-<!--                <div class="pagination-cover">-->
-<!--                    <ul class="pagination" th:if="${currentPage > 0}">-->
-<!--                        <li class="pagination-item "><a th:href="@{/blog(keyword=${keyword},page=0)}"></a></li>-->
-<!--                        <li class="pagination-item">&lt; </a></li>-->
-<!--                    </ul>-->
+                <!--                <div class="pagination-cover">-->
+                <!--                    <ul class="pagination" th:if="${currentPage > 0}">-->
+                <!--                        <li class="pagination-item "><a th:href="@{/blog(keyword=${keyword},page=0)}"></a></li>-->
+                <!--                        <li class="pagination-item">&lt; </a></li>-->
+                <!--                    </ul>-->
 
-<!--                    <ul class="pagination" th:if="${currentPage < totalPages }"></li>-->
-<!--                        <li class="pagination-item"><a th:href="@{/blog(keyword=${keyword},page=${currentPage + 1})}" th:text="${currentPage+1}"> &gt;</a></li>-->
-<!--                        <li class="pagination-item"><a th:href="@{/blog(keyword=${keyword},page=${totalPages - 1})}"></a></li>-->
-<!--                    </ul>-->
+                <!--                    <ul class="pagination" th:if="${currentPage < totalPages }"></li>-->
+                <!--                        <li class="pagination-item"><a th:href="@{/blog(keyword=${keyword},page=${currentPage + 1})}" th:text="${currentPage+1}"> &gt;</a></li>-->
+                <!--                        <li class="pagination-item"><a th:href="@{/blog(keyword=${keyword},page=${totalPages - 1})}"></a></li>-->
+                <!--                    </ul>-->
 
-<!--                </div>-->
+                <!--                </div>-->
                 <div class="pagination-cover">
                     <ul class="pagination">
-                        <li class="pagination-item item-prev"><a href="#"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+                        <li class="pagination-item item-prev"><a href="#"><i aria-hidden="true"
+                                                                             class="fa fa-angle-left"></i></a></li>
                         <li class="pagination-item active"><a href="#">1</a></li>
                         <li class="pagination-item"><a href="#">2</a></li>
                         <li class="pagination-item"><a href="#">3</a></li>
                         <li class="pagination-item"><a href="#">4</a></li>
                         <li class="pagination-item"><a href="#">5</a></li>
-                        <li class="pagination-item item-next"><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                        <li class="pagination-item item-next"><a href="#"><i aria-hidden="true"
+                                                                             class="fa fa-angle-right"></i></a></li>
                     </ul>
                 </div>
-
 
 
             </div>
@@ -119,7 +124,7 @@
 
 <!--=================== TO TOP ===================-->
 <a class="to-top" href="#home">
-    <i class="fa fa-chevron-up" aria-hidden="true"></i>
+    <i aria-hidden="true" class="fa fa-chevron-up"></i>
 </a>
 <!--================= TO TOP END =================-->
 
@@ -129,9 +134,9 @@
 <script th:src="@{/js/rx-lazy.js}"></script>
 <script th:src="@{/js/parallax.min.js}"></script>
 <script th:src="@{/js/scripts.js}"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+<script crossorigin="anonymous"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

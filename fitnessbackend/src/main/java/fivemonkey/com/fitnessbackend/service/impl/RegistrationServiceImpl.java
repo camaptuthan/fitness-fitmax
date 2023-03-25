@@ -83,9 +83,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     @Override
     public Registration getRegistrationById(String id) {
-
         return registrationRepository.getById(id);
-
     }
 
     @Override
