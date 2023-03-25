@@ -171,14 +171,15 @@
                                                     <!-- Button trigger modal -->
 
 
-                                                    <img class="img-thumbnail" style="width: 23rem;"
-                                                         data-bs-target="#ModalThumbNail" data-bs-toggle="modal"
+                                                    <img class="img-thumbnail" data-bs-target="#ModalThumbNail"
+                                                         data-bs-toggle="modal" style="width: 23rem;"
                                                          th:alt="${item.servicesName}" th:src="${item.servicesImage}">
                                                     <!-- Modal -->
                                                     <div aria-hidden="true" aria-labelledby="ModalThumbNailLabel"
                                                          class="modal fade"
                                                          id="ModalThumbNail" tabindex="-1">
-                                                        <div class="modal-dialog  modal-dialog-centered" style="max-width: 100rem;">
+                                                        <div class="modal-dialog  modal-dialog-centered"
+                                                             style="max-width: 100rem;">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h1 class="modal-title fs-5"
@@ -211,277 +212,283 @@
                                     </form>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="wc-title col-12">
-                                    <h4>Class List</h4>
-                                    <div class="ml-auto mr-3 row col-2">
-                                        <button class="btn btn-primary text-white"
-                                                data-bs-target='#staticBackdropNew'
-                                                data-bs-toggle="modal"
-                                                type="button">
-                                            <i class="fa fa-plus-circle" style="font-size:18px"></i>
-                                            <spam clas="mb-5">Add new studio</spam>
-                                        </button>
-                                        <!-- Modal -->
-                                        <div aria-hidden="true"
-                                             aria-labelledby='staticBackdropLabelNew'
-                                             class="modal fade" data-bs-backdrop="static"
-                                             data-bs-keyboard="false"
-                                             id="staticBackdropNew"
-                                             tabindex="-1">
-                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-                                                 style="max-width: 50rem;">
-                                                <div class="modal-content">
-                                                    <form
-                                                            id="sessions-form-new">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title fs-5"
-                                                                id="staticBackdropLabel"
-                                                            >New session</h1>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <table class="table">
-                                                                <thead>
-                                                                <input name="classId" th:value="${item.id}"
-                                                                       type="hidden">
-                                                                <tr>
-                                                                    <th scope="col">#</th>
-                                                                    <th scope="col"></th>
-                                                                    <th scope="col">Created At</th>
-                                                                    <th scope="col"></th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                <tr>
-                                                                    <th scope="row">
-                                                                        <label for="session-name-new">Name</label>
-                                                                    </th>
-                                                                    <td>
-                                                                        <input class="form-control"
-                                                                               id="session-name-new"
-                                                                               name="name"
-                                                                               placeholder=""
-                                                                               type="text">
-                                                                    </td>
-                                                                    <th scope="row">Trainer</th>
-                                                                    <td>
-                                                                        <select
-                                                                                class="form-select"
-                                                                                name="trainer">
-                                                                            <option selected>Open this
-                                                                                select menu
-                                                                            </option>
-                                                                            <option value="1">One</option>
-                                                                            <option value="2">Two</option>
-                                                                            <option value="3">Three</option>
-                                                                        </select>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Slot</th>
-                                                                    <td>
-                                                                        <select
-                                                                                class="form-select"
-                                                                                name="scheduleId">
-                                                                            <th:block
-                                                                                    th:each="schedule,iter : ${schedules}">
-                                                                                <option th:selected="${iter.index == 0}"
-                                                                                        th:text="${schedule.startTime + ' - ' + schedule.endTime}"
-                                                                                        th:value="${schedule.id}"></option>
-                                                                            </th:block>
-                                                                        </select>
-                                                                    </td>
-                                                                    <th scope="row">Date</th>
-                                                                    <td>
-                                                                        <input class="form-control"
-                                                                               id="session-date-new"
-                                                                               name="happenedDate"
-                                                                               placeholder=""
-                                                                               type="date">
-                                                                    </td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <div class="form-floating">
+                            <div th:if="${item.sessions.size() != 0 }">
+                                <div class="row">
+                                    <div class="wc-title col-12">
+                                        <h4>Class List</h4>
+                                        <div class="ml-auto mr-3 row col-2">
+                                            <button class="btn btn-primary text-white"
+                                                    data-bs-target='#staticBackdropNew'
+                                                    data-bs-toggle="modal"
+                                                    type="button">
+                                                <i class="fa fa-plus-circle" style="font-size:18px"></i>
+                                                <spam clas="mb-5">Add new studio</spam>
+                                            </button>
+                                            <!-- Modal -->
+                                            <div aria-hidden="true"
+                                                 aria-labelledby='staticBackdropLabelNew'
+                                                 class="modal fade" data-bs-backdrop="static"
+                                                 data-bs-keyboard="false"
+                                                 id="staticBackdropNew"
+                                                 tabindex="-1">
+                                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                                                     style="max-width: 50rem;">
+                                                    <div class="modal-content">
+                                                        <form
+                                                                id="sessions-form-new">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5"
+                                                                    id="staticBackdropLabel"
+                                                                >New session</h1>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <table class="table">
+                                                                    <thead>
+                                                                    <input name="classId" th:value="${item.id}"
+                                                                           type="hidden">
+                                                                    <tr>
+                                                                        <th scope="col">#</th>
+                                                                        <th scope="col"></th>
+                                                                        <th scope="col">Created At</th>
+                                                                        <th scope="col"></th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <th scope="row">
+                                                                            <label for="session-name-new">Name</label>
+                                                                        </th>
+                                                                        <td>
+                                                                            <input class="form-control"
+                                                                                   id="session-name-new"
+                                                                                   name="name"
+                                                                                   placeholder=""
+                                                                                   type="text">
+                                                                        </td>
+                                                                        <th scope="row">Trainer</th>
+                                                                        <td>
+                                                                            <select
+                                                                                    class="form-select"
+                                                                                    name="trainer">
+                                                                                <option selected>Open this
+                                                                                    select menu
+                                                                                </option>
+                                                                                <option value="1">One</option>
+                                                                                <option value="2">Two</option>
+                                                                                <option value="3">Three</option>
+                                                                            </select>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">Slot</th>
+                                                                        <td>
+                                                                            <select
+                                                                                    class="form-select"
+                                                                                    name="scheduleId">
+                                                                                <th:block
+                                                                                        th:each="schedule,iter : ${schedules}">
+                                                                                    <option th:selected="${iter.index == 0}"
+                                                                                            th:text="${schedule.startTime + ' - ' + schedule.endTime}"
+                                                                                            th:value="${schedule.id}"></option>
+                                                                                </th:block>
+                                                                            </select>
+                                                                        </td>
+                                                                        <th scope="row">Date</th>
+                                                                        <td>
+                                                                            <input class="form-control"
+                                                                                   id="session-date-new"
+                                                                                   name="happenedDate"
+                                                                                   placeholder=""
+                                                                                   type="date">
+                                                                        </td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                                <div class="form-floating">
                                                                             <textarea class="form-control"
                                                                                       id="session-des-new"
                                                                                       placeholder="Leave a comment here"
                                                                                       style="height: 300px"
                                                                                       th:name="description"></textarea>
-                                                                <label th:attr="for='session-des-new'">Comments</label>
+                                                                    <label th:attr="for='session-des-new'">Comments</label>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal"
-                                                                    type="button">Close
-                                                            </button>
-                                                            <button class="btn btn-primary"
-                                                                    id="new"
-                                                                    onclick="updateSession(this.id)"
-                                                                    type="button">
-                                                                Understood
-                                                            </button>
-                                                        </div>
-                                                    </form>
+                                                            <div class="modal-footer">
+                                                                <button class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal"
+                                                                        type="button">Close
+                                                                </button>
+                                                                <button class="btn btn-primary"
+                                                                        id="new"
+                                                                        onclick="updateSession(this.id)"
+                                                                        type="button">
+                                                                    Understood
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
+
                                         </div>
-
                                     </div>
-                                </div>
-                                <div class="col-12">
-                                    <table class="table" th:id="session-table">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <th:block th:each="sessionItem : ${item.sessions}">
+                                    <div class="col-12">
+                                        <table class="table" th:id="session-table">
+                                            <thead>
                                             <tr>
-                                                <th scope="row" th:text="${sessionItem.id}">1</th>
-                                                <td th:text="${sessionItem.name}">Mark</td>
-                                                <td>
-                                                    <!-- Button trigger modal -->
-                                                    <button class="btn btn-primary"
-                                                            data-bs-toggle="modal"
-                                                            th:attr="data-bs-target='#staticBackdrop' + ${sessionItem.id}"
-                                                            type="button">
-                                                        View
-                                                    </button>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <th:block th:each="sessionItem : ${item.sessions}">
+                                                <tr>
+                                                    <th scope="row" th:text="${sessionItem.id}">1</th>
+                                                    <td th:text="${sessionItem.name}">Mark</td>
+                                                    <td>
+                                                        <!-- Button trigger modal -->
+                                                        <button class="btn btn-primary"
+                                                                data-bs-toggle="modal"
+                                                                th:attr="data-bs-target='#staticBackdrop' + ${sessionItem.id}"
+                                                                type="button">
+                                                            View
+                                                        </button>
 
-                                                    <!-- Modal -->
-                                                    <div aria-hidden="true"
-                                                         class="modal fade"
-                                                         data-bs-backdrop="static" data-bs-keyboard="false"
-                                                         tabindex="-1"
-                                                         th:attr="aria-labelledby='staticBackdropLabel' + ${sessionItem.id}"
-                                                         th:id="${'staticBackdrop' + sessionItem.id}">
-                                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-                                                             style="max-width: 50rem;">
-                                                            <div class="modal-content">
-                                                                <form onchange="ifChange()"
-                                                                      th:id="${'sessions-form-' + sessionItem.id+'-'+item.servicesId}">
-                                                                    <div class="modal-header">
-                                                                        <h1 class="modal-title fs-5"
-                                                                            th:id="${'staticBackdropLabel' + sessionItem.id}"
-                                                                            th:text="${sessionItem.name}"
-                                                                        >Modal title</h1>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <table class="table">
-                                                                            <thead>
-                                                                            <tr>
-                                                                                <th scope="col">#</th>
-                                                                                <th scope="col"
-                                                                                    th:text="${sessionItem.id}">First
-                                                                                </th>
-                                                                                <input name="id"
-                                                                                       th:value="${sessionItem.id}"
-                                                                                       type="hidden">
-                                                                                <th scope="col">Created At</th>
-                                                                                <th scope="col"
-                                                                                    th:text="${#dates.format(sessionItem.createdDate, 'dd-MM-yyyy HH:mm')}">
-                                                                                    First
-                                                                                </th>
-                                                                            </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                            <tr>
-                                                                                <th scope="row">
-                                                                                    <label th:attr="for='session-name'+${sessionItem.id}">Name</label>
-                                                                                </th>
-                                                                                <td>
-                                                                                    <input class="form-control"
-                                                                                           name="name"
-                                                                                           placeholder="name@example.com"
-                                                                                           th:id="session-name- + ${sessionItem.id}"
-                                                                                           th:value="${sessionItem.name}"
-                                                                                           type="text">
-                                                                                </td>
-                                                                                <th scope="row">Trainer</th>
-                                                                                <td>
-                                                                                    <select
-                                                                                            class="form-select"
-                                                                                            name="trainer">
-                                                                                        <option selected>Open this
-                                                                                            select menu
-                                                                                        </option>
-                                                                                        <option value="1">One</option>
-                                                                                        <option value="2">Two</option>
-                                                                                        <option value="3">Three</option>
-                                                                                    </select>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th scope="row">Slot</th>
-                                                                                <td>
-                                                                                    <select
-                                                                                            class="form-select"
-                                                                                            name="scheduleId">
-                                                                                        <th:block
-                                                                                                th:each="schedule : ${schedules}">
-                                                                                            <option th:selected="${schedule.id == sessionItem.scheduleId}"
-                                                                                                    th:text="${schedule.startTime + ' - ' + schedule.endTime}"
-                                                                                                    th:value="${schedule.id}"></option>
-                                                                                        </th:block>
-                                                                                    </select>
-                                                                                </td>
-                                                                                <th scope="row">Date</th>
-                                                                                <td>
-                                                                                    <input class="form-control"
-                                                                                           id="session-date"
-                                                                                           name="happenedDate"
-                                                                                           placeholder="name@example.com"
-                                                                                           th:value="${sessionItem.happenedDate}"
-                                                                                           type="date">
-                                                                                </td>
-                                                                            </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                        <div class="form-floating">
+                                                        <!-- Modal -->
+                                                        <div aria-hidden="true"
+                                                             class="modal fade"
+                                                             data-bs-backdrop="static" data-bs-keyboard="false"
+                                                             tabindex="-1"
+                                                             th:attr="aria-labelledby='staticBackdropLabel' + ${sessionItem.id}"
+                                                             th:id="${'staticBackdrop' + sessionItem.id}">
+                                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                                                                 style="max-width: 50rem;">
+                                                                <div class="modal-content">
+                                                                    <form onchange="ifChange()"
+                                                                          th:id="${'sessions-form-' + sessionItem.id+'-'+item.servicesId}">
+                                                                        <div class="modal-header">
+                                                                            <h1 class="modal-title fs-5"
+                                                                                th:id="${'staticBackdropLabel' + sessionItem.id}"
+                                                                                th:text="${sessionItem.name}"
+                                                                            >Modal title</h1>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <table class="table">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th scope="col">#</th>
+                                                                                    <th scope="col"
+                                                                                        th:text="${sessionItem.id}">
+                                                                                        First
+                                                                                    </th>
+                                                                                    <input name="id"
+                                                                                           th:value="${sessionItem.id}"
+                                                                                           type="hidden">
+                                                                                    <th scope="col">Created At</th>
+                                                                                    <th scope="col"
+                                                                                        th:text="${#dates.format(sessionItem.createdDate, 'dd-MM-yyyy HH:mm')}">
+                                                                                        First
+                                                                                    </th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                <tr>
+                                                                                    <th scope="row">
+                                                                                        <label th:attr="for='session-name'+${sessionItem.id}">Name</label>
+                                                                                    </th>
+                                                                                    <td>
+                                                                                        <input class="form-control"
+                                                                                               name="name"
+                                                                                               placeholder="name@example.com"
+                                                                                               th:id="session-name- + ${sessionItem.id}"
+                                                                                               th:value="${sessionItem.name}"
+                                                                                               type="text">
+                                                                                    </td>
+                                                                                    <th scope="row">Trainer</th>
+                                                                                    <td>
+                                                                                        <select
+                                                                                                class="form-select"
+                                                                                                name="trainer">
+                                                                                            <option selected>Open this
+                                                                                                select menu
+                                                                                            </option>
+                                                                                            <option value="1">One
+                                                                                            </option>
+                                                                                            <option value="2">Two
+                                                                                            </option>
+                                                                                            <option value="3">Three
+                                                                                            </option>
+                                                                                        </select>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <th scope="row">Slot</th>
+                                                                                    <td>
+                                                                                        <select
+                                                                                                class="form-select"
+                                                                                                name="scheduleId">
+                                                                                            <th:block
+                                                                                                    th:each="schedule : ${schedules}">
+                                                                                                <option th:selected="${schedule.id == sessionItem.scheduleId}"
+                                                                                                        th:text="${schedule.startTime + ' - ' + schedule.endTime}"
+                                                                                                        th:value="${schedule.id}"></option>
+                                                                                            </th:block>
+                                                                                        </select>
+                                                                                    </td>
+                                                                                    <th scope="row">Date</th>
+                                                                                    <td>
+                                                                                        <input class="form-control"
+                                                                                               id="session-date"
+                                                                                               name="happenedDate"
+                                                                                               placeholder="name@example.com"
+                                                                                               th:value="${sessionItem.happenedDate}"
+                                                                                               type="date">
+                                                                                    </td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                            <div class="form-floating">
                                                                             <textarea class="form-control"
                                                                                       placeholder="Leave a comment here"
                                                                                       style="height: 300px"
                                                                                       th:id="${'session-des-'+sessionItem.id}"
                                                                                       th:name="description"></textarea>
-                                                                            <label th:attr="for='session-'+${sessionItem.id}">Comments</label>
+                                                                                <label th:attr="for='session-'+${sessionItem.id}">Comments</label>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button class="btn btn-secondary"
-                                                                                data-bs-dismiss="modal"
-                                                                                type="button">Close
-                                                                        </button>
-                                                                        <button class="btn btn-primary"
-                                                                                onclick="updateSession(this.id)"
-                                                                                th:id="${sessionItem.id+'-'+item.servicesId}"
-                                                                                type="button">
-                                                                            Understood
-                                                                        </button>
-                                                                    </div>
-                                                                </form>
+                                                                        <div class="modal-footer">
+                                                                            <button class="btn btn-secondary"
+                                                                                    data-bs-dismiss="modal"
+                                                                                    type="button">Close
+                                                                            </button>
+                                                                            <button class="btn btn-primary"
+                                                                                    onclick="updateSession(this.id)"
+                                                                                    th:id="${sessionItem.id+'-'+item.servicesId}"
+                                                                                    type="button">
+                                                                                Understood
+                                                                            </button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </th:block>
-                                        </tbody>
-                                    </table>
+                                                    </td>
+                                                </tr>
+                                            </th:block>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div>
-                                    <button class="btn btn-primary"
-                                            onclick="updateClass(this.id)"
-                                            th:id="${item.servicesId}"
-                                            type="button">
-                                        Save
-                                    </button>
+                                <div class="row">
+                                    <div>
+                                        <button class="btn btn-primary"
+                                                onclick="updateClass(this.id)"
+                                                th:id="${item.servicesId}"
+                                                type="button">
+                                            Save
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -577,12 +584,11 @@
                         updateSession(`${session.id}-${id}`);
                     }
                 })
+                location.reload();
             },
             error: function (error) {
                 console.log(error);
             }
-        }).done(() => {
-            // location.reload();
         })
 
 
@@ -597,12 +603,11 @@
             success: function (data) {
                 console.log(data);
                 sessionFormEle.data('changed', false);
+                location.reload();
             },
             error: function (error) {
                 console.log(error);
             }
-        }).done(() => {
-            // location.reload();
         })
     }
 
