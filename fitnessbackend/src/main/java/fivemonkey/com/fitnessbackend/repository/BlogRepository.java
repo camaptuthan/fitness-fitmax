@@ -18,8 +18,5 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
     @Query("select b from Blog  b where CONCAT(b.description,'',b.category,'',b.title) like %?1% ")
     Page<Blog> findBlogByKeyword(String keyword, Pageable pageRequest);
 
-    //get blog by category id
-    @Query("select  b from Blog b where  b.category.id=?1")
-    List<Blog> getAllByCategoryId(Long id);
 
 }
