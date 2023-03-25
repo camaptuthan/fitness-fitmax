@@ -20,5 +20,7 @@ public interface ClassService {
 
     List<ClassDTO> getAllClass();
 
-    List<ClassDTO> getClassesBy4Fields(String keyword, String cityname, String studio, Long category);
+    List<ClassDTO> getClassesBy4Fields(String keyword, String cityname, String studio, Long category, int currentPage);
+
+    int totalPageBy4Fields(String keyword, String cityname, String studio, Long category);
 }
