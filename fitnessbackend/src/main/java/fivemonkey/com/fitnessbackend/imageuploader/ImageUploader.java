@@ -17,13 +17,15 @@ public class ImageUploader {
 
 
     public String upload(MultipartFile multipartFile) {
-        String fileName = null;
-        try {
-            fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-            fireBaseUtils.uploadFile(multipartFile, fileName);
-            return String.format(FireBaseConstant.FILE_URL, fileName);
-        } catch (IOException ignored) {
+        String fileName = "";
+        if (!multipartFile.isEmpty()) {
+            try {
+                fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+                fireBaseUtils.uploadFile(multipartFile, fileName);
+                return String.format(FireBaseConstant.FILE_URL, fileName);
+            } catch (IOException ignored) {
 
+            }
         }
         return fileName;
     }

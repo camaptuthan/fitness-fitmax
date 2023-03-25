@@ -14,12 +14,15 @@ import java.util.Date;
 @ToString
 public class SessionDTO {
     private String id;
-    private String weekDay;
     private String name;
-    private String classId;
+    private String description;
+    private Long classId;
+    private Date createdDate;
+    private String scheduleId;
 
-    private TrainerDTO trainer;
     private Date happenedDate;
+
+    private String trainerEmail;
 
     public String getWeekDay() {
         return "" + getWeekday(happenedDate);
