@@ -3,10 +3,10 @@ $(document).ready(function () {
         // Specify validation rules
         rules: {
             title: {
-                required:true
+                required:true,
             },
            content: {
-                required: true
+                required: true,
             },
         },
 

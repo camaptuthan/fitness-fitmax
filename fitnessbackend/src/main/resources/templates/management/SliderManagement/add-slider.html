@@ -2,19 +2,18 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" th:href="@{../css/font-awesome.min.css}">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jQuery Validation Plugin -->
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script th:src="@{/js/validate/validate-slider.js}"></script>
+    <!-- Left sidebar menu end -->
 </head>
-
-<!-- Mirrored from educhamp.themetrades.com/demo/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Feb 2019 13:08:15 GMT -->
 <th:block th:insert="/fragments/admin_fragment/head"></th:block>
+<!-- Mirrored from educhamp.themetrades.com/demo/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Feb 2019 13:08:15 GMT -->
 <th:block th:insert="/fragments/admin_fragment/header"></th:block>
 <body class="ttr-opened-sidebar ttr-pinned-sidebar">
 <th:block th:insert="/fragments/admin_fragment/sidebar_fragment"></th:block>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- jQuery Validation Plugin -->
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-<script th:src="@{/js/validate/validate-slider.js}"></script>
-<!-- Left sidebar menu end -->
+
 <!--Main container start -->
 <main class="ttr-wrapper">
     <div class="container-fluid">
@@ -80,16 +79,5 @@
 <div class="ttr-overlay"></div>
 <th:block th:insert="/fragments/admin_fragment/script"></th:block>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-<script>
-    $("#fileImage").on("change", () => {
-        const file = $("#fileImage")[0].files[0];
-        const reader = new FileReader();
-        reader.onload = () => {
-            $("#up-img").html(`<img src="${reader.result}" alt="img" style=" object-fit: cover;">`);
-        }
-        reader.readAsDataURL(file);
-    })
-
-</script>
 </body>
 </html>

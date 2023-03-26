@@ -60,7 +60,7 @@
                                            Edit
                                         </a>
 
-                                        <a   th:href="@{'/slider/delete/' + ${s.id}}" >
+                                        <a onclick="return confirm('Are you sure want to delete?')"  th:href="@{'/slider/delete/' + ${s.id}}" >
                                              Delete
                                         </a>
 
@@ -101,14 +101,6 @@
 </main>
 
 <div class="ttr-overlay"></div>
-<script>
-        $('.btn-delete').on('click', function (e) {
-            e.preventDefault();
-            var href =$(this).attr('href');
-            $('#myModal #btnDeleteYes').attr('href',href);
-            $('#myModal').modal();
-        });
-</script>
  External JavaScripts
 <th:block th:insert="/fragments/admin_fragment/script"></th:block>
 </body>
