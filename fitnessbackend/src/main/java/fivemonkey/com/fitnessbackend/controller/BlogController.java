@@ -7,7 +7,6 @@ import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.service.service.BlogService;
 import fivemonkey.com.fitnessbackend.service.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,19 +27,25 @@ public class BlogController {
     private CategoryService categoryService;
 
     @GetMapping("")
-    public String blogInformation(Model model,String keyword, @RequestParam(name = "page", defaultValue = "0") int pageNumber) {
-        List<Category> categoryList = categoryService.findAllCategories();
-        Page<Blog> list = blogService.findBlogByKeyword("", pageNumber);
-        if(keyword!=null){
-             list = blogService.findBlogByKeyword(keyword, pageNumber);
-        }
+    public String blogInformation(Model model, @RequestParam(name = "keyword", required = false, defaultValue = "") String keyword,
+                                  @RequestParam(name = "category", required = false, defaultValue = "0") String category,
+                                  @RequestParam(name = "pageNumber", required = false, defaultValue = "1") String pageNumber) {
+        int totalPage = blogService.totalPageBy2Fields(keyword, Long.parseLong(category));
+        List<Category> categoryList = categoryService.findBlogCategories();
+        List<Blog> list = blogService.findBlogBy2Fields(keyword, Long.parseLong(category), Integer.parseInt(pageNumber) - 1);
         List<Blog> listNewestBlog = blogService.findTop3NewestBlogs();
         model.addAttribute("listBlog", list);
-        model.addAttribute("size", list.getSize());
+        model.addAttribute("size", list.size());
         model.addAttribute("listNewestBlog", listNewestBlog);
         model.addAttribute("catelist", categoryList);
-        model.addAttribute("currentPage", pageNumber);
-        model.addAttribute("totalPages", list.getTotalPages());
+        model.addAttribute("currentKeyword", keyword);
+        model.addAttribute("currentCategory", category);
+        model.addAttribute("currentPage", Integer.parseInt(pageNumber));
+        if (totalPage == 0) {
+            model.addAttribute("totalPage", totalPage + 1);
+        }else {
+            model.addAttribute("totalPage",totalPage);
+        }
         return "/blog";
     }
 

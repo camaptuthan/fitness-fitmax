@@ -36,7 +36,7 @@
 
 <section class="s-related-posts home-related-posts">
     <div class="container">
-        <h2 class="title-decor" th:object="${studios}"><span th:text="${studios.name}"></span></h2>
+        <h2 class="title-decor" th:object="${studios}"><span  th:text="${studios.name}"></span></h2>
         <p class="slogan">Fitmax's mission is to bring the right awareness to the community in physical training to have great health and spirit, always firmly overcome all challenges in life.</p>
 
     </div>
@@ -47,6 +47,36 @@
 <!-- ========= S-TRAINING-SCHEDULE END ========= -->
 
 <!-- ================== FOOTER ================== -->
+<section class="s-our-trainer">
+    <div class="container">
+        <img class="about-effect-tringle" th:src="@{/img/tringle-about-top.svg}" alt="img">
+        <h2 class="title-decor">Our <span>Trainer</span></h2>
+        <p class="slogan">Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor tincidunt lorem ut, venenatis dapibus miq.</p>
+        <div class="row our-trainer-row">
+            <div class="col-md-5 trainer-img-col">
+                <div class="trainer-img-cover">
+                    <img class="our-trainer-effect-1" th:src="@{/img/line-red-1.svg}" alt="img">
+                    <img class="our-trainer-effect-2" th:src="@{/img/line-red-2.svg}" alt="img">
+                    <img class="our-trainer-effect-3" th:src="@{/img/square-yellow.svg}" alt="img">
+                    <img  class="our-trainer-img" th:src="${managerStudio.avatar}" alt="img">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="our-trainer-info">
+                    <h3 class="name" th:text="${managerStudio.getLastName()+''+managerStudio.getFirstName()}"></h3>
+                    <div class="prof">Studio Manager</div>
+                    <p >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</p>
+                    <ul class="social-list">
+                        <li><a target="_blank" href="https://www.facebook.com/rovadex"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a target="_blank" href="https://twitter.com/RovadexStudio"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a target="_blank" href="https://www.youtube.com/"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+                        <li><a target="_blank" href="https://www.instagram.com/rovadex"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <div class="s-our-programs" style="background-image: url(/img/bg-programs.jpg);">
     <div class="mask"></div>
     <div class="our-programs-effect" style="background-image: url(/img/bg-programs.svg);"></div>
