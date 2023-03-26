@@ -27,7 +27,7 @@ public class SliderController {
     }
     @PostMapping("/add")
     public String addSliderDashboard(@ModelAttribute("s") Slider slider){
-        sliderService.insertSlider(slider);
+        sliderService.insertSlider(slider.getImage(),slider.getTitle(),slider.getDes());
         return "redirect:/slider/management";
     }
     @GetMapping("/management")
@@ -51,9 +51,11 @@ public class SliderController {
 
     }
     @PostMapping("/edit/{id}")
-    public String saveEdit(@ModelAttribute("sliderInfo") Slider slider,@RequestParam("title") String title,@RequestParam("content") String content){
+    public String saveEdit(@RequestParam("title") String title,@RequestParam("content") String content,@PathVariable("id") Long id){
+        Slider slider= sliderService.findById(id);
         slider.setTitle(title);
         slider.setDes(content);
+        sliderRepository.save(slider);
         return "redirect:/slider/management";
     }
 

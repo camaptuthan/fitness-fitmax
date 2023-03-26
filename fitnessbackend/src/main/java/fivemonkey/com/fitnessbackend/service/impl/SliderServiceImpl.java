@@ -21,9 +21,11 @@ public class SliderServiceImpl implements SliderService {
     }
 
     @Override
-    public void insertSlider(Slider slider) {
-        slider= new Slider();
+    public void insertSlider(String img, String title,String image) {
+        Slider slider= new Slider();
         slider.setDate(new Date());
+        slider.setImage(img);
+        slider.setTitle(title);
         sliderRepository.save(slider);
     }
 

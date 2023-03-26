@@ -52,8 +52,8 @@
                     <div class="post-item-cover" th:each="blog:${listBlog}">
                         <div class="post-header">
                             <div class="post-thumbnail">
-                                <a href="single-blog.html">
-                                    <img alt="img" th:src="${blog.thumbnail}">
+                                <a  th:href="@{/blog/blog-details/{id} (id=${blog.id})}">
+                                    <img  alt="img" th:src="${blog.thumbnail}">
                                 </a>
                             </div>
                         </div>
@@ -68,11 +68,8 @@
                                     <span class="post-category"><i aria-hidden="true" class="fa fa-tag"
                                             th:text="${blog.category.name}"></i><a href="#"></a></span>
                                 </div>
-                                <h2 class="title"><a href="single-blog.html" th:text="${blog.title}"></a></h2>
+                                <h2 class="title"><a th:href="@{/blog/blog-details/{id} (id=${blog.id})}" th:text="${blog.title}"></a></h2>
                                 <div class="text">
-                                    <p
-                                        th:text="${#strings.length(blog.description) > 150 ? #strings.substring(blog.description, 0, 150) + '...' : blog.description}">
-                                    </p>
                                 </div>
                             </div>
                         </div>

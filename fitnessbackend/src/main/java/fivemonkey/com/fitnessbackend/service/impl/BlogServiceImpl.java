@@ -56,11 +56,7 @@ public class BlogServiceImpl implements BlogService {
     //find blog by id
     @Override
     public BlogDTO findBlogById(Long id) {
-        Blog blog = blogRepository.getById(id);
-        BlogDTO blogDTO = new BlogDTO();
-        ModelMapper mapper = new ModelMapper();
-        blogDTO = mapper.map(blog, BlogDTO.class);
-        return blogDTO;
+        return modelMapper.map(blogRepository.getById(id), BlogDTO.class);
     }
 
 
