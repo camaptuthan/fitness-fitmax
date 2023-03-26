@@ -124,7 +124,7 @@ public class UserController {
 
         model.addAttribute("list", trainerMapList);
         model.addAttribute("size", trainerMapList.size());
-        return "testListPT";
+        return "listPT";
     }
 
     @RequestMapping(value = "/management/enableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
@@ -189,15 +189,17 @@ public class UserController {
 
                              @ModelAttribute("user") UserDTO userDTO,
                              Model model) throws IOException {
-
+//if(multipartFile.isEmpty()){
+//    return null;
+//}else{
         userDTO.setAvatar(imageUploader.upload(multipartFile));
 
         userService.updateUserAvatar(userDTO);
 
-        return "redirect:/user/management/listusers";
+        return "redirect:/user/management/listusers";}
 
 
-    }
+
     @RequestMapping("/ptdetail/{email}")
     public String getInformationPtDetail(@PathVariable("email") String email, Model model) {
         TrainerDTO trainerDTO = trainerService.getTrainerByEmail(email);
@@ -205,9 +207,9 @@ public class UserController {
         return "ptDetails";
     }
 
-    @RequestMapping("/management/updateprofile/{email}")
-    public String getInformationUserPro5(@PathVariable("email") String email, Model model) {
-        UserDTO userDTO = userService.getUserByEmail(email);
+    @RequestMapping("/management/updateprofile")
+    public String getInformationUserPro5(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+        UserDTO userDTO = userService.getUserByEmail(userDetail.getUser().getEmail());
         model.addAttribute("user", userDTO);
         return "myprofile";
     }

@@ -1,6 +1,7 @@
 package fivemonkey.com.fitnessbackend.service.service;
 
 import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
+import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.Services;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Service
 public interface ServicesService {
+    void updatePackageImg(ServicesDTO servicesDTO);
 
     List<ServicesDTO> getAllServices();
 

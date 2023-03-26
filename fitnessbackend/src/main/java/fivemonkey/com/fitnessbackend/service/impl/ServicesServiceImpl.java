@@ -31,6 +31,14 @@ public class ServicesServiceImpl implements ServicesService {
     private ServiceTypeRepository serviceTypeRepository;
 
     @Override
+    public void updatePackageImg(ServicesDTO servicesDTO) {
+        Services services = serviceRepository.getPackageById(servicesDTO.getId());
+        services.setImage(servicesDTO.getImage());
+        serviceRepository.save(services);
+
+    }
+
+    @Override
     public List<ServicesDTO> getAllServices() {
         return modelMapper.mapList(serviceRepository.findAll(), ServicesDTO.class);
     }
