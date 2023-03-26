@@ -7,13 +7,19 @@ import fivemonkey.com.fitnessbackend.repository.BlogRepository;
 import fivemonkey.com.fitnessbackend.repository.CategoryRepository;
 import fivemonkey.com.fitnessbackend.repository.UserRepository;
 import fivemonkey.com.fitnessbackend.service.service.BlogService;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +38,9 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private SessionFactory sessionFactory;
+
     //get all blogs
     @Override
     public List<BlogDTO> findAllBlogs() {
@@ -47,11 +56,7 @@ public class BlogServiceImpl implements BlogService {
     //find blog by id
     @Override
     public BlogDTO findBlogById(Long id) {
-        Blog blog = blogRepository.getById(id);
-        BlogDTO blogDTO = new BlogDTO();
-        ModelMapper mapper = new ModelMapper();
-        blogDTO = mapper.map(blog, BlogDTO.class);
-        return blogDTO;
+        return modelMapper.map(blogRepository.getById(id), BlogDTO.class);
     }
 
 
@@ -114,21 +119,54 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public void delete(Long id) {
-
     }
-
 
     @Override
     public List<Blog> findTop3NewestBlogs() {
-        return blogRepository.findTop3NewestBlogs();
+        Session session = sessionFactory.openSession();
+        String sql = "SELECT  b FROM Blog b ORDER BY b.date DESC";
+        Query<Blog> query = session.createQuery(sql, Blog.class);
+        query.setFirstResult(0);
+        query.setMaxResults(3);
+        return query.getResultList();
     }
 
     @Override
-    public Page<Blog> findBlogByKeyword(String keyword,int pageNumber) {
-
-        Pageable pageable = PageRequest.of(pageNumber , 1);
-
-        return blogRepository.findBlogByKeyword(keyword, pageable);
+    public List<Blog> findBlogBy2Fields(String keyword, Long category, int pageNumber) {
+        int pageSize = 3;
+        Session session = sessionFactory.openSession();
+        String sql = "select b from Blog b where b.id is not null ";
+        if (!"".equals(keyword)) {
+            sql += " and CONCAT(b.description,'',b.category,'',b.title) like '%" + keyword + "%' ";
+        }
+        if (category != 0L) {
+            sql += " and b.category.id = " + category + " ";
+        }
+        Query<Blog> query = session.createQuery(sql, Blog.class);
+        query.setFirstResult(pageNumber * pageSize);
+        query.setMaxResults(pageSize);
+        return query.getResultList();
     }
+
+    @Override
+    public int totalPageBy2Fields(String keyword, Long category) {
+        int pageSize = 3;
+        Session session = sessionFactory.openSession();
+        String sqlcount = "select count(b.id) from Blog b where b.id is not null ";
+        if (!"".equals(keyword)) {
+            sqlcount += " and CONCAT(b.description,'',b.category,'',b.title) like '%" + keyword + "%' ";
+        }
+        if (category != 0L) {
+            sqlcount += " and b.category.id = " + category + " ";
+        }
+        Query queryCount = session.createQuery(sqlcount);
+        Long countResult = (Long) queryCount.uniqueResult();
+        if ((int) (countResult % pageSize) != 0) {
+            return (int) (countResult / pageSize) + 1;
+        } else {
+            return (int) (countResult / pageSize);
+        }
+    }
+
 
 }

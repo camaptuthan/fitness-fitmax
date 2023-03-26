@@ -7,5 +7,9 @@ import java.util.List;
 public interface SliderService {
     List<Slider> getAllSlider();
 
-    void insertSlider(Slider slider);
+    void insertSlider(String image,String title,String content);
+
+    void deleteSlider(Long id);
+
+    Slider findById(Long id);
 }

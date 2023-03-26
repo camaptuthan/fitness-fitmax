@@ -2,18 +2,19 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" th:href="@{../css/font-awesome.min.css}">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- jQuery Validation Plugin -->
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-    <script th:src="@{/js/validate/validate-slider.js}"></script>
-    <!-- Left sidebar menu end -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
 </head>
-<th:block th:insert="/fragments/admin_fragment/head"></th:block>
+
 <!-- Mirrored from educhamp.themetrades.com/demo/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Feb 2019 13:08:15 GMT -->
+<th:block th:insert="/fragments/admin_fragment/head"></th:block>
 <th:block th:insert="/fragments/admin_fragment/header"></th:block>
 <body class="ttr-opened-sidebar ttr-pinned-sidebar">
 <th:block th:insert="/fragments/admin_fragment/sidebar_fragment"></th:block>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- jQuery Validation Plugin -->
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script th:src="@{/js/validate/validate-slider.js}"></script>
+<!-- Left sidebar menu end -->
 <!--Main container start -->
 <main class="ttr-wrapper">
     <div class="container-fluid">
@@ -28,7 +29,7 @@
 
         <div class="row">
             <div class="col-lg-12 m-b30">
-                <form id="slider-form" method="POST"  th:action="@{/slider/add}" th:object="${s}" enctype="multipart/form-data" >
+                <form id="slider-form" method="POST"  th:action="@{/slider/edit/{id} (id=${sliderInfo.id})}" th:object="${sliderInfo}"  enctype="multipart/form-data">
                     <div class="form-group row">
                         <div class="col-sm-4">
                             <h8>Slider Title</h8>
@@ -36,7 +37,7 @@
                                     class="form-control"
                                     name="title"
                                     placeholder="Enter Title"
-                                    th:value="${s.title}"
+                                    th:value="${sliderInfo.title}"
                                     required
                                     id="title"
                                     type="text"
@@ -49,7 +50,7 @@
                             <input
                                     class="form-control"
                                     name="content"
-                                    th:value="${s.des}"
+                                    th:value="${sliderInfo.des}"
                                     placeholder="Enter Content"
                                     required
                                     id="content"

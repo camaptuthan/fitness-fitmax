@@ -31,5 +31,10 @@ public class BlogDTO {
 
     private User user;
 
+    private int userId;
+
+    private String userFirstName;
+
+    private String userLastName;
 
 }

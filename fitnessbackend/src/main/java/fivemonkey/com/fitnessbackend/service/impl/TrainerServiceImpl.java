@@ -41,12 +41,11 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     public List<TrainerDTO> listAllPT() {
-        return modelMapperConfiguration.mapList(trainerRepository.findAll(), TrainerDTO.class);
+        return modelMapperConfiguration.mapList(trainerRepository.getAllTrainer(), TrainerDTO.class);
     }
 
     @Override
     public List<TrainerDTO> getListPTByCity(String cityName) {
-        System.out.println("vanh" + trainerRepository.getListPTByCity(cityName));
         return modelMapperConfiguration.mapList(trainerRepository.getListPTByCity(cityName), TrainerDTO.class);
     }
 

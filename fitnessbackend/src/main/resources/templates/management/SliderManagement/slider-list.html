@@ -56,13 +56,14 @@
                                 <td th:text="${s.title}"></td>
                                 <td th:text="${#dates.format(s.date, 'dd-MM-yyyy')}"></td>
                                 <td>
-                                        <a  style="padding: 20px 20px" data-toggle="modal" href="">
+                                        <a  style="padding: 20px 20px"  th:href="@{'/slider/edit/' + ${s.id}}">
                                            Edit
                                         </a>
 
-                                        <a  data-toggle="modal" href="#delete_modal" >
+                                        <a onclick="return confirm('Are you sure want to delete?')"  th:href="@{'/slider/delete/' + ${s.id}}" >
                                              Delete
                                         </a>
+
                                 </td>
                             </tr>
                             </tbody>
@@ -74,29 +75,34 @@
         </div>
 
     </div>
+    <!-- The modal -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Are you sure want to delete</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+
+                <!-- Modal footer -->
+                <div class="modal-footer" >
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button  type="submit" class="btn btn-primary" id="btnDeleteYes">Save changes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
     </div>
 </main>
 
 <div class="ttr-overlay"></div>
-
  External JavaScripts
 <th:block th:insert="/fragments/admin_fragment/script"></th:block>
 </body>
 <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-<!--<script>-->
-<!--    $(document).ready(function () {-->
-<!--        $('#slider_table').DataTable({-->
-<!--            // dom: 'rtip',-->
-<!--            columnDefs: [{-->
-<!--                target: 0,-->
-<!--                visible: false,-->
-<!--                searchable: false-->
-<!--            }],-->
-<!--            pagingType: 'full_numbers',-->
-<!--            bLengthChange: false,-->
-<!--            pageLength: 5,-->
-<!--            searching: false,-->
-<!--        });-->
-<!--    });-->
-<!--</script>-->
 </html>

@@ -1,6 +1,7 @@
 package fivemonkey.com.fitnessbackend.service.impl;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
+import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.*;
@@ -40,6 +41,8 @@ public class UserServiceImpl implements UserService {
     private JavaMailSender mailSender;
     @Autowired
     private SessionFactory sessionFactory;
+    @Autowired
+    private ModelMapperConfiguration<User, UserDTO> modelMapper;
 
 
     @Autowired
@@ -150,6 +153,14 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user2);
 
+    }
+
+    @Override
+    public UserDTO saveThumbnail(String thumbNail, String email) {
+        if (thumbNail.isBlank()) return null;
+        User user = userRepository.getUserByEmail(email);
+         user.setAvatar(thumbNail);
+        return modelMapper.map(userRepository.save(user), UserDTO.class);
     }
 
     @Override
@@ -423,6 +434,12 @@ public class UserServiceImpl implements UserService {
         Query<User> query1 = session.createQuery(query, User.class);
         return modelMapperConfiguration.mapList(query1.getResultList(), UserDTO.class);
     }
+
+    @Override
+    public User getManagerOfStudio(String id) {
+        return userRepository.getManagerOfStudio(id) ;
+    }
+
 
 
 

@@ -40,6 +40,7 @@ public class StudioController {
     @GetMapping("/studio-details/{id}")
     public String homepageStudioDetail(@RequestParam(value = "category", required = false, defaultValue = "0") Long category,@PathVariable("id") String id, Model model) {
         StudioDTO s=  studioService.getStudioDTOById(id);
+        User u= userService.getManagerOfStudio(id);
         List<CategoryDTO> listCategory = categoryService.getAllCategoriesByType("service");
         Map<String, List<ServicesDTO>> packagesMapList = new HashMap<>();
         List<ServicesDTO> servicesDTOList;
@@ -60,12 +61,12 @@ public class StudioController {
             packagesMapList.put("PKG-" + (i + 1), value);
         }
         model.addAttribute("studios",s);
+        model.addAttribute("managerStudio",u);
         model.addAttribute("size", packagesMapList.size());
-        System.out.println("size is "+packagesMapList.size());
         model.addAttribute("categoryList", listCategory);
         model.addAttribute("listServiceOfStudio",packagesMapList);
         model.addAttribute("currentCategory", category);
-        return "/studio_details";
+        return "studio_details";
     }
 
     @RequestMapping(value = "management/studios", method = {RequestMethod.GET, RequestMethod.POST})
