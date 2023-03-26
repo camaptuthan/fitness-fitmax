@@ -1,13 +1,13 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.entities.Slider;
+import fivemonkey.com.fitnessbackend.entities.Studio;
+import fivemonkey.com.fitnessbackend.repository.SliderRepository;
 import fivemonkey.com.fitnessbackend.service.service.SliderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,17 +16,47 @@ import java.util.List;
 public class SliderController {
     @Autowired
     SliderService sliderService;
+    @Autowired
+    SliderRepository sliderRepository;
 
     @GetMapping("/add")
     public String addSlider(Model model){
-        model.addAttribute("slider",new Slider());
+        Slider s= new Slider();
+        model.addAttribute("s",s);
         return "/management/SliderManagement/add-slider";
+    }
+    @PostMapping("/add")
+    public String addSliderDashboard(@ModelAttribute("s") Slider slider){
+        sliderService.insertSlider(slider.getImage(),slider.getTitle(),slider.getDes());
+        return "redirect:/slider/management";
     }
     @GetMapping("/management")
     public String getAllServiceType( Model model) {
         List<Slider> sliderList=sliderService.getAllSlider();
         model.addAttribute("listSlider",sliderList);
         return "/management/SliderManagement/slider-list";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteSlider(@PathVariable("id") Long id){
+        sliderService.deleteSlider(id);
+        return "redirect:/slider/management";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editSlider(@PathVariable("id") Long id,Model model){
+        Slider s= sliderService.findById(id);
+        model.addAttribute("sliderInfo",s);
+        return "/management/SliderManagement/edit-slider";
+
+    }
+    @PostMapping("/edit/{id}")
+    public String saveEdit(@RequestParam("title") String title,@RequestParam("content") String content,@PathVariable("id") Long id){
+        Slider slider= sliderService.findById(id);
+        slider.setTitle(title);
+        slider.setDes(content);
+        sliderRepository.save(slider);
+        return "redirect:/slider/management";
     }
 
 

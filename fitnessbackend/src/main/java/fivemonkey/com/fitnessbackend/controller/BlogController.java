@@ -100,5 +100,20 @@ public class BlogController {
         return "/management/Dashboard/service";
     }
 
+    @GetMapping("/blog-details/{id}")
+    public String getBlogDetailInformation(@PathVariable("id") Long id,Model model, @RequestParam(name = "keyword", required = false, defaultValue = "") String keyword,
+                                           @RequestParam(name = "category", required = false, defaultValue = "0") String category){
+        BlogDTO blogDTO= blogService.findBlogById(id);
+        List<Category> categoryList = categoryService.findBlogCategories();
+        List<BlogDTO> list = blogService.findAllBlogs();
+        List<Blog> listNewestBlog = blogService.findTop3NewestBlogs();
+        model.addAttribute("listNewestBlog", listNewestBlog);
+        model.addAttribute("catelist", categoryList);
+        model.addAttribute("currentKeyword", keyword);
+        model.addAttribute("currentCategory", category);
+        model.addAttribute("listBlog", list);
 
+        model.addAttribute("b",blogDTO);
+        return "blog_detail";
+    }
 }

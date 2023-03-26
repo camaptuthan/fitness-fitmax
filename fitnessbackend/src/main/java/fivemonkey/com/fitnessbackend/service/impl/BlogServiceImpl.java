@@ -12,11 +12,14 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,11 +56,7 @@ public class BlogServiceImpl implements BlogService {
     //find blog by id
     @Override
     public BlogDTO findBlogById(Long id) {
-        Blog blog = blogRepository.getById(id);
-        BlogDTO blogDTO = new BlogDTO();
-        ModelMapper mapper = new ModelMapper();
-        blogDTO = mapper.map(blog, BlogDTO.class);
-        return blogDTO;
+        return modelMapper.map(blogRepository.getById(id), BlogDTO.class);
     }
 
 
