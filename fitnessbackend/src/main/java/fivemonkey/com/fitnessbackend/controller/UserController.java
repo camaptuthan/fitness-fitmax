@@ -199,7 +199,21 @@ public class UserController {
     public String getInformationPtDetail(@AuthenticationPrincipal UserDetail userDetail,
                                          @PathVariable("email") String email, Model model) {
         TrainerDTO trainerDTO = trainerService.getTrainerByEmail(email);
+
+
+        boolean hasRegistered = false;
+        if (userDetail != null) {
+            hasRegistered = registrationService.hasRegistration(email, userDetail.getUser().getEmail());
+            model.addAttribute("userEmail", userDetail.getUser().getEmail());
+            model.addAttribute("userPhone", userDetail.getUser().getPhone());
+        } else {
+            model.addAttribute("userEmail", "");
+            model.addAttribute("userPhone", "");
+        }
+        model.addAttribute("userRole", userDetail.getUser().getRole().getId());
+        model.addAttribute("hasRegistered", hasRegistered);
         model.addAttribute("trainer", trainerDTO);
+
         return "ptDetails";
     }
 
