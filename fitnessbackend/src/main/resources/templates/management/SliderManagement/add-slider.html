@@ -29,7 +29,7 @@
 
         <div class="row">
             <div class="col-lg-12 m-b30">
-                <form id="slider-form" method="POST"  th:action="@{/slider/add}" th:object="${s}" >
+                <form id="slider-form" method="POST"  th:action="@{/slider/add}" th:object="${s}" enctype="multipart/form-data" >
                     <div class="form-group row">
                         <div class="col-sm-4">
                             <h8>Slider Title</h8>
@@ -61,11 +61,9 @@
                     <div class="form-group row">
                         <div class="col-sm-4">
                             <h8>Slider Image</h8>
-                            <input
-                                    class="form-control"
-                                    name="image"
-                                    type="file"
-                            />
+                            <input type="file" name="fileImage" id="fileImage"
+                                   accept="image/jpeg, image/png"
+                                   class="form-control-file" />
                         </div>
                     </div>
                     <div class="box-footer">
@@ -82,5 +80,16 @@
 <div class="ttr-overlay"></div>
 <th:block th:insert="/fragments/admin_fragment/script"></th:block>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    $("#fileImage").on("change", () => {
+        const file = $("#fileImage")[0].files[0];
+        const reader = new FileReader();
+        reader.onload = () => {
+            $("#up-img").html(`<img src="${reader.result}" alt="img" style=" object-fit: cover;">`);
+        }
+        reader.readAsDataURL(file);
+    })
+
+</script>
 </body>
 </html>
