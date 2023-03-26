@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -136,24 +136,23 @@
                 </select>
             </div>
         </div>
-        <form th:action="@{/service/management/update-package-img/{id} (id=${package.id})}" method="POST"  th:object="${package}"
+        <form method="POST" th:action="@{/service/management/update-package-img/{id} (id=${package.id})}"
+              th:object="${package}"
               enctype="multipart/form-data">
 
-        <div class="form-group">
-            <!--            <label for="fileImage" class="btn btn-primary">Upload Img</label>-->
-            <input type="file" th:name="fileImage" id="fileImage"
-                   accept="image/jpeg, image/png"
-                   class="col-md-4 form-control-file"/>
-
-            <div id="img_thumbnail"  class="col-md-4">
-                <img th:src="${package.image}"
-                     alt="Admin"
-                     width="150"
-                     src="">
+            <div class="form-group">
+                <div class="col-md-4 ">
+                    <input accept="image/*" class="col-md-4 form-control-file" id="fileImage"
+                           th:name="fileImage"
+                           type="file"/>
+                </div>
             </div>
 
-        </div>
-            <button class="btn btn-primary" type="submit">Save</button>
+            <div class="form-group">
+                <div class="col-md-4" id="img_thumbnail">
+                    <img height="600" th:src="${package.image}" width="800">
+                </div>
+            </div>
         </form>
         <div class="form-group">
             <label class="col-md-4 control-label" for="singlebutton"></label>
