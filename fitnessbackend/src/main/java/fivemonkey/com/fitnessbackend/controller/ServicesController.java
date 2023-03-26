@@ -265,6 +265,7 @@ public class ServicesController {
                                 @RequestParam(value = "city", required = false) String cityname,
                                 @RequestParam(value = "studio", required = false) String studio,
                                 @RequestParam(value = "category", required = false) String category,
+                                @RequestParam("fileImage") MultipartFile multipartFile,
                                 @ModelAttribute("package") ServicesDTO servicesDTO) {
         Services s = servicesService.getPackageById(id);
 
@@ -275,10 +276,12 @@ public class ServicesController {
                 s.setDes(servicesDTO.getDes());
                 s.setPrice(servicesDTO.getPrice());
                 s.setDate(servicesDTO.getDate());
+
                 s.setStatus(Integer.parseInt(status_type_id));
                 s.setCity(cityService.getCityByName(cityname));
                 s.setStudio(studioService.getStudioById(studio));
                 s.setCategory(categoryService.getCategoryById(Long.parseLong(category)));
+
                 servicesRepository.save(s);
                 break;
             case "ROLE02":
@@ -293,6 +296,7 @@ public class ServicesController {
                 s.setCity(cityService.getCityByName(cityname));
                 s.setStudio(studioService.getStudioById(studio));
                 s.setCategory(categoryService.getCategoryById(Long.parseLong(category)));
+
                 servicesRepository.save(s);
                 break;
             case "ROLE03":
@@ -307,6 +311,7 @@ public class ServicesController {
                 s.setCity(cityService.getCityByName(cityname));
                 s.setStudio(studioService.getStudioById(studio));
                 s.setCategory(categoryService.getCategoryById(Long.parseLong(category)));
+
                 servicesRepository.save(s);
                 break;
         }
@@ -326,8 +331,6 @@ public class ServicesController {
                              Model model) throws IOException {
 
             servicesDTO.setImage(imageUploader.upload(multipartFile));
-        System.out.println(multipartFile +"vanhhhhhhhh");
-        System.out.println(servicesDTO+"helllppppp");
             servicesService.updatePackageImg(servicesDTO);
             return "redirect:/service/management/packages";}
 

@@ -74,45 +74,45 @@
             </div>
         </div>
         <div>
-            <div class="form-group">
-                <label class="col-md-4 control-label">City</label>
-                <div class="col-md-4 ">
-                    <select th:name="city" class="form-select" id="city_selector">
-                        <th:block th:each="city : ${cityList}">
-                            <option th:value="${city.name}" th:text="${city.name}"
-                                    th:selected="${city.name == currentCity}"></option>
-                        </th:block>
-                    </select>
-                </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">City</label>
+            <div class="col-md-4 ">
+                <select th:name="city" class="form-select" id="city_selector">
+                    <th:block th:each="city : ${cityList}">
+                        <option th:value="${city.name}" th:text="${city.name}"
+                                th:selected="${city.name == currentCity}"></option>
+                    </th:block>
+                </select>
             </div>
-            <div class="form-group">
-                <label class="col-md-4 control-label">Studio</label>
-                <div class="col-md-4 ">
-                    <select th:name="studio" class="form-select" id="studio_selector">
-                        <option>All</option>
-                        <th:block th:each="studio : ${studioList}">
-                            <option th:value="${studio.id}" th:text="${studio.name}"
-                                    th:selected="${studio.id == currentStudio}"></option>
-                        </th:block>
-                    </select>
-                </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Studio</label>
+            <div class="col-md-4 ">
+                <select th:name="studio" class="form-select" id="studio_selector">
+                    <option>All</option>
+                    <th:block th:each="studio : ${studioList}">
+                        <option th:value="${studio.id}" th:text="${studio.name}"
+                                th:selected="${studio.id == currentStudio}"></option>
+                    </th:block>
+                </select>
             </div>
-            <script>
-                const origin_path = window.location.origin;
-                $("#city_selector").on("change", (e) => {
-                    getStudio(e.target.value);
-                })
+        </div>
+        <script>
+            const origin_path = window.location.origin;
+            $("#city_selector").on("change", (e) => {
+                getStudio(e.target.value);
+            })
 
-                const getStudio = (cityName) => {
-                    $("#studio_selector").html('<option>All</option>');
-                    $.get(`${origin_path}/address/studio/${cityName}`, (results) => {
-                        results.forEach(result => {
-                            console.log(result.name)
-                            $("#studio_selector").append(`<option value="${result.id}">${result.name}</option>`);
-                        })
+            const getStudio = (cityName) => {
+                $("#studio_selector").html('<option>All</option>');
+                $.get(`${origin_path}/address/studio/${cityName}`, (results) => {
+                    results.forEach(result => {
+                        console.log(result.name)
+                        $("#studio_selector").append(`<option value="${result.id}">${result.name}</option>`);
                     })
-                }
-            </script>
+                })
+            }
+        </script>
         </div>
         <div class="form-group">
             <label class="col-md-4 control-label">Category</label>
@@ -136,48 +136,23 @@
                 </select>
             </div>
         </div>
-        <form th:action="@{/service/management/update-package-img/{id} (id=${package.id})}" method="POST"  th:object="${package}"
-              enctype="multipart/form-data">
 
-        <div class="form-group">
-            <!--            <label for="fileImage" class="btn btn-primary">Upload Img</label>-->
-            <input type="file" th:name="fileImage" id="fileImage"
-                   accept="image/jpeg, image/png"
-                   class="col-md-4 form-control-file"/>
+                <div  class="post-thumbnail">
+            <img th:src="${package.image}" width="700" height="500">
+                    <label for="fileImage" class="btn btn-primary">Upload
+                        Avatar</label>
+                    <input type="file" name="fileImage" id="fileImage"
+                           accept="image/jpeg, image/png"
+                           class="form-control-file" hidden=""/>
+                </div>
 
-            <div id="img_thumbnail"  class="col-md-4">
-                <img th:src="${package.image}"
-                     alt="Admin"
-                     width="150"
-                     src="">
-            </div>
-
-        </div>
-            <button class="btn btn-primary" type="submit">Save</button>
-        </form>
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="singlebutton"></label>
             <div class="col-md-4">
                 <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Update</button>
             </div>
         </div>
 
-
     </fieldset>
 </form>
-<script>
-
-
-    $("#fileImage").on("change", () => {
-        const file = $("#fileImage")[0].files[0];
-        const reader = new FileReader();
-        reader.onload = () => {
-            $("#img_thumbnail").html(`<img src="${reader.result}" alt="img" style=" object-fit: cover;">`);
-        }
-        reader.readAsDataURL(file);
-    })
-
-
-</script>
+<!---->
 </body>
 </html>
