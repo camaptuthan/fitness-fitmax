@@ -277,12 +277,14 @@ public class ServicesController {
                 s.setPrice(servicesDTO.getPrice());
                 s.setDate(servicesDTO.getDate());
 
+
                 s.setImage(imageUploader.upload(multipartFile));
+
                 s.setStatus(Integer.parseInt(status_type_id));
                 s.setCity(cityService.getCityByName(cityname));
                 s.setStudio(studioService.getStudioById(studio));
                 s.setCategory(categoryService.getCategoryById(Long.parseLong(category)));
-
+                s.setImage(imageUploader.upload(multipartFile));
                 servicesRepository.save(s);
                 break;
             case "ROLE02":
@@ -297,7 +299,7 @@ public class ServicesController {
                 s.setCity(cityService.getCityByName(cityname));
                 s.setStudio(studioService.getStudioById(studio));
                 s.setCategory(categoryService.getCategoryById(Long.parseLong(category)));
-
+                s.setImage(imageUploader.upload(multipartFile));
                 servicesRepository.save(s);
                 break;
             case "ROLE03":
@@ -312,31 +314,13 @@ public class ServicesController {
                 s.setCity(cityService.getCityByName(cityname));
                 s.setStudio(studioService.getStudioById(studio));
                 s.setCategory(categoryService.getCategoryById(Long.parseLong(category)));
-
+                s.setImage(imageUploader.upload(multipartFile));
                 servicesRepository.save(s);
                 break;
         }
         return "redirect:/service/management/packages";
     }
 
-    @RequestMapping("/management/update-package-img/{id}")
-    public String getPackageImg(@PathVariable("id") String id, Model model) {
-        ServicesDTO servicesDTO = servicesService.getPackageDTOById(id);
-        model.addAttribute("package", servicesDTO);
-        System.out.println(servicesDTO.getImage());
-        return "management/PackageManagement/package-update";
-    }
-
-
-    @PostMapping("/management/update-package-img/{id}")
-    public String userUpdate(@RequestParam("fileImage") MultipartFile multipartFile,
-                             @ModelAttribute("package") ServicesDTO servicesDTO,
-                             Model model) throws IOException {
-
-        servicesDTO.setImage(imageUploader.upload(multipartFile));
-        System.out.println(multipartFile + "chackkkkkkkkkkkk");
-        servicesService.updatePackageImg(servicesDTO);
-        return "redirect:/service/management/packages";}
 
 
 

@@ -189,10 +189,7 @@ public class UserController {
 
                              @ModelAttribute("user") UserDTO userDTO,
                              Model model) throws IOException {
-        userDTO.setAvatar(imageUploader.upload(multipartFile));
-        System.out.println(multipartFile + "VanhhhhhhhhF");
-
-        userService.updateUserAvatar(userDTO);
+        userService.saveThumbnail(imageUploader.upload(multipartFile), userDTO.getEmail());
 
         return "redirect:/user/management/updateprofile";}
 
