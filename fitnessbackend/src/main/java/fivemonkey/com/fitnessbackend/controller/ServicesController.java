@@ -4,6 +4,7 @@ import fivemonkey.com.fitnessbackend.dto.*;
 import fivemonkey.com.fitnessbackend.entities.ServiceType;
 import fivemonkey.com.fitnessbackend.entities.Services;
 import fivemonkey.com.fitnessbackend.entities.Status;
+import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
 import fivemonkey.com.fitnessbackend.repository.ServiceTypeRepository;
 import fivemonkey.com.fitnessbackend.repository.ServicesRepository;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
@@ -14,8 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +27,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/service")
 public class ServicesController {
+    @Autowired
+    private ImageUploader imageUploader;
 
     @Autowired
     private ServicesService servicesService;
@@ -252,6 +257,7 @@ public class ServicesController {
                                 @RequestParam(value = "category", required = false) String category,
                                 @ModelAttribute("package") ServicesDTO servicesDTO) {
         Services s = servicesService.getPackageById(id);
+
         switch (userDetail.getUser().getRole().getId()) {
             case "ROLE01":
                 s.setId(servicesDTO.getId());
@@ -296,4 +302,25 @@ public class ServicesController {
         }
         return "redirect:/service/management/packages";
     }
+
+    @RequestMapping("/management/update-package-img/{id}")
+    public String getPackageImg(@PathVariable("id") String id, Model model) {
+        Services s = servicesService.getPackageById(id);
+        model.addAttribute("package", s);
+        return "management/PackageManagement/package-update";
+    }
+
+    @PostMapping("/management/update-package-img/{id}")
+    public String userUpdate(@RequestParam("fileImage") MultipartFile multipartFile,
+                             @ModelAttribute("package") ServicesDTO servicesDTO,
+                             Model model) throws IOException {
+
+            servicesDTO.setImage(imageUploader.upload(multipartFile));
+        System.out.println(multipartFile +"vanhhhhhhhh");
+        System.out.println(servicesDTO+"helllppppp");
+            servicesService.updatePackageImg(servicesDTO);
+            return "redirect:/service/management/packages";}
+
+
+
 }
