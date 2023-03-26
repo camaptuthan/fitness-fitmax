@@ -20,7 +20,7 @@
 <body>
 <form class="form-horizontal"
       th:action="@{/service/management/update-package/{id} (id=${package.id})}" method="post"
-      th:object="${package}">
+      enctype="multipart/form-data" th:object="${package}">
     <fieldset>
 
         <!-- Form Name -->
@@ -136,47 +136,39 @@
                 </select>
             </div>
         </div>
-        <form method="POST" th:action="@{/service/management/update-package-img/{id} (id=${package.id})}"
-              th:object="${package}"
-              enctype="multipart/form-data">
 
-            <div class="form-group">
-                <div class="col-md-4 ">
-                    <input accept="image/*" class="col-md-4 form-control-file" id="fileImage"
-                           th:name="fileImage"
-                           type="file"/>
+        <div class="form-group" style="display: flex; align-items: center; justify-content: center;">
+            <div class="col-md-4">
+                <label class="btn btn-primary" for="fileImage">Upload
+                    Avatar</label>
+                <input accept="image/jpeg, image/png" class="form-control-file" id="fileImage"
+                       name="fileImage"
+                       style="display: none" type="file"/>
+                <div id="up-img">
+                <img th:src="${package.image}" style="width: 800px; height: 600px">
                 </div>
             </div>
+        </div>
+        <script>
+            $("#fileImage").on("change", () => {
+                const file = $("#fileImage")[0].files[0];
+                const reader = new FileReader();
+                reader.onload = () => {
+                    $("#up-img").html(`<img src="${reader.result}" alt="img" style="width: 800px; height: 600px">`);
+                }
+                reader.readAsDataURL(file);
+            })
 
-            <div class="form-group">
-                <div class="col-md-4" id="img_thumbnail">
-                    <img height="600" th:src="${package.image}" width="800">
-                </div>
-            </div>
-        </form>
+        </script>
         <div class="form-group">
             <label class="col-md-4 control-label" for="singlebutton"></label>
+
             <div class="col-md-4">
                 <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Update</button>
             </div>
         </div>
-
-
     </fieldset>
 </form>
-<script>
-
-
-    $("#fileImage").on("change", () => {
-        const file = $("#fileImage")[0].files[0];
-        const reader = new FileReader();
-        reader.onload = () => {
-            $("#img_thumbnail").html(`<img src="${reader.result}" alt="img" style=" object-fit: cover;">`);
-        }
-        reader.readAsDataURL(file);
-    })
-
-
-</script>
+<!---->
 </body>
 </html>

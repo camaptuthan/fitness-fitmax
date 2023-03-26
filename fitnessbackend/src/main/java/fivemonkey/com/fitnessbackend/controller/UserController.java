@@ -181,7 +181,7 @@ public class UserController {
     public String getInformationUserAvatar(@PathVariable("email") String email, Model model) {
         UserDTO userDTO = userService.getUserByEmail(email);
         model.addAttribute("user", userDTO);
-        return "pro";
+        return "myprofile";
     }
 
     @PostMapping("/management/avataruser/{email}")
@@ -196,7 +196,7 @@ public class UserController {
 
         userService.updateUserAvatar(userDTO);
 
-        return "redirect:/user/management/listusers";}
+        return "redirect:/user/management/updateprofile";}
 
 
 
