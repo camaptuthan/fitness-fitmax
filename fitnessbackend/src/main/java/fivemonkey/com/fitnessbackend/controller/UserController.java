@@ -59,7 +59,7 @@ public class UserController {
     @GetMapping("/management/listusers")
     public String listUser(Model model, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword
             , @RequestParam(value = "cityName", required = false, defaultValue = "All") String cityName
-            , @RequestParam(value = "ROLE04", required = false, defaultValue = "All") String roleId
+            , @RequestParam(value = "roleId", required = false, defaultValue = "All") String roleId
             , @RequestParam(value = "studioId", required = false, defaultValue = "All") String studioId
             , @AuthenticationPrincipal UserDetail userDetail) {
         switch (userDetail.getUser().getRole().getId()) {
@@ -68,8 +68,8 @@ public class UserController {
                 model.addAttribute("listCity", addressService.getCities());
                 model.addAttribute("listStudio", addressService.getStudioByCity(cityName));
                 model.addAttribute("listRole", roleService.getRoleAdmin());
-                model.addAttribute("list", userService.getUserByFieldsByAdmin(keyword, cityName, "ROLE04", studioId));
-                model.addAttribute("size", userService.getUserByFieldsByAdmin(keyword, cityName, "ROLE04", studioId).size());
+                model.addAttribute("list", userService.getUserByFieldsByAdmin(keyword, cityName, roleId, studioId));
+                model.addAttribute("size", userService.getUserByFieldsByAdmin(keyword, cityName, roleId, studioId).size());
                 break;
             case "ROLE02":
                 List<UserDTO> userDTOList = userService.listUserByManage(userDetail.getUser().getStudio().getId(),keyword,roleId);
