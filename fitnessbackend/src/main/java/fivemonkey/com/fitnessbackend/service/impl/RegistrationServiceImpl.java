@@ -27,7 +27,6 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Autowired
     private ClassRepository classRepository;
 
-
     @Autowired
     private TraineeRepository traineeRepository;
 

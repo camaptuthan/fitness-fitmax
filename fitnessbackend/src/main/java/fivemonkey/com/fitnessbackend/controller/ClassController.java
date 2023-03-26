@@ -22,9 +22,11 @@ import java.util.Map;
 @RequestMapping("/service/class")
 public class ClassController {
 
-
     @Autowired
     private ClassService classService;
+
+    @Autowired
+    private ServicesService servicesService;
     @Autowired
     private RegistrationService registrationService;
 
@@ -87,12 +89,16 @@ public class ClassController {
 
     @GetMapping("/management/classes/{id}")
     public String classes(Model model,
+                          @AuthenticationPrincipal UserDetail userDetail,
                           @PathVariable("id") String serviceId) {
         String path = "management/ClassManagement/class";
-        ClassDTO foundClass = classService.getByServiceId(serviceId);
-        model.addAttribute("trainers", trainerService.getAllAvailableTrainers());
+        ClassDTO foundClass = serviceId.equals("new") ? new ClassDTO() : classService.getByServiceId(serviceId);
+        if (foundClass.getId() != null && !servicesService.isServiceExistInStudio(foundClass.getServicesId(), userDetail.getUser().getStudio().getId())) {
+            throw new NullPointerException();
+        }
+        model.addAttribute("trainers", trainerService.getAllAvailableTrainersByStudio(foundClass.getServicesStudioId()));
         model.addAttribute("cities", addressService.getCities());
-        model.addAttribute("studios", addressService.getStudioByCity(String.valueOf(foundClass.getServicesCityId())));
+        model.addAttribute("studios", addressService.getStudioByCity(serviceId.equals("new") ? userDetail.getUser().getCity().getName() : foundClass.getServicesCityName()));
         model.addAttribute("schedules", scheduleService.getAll(null, null));
         model.addAttribute("item", foundClass);
         return path;

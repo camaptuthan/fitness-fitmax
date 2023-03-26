@@ -50,7 +50,8 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12">
-                                    <form enctype="multipart/form-data" th:attr="id='class-form-'+${item.servicesId}">
+                                    <form enctype="multipart/form-data"
+                                          th:attr="id='class-form-'+${item.servicesId == null ? 'new' : item.servicesId}">
                                         <div class="row my-3">
                                             <div class="col-4">
                                                 <div class="input-group flex-nowrap">
@@ -59,7 +60,7 @@
                                                     <input aria-describedby="addon-wrapping-updated-dat"
                                                            aria-label="Username" class="form-control"
                                                            disabled
-                                                           placeholder="Username" th:value="${item.servicesId}"
+                                                           th:value="${item.servicesId}"
                                                            type="text">
                                                     <input name="servicesId" th:value="${item.servicesId}"
                                                            type="hidden"/>
@@ -71,7 +72,6 @@
                                                     <input aria-describedby="addon-wrapping-created-date"
                                                            aria-label="Username" class="form-control"
                                                            disabled
-                                                           placeholder="Username"
                                                            th:value="${#dates.format(item.servicesDate, 'dd-MM-yyyy HH:mm')}"
                                                            type="text">
                                                 </div>
@@ -82,7 +82,6 @@
                                                     <input aria-describedby="addon-wrapping-updated-date"
                                                            aria-label="Username" class="form-control"
                                                            disabled
-                                                           placeholder="Username"
                                                            th:value="${#dates.format(item.servicesDate, 'dd-MM-yyyy HH:mm')}"
                                                            type="text">
                                                 </div>
@@ -105,7 +104,7 @@
                                                       id="addon-wrapping-price">Price</span>
                                                     <input aria-describedby="addon-wrapping-price"
                                                            aria-label="Username" class="form-control"
-                                                           placeholder="Class name" th:value="${item.servicesPrice}"
+                                                           placeholder="Price" th:value="${item.servicesPrice}"
                                                            type="text">
                                                 </div>
                                             </div>
@@ -117,14 +116,14 @@
                                                           id="addon-wrapping-city">City</span>
                                                     <select aria-label="Default select example"
                                                             class="form-select w-100"
-                                                            name="servicesCityId"
+                                                            name="servicesCityName"
                                                             onchange="studioGenerator(this.value)"
                                                             th:id="city-selector"
                                                     >
                                                         <th:block th:each="city : ${cities}">
-                                                            <option th:selected="${city.id == item.servicesCityId}"
+                                                            <option th:selected="${city.id == item.servicesCityId || #authentication.getPrincipal().user.city.id == city.id}"
                                                                     th:text="${city.name}"
-                                                                    th:value="${city.id}"></option>
+                                                                    th:value="${city.name}"></option>
                                                         </th:block>
                                                     </select>
                                                 </div>
@@ -160,7 +159,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-12">
+                                            <div class="col-2">
                                                 <div class="mb-3">
                                                     <label class="form-label">Thumbnail</label>
                                                     <input accept="image/jpeg, image/png" class="form-control-file mb-2"
@@ -170,10 +169,10 @@
                                                            type="file">
                                                     <!-- Button trigger modal -->
 
-
                                                     <img class="img-thumbnail" data-bs-target="#ModalThumbNail"
                                                          data-bs-toggle="modal" style="width: 23rem;"
-                                                         th:alt="${item.servicesName}" th:src="${item.servicesImage}">
+                                                         th:alt="${item.servicesName}"
+                                                         th:src="${item.servicesImage == null ? 'https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg' : item.servicesImage}">
                                                     <!-- Modal -->
                                                     <div aria-hidden="true" aria-labelledby="ModalThumbNailLabel"
                                                          class="modal fade"
@@ -188,7 +187,7 @@
                                                                 <div class="modal-body d-flex justify-content-center align-items-center">
                                                                     <img class="img-thumbnail" id="image-preview"
                                                                          th:alt="${item.servicesName}"
-                                                                         th:src="${item.servicesImage}">
+                                                                         th:src="${item.servicesImage == null ? 'https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg' : item.servicesImage}">
                                                                 </div>
 
                                                             </div>
@@ -212,7 +211,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <div th:if="${item.sessions.size() != 0 }">
+                            <div th:if="${item.servicesId != null}">
                                 <div class="row">
                                     <div class="wc-title col-12">
                                         <h4>Class List</h4>
@@ -480,15 +479,16 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div>
-                                        <button class="btn btn-primary"
-                                                onclick="updateClass(this.id)"
-                                                th:id="${item.servicesId}"
-                                                type="button">
-                                            Save
-                                        </button>
-                                    </div>
+
+                            </div>
+                            <div class="row">
+                                <div>
+                                    <button class="btn btn-primary"
+                                            onclick="updateClass(this.id)"
+                                            th:id="${item.servicesId}"
+                                            type="button">
+                                        Save
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -552,7 +552,8 @@
     }
 
     const updateClass = (id) => {
-        const classFormEle = $(`form#class-form-${id}`);
+        const classFormEle = $(`form#class-form-${id ? id : 'new'}`);
+        console.log(getFormData(classFormEle));
         $.ajax({
             url: `${origin_path}/service/class/management/api/update`,
             type: 'POST',
@@ -578,13 +579,15 @@
                 }
 
                 const sessions = data.sessions;
-                sessions.forEach(session => {
-                    const sessionFormEle = $(`form#sessions-form-${session.id}-${id}`);
-                    if (sessionFormEle.data('changed')) {
-                        updateSession(`${session.id}-${id}`);
-                    }
-                })
-                location.reload();
+                if (sessions) {
+                    sessions.forEach(session => {
+                        const sessionFormEle = $(`form#sessions-form-${session.id}-${id}`);
+                        if (sessionFormEle.data('changed')) {
+                            updateSession(`${session.id}-${id}`);
+                        }
+                    })
+                }
+                window.location.replace(`${origin_path}/service/class/management/classes/${data.servicesId}`);
             },
             error: function (error) {
                 console.log(error);
