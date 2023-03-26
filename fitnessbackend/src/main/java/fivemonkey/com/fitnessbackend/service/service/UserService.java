@@ -1,5 +1,6 @@
 package fivemonkey.com.fitnessbackend.service.service;
 
+import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.User;
 import org.springframework.data.repository.query.Param;
@@ -30,6 +31,8 @@ public interface UserService {
     List<User> findAllUserNameContaining(String email);
 
     void updateUserAvatar(UserDTO userDTO);
+
+    UserDTO  saveThumbnail(String thumbNail, String email);
 
     void registerUser(User user);
 

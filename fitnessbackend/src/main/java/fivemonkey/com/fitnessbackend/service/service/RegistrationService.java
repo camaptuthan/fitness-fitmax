@@ -14,6 +14,8 @@ public interface RegistrationService {
 
     RegistrationDTO doRegistration(User user, String itemId);
     boolean hasRegistration(String serviceId, String userEmail);
+
+    boolean hasRegistrationPt(String trainerEmail, String userEmail);
     List<RegistrationDTO> getRegistrationsByUserEmail(String userEmail);
 
     List<Registration> getAllRegistrations();

@@ -274,6 +274,10 @@ public class ServicesController {
                 s.setDes(servicesDTO.getDes());
                 s.setPrice(servicesDTO.getPrice());
                 s.setDate(servicesDTO.getDate());
+
+
+                s.setImage(imageUploader.upload(multipartFile));
+
                 s.setStatus(Integer.parseInt(status_type_id));
                 s.setCity(cityService.getCityByName(cityname));
                 s.setStudio(studioService.getStudioById(studio));
@@ -326,6 +330,5 @@ public class ServicesController {
         }
         return "redirect:/service/management/packages";
     }
-
 
 }

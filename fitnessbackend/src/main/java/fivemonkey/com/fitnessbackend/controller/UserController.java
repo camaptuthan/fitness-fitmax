@@ -189,19 +189,15 @@ public class UserController {
 
                              @ModelAttribute("user") UserDTO userDTO,
                              Model model) throws IOException {
-//if(multipartFile.isEmpty()){
-//    return null;
-//}else{
-        userDTO.setAvatar(imageUploader.upload(multipartFile));
-
-        userService.updateUserAvatar(userDTO);
+        userService.saveThumbnail(imageUploader.upload(multipartFile), userDTO.getEmail());
 
         return "redirect:/user/management/updateprofile";}
 
 
 
     @RequestMapping("/ptdetail/{email}")
-    public String getInformationPtDetail(@PathVariable("email") String email, Model model) {
+    public String getInformationPtDetail(@AuthenticationPrincipal UserDetail userDetail,
+                                         @PathVariable("email") String email, Model model) {
         TrainerDTO trainerDTO = trainerService.getTrainerByEmail(email);
         model.addAttribute("trainer", trainerDTO);
         return "ptDetails";
