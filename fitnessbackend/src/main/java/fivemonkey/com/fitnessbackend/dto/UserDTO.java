@@ -24,7 +24,6 @@ public class UserDTO {
     private String avatar;
     private Date date;
     private boolean status;
-
     private String roleId;
     private String roleName;
     private String studioName;

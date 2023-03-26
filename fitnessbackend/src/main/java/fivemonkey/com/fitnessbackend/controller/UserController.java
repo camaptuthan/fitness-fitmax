@@ -124,7 +124,7 @@ public class UserController {
 
         model.addAttribute("list", trainerMapList);
         model.addAttribute("size", trainerMapList.size());
-        return "testListPT";
+        return "listPT";
     }
 
     @RequestMapping(value = "/management/enableuser/{email}", method = {RequestMethod.PUT, RequestMethod.GET})
@@ -181,7 +181,7 @@ public class UserController {
     public String getInformationUserAvatar(@PathVariable("email") String email, Model model) {
         UserDTO userDTO = userService.getUserByEmail(email);
         model.addAttribute("user", userDTO);
-        return "pro";
+        return "myprofile";
     }
 
     @PostMapping("/management/avataruser/{email}")
@@ -189,25 +189,37 @@ public class UserController {
 
                              @ModelAttribute("user") UserDTO userDTO,
                              Model model) throws IOException {
+        userService.saveThumbnail(imageUploader.upload(multipartFile), userDTO.getEmail());
 
-        userDTO.setAvatar(imageUploader.upload(multipartFile));
-
-        userService.updateUserAvatar(userDTO);
-
-        return "redirect:/user/management/listusers";
+        return "redirect:/user/management/updateprofile";}
 
 
-    }
+
     @RequestMapping("/ptdetail/{email}")
-    public String getInformationPtDetail(@PathVariable("email") String email, Model model) {
+    public String getInformationPtDetail(@AuthenticationPrincipal UserDetail userDetail,
+                                         @PathVariable("email") String email, Model model) {
         TrainerDTO trainerDTO = trainerService.getTrainerByEmail(email);
+
+
+        boolean hasRegistered = false;
+        if (userDetail != null) {
+            hasRegistered = registrationService.hasRegistration(email, userDetail.getUser().getEmail());
+            model.addAttribute("userEmail", userDetail.getUser().getEmail());
+            model.addAttribute("userPhone", userDetail.getUser().getPhone());
+        } else {
+            model.addAttribute("userEmail", "");
+            model.addAttribute("userPhone", "");
+        }
+        model.addAttribute("userRole", userDetail.getUser().getRole().getId());
+        model.addAttribute("hasRegistered", hasRegistered);
         model.addAttribute("trainer", trainerDTO);
+
         return "ptDetails";
     }
 
-    @RequestMapping("/management/updateprofile/{email}")
-    public String getInformationUserPro5(@PathVariable("email") String email, Model model) {
-        UserDTO userDTO = userService.getUserByEmail(email);
+    @RequestMapping("/management/updateprofile")
+    public String getInformationUserPro5(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+        UserDTO userDTO = userService.getUserByEmail(userDetail.getUser().getEmail());
         model.addAttribute("user", userDTO);
         return "myprofile";
     }

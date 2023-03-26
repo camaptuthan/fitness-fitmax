@@ -15,7 +15,6 @@ public class ImageUploader {
     @Autowired
     private FireBaseUtils fireBaseUtils;
 
-
     public String upload(MultipartFile multipartFile) {
         String fileName = "";
         if (!multipartFile.isEmpty()) {

@@ -42,6 +42,11 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
+    public boolean hasRegistrationPt(String trainerEmail, String userEmail) {
+        return registrationRepository.findRegistrationByTrainerAndTrainee(trainerEmail,userEmail) != null;
+    }
+
+    @Override
     public List<RegistrationDTO> getRegistrationsByUserEmail(String userEmail) {
         List<RegistrationDTO> registrations = new ArrayList<>();
         registrationRepository.getRegistrationByTrainee(userEmail).forEach(registration -> {

@@ -1,7 +1,9 @@
 package fivemonkey.com.fitnessbackend.service.impl;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
+import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
+import fivemonkey.com.fitnessbackend.entities.Clazz;
 import fivemonkey.com.fitnessbackend.entities.Services;
 import fivemonkey.com.fitnessbackend.repository.ServiceTypeRepository;
 import fivemonkey.com.fitnessbackend.repository.ServicesRepository;
@@ -29,6 +31,23 @@ public class ServicesServiceImpl implements ServicesService {
 
     @Autowired
     private ServiceTypeRepository serviceTypeRepository;
+
+    @Override
+    public void updatePackageImg(ServicesDTO servicesDTO) {
+        Services services = serviceRepository.getPackageById(servicesDTO.getId());
+        services.setImage(servicesDTO.getImage());
+        serviceRepository.save(services);
+
+    }
+
+    @Override
+    public ServicesDTO saveThumbnail(String thumbNail, String serviceId) {
+        if (thumbNail.isBlank()) return null;
+        Services services = serviceRepository.getPackageById(serviceId);
+       services.setImage(thumbNail);
+
+        return modelMapper.map(serviceRepository.save(services), ServicesDTO.class);
+    }
 
     @Override
     public List<ServicesDTO> getAllServices() {
