@@ -223,7 +223,7 @@ public class ServicesController {
         ServicesDTO servicesDTO = servicesService.getPackageDTOById(id);
         status_type_id = servicesDTO.getStatus() + "";
         cityname = servicesDTO.getCityName();
-        System.out.println("HAPH" + servicesDTO.getStudioId());
+//        System.out.println("HAPH" + servicesDTO.getStudioId());
         if (null != servicesDTO.getStudioId()) {
             studio = servicesDTO.getStudioId();
         } else studio.equals("All");
@@ -277,6 +277,7 @@ public class ServicesController {
                 s.setPrice(servicesDTO.getPrice());
                 s.setDate(servicesDTO.getDate());
 
+                s.setImage(imageUploader.upload(multipartFile));
                 s.setStatus(Integer.parseInt(status_type_id));
                 s.setCity(cityService.getCityByName(cityname));
                 s.setStudio(studioService.getStudioById(studio));
@@ -320,19 +321,22 @@ public class ServicesController {
 
     @RequestMapping("/management/update-package-img/{id}")
     public String getPackageImg(@PathVariable("id") String id, Model model) {
-        Services s = servicesService.getPackageById(id);
-        model.addAttribute("package", s);
+        ServicesDTO servicesDTO = servicesService.getPackageDTOById(id);
+        model.addAttribute("package", servicesDTO);
+        System.out.println(servicesDTO.getImage());
         return "management/PackageManagement/package-update";
     }
+
 
     @PostMapping("/management/update-package-img/{id}")
     public String userUpdate(@RequestParam("fileImage") MultipartFile multipartFile,
                              @ModelAttribute("package") ServicesDTO servicesDTO,
                              Model model) throws IOException {
 
-            servicesDTO.setImage(imageUploader.upload(multipartFile));
-            servicesService.updatePackageImg(servicesDTO);
-            return "redirect:/service/management/packages";}
+        servicesDTO.setImage(imageUploader.upload(multipartFile));
+        System.out.println(multipartFile + "chackkkkkkkkkkkk");
+        servicesService.updatePackageImg(servicesDTO);
+        return "redirect:/service/management/packages";}
 
 
 
