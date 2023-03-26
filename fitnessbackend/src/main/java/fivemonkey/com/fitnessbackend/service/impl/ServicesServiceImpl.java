@@ -2,10 +2,7 @@ package fivemonkey.com.fitnessbackend.service.impl;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
-import fivemonkey.com.fitnessbackend.dto.UserDTO;
-import fivemonkey.com.fitnessbackend.entities.ServiceType;
 import fivemonkey.com.fitnessbackend.entities.Services;
-
 import fivemonkey.com.fitnessbackend.repository.ServiceTypeRepository;
 import fivemonkey.com.fitnessbackend.repository.ServicesRepository;
 import fivemonkey.com.fitnessbackend.service.service.ServicesService;
@@ -95,6 +92,7 @@ public class ServicesServiceImpl implements ServicesService {
                                                   @Param("cityname") String cityname,
                                                   @Param("studio") String studio,
                                                   @Param("category") Long category) {
+        int pageSize = 5;
         Session session = sessionFactory.openSession();
         String sql = "select s from Services s where s.serviceType.id = 1 ";
         if (!"".equals(keyword)) {
@@ -109,6 +107,7 @@ public class ServicesServiceImpl implements ServicesService {
         if (category != 0L) {
             sql += " and s.category.id = " + category + " ";
         }
+
         Query<Services> query = session.createQuery(sql, Services.class);
         return modelMapper.mapList(query.getResultList(), ServicesDTO.class);
     }
@@ -143,8 +142,8 @@ public class ServicesServiceImpl implements ServicesService {
     }
 
     @Override
-    public List<ServicesDTO> getServiceOfStudio(String id,Long idC) {
-        return modelMapper.mapList(serviceRepository.getServicesByStudioIdAndCateId(id,idC), ServicesDTO.class);
+    public List<ServicesDTO> getServiceOfStudio(String id, Long idC) {
+        return modelMapper.mapList(serviceRepository.getServicesByStudioIdAndCateId(id, idC), ServicesDTO.class);
     }
 
     @Override

@@ -63,4 +63,7 @@ public class Session {
                 '}';
     }
 
+    public Session(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 }

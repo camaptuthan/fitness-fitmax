@@ -4,9 +4,6 @@ import fivemonkey.com.fitnessbackend.dto.BlogDTO;
 import fivemonkey.com.fitnessbackend.entities.Blog;
 import fivemonkey.com.fitnessbackend.entities.Category;
 import fivemonkey.com.fitnessbackend.entities.User;
-import fivemonkey.com.fitnessbackend.security.UserDetail;
-import org.springframework.data.domain.Page;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,7 +29,7 @@ public interface BlogService {
 
     List<Blog> findTop3NewestBlogs();
 
-    Page<Blog> findBlogByKeyword(String keyword,int pageNumber);
+    List<Blog> findBlogBy2Fields(String keyword, Long category, int pageNumber);
 
-
+    int totalPageBy2Fields(String keyword, Long category);
 }

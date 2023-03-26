@@ -85,4 +85,7 @@ public interface UserRepository extends JpaRepository<User, String> {
             "and u.studio.id=?4"
     )
     List<User> findAllUser(String keyword,String roleId, String cityName, String studioId);
+
+    @Query("SELECT u FROM User u where u.role.name='Studio Manager' and u.studio.id=?1")
+    User getManagerOfStudio(String studioId);
 }

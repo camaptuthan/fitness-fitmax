@@ -1,5 +1,7 @@
 package fivemonkey.com.fitnessbackend.service.impl;
 
+import fivemonkey.com.fitnessbackend.dto.TrainerDTO;
+import fivemonkey.com.fitnessbackend.repository.TrainerRepository;
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.TrainerDTO;
 import fivemonkey.com.fitnessbackend.entities.Trainer;
@@ -13,12 +15,18 @@ import java.util.List;
 
 @Service
 public class TrainerServiceImpl implements TrainerService {
+
+    @Autowired
+    private TrainerRepository trainerRepository;
+    @Override
+    public List<TrainerDTO> getAllAvailableTrainers() {
+        return null;
+    }
     @Autowired
     ModelMapperConfiguration<Trainer, TrainerDTO> modelMapperConfiguration;
+   
     @Autowired
-    TrainerRepository trainerRepository;
-    @Autowired
-    UserRepository userRepository;
+   private UserRepository userRepository;
 
     @Override
     public List<TrainerDTO> getListPT(String studioId) {

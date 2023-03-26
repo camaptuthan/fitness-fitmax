@@ -82,15 +82,22 @@
 
                 <div class="pagination-cover">
                     <ul class="pagination">
-                        <li class="pagination-item item-prev"><a href="#"><i aria-hidden="true"
-                                                                             class="fa fa-angle-left"></i></a></li>
-                        <li class="pagination-item active"><a href="#">1</a></li>
-                        <li class="pagination-item"><a href="#">2</a></li>
-                        <li class="pagination-item"><a href="#">3</a></li>
-                        <li class="pagination-item"><a href="#">4</a></li>
-                        <li class="pagination-item"><a href="#">5</a></li>
-                        <li class="pagination-item item-next"><a href="#"><i aria-hidden="true"
-                                                                             class="fa fa-angle-right"></i></a></li>
+                        <li class="pagination-item item-prev" th:classappend="${currentPage -1 == 0} ? 'disabled':''"
+                            th:if="${currentPage -1 > 0}">
+                            <a th:href="@{/service/classes(pageNumber=${currentPage - 1},keyword=${currentKeyword},category=${currentCategory},city=${currentCity},studio=${currentStudio})}">
+                                <i aria-hidden="true" class="fa fa-angle-left"></i>
+                            </a>
+                        </li>
+                        <li class="pagination-item "
+                            th:classappend="${currentPage == i}? 'active' :'' "
+                            th:each="i: ${#numbers.sequence(1,totalPage)}"><a
+                                th:href="@{/service/classes(pageNumber=${i},keyword=${currentKeyword},category=${currentCategory},city=${currentCity},studio=${currentStudio})}"
+                                th:text="${i}"></a></li>
+                        <li class="pagination-item item-next"
+                            th:classappend="${currentPage == totalPage}  ? 'disabled':''"
+                            th:if="${currentPage < totalPage}"><a
+                                th:href="@{/service/classes(pageNumber=${currentPage + 1},keyword=${currentKeyword},category=${currentCategory},city=${currentCity},studio=${currentStudio})}"><i
+                                aria-hidden="true" class="fa fa-angle-right"></i></a></li>
                     </ul>
                 </div>
 
@@ -108,6 +115,7 @@
                             <input name="city" th:value="${currentCity}" type="hidden">
                             <input name="studio" th:value="${currentStudio}" type="hidden">
                             <input name="category" th:value="${currentCategory}" type="hidden">
+                            <input name="pageNumber" th:value="${currentPage}" type="hidden">
                             <button class="btn-form" type="submit"><i aria-hidden="true" class="fa fa-search"></i>
                             </button>
 
@@ -118,9 +126,12 @@
                     <li class="widget widget-categories">
                         <h3 class="title">Categories</h3>
                         <ul>
-                            <li><a th:href="@{/service/classes(keyword=${currentKeyword},city=${currentCity},studio=${currentStudio})}">All</a></li>
+                            <li>
+                                <a th:href="@{/service/classes(pageNumber=${currentPage},keyword=${currentKeyword},city=${currentCity},studio=${currentStudio})}">All</a>
+                            </li>
                             <th:block th:each="category: ${categoryList}">
-                                <li><a th:href="@{/service/classes(keyword=${currentKeyword},category=${category.id},city=${currentCity},studio=${currentStudio})}"
+                                <li>
+                                    <a th:href="@{/service/classes(pageNumber=${currentPage},keyword=${currentKeyword},category=${category.id},city=${currentCity},studio=${currentStudio})}"
                                        th:text="${category.name} "></a></li>
                             </th:block>
                         </ul>
@@ -130,9 +141,12 @@
                         <ul>
                             <h3 class="title">City</h3>
                             <ul>
-                                <li><a th:href="@{/service/classes(keyword=${currentKeyword},category=${currentCategory})}">All</a></li>
+                                <li>
+                                    <a th:href="@{/service/classes(pageNumber=${currentPage},keyword=${currentKeyword},category=${currentCategory})}">All</a>
+                                </li>
                                 <th:block th:each="city : ${cityList}">
-                                    <li><a th:href="@{/service/classes(keyword=${currentKeyword},category=${currentCategory},city=${city.name})}"
+                                    <li>
+                                        <a th:href="@{/service/classes(pageNumber=${currentPage},keyword=${currentKeyword},category=${currentCategory},city=${city.name})}"
                                            th:text="${city.name} "></a></li>
                                 </th:block>
                             </ul>
@@ -142,11 +156,11 @@
                             <h3 class="title">Studio</h3>
                             <ul th:name="studio">
                                 <li>
-                                    <a th:href="@{/service/classes(keyword=${currentKeyword},category=${currentCategory},city=${currentCity})}">All</a>
+                                    <a th:href="@{/service/classes(pageNumber=${currentPage},keyword=${currentKeyword},category=${currentCategory},city=${currentCity})}">All</a>
                                 </li>
                                 <th:block th:each="studio: ${studioList}">
                                     <li>
-                                        <a th:href="@{/service/classes(keyword=${currentKeyword},category=${currentCategory},city=${currentCity},studio=${studio.id})}"
+                                        <a th:href="@{/service/classes(pageNumber=${currentPage},keyword=${currentKeyword},category=${currentCategory},city=${currentCity},studio=${studio.id})}"
                                            th:text="${studio.name} "></a></li>
                                 </th:block>
                             </ul>

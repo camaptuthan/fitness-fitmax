@@ -424,6 +424,12 @@ public class UserServiceImpl implements UserService {
         return modelMapperConfiguration.mapList(query1.getResultList(), UserDTO.class);
     }
 
+    @Override
+    public User getManagerOfStudio(String id) {
+        return userRepository.getManagerOfStudio(id) ;
+    }
+
+
 
 
 }
