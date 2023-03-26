@@ -127,7 +127,12 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<Blog> findTop3NewestBlogs() {
-        return blogRepository.findTop3NewestBlogs();
+        Session session = sessionFactory.openSession();
+        String sql = "SELECT  b FROM Blog b ORDER BY b.date DESC";
+        Query<Blog> query = session.createQuery(sql, Blog.class);
+        query.setFirstResult(0);
+        query.setMaxResults(3);
+        return query.getResultList();
     }
 
     @Override

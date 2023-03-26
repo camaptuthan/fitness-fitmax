@@ -12,8 +12,6 @@ import java.util.List;
 
 @Repository
 public interface BlogRepository extends JpaRepository<Blog, Long> {
-    @Query("SELECT  b FROM Blog b ORDER BY b.date DESC")
-    List<Blog> findTop3NewestBlogs();
 
 
     @Query("select b from Blog  b where CONCAT(b.description,'',b.category,'',b.title) like %?1% ")
