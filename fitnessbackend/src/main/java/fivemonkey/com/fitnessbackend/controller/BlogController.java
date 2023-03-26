@@ -1,5 +1,6 @@
 package fivemonkey.com.fitnessbackend.controller;
 
+import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.BlogDTO;
 import fivemonkey.com.fitnessbackend.entities.Blog;
 import fivemonkey.com.fitnessbackend.entities.Category;
@@ -26,6 +27,9 @@ public class BlogController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private ModelMapperConfiguration<Blog, BlogDTO> modelMapper;
+
     @GetMapping("")
     public String blogInformation(Model model, @RequestParam(name = "keyword", required = false, defaultValue = "") String keyword,
                                   @RequestParam(name = "category", required = false, defaultValue = "0") String category,
@@ -33,8 +37,9 @@ public class BlogController {
         int totalPage = blogService.totalPageBy2Fields(keyword, Long.parseLong(category));
         List<Category> categoryList = categoryService.findBlogCategories();
         List<Blog> list = blogService.findBlogBy2Fields(keyword, Long.parseLong(category), Integer.parseInt(pageNumber) - 1);
+        List<BlogDTO> listBlog = modelMapper.mapList(list, BlogDTO.class);
         List<Blog> listNewestBlog = blogService.findTop3NewestBlogs();
-        model.addAttribute("listBlog", list);
+        model.addAttribute("listBlog", listBlog);
         model.addAttribute("size", list.size());
         model.addAttribute("listNewestBlog", listNewestBlog);
         model.addAttribute("catelist", categoryList);
