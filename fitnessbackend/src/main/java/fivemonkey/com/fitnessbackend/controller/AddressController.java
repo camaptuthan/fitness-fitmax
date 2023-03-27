@@ -43,10 +43,7 @@ public class AddressController {
     public List<StudioDTO> getStudioByCityId(@PathVariable("city") String cityName) {
         return addressService.getStudioByCity(cityName);
 
-//        public List<StudioDTO> getStudioByCity (@PathVariable("city") String cityname){
-//            return studioService.getAllStudiosByCity(cityname);
-//
-//        }
+
 
     }
 }
