@@ -97,7 +97,7 @@ public class HomeController {
         return "/program";
     }
 
-    @RequestMapping(value = "/homepage/studio", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/studio", method = {RequestMethod.GET, RequestMethod.POST})
     public String listStudiosHomepage(Model model, @RequestParam(value = "cityname", required = false, defaultValue = "All") String cityname) {
         Map<String, List<StudioDTO>> studioMapList = new HashMap<>();
         List<CityDTO> listCity = cityService.getAllCities();

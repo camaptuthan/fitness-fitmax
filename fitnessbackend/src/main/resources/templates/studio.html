@@ -67,7 +67,7 @@
   <div class="container">
       <h2 class="title-decor">Studio <span>Fitness</span></h2>
       <div class="custom-select" style="width:400px;">
-          <form id="searchAndFilter" th:action="@{/homepage/studio}" method="get">
+          <form id="searchAndFilter" th:action="@{/studio}" method="get">
               City: <select th:name="cityname" style="width:30%" onchange="submitForm()">
               <option >All</option>
               <th:block th:each="city : ${cities}">
@@ -100,7 +100,7 @@
                   </div>
                   <div class="post-footer">
                       <div class="meta">
-                          <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a href="#" th:text="${s.districtName()}+', '+${s.road()}"></a></span>
+                          <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a href="#" th:text="${s.getDistrictName()}+', '+${s.getRoad()}"></a></span>
                           <span th:text="${s.contact}" class="post-comment"><i class="fa fa-comment" aria-hidden="true"></i><a href="#">2 Comments(s)</a></span>
                       </div>
                       <a th:href="@{/studio/studio-details/{id} (id=${s.id})}" class="btn"><span>Detail</span></a>
