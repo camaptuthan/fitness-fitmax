@@ -228,7 +228,7 @@ public class UserController {
     @PostMapping("/management/updateprofile/{email}")
     public String userUpdateAll(@ModelAttribute("user") UserDTO userDTO, Model model) throws IOException {
         userService.updateUser(userDTO);
-        return "redirect:/user/management/listusers";
+        return "redirect:/user/management/updateprofile";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)

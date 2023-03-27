@@ -31,21 +31,21 @@ insert into district(district_name,road,city_id) values ('Cam Le','149 Truong Ch
 insert into district(district_name,road,city_id) values ('Son Tra','45 Yet Kieu',3);
 
 /*select * from studio;*/
-insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU001',1,'','Gym Ha Noi A',1,CURDATE());
-insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU002',2,'','Gym Ha Noi B',1,CURDATE());
-insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU003',3,'','Gym Ha Noi C',1,CURDATE());
-insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU004',4,'','Gym Ha Noi D',1,CURDATE());
-insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU005',5,'','Gym Ha Noi E',1,CURDATE());
-insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU006',6,'','Gym HCM A',1,CURDATE());
-insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU007',7,'','Gym HCM B',1,CURDATE());
-insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU008',8,'','Gym HCM C',1,CURDATE());
-insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU009',9,'','Gym HCM D',1,CURDATE());
-insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU010',10,'','Gym HCM E',1,CURDATE());
-insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU011',11,'','Gym Da Nang A',1,CURDATE());
-insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU012',12,'','Gym Da Nang B',1,CURDATE());
-insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU013',13,'','Gym Da Nang C',1,CURDATE());
-insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU014',14,'','Gym Da Nang D',1,CURDATE());
-insert into studio(studio_id,district_id,contact,studio_name,status,created_date) values ('STU015',15,'','Gym Da Nang E',1,CURDATE());
+insert into studio(studio_id,district_id,image,studio_name,status,created_date) values ('STU001',1,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym2.jpg?alt=media&token=83b7d65e-b33d-48d5-aa24-a490b076c19c','Gym Ha Noi A',1,CURDATE());
+insert into studio(studio_id,district_id,image,studio_name,status,created_date) values ('STU002',2,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym4.jpg?alt=media&token=24d4d9df-d2b6-4230-afc3-8c13cc61669d','Gym Ha Noi B',1,CURDATE());
+insert into studio(studio_id,district_id,image,studio_name,status,created_date) values ('STU003',3,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym2.jpg?alt=media&token=83b7d65e-b33d-48d5-aa24-a490b076c19c','Gym Ha Noi C',1,CURDATE());
+insert into studio(studio_id,district_id,image,studio_name,status,created_date) values ('STU004',4,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym4.jpg?alt=media&token=24d4d9df-d2b6-4230-afc3-8c13cc61669d','Gym Ha Noi D',1,CURDATE());
+insert into studio(studio_id,district_id,image,studio_name,status,created_date) values ('STU005',5,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym3.jpg?alt=media&token=c9ec6f49-a56f-40c8-84fe-b81d1ea34ef3','Gym Ha Noi E',1,CURDATE());
+insert into studio(studio_id,district_id,image,studio_name,status,created_date) values ('STU006',6,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym3.jpg?alt=media&token=c9ec6f49-a56f-40c8-84fe-b81d1ea34ef3','Gym HCM A',1,CURDATE());
+insert into studio(studio_id,district_id,image,studio_name,status,created_date) values ('STU007',7,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym2.jpg?alt=media&token=83b7d65e-b33d-48d5-aa24-a490b076c19c','Gym HCM B',1,CURDATE());
+insert into studio(studio_id,district_id,image,studio_name,status,created_date) values ('STU008',8,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym3.jpg?alt=media&token=c9ec6f49-a56f-40c8-84fe-b81d1ea34ef3','Gym HCM C',1,CURDATE());
+insert into studio(studio_id,district_id,image,studio_name,status,created_date) values ('STU009',9,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym3.jpg?alt=media&token=c9ec6f49-a56f-40c8-84fe-b81d1ea34ef3','Gym HCM D',1,CURDATE());
+insert into studio(studio_id,district_id,image,studio_name,status,created_date) values ('STU010',10,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym4.jpg?alt=media&token=24d4d9df-d2b6-4230-afc3-8c13cc61669d','Gym HCM E',1,CURDATE());
+insert into studio(studio_id,district_id,image,studio_name,status,created_date) values ('STU011',11,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym4.jpg?alt=media&token=24d4d9df-d2b6-4230-afc3-8c13cc61669d','Gym Da Nang A',1,CURDATE());
+insert into studio(studio_id,district_id,image,studio_name,status,created_date) values ('STU012',12,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym3.jpg?alt=media&token=c9ec6f49-a56f-40c8-84fe-b81d1ea34ef3','Gym Da Nang B',1,CURDATE());
+insert into studio(studio_id,district_id,image,studio_name,status,created_date) values ('STU013',13,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym2.jpg?alt=media&token=83b7d65e-b33d-48d5-aa24-a490b076c19c','Gym Da Nang C',1,CURDATE());
+insert into studio(studio_id,district_id,image,studio_name,status,created_date) values ('STU014',14,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym3.jpg?alt=media&token=c9ec6f49-a56f-40c8-84fe-b81d1ea34ef3','Gym Da Nang D',1,CURDATE());
+insert into studio(studio_id,district_id,image,studio_name,status,created_date) values ('STU015',15,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym2.jpg?alt=media&token=83b7d65e-b33d-48d5-aa24-a490b076c19c','Gym Da Nang E',1,CURDATE());
 
 /*select * from user*/
 insert into user(email,password,first_name,last_name,role_id,status,created_date) values ('fivemonkey.co@gmail.com','123456','Monkey','Five','ROLE01',1,CURDATE());
