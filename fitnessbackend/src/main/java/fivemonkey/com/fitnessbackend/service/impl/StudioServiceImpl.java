@@ -72,6 +72,12 @@ public class StudioServiceImpl implements StudioService {
         return modelMapper.mapList(studioRepository.findAll(), StudioDTO.class);
     }
 
+//    @Override
+//    public void updateStudio(Studio studioDTO) {
+//        StudioDTO studio = modelMapper.map(studioDTO, StudioDTO.class);
+//        studioRepository.save(studioDTO);
+//    }
+
     @Override
     public Studio getStudioById(String id) {
         return studioRepository.findStudioById(id);
@@ -97,18 +103,18 @@ public class StudioServiceImpl implements StudioService {
                                                  @Param("city") String city,
                                                  @Param("status") String studioStatus) {
         Session session = sessionFactory.openSession();
-        String sql = "select s from Studio s join District d on s.district.id = d.id where 1=1 ";
+        String hql = "select s from Studio s join District d on s.district.id = d.id where 1=1 ";
         if (!"".equals(keyword)) {
-            sql += " and concat(s.name,s.contact, s.date) like '%" + keyword + "%' ";
+            hql += " and concat(s.name,s.contact, s.date) like '%" + keyword + "%' ";
         }
         if (!"".equals(city)) {
-            sql += " and s.district.id in (select d.id from District d where d.city.id = '" + city + "') ";
+            hql += " and s.district.id in (select d.id from District d where d.city.id = '" + city + "') ";
         }
         if (!"".equals(studioStatus)) {
-            sql += " and s.status = '" + studioStatus + "' ";
+            hql += " and s.status = '" + studioStatus + "' ";
         }
 
-        Query<Studio> query = session.createQuery(sql, Studio.class);
+        Query<Studio> query = session.createQuery(hql, Studio.class);
         return modelMapper.mapList(query.getResultList(), StudioDTO.class);
         //return query.getResultList();
     }

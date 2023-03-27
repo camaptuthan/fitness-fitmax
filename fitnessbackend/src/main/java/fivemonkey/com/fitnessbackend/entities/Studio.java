@@ -35,8 +35,8 @@ public class Studio {
     @Column(name = "contact")
     private String contact;
 
-    @Column(name = "road")
-    private String road;
+    @Column(name = "address")
+    private String address;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
