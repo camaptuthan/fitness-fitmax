@@ -29,7 +29,7 @@
 
         <div class="row">
             <div class="col-lg-12 m-b30">
-                <form id="slider-form" method="POST"  th:action="@{/slider/edit/{id} (id=${sliderInfo.id})}" th:object="${sliderInfo}" >
+                <form id="slider-form" method="POST"  th:action="@{/slider/edit/{id} (id=${sliderInfo.id})}" th:object="${sliderInfo}"  enctype="multipart/form-data">
                     <div class="form-group row">
                         <div class="col-sm-4">
                             <h8>Slider Title</h8>
@@ -61,11 +61,9 @@
                     <div class="form-group row">
                         <div class="col-sm-4">
                             <h8>Slider Image</h8>
-                            <input
-                                    class="form-control"
-                                    name="image"
-                                    type="file"
-                            />
+                            <input type="file" name="fileImage" id="fileImage"
+                                   accept="image/jpeg, image/png"
+                                   class="form-control-file" />
                         </div>
                     </div>
                     <div class="box-footer">

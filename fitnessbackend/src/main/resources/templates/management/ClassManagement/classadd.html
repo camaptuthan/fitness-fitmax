@@ -14,7 +14,7 @@
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script th:src="@{//code.jquery.com/jquery-1.11.1.min.js}"></script>
     <script th:src="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js}"></script>
-    <script th:src="@{/js/validate-form.js}"></script>
+
 </head>
 
 <!------ Include the above in your HEAD tag ---------->
@@ -35,7 +35,7 @@
         <div class="form-group row">
             <div th:class="'col-6'">
                 <label class="control-label" for="name">NAME</label>
-                <input id="name" onblur="inputValidation(this)" th:value="${clazz.name}" name="name"
+                <input id="name"  th:value="${clazz.name}" name="name"
                        placeholder="Name"
                        class="form-control input-md"
                        type="text"/>
@@ -53,7 +53,7 @@
         <div class="form-group row">
             <div th:class="'col-6'">
                 <label class="control-label" for="des">Description</label>
-                <input id="des" onblur="inputValidationDes(this)" name="des" th:value="${clazz.des}"
+                <input id="des"  name="des" th:value="${clazz.des}"
                        placeholder=" Description"
                        class="form-control input-md"
                        type="text">
@@ -61,7 +61,7 @@
             </div>
             <div th:class="'col-6'">
                 <label class="control-label" for="class-duration">Duration</label>
-                <input id="class-duration" onblur="inputValidationDuration(this)" th:value="${clazz.duration}"
+                <input id="class-duration"  th:value="${clazz.duration}"
                        name="duration"
                        placeholder="Duration"
                        class="form-control input-md"
@@ -73,7 +73,7 @@
         <div class="form-group row">
             <div th:class="'col-6'">
                 <label class="control-label" for="price">Price</label>
-                <input id="price" onblur="inputValidationPrice(this)" th:value="${clazz.price}" name="price"
+                <input id="price"  th:value="${clazz.price}" name="price"
                        placeholder="Price"
                        class="form-control input-md"
                        type="number">
