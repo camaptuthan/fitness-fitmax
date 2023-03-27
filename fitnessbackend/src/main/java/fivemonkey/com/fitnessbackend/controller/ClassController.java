@@ -54,15 +54,13 @@ public class ClassController {
 
         Map<String, List<ClassDTO>> classDTOListMap = new HashMap<>();
 
-        int size = classDTOList.size() % 3 == 0 ? classDTOList.size() / 3 : classDTOList.size() / 3 + 1;
+        int size = classDTOList.size() % 3 == 0 ? classDTOList.size() / 3 : (classDTOList.size() / 3) + 1;
         for (int i = 0; i < size; i++) {
             List<ClassDTO> valueList = new ArrayList<>();
             for (int j = 0; j < 3; j++) {
-                if (i * 3 + j < size) {
                     valueList.add(classDTOList.get(i * 3 + j));
-                }
             }
-            classDTOListMap.put("page-" + i + 1, valueList);
+            classDTOListMap.put("page-" + (i + 1), valueList);
         }
 
 
