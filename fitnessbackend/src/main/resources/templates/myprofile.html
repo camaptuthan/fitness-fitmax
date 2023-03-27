@@ -41,7 +41,7 @@
         <div class="row gutters-sm" th:object="${user}">
             <div class="col-md-4 mb-3">
                 <div class="card">
-                    <form  th:action="@{/user/management/avataruser/{email} (email=${user.email})}" method="POST"
+                    <form  th:action="@{/user/avataruser/{email} (email=${user.email})}" method="POST"
                           th:object="${user}" enctype="multipart/form-data">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
@@ -126,7 +126,7 @@
 
             <div class="col-md-8">
                 <div class="card mb-3">
-                    <form id="profile-form" th:action="@{/user/management/updateprofile/{email} (email=${user.email})}" method="POST"
+                    <form id="profile-form" th:action="@{/user/updateprofile/{email} (email=${user.email})}" method="POST"
                           th:object="${user}" enctype="multipart/form-data">
                         <div class="card-body">
                             <div class="row">
@@ -149,9 +149,9 @@
                                             placeholder="Enter your first name"
                                             th:field="*{firstName}"
                                             type="text"
-                                            required
                                             style="background: #202020; color: whitesmoke"
-                                            id="firstName"
+                                            id="firstname"
+                                            required
                                     />
 
                                 </div>
@@ -169,7 +169,7 @@
                                             type="text"
                                             required
                                             style="background: #202020; color: whitesmoke"
-                                            id="lastName"
+                                            id="lastname"
                                     />
 
                                 </div>

@@ -24,15 +24,12 @@ public class District {
     @Column(name = "district_name")
     private String name;
 
-    @Column(name = "road")
-    private String road;
-
     //city-district relationship
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id", referencedColumnName = "city_id")
     private City city;
 
     //studio-district relationship
-    @OneToOne(mappedBy = "district", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Studio studios;
+    @OneToMany(mappedBy = "district", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Studio> studios;
 }

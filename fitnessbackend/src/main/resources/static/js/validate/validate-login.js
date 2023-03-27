@@ -4,7 +4,6 @@
         // Specify validation rules
         rules: {
             email: {
-                required:true,
                 email: true
             },
             password: {

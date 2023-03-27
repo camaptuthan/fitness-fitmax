@@ -132,6 +132,7 @@ public class ServicesController {
         List<StudioDTO> listStudio = studioService.getAllStudiosByCity(cityname);
         List<CategoryDTO> listCategory = categoryService.getAllCategoriesByType("service");
         List<ClassDTO> listClass = classService.getClassesBy4Fields(keyword, cityname, studio, Long.parseLong(category), Integer.parseInt(pageNumber) - 1);
+        System.out.println("HAPH" + listClass);
         model.addAttribute("classes", listClass);
         model.addAttribute("size", listClass.size());
         model.addAttribute("cityList", listCity);

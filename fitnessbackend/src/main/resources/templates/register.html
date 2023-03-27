@@ -18,6 +18,11 @@
     <!-- jQuery Validation Plugin -->
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
     <script th:src="@{/js/validate/validate-register.js}"></script>
+    <style>
+        label.error {
+            color: red;
+        }
+    </style>
 </head>
 <body class="img js-fullheight">
 <section class="ftco-section" th:style="'background: url(/img/bg-2.jpg);background-repeat: no-repeat;background-size: cover;'">
@@ -35,9 +40,9 @@
                     <form class="signin-form" id="registration-form" th:action="@{/user/register}"   method="post" th:object="${userDTO}"  >
                         <div class="form-group" style="display: block">
                             <input  style="width: 49%;display: inline-block" id="firstname" type="text" class="form-control" placeholder="First Name"
-                                    name="firstName"   required>
+                                    name="firstName"  >
                             <input style="width: 49%;display: inline-block" id="lastname" type="text" class="form-control" placeholder="Last Name"
-                                   name="lastName"   required>
+                                   name="lastName"   >
                         </div>
                         <div class="form-group">
                             <input type="text" id="email" class="form-control" placeholder="Email" name="email" required>
@@ -54,8 +59,8 @@
                             <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                         </div>
                         <div class="form-group">
-                            <h6 style="color: green" th:text="${message}"></h6>
-                            <h6 style="color: green" th:text="${message2}"></h6>
+                            <h4 style="color: green" th:text="${message}"></h4>
+                            <h4 style="color: green" th:text="${message2}"></h4>
                             <button type="submit" class="form-control btn btn-primary submit px-3">Register</button>
                         </div>
                     </form>

@@ -14,12 +14,12 @@ $(document).ready(function () {
         messages: {
             firstname: "Please enter first name",
             lastname: "Please enter last name",
-            address: {
-                required: "Please provide address",
-            },
-            phone: {
-                required: "Please provide   phone",
-            },
+            address:
+                 "Please provide address",
+
+            phone:
+                "Please provide phone",
+
         },
 
         // Submit form if validation passes

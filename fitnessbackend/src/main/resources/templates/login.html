@@ -15,7 +15,11 @@
     <link rel="stylesheet" th:href="@{/css/stylelogin.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <script th:src="@{/js/validate/validate-login.js}"></script>
-
+    <style>
+        label.error {
+            color: red;
+        }
+    </style>
 </head>
 <body class="img js-fullheight">
 <section class="ftco-section"
@@ -30,7 +34,7 @@
             <div class="col-md-6 col-lg-4">
                 <div class="login-wrap p-0">
                     <h3 class="mb-4 text-center">Have an account?</h3>
-                    <div class="text-warning text-center" th:text="${errorMsg}"></div>
+                    <div style="color: red" class="text-center" th:text="${errorMsg}"></div>
                     <form id="login-form" th:action="@{/login}" method="post" class="signin-form"
                           th:object="${loginDto}">
                         <div class="form-group">
