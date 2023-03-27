@@ -55,4 +55,19 @@ public class CityServiceImpl implements CityService {
     public List<CityDTO> getCities() {
         return modelMapper.mapList(cityRepository.findAll(), CityDTO.class);
     }
+
+    @Override
+    public City saveCity(City city) {
+        return cityRepository.save(city);
+    }
+
+    @Override
+    public City createCity(City city) {
+        return cityRepository.save(city);
+    }
+
+    @Override
+    public List<City> getNewCity() {
+        return cityRepository.getNewCity();
+    }
 }

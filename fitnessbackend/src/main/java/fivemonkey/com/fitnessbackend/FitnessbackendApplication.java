@@ -14,6 +14,7 @@ public class FitnessbackendApplication {
     public static void main(
             String[] args) {
         SpringApplication.run(FitnessbackendApplication.class, args);
+
     }
 
 }

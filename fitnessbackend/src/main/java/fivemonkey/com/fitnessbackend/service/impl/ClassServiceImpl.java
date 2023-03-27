@@ -120,7 +120,7 @@ public class ClassServiceImpl implements ClassService {
     public int totalPageBy4Fields(String keyword, String cityname, String studio, Long category) {
         int pageSize = 5;
         Session session = sessionFactory.openSession();
-        String querycount = "select count(c.id) from Clazz c where c.services.serviceType.id = 3 and c.services.status = 1 ";
+        String querycount = "select count(c.id) from Clazz c where c.services.serviceType.id = 3 and c.services.status = 2 ";
         if (!"".equals(keyword)) {
             querycount += " and concat(c.services.name,'',c.services.price,'',c.services.duration,'',c.services.des,'',c.services.date) like '%" + keyword + "%' ";
         }

@@ -5,6 +5,7 @@ import fivemonkey.com.fitnessbackend.entities.Registration;
 import fivemonkey.com.fitnessbackend.entities.Status;
 import fivemonkey.com.fitnessbackend.entities.User;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,4 +32,5 @@ public interface RegistrationService {
 
     List<Registration> getRegistrationByAssistant(String email);
 
+    List<RegistrationDTO> getRegistrationByFilter(String keyword, String city, String studio, String studioStatus);
 }

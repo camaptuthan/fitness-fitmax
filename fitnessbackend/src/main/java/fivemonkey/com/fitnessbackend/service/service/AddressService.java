@@ -11,7 +11,7 @@ import java.util.List;
 public interface AddressService {
     List<CityDTO> getCities();
 
-    List<DistrictDTO> getDistrictsByCityId(Long cityId);
+    List<DistrictDTO> getDistrictsByCityName(String cityId);
 
     List<StudioDTO> getStudioByCity(String cityName);
 }

@@ -1,6 +1,7 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.dto.CityDTO;
+import fivemonkey.com.fitnessbackend.dto.DistrictDTO;
 import fivemonkey.com.fitnessbackend.dto.StudioDTO;
 import fivemonkey.com.fitnessbackend.service.service.AddressService;
 import fivemonkey.com.fitnessbackend.service.service.StudioService;
@@ -26,6 +27,13 @@ public class AddressController {
     @GetMapping("/city")
     public List<CityDTO> getCities() {
         return addressService.getCities();
+    }
+
+
+    @ResponseBody
+    @GetMapping("/district/{cityid}")
+    public List<DistrictDTO> getDistricts(@PathVariable("cityid") String cityName) {
+        return addressService.getDistrictsByCityName(cityName);
     }
 
 

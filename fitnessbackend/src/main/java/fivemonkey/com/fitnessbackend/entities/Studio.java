@@ -35,6 +35,9 @@ public class Studio {
     @Column(name = "contact")
     private String contact;
 
+    @Column(name = "address")
+    private String address;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
     private Date date;
@@ -50,13 +53,12 @@ public class Studio {
     private List<User> users;
 
     //studio-district relationship
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "district_id", referencedColumnName = "district_id", unique = true)
     private District district;
 
     //studio-service relationship
     @OneToMany(mappedBy = "studio", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Services> services;
-
 
 }
