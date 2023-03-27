@@ -75,7 +75,6 @@ public class ClassController {
         model.addAttribute("related_class", classDTOListMap);
         model.addAttribute("class", classDTO);
 
-
         return "class/profile";
     }
 
@@ -93,20 +92,21 @@ public class ClassController {
                           @PathVariable("id") String serviceId) {
         String path = "management/ClassManagement/class";
         ClassDTO foundClass = serviceId.equals("new") ? new ClassDTO() : classService.getByServiceId(serviceId);
-        if (foundClass.getId() != null && !servicesService.isServiceExistInStudio(foundClass.getServicesId(), userDetail.getUser().getStudio().getId())) {
-            throw new NullPointerException();
+        if (foundClass.getId() != null && classService.getByUserRole(userDetail.getUser()).stream().noneMatch(o -> o.getId().equals(foundClass.getId()))) {
+            path = "redirect:/service/class/management/classes";
+        } else {
+            model.addAttribute("trainers", trainerService.getAllAvailableTrainersByStudio(foundClass.getServicesStudioId()));
+            model.addAttribute("cities", addressService.getCities());
+            model.addAttribute("studios", addressService.getStudioByCity(serviceId.equals("new") ? userDetail.getUser().getCity().getName() : foundClass.getServicesCityName()));
+            model.addAttribute("schedules", scheduleService.getAll(null, null));
+            model.addAttribute("item", foundClass);
         }
-        model.addAttribute("trainers", trainerService.getAllAvailableTrainersByStudio(foundClass.getServicesStudioId()));
-        model.addAttribute("cities", addressService.getCities());
-        model.addAttribute("studios", addressService.getStudioByCity(serviceId.equals("new") ? userDetail.getUser().getCity().getName() : foundClass.getServicesCityName()));
-        model.addAttribute("schedules", scheduleService.getAll(null, null));
-        model.addAttribute("item", foundClass);
         return path;
     }
 
     @ResponseBody
     @PostMapping("/management/api/update/{id}")
-    public ClassDTO classes(@PathVariable("id") String serviceId,
+    public ClassDTO updateClasses(@PathVariable("id") String serviceId,
                             @RequestParam(value = "fileImage", defaultValue = "", required = false) MultipartFile multipartFile,
                             Model model) throws IOException {
         return classService.saveThumbnail(imageUploader.upload(multipartFile), serviceId);

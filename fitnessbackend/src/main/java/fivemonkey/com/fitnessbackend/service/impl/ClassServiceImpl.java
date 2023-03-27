@@ -62,7 +62,7 @@ public class ClassServiceImpl implements ClassService {
         Clazz clazz = classRepository.findByServicesId(classDTO.getServicesId()).orElse(new Clazz());
         Services services = clazz.getServices() == null ? new Services(new Date()) : clazz.getServices();
         services.setCity(cityRepository.getCityByName(classDTO.getServicesCityName()));
-        services.setStudio(studioRepository.getStudioById(classDTO.getServicesStudioId()));
+        services.setStudio(studioRepository.getStudioById(clazz.getServices() == null ? user.getStudio().getId() :  classDTO.getServicesStudioId()));
         services.setName(classDTO.getServicesName());
         services.setDes(classDTO.getServicesDes());
         services.setStatus(classDTO.getServicesStatus());
@@ -97,7 +97,7 @@ public class ClassServiceImpl implements ClassService {
     public List<ClassDTO> getClassesBy4Fields(String keyword, String cityname, String studio, Long category, int pageNumber) {
         int pageSize = 5;
         Session session = sessionFactory.openSession();
-        String query = "select c from Clazz c where c.services.serviceType.id = 3 and c.services.status = 2 ";
+        String query = "select c from Clazz c where c.services.serviceType.id = 3 and c.services.status = 1 ";
         if (!"".equals(keyword)) {
             query += " and concat(c.services.name,'',c.services.price,'',c.services.duration,'',c.services.des,'',c.services.date) like '%" + keyword + "%' ";
         }
