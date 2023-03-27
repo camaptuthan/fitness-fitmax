@@ -3,6 +3,7 @@ package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.configuration.Utility;
 import fivemonkey.com.fitnessbackend.dto.*;
+import fivemonkey.com.fitnessbackend.entities.Registration;
 import fivemonkey.com.fitnessbackend.entities.Role;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.User;
@@ -49,7 +50,8 @@ public class UserController {
     @Autowired
     private RegistrationService registrationService;
 
-
+    @Autowired
+    private ServicesService servicesService;
     @Autowired
     private AddressService addressService;
 
@@ -72,13 +74,13 @@ public class UserController {
                 model.addAttribute("size", userService.getUserByFieldsByAdmin(keyword, cityName, roleId, studioId).size());
                 break;
             case "ROLE02":
-                List<UserDTO> userDTOList = userService.listUserByManage(userDetail.getUser().getStudio().getId(),keyword,roleId);
+                List<UserDTO> userDTOList = userService.listUserByManage(userDetail.getUser().getStudio().getId(), keyword, roleId);
                 model.addAttribute("listRole", roleService.getRoleManager());
                 model.addAttribute("list", userDTOList);
                 model.addAttribute("size", userDTOList == null ? 0 : userDTOList.size());
                 break;
             case "ROLE04":
-                List<UserDTO> userDTOList1 = userService.listUserByAssistant(userDetail.getUser().getStudio().getId(),keyword,roleId);
+                List<UserDTO> userDTOList1 = userService.listUserByAssistant(userDetail.getUser().getStudio().getId(), keyword, roleId);
                 model.addAttribute("listRole", roleService.getRoleAssistant());
                 model.addAttribute("list", userDTOList1);
                 model.addAttribute("size", userDTOList1 == null ? 0 : userDTOList1.size());
@@ -94,16 +96,17 @@ public class UserController {
 
     @RequestMapping(value = "/listpt", method = {RequestMethod.GET, RequestMethod.POST})
     public String getPT(Model model, @RequestParam(value = "studioId", required = false, defaultValue = "All") String studioId
-                                   ,@RequestParam(value = "cityName", required = false, defaultValue = "All") String cityName) {
+            , @RequestParam(value = "cityName", required = false, defaultValue = "All") String cityName) {
 
         Map<String, List<TrainerDTO>> trainerMapList = new HashMap<>();
         List<TrainerDTO> listPT = null;
-        if(("All").equals(cityName)){
-           listPT = trainerService.listAllPT();
+        if (("All").equals(cityName)) {
+            listPT = trainerService.listAllPT();
         } else if (("All").equals(studioId)) {
             listPT = trainerService.getListPTByCity(cityName);
         } else {
-       listPT = trainerService.getListPT(studioId);}
+            listPT = trainerService.getListPT(studioId);
+        }
 
         int size = listPT.size() % 4 == 0 ? listPT.size() / 4 : (listPT.size() / 4 + 1);
         List<TrainerDTO> value = null;
@@ -191,8 +194,8 @@ public class UserController {
                              Model model) throws IOException {
         userService.saveThumbnail(imageUploader.upload(multipartFile), userDTO.getEmail());
 
-        return "redirect:/user/management/updateprofile";}
-
+        return "redirect:/user/management/listusers";
+    }
 
 
     @RequestMapping("/ptdetail/{email}")
@@ -203,7 +206,7 @@ public class UserController {
 
         boolean hasRegistered = false;
         if (userDetail != null) {
-            hasRegistered = registrationService.hasRegistration(email, userDetail.getUser().getEmail());
+            hasRegistered = registrationService.hasRegistrationPt(email, userDetail.getUser().getEmail());
             model.addAttribute("userEmail", userDetail.getUser().getEmail());
             model.addAttribute("userPhone", userDetail.getUser().getPhone());
         } else {
@@ -211,15 +214,34 @@ public class UserController {
             model.addAttribute("userPhone", "");
         }
         model.addAttribute("userRole", userDetail.getUser().getRole().getId());
+        model.addAttribute("listservice", servicesService.getServicesPT());
         model.addAttribute("hasRegistered", hasRegistered);
         model.addAttribute("trainer", trainerDTO);
 
         return "ptDetails";
     }
+    @PostMapping("/ptdetail/{email}")
+    public String sendRequestBookPt(@AuthenticationPrincipal UserDetail userDetail,
+                                    @RequestParam("servicePt") String serviceId,
+                                    @PathVariable("email") String email, Model model){
+        TrainerDTO trainerDTO = trainerService.getTrainerByEmail(email);
+        registrationService.doRegistrationPt(email,userDetail.getUser(),serviceId);
+        trainerService.setStatusTrainer(email);
+        model.addAttribute("trainer", trainerDTO);
+        return "redirect:/";
 
-    @RequestMapping("/management/updateprofile")
-    public String getInformationUserPro5(@AuthenticationPrincipal UserDetail userDetail, Model model) {
-        UserDTO userDTO = userService.getUserByEmail(userDetail.getUser().getEmail());
+    }
+
+//    @RequestMapping("/management/updateprofile")
+//    public String getInformationUserPro5(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+//        UserDTO userDTO = userService.getUserByEmail(userDetail.getUser().getEmail());
+//        model.addAttribute("user", userDTO);
+//        return "myprofile";
+//    }
+
+    @RequestMapping("/management/updateprofile/{email}")
+    public String getInformationUserPro5(@PathVariable("email") String email, Model model) {
+        UserDTO userDTO = userService.getUserByEmail(email);
         model.addAttribute("user", userDTO);
         return "myprofile";
     }

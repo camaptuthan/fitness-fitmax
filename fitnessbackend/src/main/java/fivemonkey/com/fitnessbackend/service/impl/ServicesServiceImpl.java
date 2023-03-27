@@ -162,4 +162,14 @@ public class ServicesServiceImpl implements ServicesService {
         return modelMapper.mapList(serviceRepository.getServicesByStudio(id), ServicesDTO.class);
     }
 
+    @Override
+    public List<ServicesDTO> getServicesPT() {
+        return modelMapper.mapList(serviceRepository.getServicesByPT(), ServicesDTO.class);
+    }
+
+    @Override
+    public List<Services> getServicesById(String id) {
+        return serviceRepository.getServicesById(id);
+    }
+
 }

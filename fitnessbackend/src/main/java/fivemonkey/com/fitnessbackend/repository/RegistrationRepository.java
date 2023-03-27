@@ -39,4 +39,11 @@ public interface RegistrationRepository extends JpaRepository<Registration, Stri
 
     @Query(value = "select r from Registration r where r.trainer.email= :trainerEmail and r.trainee.email = :traineeEmail")
     Registration findRegistrationByTrainerAndTrainee(String trainerEmail, String traineeEmail);
+
+    @Query("select r from Registration r where r.trainer.email is not null and r.trainee.email is not null and r.trainer.user.studio.id = ?1 ")
+    List<Registration> getRegistrationBookPt(String studioId);
+
+    @Query("select count (r.id) from Registration r where r.trainer.email= :trainerEmail")
+    int countRegistrationPT(String trainerEmail);
+
 }

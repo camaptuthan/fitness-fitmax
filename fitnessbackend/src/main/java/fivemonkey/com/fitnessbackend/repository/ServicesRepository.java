@@ -29,5 +29,10 @@ public interface ServicesRepository extends JpaRepository<Services, String> {
     @Query("select s from Services s where s.studio.id = ?1")
     List<Services> getServicesByStudio(String id);
 
+    @Query("select s from Services s where s.id = ?1")
+    List<Services> getServicesById(String id);
+
+
+
 
 }
