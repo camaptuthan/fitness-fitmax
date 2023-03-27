@@ -47,11 +47,6 @@ public class RegistrationController {
         return path;
     }
 
-    @ResponseBody
-    @GetMapping("/api/profile")
-    public List<RegistrationDTO> registration(@AuthenticationPrincipal UserDetail userDetail) {
-        return registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail());
-    }
 
 
     //Get Registration List

@@ -62,7 +62,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     private RegistrationDTO makeRegistrationDTO(Registration registration) {
         RegistrationDTO registrationDTO = modelMapper.map(registration, RegistrationDTO.class);
-        registrationDTO.setPath(registration.getClass() != null ? "/class" : "");
+        registrationDTO.setPath(registration.getClass() != null ? "/service/class/"+registrationDTO.getServicesId() : "");
         return registrationDTO;
     }
 
