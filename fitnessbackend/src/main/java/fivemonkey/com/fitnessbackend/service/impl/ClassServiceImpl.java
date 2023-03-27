@@ -5,17 +5,15 @@ import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.entities.Clazz;
 import fivemonkey.com.fitnessbackend.entities.Services;
 import fivemonkey.com.fitnessbackend.entities.User;
-import fivemonkey.com.fitnessbackend.repository.CityRepository;
-import fivemonkey.com.fitnessbackend.repository.ClassRepository;
-import fivemonkey.com.fitnessbackend.repository.StudioRepository;
+import fivemonkey.com.fitnessbackend.repository.*;
 import fivemonkey.com.fitnessbackend.service.service.ClassService;
-import fivemonkey.com.fitnessbackend.service.service.RegistrationService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,12 +25,17 @@ public class ClassServiceImpl implements ClassService {
     private CityRepository cityRepository;
 
     @Autowired
-    private StudioRepository studioRepository;
-    @Autowired
-    private ModelMapperConfiguration<Clazz, ClassDTO> modelMapper;
+    private ServicesRepository servicesRepository;
 
     @Autowired
-    private RegistrationService registrationService;
+    private ServiceTypeRepository serviceTypeRepository;
+    @Autowired
+    private StudioRepository studioRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private ModelMapperConfiguration<Clazz, ClassDTO> modelMapper;
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -57,12 +60,19 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public ClassDTO save(ClassDTO classDTO, User user) {
         Clazz clazz = classRepository.findByServicesId(classDTO.getServicesId()).orElse(new Clazz());
-        Services services = clazz.getServices();
-        services.setCity(cityRepository.getCityById(classDTO.getServicesCityId()));
-        services.setStudio(studioRepository.getStudioById(classDTO.getServicesStudioId()));
+        Services services = clazz.getServices() == null ? new Services(new Date()) : clazz.getServices();
+        services.setCity(cityRepository.getCityByName(classDTO.getServicesCityName()));
+        services.setStudio(studioRepository.getStudioById(clazz.getServices() == null ? user.getStudio().getId() :  classDTO.getServicesStudioId()));
         services.setName(classDTO.getServicesName());
         services.setDes(classDTO.getServicesDes());
         services.setStatus(classDTO.getServicesStatus());
+        if (services.getId() == null) {
+            services.setServiceType(serviceTypeRepository.getServiceTypeById(3L));
+            services.setDuration(10);
+            services.setUser(userRepository.getUserByEmail(user.getEmail()));
+            servicesRepository.save(services);
+            clazz.setServices(services);
+        }
         return modelMapper.map(classRepository.save(clazz), ClassDTO.class);
     }
 
@@ -73,6 +83,7 @@ public class ClassServiceImpl implements ClassService {
         clazz.getServices().setImage(thumbNail);
         return modelMapper.map(classRepository.save(clazz), ClassDTO.class);
     }
+
     public ClassDTO getClassById(String id) {
         return modelMapper.map(classRepository.getClassById(id), ClassDTO.class);
     }

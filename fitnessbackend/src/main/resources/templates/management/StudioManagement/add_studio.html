@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
 <head>
+  <th:block th:insert="/fragments/admin_fragment/head"></th:block>
   <link rel="stylesheet" th:href="@{../css/font-awesome.min.css}">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
 </head>
 
 <!-- Mirrored from educhamp.themetrades.com/demo/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Feb 2019 13:08:15 GMT -->
-<th:block th:insert="/fragments/admin_fragment/head"></th:block>
+
 <th:block th:insert="/fragments/admin_fragment/header"></th:block>
 <body class="ttr-opened-sidebar ttr-pinned-sidebar">
 <th:block th:insert="/fragments/admin_fragment/sidebar_fragment"></th:block>
@@ -15,162 +16,122 @@
 <main class="ttr-wrapper">
   <div class="container-fluid">
     <div class="db-breadcrumb">
-      <h4 class="breadcrumb-title">Studio Details</h4>
+        <h4 class="breadcrumb-title">Add Studio</h4>
       <ul class="db-breadcrumb-list">
         <li><a href="#"><i class="fa fa-home"></i>Home</a></li>
         <li>Studio</li>
         <li>Studio Details</li>
       </ul>
     </div>
-    <div>
-      <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
-        <option value="" selected>Chọn tỉnh thành</option>
-      </select>
 
-      <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
-        <option value="" selected>Chọn quận huyện</option>
-      </select>
-
-      <select class="form-select form-select-sm" id="ward" aria-label=".form-select-sm">
-        <option value="" selected>Chọn phường xã</option>
-      </select>
     </div>
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-    <script>
-      var citis = document.getElementById("city");
-      var districts = document.getElementById("district");
-      var wards = document.getElementById("ward");
-      var Parameter = {
-        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-        method: "GET",
-        responseType: "application/json",
-      };
-      var promise = axios(Parameter);
-      promise.then(function (result) {
-        renderCity(result.data);
-      });
-
-      function renderCity(data) {
-        for (const x of data) {
-          citis.options[citis.options.length] = new Option(x.Name, x.Id);
-        }
-        citis.onchange = function () {
-          district.length = 1;
-          ward.length = 1;
-          if(this.value != ""){
-            const result = data.filter(n => n.Id === this.value);
-
-            for (const k of result[0].Districts) {
-              district.options[district.options.length] = new Option(k.Name, k.Id);
-            }
-          }
-        };
-        district.onchange = function () {
-          ward.length = 1;
-          const dataCity = data.filter((n) => n.Id === citis.value);
-          if (this.value != "") {
-            const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
-
-            for (const w of dataWards) {
-              wards.options[wards.options.length] = new Option(w.Name, w.Id);
-            }
-          }
-        };
-      }
-    </script>
     <div class="row">
       <div class="col-lg-12 m-b30">
-        <form method="POST" th:action="@{/studio/management/poststudio}" th:object="${studio}">
-          <div class="form-group">
-            <input
-                    class="form-control"
-                    hidden="true"
-                    name="id"
-                    th:field="*{id}"
-                    type="text"
-            />
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label"> Studio Name: </label>
-            <div class="col-sm-4">
-              <input
-                      class="form-control"
-                      name="name"
-                      placeholder="Enter Studio Name"
-                      required=""
-                      th:field="*{name}"
-                      type="text"
-              />
-            </div>
-            <label class="col-sm-2 col-form-label" for="manager"> Manager:</label>
-            <div class="col-sm-4">
-              <select class="form-control" id="manager" name="manager">
-                <option th:each="list:${list}" th:text="${list.email}" th:value="${list.email}">
-
-                </option>
-              </select>
-            </div>
-          </div>
-
-<!--          <div class="form-group row">-->
-<!--            <label class="col-sm-2 col-form-label"> Studio City: </label>-->
-<!--            <div class="col-sm-4">-->
-<!--              <input-->
-<!--                      class="form-control"-->
-<!--                      name="city"-->
-<!--                      placeholder="Enter Studio City"-->
-<!--                      required=""-->
-<!--                      th:field="*{district.city.name}"-->
-<!--                      type="text"-->
-<!--              />-->
-<!--            </div>-->
-<!--            <label class="col-sm-2 col-form-label "> District: </label>-->
-<!--            <div class="col-sm-4">-->
-<!--              <input-->
-<!--                      class="form-control"-->
-<!--                      name="district"-->
-<!--                      placeholder="Enter Studio District"-->
-<!--                      required=""-->
-<!--                      th:field="*{district}"-->
-<!--                      type="text"-->
-<!--              />-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <label class="col-sm-2 col-form-label"> Studio City: </label>-->
-<!--          <div class="col-sm-4">-->
-<!--            <th:block th:insert="/fragments/admin_fragment/city"></th:block>-->
-<!--          </div>-->
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label"> Studio Contact: </label>
-            <div class="col-sm-4">
-              <input
-                      class="form-control"
-                      name="contact"
-                      oninput="this.setCustomValidity('')"
-                      oninvalid="this.setCustomValidity('Enter Phone number')"
-                      pattern="[0]{1}[0-9]{9}"
-                      placeholder="Mobile Number (10 digits only)"
-                      required
-                      th:field="*{contact}"
-                      type="tel">
-
-              <p class="alert alert-danger" th:errors="*{contact}" th:if="${#fields.hasErrors('contact')}"/>
-
-
-            </div>
-            <label class="col-sm-2 col-form-label "> Status: </label>
-            <div class="col-sm-4">
-              <div>
-                <input name="status" th:checked="*{status}"
-                       th:field="*{status}" th:type="radio" th:value="true"/>
-                Active
-                <input name="status" th:checked="*{status==false}"
-                       th:field="*{status}" th:type="radio" th:value="false"/>
-                Inactive
+          <form method="POST" th:action="@{/studio/management/poststudio}" th:object="${studio}">
+              <div class="form-group">
+                  <input
+                          class="form-control"
+                          hidden="true"
+                          name="id"
+                          th:field="*{id}"
+                          type="text"
+                  />
               </div>
-            </div>
+              <div class="form-group row">
+                  <label class="col-sm-2 col-form-label"> City: </label>
+                  <div class="col-sm-4">
+                      <select class="form-control" id="districtCityName" onchange="getDistrict()"
+                              name="districtCityName">
+                          <option th:each="list:${cityList}" th:text="${list.name}" th:value="${list.name}">
+                          </option>
+                      </select>
+                  </div>
+
+                  <label class="col-sm-2 col-form-label"> District: </label>
+                  <div class="col-sm-4" id="districtName">
+
+                      <select class="form-control" name="districtName">
+                          <option value="all">Please select city first</option>
+                          <option th:each="list:${districtList}" th:text="${list.name}" th:value="${list.id}">
+                          </option>
+                      </select>
+                  </div>
+
+                  <script>
+                      const getDistrict = () => {
+                          const id = event.target.innerText;
+                          console.log(event.target.innerText);
+                          $.get(`http://localhost:8080/address/district/${id}`, (result) => {
+                              let html = `
+                                 <select class="form-control" name="districtName">
+                               `
+                              result.forEach((item) => {
+                                  html += `<option value="${item.id}">${item.name}</option>`
+                              })
+                              html += `</select>`;
+                              console.log($('#districtName'))
+                              $('#districtName').html(html)
+                          });
+                      }
+                  </script>
+              </div>
+              <label class="col-sm-2 col-form-label"> Studio Address: </label>
+              <div class="col-sm-4">
+                  <input
+                          class="form-control"
+                          name="districtRoad"
+                          placeholder="Enter Studio Location"
+                          required=""
+                          th:field="*{address}"
+                          type="text"
+                  />
+              </div>
+              <label class="col-sm-2 col-form-label"> Studio Name: </label>
+              <div class="col-sm-4">
+                  <input
+                          class="form-control"
+                          name="name"
+                          placeholder="Enter Studio Name"
+                          required=""
+                          th:field="*{name}"
+                          type="text"
+                  />
+              </div>
+
+
+              <<!doctype html>
+              <html lang="en">
+              <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport"
+                        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+                  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+                  <title>Document</title>
+              </head>
+              <body>
+
+              </body>
+              </html>
+
+              <div class="form-group row">
+                  <label class="col-sm-2 col-form-label"> Studio Contact: </label>
+                  <div class="col-sm-4">
+                      <input
+                              class="form-control"
+                              name="contact"
+                              oninput="this.setCustomValidity('')"
+                              oninvalid="this.setCustomValidity('Enter Phone number')"
+                              pattern="[0]{1}[0-9]{9}"
+                              placeholder="Mobile Number (10 digits only)"
+                              required
+                              th:field="*{contact}"
+                              type="tel">
+
+                      <p class="alert alert-danger" th:errors="*{contact}" th:if="${#fields.hasErrors('contact')}"/>
+
+
+                  </div>
+                  <!-
           </div>
 
 
@@ -185,12 +146,6 @@
                     th:field="*{des}"
                     type="textarea"
             />    </textarea>
-          </div>
-          <div class="form-group col-6">
-            <label class="col-form-label">Course start</label>
-            <div>
-              <input class="form-control" type="text" value="">
-            </div>
           </div>
           <div class="box-footer">
             <button class="btn btn-primary" type="submit">
@@ -212,69 +167,54 @@
 </main>
 <div class="ttr-overlay"></div>
 <th:block th:insert="/fragments/admin_fragment/script"></th:block>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-<script>
-  var citis = document.getElementById("cityvn");
-  var districts = document.getElementById("districtvn");
-  var wards = document.getElementById("wardvn");
-  var Parameter = {
-    url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-    method: "GET",
-    responseType: "json",
-  };
-  var promise = axios(Parameter);
-  promise.then(function (result) {
-    renderCity(result.data);
-  });
 
-  function renderCity(data) {
-    for (const x of data) {
-      citis.options[citis.options.length] = new Option(x.Name, x.Id);
-    }
-    citis.onchange = function () {
-      districtvn.length = 1;
-      wardvn.length = 1;
-      if (this.value != "") {
-        const result = data.filter(n => n.Id === this.value);
-
-        for (const k of result[0].Districts) {
-          districtvn.options[districtvn.options.length] = new Option(k.Name, k.Id);
-        }
-      }
-    };
-    districtvn.onchange = function () {
-      wardvn.length = 1;
-      const dataCity = data.filter((n) => n.Id === citis.value);
-      if (this.value != "") {
-        const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
-
-        for (const w of dataWards) {
-          wards.options[wards.options.length] = new Option(w.Name, w.Id);
-        }
-      }
-    };
-  }
-</script>
 </body>
 <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
 <script>
   $(document).ready(function () {
-    $('#studio_table').DataTable({
-      dom: 'rtip',
-      columnDefs: [],
-      pageLength: '6',
-      pagingType:'full_numbers',
-    });
+      $('#studio_table').DataTable({
+          dom: 'rtip',
+          columnDefs: [],
+          pageLength: '6',
+          pagingType: 'full_numbers',
+      });
+
+      $.ajax(
+          {
+              url: 'https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json',
+              type: 'GET',
+              dataType: 'json',
+              success: function (data) {
+                  renderCity(data);
+              }
+          }
+      );
+
   });
-</script><script>
-  $(document).ready(function () {
-    $('#studio_table').DataTable({
-      dom: 'rtip',
-      columnDefs: [],
-      pageLength: '6',
-      pagingType:'full_numbers',
-    });
-  });
+  const cities = $("#cityvn");
+  const districts = $("districtvn");
+
+  function renderCity(data) {
+      for (const x of data) {
+          cities.append(` <option value="${x.Name}">${x.Name}</option>`);
+      }
+      cities.onchange = function () {
+          districts.length = 1;
+          if (this.value != "") {
+              const result = data.filter(n => n.Name === this.value);
+              districts.html("");
+              for (const k of result[0].Districts) {
+                  districts.append(` <option value="${k.Name}">${k.Name}</option>`);
+              }
+          }
+      };
+
+  }
+</script>
+<script type="text/javascript">
+    function submitFormDashboard() {
+        document.getElementById("").submit();
+    }
 </script>
 
 </html>

@@ -24,6 +24,9 @@ public class City {
     @Column(name = "city_name")
     private String name;
 
+    @Column(name = "type")
+    private String type;
+
     //city-district relationship
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<District> districts;

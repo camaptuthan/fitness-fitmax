@@ -334,13 +334,11 @@ public class UserController {
         return path;
     }
 
-    @GetMapping("/profile")
-    public String myProfile(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+    @GetMapping("/myregistrations")
+    public String myRegistrations(@AuthenticationPrincipal UserDetail userDetail, Model model) {
         model.addAttribute("registrations", registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail()));
-        model.addAttribute("user", userDetail.getUser());
-        return "user/profile";
+        return "user/registration";
     }
-
 
 }
 

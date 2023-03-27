@@ -23,7 +23,8 @@ public class District {
 
     @Column(name = "district_name")
     private String name;
-
+    @Column(name = "type")
+    private String type;
     //city-district relationship
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id", referencedColumnName = "city_id")
