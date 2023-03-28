@@ -84,6 +84,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     @Override
     public RegistrationDTO doRegistration(User user, String itemId) {
+
         return modelMapper.map(registrationRepository.save(makeRegistration(user, itemId)), RegistrationDTO.class);
     }
 

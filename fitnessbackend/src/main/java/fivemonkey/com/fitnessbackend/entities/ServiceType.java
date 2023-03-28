@@ -1,6 +1,5 @@
 package fivemonkey.com.fitnessbackend.entities;
 
-import jdk.dynalink.linker.LinkerServices;
 import lombok.*;
 
 import javax.persistence.*;

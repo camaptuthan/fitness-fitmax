@@ -96,11 +96,14 @@ public class ClassController {
                           @PathVariable("id") String serviceId) {
         String path = "management/ClassManagement/class";
         ClassDTO foundClass = serviceId.equals("new") ? new ClassDTO() : classService.getByServiceId(serviceId);
+ 
         if (foundClass.getId() != null && classService.getByUserRole(userDetail.getUser(), 0, 0).stream().noneMatch(o -> o.getId().equals(foundClass.getId()))) {
+ 
             path = "redirect:/service/class/management/classes";
         } else {
             model.addAttribute("trainers", trainerService.getAllAvailableTrainersByStudio(foundClass.getServicesStudioId()));
             model.addAttribute("cities", addressService.getCities());
+ 
             model.addAttribute("studios", addressService.getStudioByCity(serviceId.equals("new") ? userDetail.getUser().getRole().getId().equalsIgnoreCase("role01") ? "Ha Noi" : userDetail.getUser().getCity().getName() : foundClass.getServicesCityName()));
             model.addAttribute("schedules", scheduleService.getAll(null, null));
             model.addAttribute("item", foundClass);
