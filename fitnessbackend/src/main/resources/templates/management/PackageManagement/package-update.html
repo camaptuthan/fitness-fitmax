@@ -14,13 +14,18 @@
           id="bootstrap-css">
     <script th:src="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js}"></script>
     <script th:src="@{//code.jquery.com/jquery-1.11.1.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- jQuery Validation Plugin -->
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
 </head>
 
 <!------ Include the above in your HEAD tag ---------->
 <body>
 <form class="form-horizontal"
       th:action="@{/service/management/update-package/{id} (id=${package.id})}" method="post"
-      enctype="multipart/form-data" th:object="${package}">
+      enctype="multipart/form-data" id="form_update_package" th:object="${package}">
     <fieldset>
 
         <!-- Form Name -->
@@ -36,7 +41,7 @@
             <label class="col-md-4 control-label" for="name">Name</label>
             <div class="col-md-4">
                 <input id="name" name="name" th:field="*{name}" th:value="${package.name}" placeholder=" Name"
-                       class="form-control input-md" type="text">
+                       class="form-control input-md" required type="text">
                 <div class="alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
 
             </div>
@@ -52,7 +57,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="des">Description</label>
             <div class="col-md-4">
-                <textarea id="des" name="des" th:text="${package.des}"
+                <textarea id="des" name="des" required th:text="${package.des}"
                           class="form-control input-md" type="text"></textarea>
             </div>
         </div>
@@ -60,7 +65,7 @@
             <label class="col-md-4 control-label" for="price">Price</label>
             <div class="col-md-4">
                 <input id="price" th:field="*{price}" th:value="${package.price}" name="price" placeholder="Price"
-                       class="form-control input-md" type="number">
+                       class="form-control input-md" required type="number">
                 <div class="alert-warning" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
             </div>
         </div>
@@ -69,7 +74,7 @@
             <div class="col-md-4">
                 <input id="duration" th:field="*{duration}" th:value="${package.duration}" name="duration"
                        placeholder="Duration"
-                       class="form-control input-md" type="number">
+                       class="form-control input-md" required type="number">
                 <div class="alert-warning" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></div>
             </div>
         </div>
@@ -165,10 +170,36 @@
 
             <div class="col-md-4">
                 <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Update</button>
+                <a class="btn btn-danger" th:href="@{/service/management/packages}">Cancel </a>
             </div>
         </div>
     </fieldset>
 </form>
+
+<script>
+    $(document).ready(function () {
+        $("#form_update_package").validate({
+            // Specify validation rules
+            rules: {
+                name: "required",
+                price: "required",
+                duration: "required",
+            },
+
+            // Specify validation error messages
+            messages: {
+                name: "Please enter name",
+                price: "Please enter price",
+                duration: "Please enter duration",
+            },
+
+            // Submit form if validation passes
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+    });
+</script>
 <!---->
 </body>
 </html>

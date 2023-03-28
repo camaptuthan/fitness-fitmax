@@ -17,6 +17,11 @@ public interface StudioService {
     Studio getStudioByManagerId(String id);
 
     List<StudioDTO> getAllStudiosByCity(String cityname);
+
+    List<StudioDTO> getStudioByCity(String cityname, int page);
+
+    int getTotalPage(String cityname);
+
     List<StudioDTO> getAllStudiosByFilter(String keyword, String city, String status);
     Studio saveStudio(Studio studio);
 

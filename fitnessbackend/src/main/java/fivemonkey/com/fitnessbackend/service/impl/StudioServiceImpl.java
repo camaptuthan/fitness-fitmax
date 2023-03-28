@@ -89,7 +89,38 @@ public class StudioServiceImpl implements StudioService {
 
     @Override
     public List<StudioDTO> getAllStudiosByCity(String cityname) {
-        return modelMapper.mapList(studioRepository.findStudioByCityName(cityname), StudioDTO.class);
+        return modelMapper.mapList(studioRepository.getStudioByCity(cityname), StudioDTO.class);
+    }
+
+    @Override
+    public List<StudioDTO> getStudioByCity(String cityname, int page) {
+        int pageSize = 4;
+        Session session = sessionFactory.openSession();
+        String sql = "select s from Studio s where s.id is not null ";
+        if(!"All".equals(cityname)){
+            sql += " and s.district.city.name = '" + cityname + "' ";
+        }
+        Query<Studio> query = session.createQuery(sql, Studio.class);
+        query.setFirstResult(page * pageSize);
+        query.setMaxResults(pageSize);
+        return modelMapper.mapList(query.getResultList(), StudioDTO.class);
+    }
+
+    @Override
+    public int getTotalPage(String cityname) {
+        int pageSize = 4;
+        Session session = sessionFactory.openSession();
+        String sql = "select count(s.id) from Studio s where s.id is not null ";
+        if(!"All".equals(cityname)){
+            sql += " and s.district.city.name = '" + cityname + "' ";
+        }
+        Query queryCount = session.createQuery(sql);
+        Long countResult = (Long) queryCount.uniqueResult();
+        if ((int) (countResult % pageSize) != 0) {
+            return (int) (countResult / pageSize) + 1;
+        } else {
+            return (int) (countResult / pageSize);
+        }
     }
 
     @Override

@@ -440,7 +440,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.getManagerOfStudio(id) ;
     }
 
-
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findUsersById(id);
+    }
 
 
 }

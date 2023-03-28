@@ -27,11 +27,11 @@ public class BlogDTO {
 
     private int status;
 
-    private Category category;
+    private Long categoryId;
 
-    private User user;
+    private String categoryName;
 
-    private int userId;
+    private Long userId;
 
     private String userFirstName;
 
