@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/service")
@@ -113,7 +110,6 @@ public class ServicesController {
             model.addAttribute("userEmail", "");
             model.addAttribute("userPhone", "");
         }
-
         model.addAttribute("hasRegistered", hasRegistered);
         model.addAttribute("packages", packagesMapList);
         model.addAttribute("package", s);
@@ -132,7 +128,6 @@ public class ServicesController {
         List<StudioDTO> listStudio = studioService.getAllStudiosByCity(cityname);
         List<CategoryDTO> listCategory = categoryService.getAllCategoriesByType("service");
         List<ClassDTO> listClass = classService.getClassesBy4Fields(keyword, cityname, studio, Long.parseLong(category), Integer.parseInt(pageNumber) - 1);
-        System.out.println("HAPH" + listClass);
         model.addAttribute("classes", listClass);
         model.addAttribute("size", listClass.size());
         model.addAttribute("cityList", listCity);
@@ -185,32 +180,6 @@ public class ServicesController {
         model.addAttribute("currentCategory", category);
         model.addAttribute("statusList", statusList);
         return "management/PackageManagement/package-list";
-    }
-
-
-    //add new package
-    @GetMapping("/management/add-package")
-    public String addPackage(Model model) {
-        model.addAttribute("packagenew", new ServicesDTO());
-        return "management/PackageManagement/package-add";
-    }
-
-    //save new package
-    @PostMapping("/management/save-package")
-    public String savePackage(@ModelAttribute("packagenew") ServicesDTO packagenew, BindingResult result, RedirectAttributes attributes) {
-        try {
-            if (result.hasErrors()) {
-                attributes.addFlashAttribute("fail", "Add fail!");
-                return "management/PackageManagement/package-add";
-            } else {
-                servicesService.addNewPackage(packagenew);
-                attributes.addFlashAttribute("success", "Add successful!");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            attributes.addFlashAttribute("fail", "Add fail!");
-        }
-        return "redirect:/service/management/packages";
     }
 
     //update package b1
@@ -275,17 +244,12 @@ public class ServicesController {
                 s.setDes(servicesDTO.getDes());
                 s.setPrice(servicesDTO.getPrice());
                 s.setDate(servicesDTO.getDate());
-
-
                 s.setImage(imageUploader.upload(multipartFile));
-
                 s.setStatus(Integer.parseInt(status_type_id));
                 s.setCity(cityService.getCityByName(cityname));
                 s.setStudio(studioService.getStudioById(studio));
                 s.setCategory(categoryService.getCategoryById(Long.parseLong(category)));
-                if (multipartFile.isEmpty()) {
-                    s.setImage("https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_package_default.jpg?alt=media&token=d96f81d3-65fc-43ac-be80-b8c9b6f55951");
-                } else {
+                if(!multipartFile.isEmpty()){
                     s.setImage(imageUploader.upload(multipartFile));
                 }
                 servicesRepository.save(s);
@@ -302,9 +266,7 @@ public class ServicesController {
                 s.setCity(cityService.getCityByName(cityname));
                 s.setStudio(studioService.getStudioById(studio));
                 s.setCategory(categoryService.getCategoryById(Long.parseLong(category)));
-                if (multipartFile.isEmpty()) {
-                    s.setImage("https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_package_default.jpg?alt=media&token=d96f81d3-65fc-43ac-be80-b8c9b6f55951");
-                } else {
+                if(!multipartFile.isEmpty()){
                     s.setImage(imageUploader.upload(multipartFile));
                 }
                 servicesRepository.save(s);
@@ -321,9 +283,7 @@ public class ServicesController {
                 s.setCity(cityService.getCityByName(cityname));
                 s.setStudio(studioService.getStudioById(studio));
                 s.setCategory(categoryService.getCategoryById(Long.parseLong(category)));
-                if (multipartFile.isEmpty()) {
-                    s.setImage("https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_package_default.jpg?alt=media&token=d96f81d3-65fc-43ac-be80-b8c9b6f55951");
-                } else {
+                if(!multipartFile.isEmpty()){
                     s.setImage(imageUploader.upload(multipartFile));
                 }
                 servicesRepository.save(s);
@@ -332,4 +292,77 @@ public class ServicesController {
         return "redirect:/service/management/packages";
     }
 
+
+    @GetMapping("/management/addpackage")
+    public String getDetailPackage( @AuthenticationPrincipal UserDetail userDetail, Model model,
+                            @RequestParam(value = "city", required = false) String cityname,
+                            @RequestParam(value = "studio", required = false, defaultValue = "All") String studio,
+                            @RequestParam(value = "category", required = false) String category) {
+        ServicesDTO servicesDTO = new ServicesDTO();
+        List<StudioDTO> listStudio = studioService.getAllStudiosByCity(cityname);
+        List<CategoryDTO> listCategory = categoryService.getAllCategoriesByType("service");
+        ServiceTypeDTO serviceTypeDTO = serviceTypeService.getServiceTypeById(1L);
+        List<Status> statusList = statusService.getStatusByPackage();
+        List<CityDTO> listCity = new ArrayList<>();
+        switch (userDetail.getUser().getRole().getId()) {
+            case "ROLE01":
+                listCity = cityService.getAllCities();
+                break;
+            case "ROLE02":
+                listCity.add(cityService.getCityByStudioManager(userDetail.getUser().getEmail()));
+                break;
+            case "ROLE03":
+                listCity.add(cityService.getCityByAssistant(userDetail.getUser().getEmail()));
+                break;
+        }
+        model.addAttribute("package", servicesDTO);
+        model.addAttribute("user_role", userDetail.getUser().getRole().getId());
+        model.addAttribute("servicetype", serviceTypeDTO);
+        model.addAttribute("cityList", listCity);
+        model.addAttribute("studioList", listStudio);
+        model.addAttribute("categoryList", listCategory);
+        model.addAttribute("statusList", statusList);
+        return "management/PackageManagement/package-add";
+    }
+
+    @PostMapping("/management/addpackage")
+    public String addPackage(@ModelAttribute("package") ServicesDTO servicesDTO, @AuthenticationPrincipal UserDetail userDetail,
+                                @RequestParam(value = "status_type_id", required = false) String status_type_id,
+                                @RequestParam(value = "city", required = false) String cityname,
+                                @RequestParam(value = "studio", required = false,defaultValue = "All") String studio,
+                                @RequestParam(value = "category", required = false) String category,
+                                @RequestParam("fileImage") MultipartFile multipartFile) {
+        Services s = new Services();
+        s.setName(servicesDTO.getName());
+        s.setDes(servicesDTO.getDes());
+        s.setPrice(servicesDTO.getPrice());
+        s.setDate(new Date());
+        s.setCity(cityService.getCityByName(cityname));
+        s.setStudio(studioService.getStudioById(studio));
+        s.setCategory(categoryService.getCategoryById(Long.parseLong(category)));
+        if (multipartFile.isEmpty()) {
+            s.setImage("https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_package_default.jpg?alt=media&token=d96f81d3-65fc-43ac-be80-b8c9b6f55951");
+        } else {
+            s.setImage(imageUploader.upload(multipartFile));
+        }
+        switch (userDetail.getUser().getRole().getId()) {
+            case "ROLE01":
+                s.setStatus(Integer.parseInt(status_type_id));
+                servicesRepository.save(s);
+                break;
+            case "ROLE02":
+                if (s.getStudio() == null || s.getStudio().getId() != userDetail.getUser().getStudio().getId()) {
+                    s.setStatus(1);
+                }
+                servicesRepository.save(s);
+                break;
+            case "ROLE03":
+                if (s.getStudio().getId() != userDetail.getUser().getStudio().getId()) {
+                    s.setStatus(1);
+                }
+                servicesRepository.save(s);
+                break;
+        }
+        return "redirect:/service/management/packages";
+    }
 }

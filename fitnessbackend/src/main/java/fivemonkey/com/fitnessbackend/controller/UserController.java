@@ -274,30 +274,29 @@ public class UserController {
         try {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             if (passwordEncoder.matches(cpassword, userDetail.getPassword()) && npassword.equals(cnpassword)) {
-                ra.addFlashAttribute("success", "Change your password successfully! Please login again!");
+                ra.addFlashAttribute("successchange", "Change your password successfully! Please login again!");
                 userDetail.getUser().setPassword(npassword);
                 userService.updateUserPassword(userDetail.getUser());
-                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cnpassword + "New: " + npassword + "Confirm New" + cnpassword);
                 path = "redirect:/logout";
             } else if (!passwordEncoder.matches(cpassword, userDetail.getPassword())) {
                 ra.addFlashAttribute("fail", "Current password is wrong! Please enter your password again!");
                 model.addAttribute("nPassword", npassword);
                 model.addAttribute("cnPassword", cnpassword);
                 model.addAttribute("cPassword", cpassword);
-                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cnpassword + "New: " + npassword + "Confirm New" + cnpassword);
-
-            } else {
+            } else if(!npassword.equals(cnpassword)) {
                 ra.addFlashAttribute("fail", "Confirm new password must be different from new password! Please enter confirm new password again!");
                 model.addAttribute("nPassword", npassword);
                 model.addAttribute("cnPassword", cnpassword);
                 model.addAttribute("cPassword", cpassword);
-                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
             }
+            else ra.addFlashAttribute("fail", "New password must be at least 6 characters! Please enter New password again!");
+            model.addAttribute("nPassword", npassword);
+            model.addAttribute("cnPassword", cnpassword);
+            model.addAttribute("cPassword", cpassword);
         } catch (Exception e) {
             e.printStackTrace();
             ra.addFlashAttribute("fail", "Fail");
         }
-        System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
         return path;
     }
 

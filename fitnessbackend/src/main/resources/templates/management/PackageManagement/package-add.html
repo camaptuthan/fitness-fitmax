@@ -14,60 +14,189 @@
           id="bootstrap-css">
     <script th:src="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js}"></script>
     <script th:src="@{//code.jquery.com/jquery-1.11.1.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- jQuery Validation Plugin -->
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 </head>
 
 <!------ Include the above in your HEAD tag ---------->
-
-<form class="form-horizontal" th:action="@{/package/save-package}" method="post" th:object="${packagenew}">
+<body>
+<form class="form-horizontal"
+      th:action="@{/service/management/addpackage}" method="post"
+      enctype="multipart/form-data" th:object="${package}" id="form_add_package">
     <fieldset>
 
         <!-- Form Name -->
+
         <!-- Text input-->
         <div class="form-group">
             <label class="col-md-4 control-label">Add Package</label>
+
         </div>
+
         <!-- Text input-->
         <div class="form-group">
             <label class="col-md-4 control-label" for="name">Name</label>
             <div class="col-md-4">
-                <input id="name" name="name" th:field="*{name}" th:value="${packagenew.name}" placeholder="Name"
+                <input id="name" name="name" th:field="*{name}" th:value="${package.name}" placeholder=" Name"
                        class="form-control input-md" type="text">
                 <div class="alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="name">Type</label>
+            <div class="col-md-4">
+                <input id="type" name="type" th:value="${servicetype.type}"
+                       class="form-control input-md" type="text" readonly>
             </div>
         </div>
 
-        <!-- Select Basic -->
         <div class="form-group">
             <label class="col-md-4 control-label" for="des">Description</label>
             <div class="col-md-4">
-                <input id="des" name="des" th:value="${packagenew.des}" placeholder=" Description"
-                       class="form-control input-md" type="text">
+                <textarea id="des" name="des" th:text="${package.des}"
+                          class="form-control input-md" type="text"></textarea>
             </div>
         </div>
-        <!-- Text input-->
         <div class="form-group">
             <label class="col-md-4 control-label" for="price">Price</label>
             <div class="col-md-4">
-                <input id="price" th:field="*{price}" th:value="${packagenew.price}" name="price" placeholder="Price"
-                       class="form-control input-md" type="text">
+                <input id="price" th:field="*{price}" th:value="${package.price}" name="price" placeholder="Price"
+                       class="form-control input-md" type="number">
                 <div class="alert-warning" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
-
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-4 control-label" for="duration">Duration</label>
             <div class="col-md-4">
-                <input id="duration" th:field="*{duration}" th:value="${packagenew.duration}" name="duration" placeholder="Duration"
-                       class="form-control input-md" type="text">
+                <input id="duration" th:field="*{duration}" th:value="${package.duration}" name="duration"
+                       placeholder="Duration"
+                       class="form-control input-md" type="number">
                 <div class="alert-warning" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></div>
             </div>
         </div>
+        <div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">City</label>
+                <div class="col-md-4 ">
+                    <select th:name="city" class="form-select" id="city_selector">
+                        <th:block th:each="city : ${cityList}">
+                            <option th:value="${city.name}" th:text="${city.name}"
+                                    th:selected="${city.name}"></option>
+                        </th:block>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">Studio</label>
+                <div class="col-md-4 ">
+                    <select th:name="studio" class="form-select" id="studio_selector">
+                        <option>All</option>
+                        <th:block th:each="studio : ${studioList}">
+                            <option th:value="${studio.id}" th:text="${studio.name}"
+                                    th:selected="${studio.id}"></option>
+                        </th:block>
+                    </select>
+                </div>
+            </div>
+            <script>
+                const origin_path = window.location.origin;
+                $("#city_selector").on("change", (e) => {
+                    getStudio(e.target.value);
+                })
+
+                const getStudio = (cityName) => {
+                    $("#studio_selector").html('<option>All</option>');
+                    $.get(`${origin_path}/address/studio/${cityName}`, (results) => {
+                        results.forEach(result => {
+                            console.log(result.name)
+                            $("#studio_selector").append(`<option value="${result.id}">${result.name}</option>`);
+                        })
+                    })
+                }
+            </script>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Category</label>
+            <div class="col-md-4 ">
+                <select th:name="category" style="width:30%">
+                    <th:block th:each="category : ${categoryList}">
+                        <option th:value="${category.id}" th:text="${category.name}"></option>
+                    </th:block>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Status</label>
+            <div class="col-md-4 ">
+                <select th:name="status_type_id" style="width:30%">
+                    <th:block th:each="status : ${statusList}">
+                        <option th:value="${status.type_id}" th:selected="${status.type_id}"
+                                th:text="${status.statusName}"
+                                th:disabled="${!#authentication.principal.user.role.id.equals('ROLE01')}"></option>
+                    </th:block>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group" style="display: flex; align-items: center; justify-content: center;">
+            <div class="col-md-4">
+                <label class="btn btn-primary" for="fileImage">Upload
+                    Avatar</label>
+                <input accept="image/jpeg, image/png" class="form-control-file" id="fileImage"
+                       name="fileImage"
+                       style="display: none" type="file"/>
+                <div id="up-img">
+                    <img th:src="${package.image}" style="width: 800px; height: 600px">
+                </div>
+            </div>
+        </div>
+        <script>
+            $("#fileImage").on("change", () => {
+                const file = $("#fileImage")[0].files[0];
+                const reader = new FileReader();
+                reader.onload = () => {
+                    $("#up-img").html(`<img src="${reader.result}" alt="img" style="width: 800px; height: 600px">`);
+                }
+                reader.readAsDataURL(file);
+            })
+        </script>
+        <script>
+            $(document).ready(function () {
+                $("#form_add_package").validate({
+                    // Specify validation rules
+                    rules: {
+                        name: "required",
+                        price:"required",
+                        duration:"required",
+                    },
+
+                    // Specify validation error messages
+                    messages: {
+                        name: "Please enter name",
+                        price: "Please enter price",
+                        duration: "Please enter duration",
+                    },
+
+                    // Submit form if validation passes
+                    submitHandler: function (form) {
+                        form.submit();
+                    }
+                });
+            });
+        </script>
         <div class="form-group">
             <label class="col-md-4 control-label" for="singlebutton"></label>
+
             <div class="col-md-4">
-                <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Save</button>
+                <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Add</button>
+                <a class="btn btn-danger" th:href="@{/service/management/packages}">Cancel </a>
             </div>
         </div>
     </fieldset>
 </form>
+<!---->
+</body>
 </html>
