@@ -4,8 +4,6 @@ $(document).ready(function () {
     $("#registration-form").validate({
         // Specify validation rules
         rules: {
-            firstname: "required",
-            lastname: "required",
             email: {
                 email: true
             },
@@ -17,8 +15,6 @@ $(document).ready(function () {
 
         // Specify validation error messages
         messages: {
-            firstname: "Please enter  first name",
-            lastname: "Please enter  last name",
             email: "Please enter a valid email ",
             password: {
                 required: "Please provide a password",
