@@ -31,7 +31,7 @@
                     <div class="wc-title row">
                         <h4>Registration List</h4>
                     </div>
-                    <form class="col-12 row" id="searchAndFilterRegistration" th:action="@{/registration/management/registrationsd}" method="get">
+                    <form class="col-12 row" id="searchAndFilterRegistration" th:action="@{/registration/management/registrations}" method="get">
 
                         <div class="form-group row col-4 ">
 
@@ -49,7 +49,7 @@
                         <div class="form-group row col-4 ml-0">
 
                             <div class="col-sm-9">
-                                <select class="form-control" th:name="status" onchange="submitFormDashboard()">
+                                <select class="form-control" th:name="studioStatus" onchange="submitFormDashboard()">
                                     <option th:selected="${status.equals('')}" value="" >All Status</option>
                                     <option th:selected="${status.equals(''+0)}" value="0" >Pending</option>
                                     <option th:selected="${status.equals(''+1)}" value="1" >Verified</option>
@@ -100,7 +100,6 @@
                                 <td th:text="${registration.servicesPrice}"></td>
                                 <td th:text="${registration.traineeEmail + registration.traineeName}" ></td>
                                 <td th:text="${registration.traineePhone}"></td>
-                                <td th:text="${registration.trainerEmail}"></td>
                                 <td th:text="${registration.startDate}"></td>
                                 <span th:if="${registration.status ==0}">
                         <td>Pending</td>
@@ -118,9 +117,9 @@
                     <td>Expired</td>
                     </span>
                                 <td>
-                                    <a class="edit" data-toggle="tooltip"
-                                       th:href="@{/management/registrationsedit/{id} (id=${registration.id})}"
-                                       title="Edit"><i class="material-icons fa" style="font-size: 25px" data-hover-only="Edit">&#xf044;</i></a>
+<!--                                    <a class="edit" data-toggle="tooltip"-->
+<!--                                       th:href="@{/management/registrationsedit/{id} (id=${registration.id})}"-->
+<!--                                       title="Edit"><i class="material-icons fa" style="font-size: 25px" data-hover-only="Edit">&#xf044;</i></a>-->
                                     <a class="active" data-toggle="tooltip" onclick="return confirm('Are you sure you want to verify this Registration?')"
                                        th:href="@{/registration/management/statusregistrations/{id}/{status} (status=${1}, id=${registration.id} )}"
                                        th:if="${registration.status == 0}"><i
@@ -131,7 +130,7 @@
                                             class="material-icons fa fa-arrow-circle-up" style="font-size: 25px" data-hover-only="Approve"></i></a>
                                     <a class="active" data-toggle="tooltip" onclick="return confirm('Are you sure you want to cancel this Registration?')"
                                        th:href="@{/registration/management/statusregistrations/{id}/{status} (status=${0}, id=${registration.id} )}"
-                                       th:if="${registration.status != null}"><i
+                                       th:if="${registration.status != 2 && registration.status!=4}"><i
                                             class="material-icons fa fa-arrow-circle-down" style="font-size: 25px" data-hover-only="Cancel"></i></a>
                                 </td>
 

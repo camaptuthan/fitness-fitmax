@@ -78,22 +78,33 @@ public class StudioController {
     public String listStudios(@AuthenticationPrincipal UserDetail userDetail, Model model,
                               @RequestParam(value = "city", required = false, defaultValue = "") String city,
                               @RequestParam(value = "status", required = false, defaultValue = "") String status,
-                              @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
+                              @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+                              @RequestParam(name = "pageNumber", required = false, defaultValue = "1") String pageNumber) {
+        int totalPage = studioService.getTotalAllStudiosByFilter(keyword,city, status);
         List<CityDTO> listCity = new ArrayList<>();
         if (userDetail.getUser().getRole().getName().equals("Admin")) {
-            listCity = cityService.getAllCities();
-            List<StudioDTO> listStudio = studioService.getAllStudiosByFilter(keyword,city, status);
-            model.addAttribute("studios", listStudio);
+
+
         } else if (userDetail.getUser().getRole().getName().equals("Studio Manager")) {
             model.addAttribute("studio", studioService.getStudioByManagerId(userDetail.getUser().getStudio().getId()));
-
         }
-
+        listCity = cityService.getAllCities();
+        List<StudioDTO> listStudio = studioService.getAllStudiosByFilter(keyword,city, status, Integer.parseInt(pageNumber) - 1);
+        model.addAttribute("studios", listStudio);
+        System.out.println("stusize"+listStudio.size());
+        System.out.println("totalPage: " + totalPage);
         model.addAttribute("cityList", listCity);
         model.addAttribute("currentCity", city);
         model.addAttribute("status", status);
         model.addAttribute("keyword", keyword);
-
+        model.addAttribute("currentKeyword", keyword);
+        model.addAttribute("currentStatus", status);
+        model.addAttribute("currentPage", Integer.parseInt(pageNumber));
+        if (totalPage == 0) {
+            model.addAttribute("totalPage", totalPage + 1);
+        }else {
+            model.addAttribute("totalPage",totalPage);
+        }
         return "management/StudioManagement/studios";
     }
 
@@ -136,25 +147,26 @@ public class StudioController {
         return "management/StudioManagement/updatestudio";
     }
 
-    @PostMapping("management/studioupdate/{id}")
-    public String updateStudio(@PathVariable String id,
-                               @ModelAttribute("studioDTO") StudioDTO studio,
+    //Update Studio Post
+    @PostMapping("management/studioupdate")
+    public String updateStudio(@ModelAttribute("studioDTO") StudioDTO studio,
                                Model model) {
         // get studio from database by id
-        Studio existingStudio = studioService.getStudioByStudioId(id);
-        City city = cityService.getCityByName(studio.getDistrictCityName());
-        District currentDistrict = districtService.getDistrictByName(studio.getDistrictName());
-        city.setName(studio.getDistrictCityName());
-        currentDistrict.setCity(city);
+        Studio existingStudio = studioService.getStudioByStudioId(studio.getId());
+//        City city = cityService.getCityByName(studio.getDistrictCityName());
+//        District currentDistrict = districtService.getDistrictByName(studio.getDistrictName());
+//        city.setName(studio.getDistrictCityName());
+//        currentDistrict.setCity(city);
+//        existingStudio.setDistrict(currentDistrict);
 
-        existingStudio.setId(id);
+
         existingStudio.setName(studio.getName());
         existingStudio.setContact(studio.getContact());
         existingStudio.setDes(studio.getDes());
         existingStudio.setStatus(studio.isStatus());
-        existingStudio.setDistrict(currentDistrict);
 
         //save updated studio object
+
         studioService.saveStudio(existingStudio);
         return "redirect:/studio/management/studios";
     }
@@ -172,10 +184,11 @@ public class StudioController {
         studio.setImage(studioDTO.getImage());
 
         //New District
-        District district1 = new District();
-        district1.setName(studioDTO.getDistrictName());
-        City city1 = cityService.getCityByName(studioDTO.getDistrictCityName());
-        district1.setCity(city1);
+        District district1 = districtService.getDistrictByDistrictId(studioDTO.getDistrictName());
+        System.out.println(district1.getId()+" "+district1.getName()+" "+district1.getCity().getName());
+//        district1.setName(studioDTO.getDistrictName());
+//        City city1 = cityService.getCityByName(studioDTO.getDistrictCityName());
+//        district1.setCity(city1);
         studio.setDistrict(district1);
 
 

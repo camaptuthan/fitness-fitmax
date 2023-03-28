@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class HomeController {
@@ -99,30 +96,22 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/studio", method = {RequestMethod.GET, RequestMethod.POST})
-    public String listStudiosHomepage(Model model, @RequestParam(value = "cityname", required = false, defaultValue = "All") String cityname) {
-        Map<String, List<StudioDTO>> studioMapList = new HashMap<>();
+    public String listStudiosHomepage(Model model, @RequestParam(value = "cityname", required = false, defaultValue = "All") String cityname,
+                                      @RequestParam(value = "page",required = false,defaultValue = "1") String page) {
+        int totalPage = studioService.getTotalPage(cityname);
         List<CityDTO> listCity = cityService.getAllCities();
-        List<StudioDTO> studioList;
-        if ("All".equals(cityname)) {
-            studioList = studioService.getAllStudios();
-        } else {
-            studioList = studioService.getAllByCity(cityname);
-        }
-        for (int i = 0; i < (studioList.size() / 3) + 1; i++) {
-            List<StudioDTO> value = new ArrayList<>();
-            for (int j = 0; j < 3; j++) {
-                if (i * 3 + j < studioList.size()) {
-                    value.add(studioList.get(i * 3 + j));
-                }
-            }
-            studioMapList.put("STU-" + (i + 1), value);
-        }
-        model.addAttribute("size", studioMapList.size());
+        List<StudioDTO> studioList = studioService.getStudioByCity(cityname,Integer.parseInt(page) - 1);
+        model.addAttribute("size", studioList.size());
         model.addAttribute("cities", listCity);
         model.addAttribute("currentCity", cityname);
-        model.addAttribute("studios", studioMapList);
-        return "/studio";
+        model.addAttribute("studios", studioList);
+        model.addAttribute("currentPage", Integer.parseInt(page));
+        if (totalPage == 0) {
+            model.addAttribute("totalPage", totalPage + 1);
+        }else {
+            model.addAttribute("totalPage",totalPage);
+        }
+        return "/user/studio";
     }
-
 
 }

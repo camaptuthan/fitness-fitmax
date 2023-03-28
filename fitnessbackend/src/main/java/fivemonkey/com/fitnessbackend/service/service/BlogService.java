@@ -11,25 +11,31 @@ import java.util.List;
 @Service
 public interface BlogService {
 
-    public List<BlogDTO> findAllBlogs();
+    List<BlogDTO> findAllBlogs();
 
-    public BlogDTO findBlogById(Long id);
+    BlogDTO findBlogDTOById(Long id);
+
+    Blog findBlogById(Long id);
 
     BlogDTO doBlog(BlogDTO blogDTO,User user, Category category);
 
-    public Blog save(BlogDTO b);
+    Blog update(BlogDTO b);
 
-    public Blog update(BlogDTO b);
+    void disableBlogById(Long id);
 
-    public void disableBlogById(Long id);
-
-    public void enableBlogById(Long id);
-
-    public void delete(Long id);
+    void enableBlogById(Long id);
 
     List<Blog> findTop3NewestBlogs();
 
     List<Blog> findBlogBy2Fields(String keyword, Long category, int pageNumber);
 
+    List<Blog> findMyBlogBy2Fields(Long userId, String keyword, Long category, int pageNumber);
+
+    List<Blog> getAllWaitingBlog(String keyword, Long category, int pageNumber);
+
     int totalPageBy2Fields(String keyword, Long category);
+
+    int myBlogtotalPage(Long userId,String keyword, Long category);
+
+    int totalWaitingBlogPage(String keyword, Long category);
 }

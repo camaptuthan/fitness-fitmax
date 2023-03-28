@@ -140,6 +140,28 @@
                             </tbody>
                         </table>
                         <div id="pagination"></div>
+                        <div class="pagination-cover">
+                            <ul class="pagination">
+                                <li class="pagination-item item-prev"
+                                    th:classappend="${currentPage -1 == 0} ? 'disabled':''" th:if="${currentPage -1 > 0}">
+                                    <a th:href="@{/studio/management/studios(pageNumber=${currentPage - 1},keyword=${currentKeyword},city=${currentCity},status=${currentStatus})}">
+                                        <i aria-hidden="true" class="fa fa-angle-left"></i>
+                                    </a>
+                                </li>
+                                <li class="pagination-item " th:classappend="${currentPage == i}? 'active' :'' "
+                                    th:each="i: ${#numbers.sequence(1,totalPage)}">
+                                    <a th:href="@{/studio/management/studios(pageNumber=${i},city=${currentCity},keyword=${currentKeyword},status=${currentStatus})}"
+                                       th:text="${i}"></a>
+                                </li>
+                                <li class="pagination-item item-next"
+                                    th:classappend="${currentPage == totalPage}  ? 'disabled':''"
+                                    th:if="${currentPage < totalPage}">
+                                    <a th:href="@{/studio/management/studios(pageNumber=${currentPage + 1},city=${currentCity},keyword=${currentKeyword},status=${currentStatus})}">
+                                        <i aria-hidden="true" class="fa fa-angle-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

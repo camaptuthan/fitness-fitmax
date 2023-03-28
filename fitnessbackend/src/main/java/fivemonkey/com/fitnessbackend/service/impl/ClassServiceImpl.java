@@ -11,6 +11,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -51,8 +54,9 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public List<ClassDTO> getByUserRole(User user) {
-        List<Clazz> clazzes = user.getStudio() == null ? classRepository.findAll() : classRepository.getClazzByUserEmail(user.getEmail());
+    public List<ClassDTO> getByUserRole(User user, int currentPage, int size) {
+        Pageable pageable = currentPage == 0 || size == 0 ? Pageable.unpaged() : PageRequest.of(currentPage - 1, size, Sort.by("services.date").descending());
+        List<Clazz> clazzes = user.getStudio() == null ? classRepository.findAll(pageable).getContent() : classRepository.getClazzByUserEmail(user.getEmail(), pageable).getContent();
         assert clazzes != null;
         return modelMapper.mapList(clazzes, ClassDTO.class);
     }
@@ -62,7 +66,8 @@ public class ClassServiceImpl implements ClassService {
         Clazz clazz = classRepository.findByServicesId(classDTO.getServicesId()).orElse(new Clazz());
         Services services = clazz.getServices() == null ? new Services(new Date()) : clazz.getServices();
         services.setCity(cityRepository.getCityByName(classDTO.getServicesCityName()));
-        services.setStudio(studioRepository.getStudioById(clazz.getServices() == null ? user.getStudio().getId() :  classDTO.getServicesStudioId()));
+        services.setStudio(studioRepository.getStudioById(classDTO.getServicesStudioId()));
+        services.setPrice(classDTO.getServicesPrice());
         services.setName(classDTO.getServicesName());
         services.setDes(classDTO.getServicesDes());
         services.setStatus(classDTO.getServicesStatus());

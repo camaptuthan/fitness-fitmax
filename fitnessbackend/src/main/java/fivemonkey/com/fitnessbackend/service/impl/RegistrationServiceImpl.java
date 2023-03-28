@@ -84,6 +84,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     @Override
     public RegistrationDTO doRegistration(User user, String itemId) {
+
         return modelMapper.map(registrationRepository.save(makeRegistration(user, itemId)), RegistrationDTO.class);
     }
 
@@ -131,7 +132,8 @@ public class RegistrationServiceImpl implements RegistrationService {
         Session session = sessionFactory.openSession();
         String hql = "select r from Registration r where 1=1 ";
         if (keyword != null && !keyword.isEmpty()) {
-            hql += " and concat(r.services.name,r.services.price, r.services.serviceType, r.date) like '%" + keyword + "%' ";
+            keyword = keyword.trim().replaceAll("\\s+", " ");
+            hql += " and concat(r.services.name,r.services.price, r.services.serviceType) like '%" + keyword + "%' ";
         }
         if (city != null && !city.isEmpty()) {
             hql += "and r.services.city.id = '" + city +"'";
