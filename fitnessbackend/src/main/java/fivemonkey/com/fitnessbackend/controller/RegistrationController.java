@@ -1,11 +1,13 @@
 package fivemonkey.com.fitnessbackend.controller;
 
+import fivemonkey.com.fitnessbackend.dto.CityDTO;
 import fivemonkey.com.fitnessbackend.dto.RegistrationDTO;
 import fivemonkey.com.fitnessbackend.entities.Registration;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.repository.RegistrationRepository;
 import fivemonkey.com.fitnessbackend.repository.StatusRepository;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
+import fivemonkey.com.fitnessbackend.service.service.CityService;
 import fivemonkey.com.fitnessbackend.service.service.RegistrationService;
 import fivemonkey.com.fitnessbackend.service.service.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -24,6 +27,9 @@ public class RegistrationController {
 
     @Autowired
     private RegistrationRepository registrationRepository;
+
+    @Autowired
+    private CityService cityService;
     @Autowired
     private StatusRepository statusRepository;
     @Autowired
@@ -41,30 +47,62 @@ public class RegistrationController {
         return path;
     }
 
-    @ResponseBody
-    @GetMapping("/api/profile")
-    public List<RegistrationDTO> registration(@AuthenticationPrincipal UserDetail userDetail) {
-        return registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail());
-    }
 
 
     //Get Registration List
 
-    @GetMapping("management/registrations")
-    public String listRegistration(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+    @GetMapping("management/registrationsd")
+    public String listRegistration(@AuthenticationPrincipal UserDetail userDetail,
+                                   @RequestParam(value ="keyword" , required = false, defaultValue = "") String keyword,
+                                   @RequestParam(value ="city" ,required = false, defaultValue = "") String city,
+                                   @RequestParam(value = "studio", required = false, defaultValue = "") String studio,
+                                   @RequestParam(value ="studioStatus", required = false, defaultValue = "") String studioStatus,
+                                   Model model) {
+        List<CityDTO> listCity = new ArrayList<>();
         if (userDetail.getUser().getRole().getName().equals("Admin")) {
+            listCity = cityService.getAllCities();
             model.addAttribute("registrations", registrationService.getAllRegistrations());
         } else if (userDetail.getUser().getRole().getName().equals("Manager")) {
             model.addAttribute("registrations", registrationService.getRegistrationByManager(userDetail.getUser().getStudio().getId()));
         } else if (userDetail.getUser().getRole().getName().equals("Assistant")) {
             model.addAttribute("registrations", registrationService.getRegistrationByAssistant(userDetail.getUser().getEmail()));
         }
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("status", studioStatus);
+        model.addAttribute("listCity", listCity);
+        model.addAttribute("currentCity", city);
         model.addAttribute("statusList", statusService.getStatusByPackage());
         model.addAttribute("registrations", registrationService.getAllRegistrations());
         return "management/RegistrationManagement/registration";
     }
 
+    //Get Registration List by Filter
+    @GetMapping("/management/registrations")
+    public String getRegistrationByFilter(@AuthenticationPrincipal UserDetail userDetail,
+                                          @RequestParam(value ="keyword" , required = false, defaultValue = "") String keyword,
+                                          @RequestParam(value ="city" ,required = false, defaultValue = "") String city,
+                                          @RequestParam(value = "studio", required = false, defaultValue = "") String studio,
+                                          @RequestParam(value ="studioStatus", required = false, defaultValue = "") String studioStatus,
+                                          Model model) {
+        List<CityDTO> listCity = new ArrayList<>();
+        if (userDetail.getUser().getRole().getName().equals("Admin")) {
+            //model.addAttribute("registrations", registrationService.getAllRegistrations());
+            listCity = cityService.getAllCities();
+        } else if (userDetail.getUser().getRole().getName().equals("Manager")) {
+           //model.addAttribute("registrations", registrationService.getRegistrationByManager(userDetail.getUser().getStudio().getId()));
+        } else if (userDetail.getUser().getRole().getName().equals("Assistant")) {
+            //model.addAttribute("registrations", registrationService.getRegistrationByAssistant(userDetail.getUser().getEmail()));
+        }
+        List<RegistrationDTO> registrationDTOS = registrationService.getRegistrationByFilter(keyword, city, studio, studioStatus);
+        model.addAttribute("registrations", registrationDTOS);
 
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("status", studioStatus);
+        model.addAttribute("listCity", listCity);
+        model.addAttribute("currentCity", city);
+        model.addAttribute("statusList", statusService.getStatusByPackage());
+        return "management/RegistrationManagement/registration";
+    }
     @PostMapping("management/registrationpost/{id}")
     public String updateStudio(@PathVariable String id,
                                @ModelAttribute("registration") Registration registration,
@@ -73,9 +111,6 @@ public class RegistrationController {
         Registration existingRegis = registrationService.getRegistrationById(id);
         existingRegis.setId(id);
         existingRegis.setStatus(registration.getStatus());
-//        existingRegis.getDate();
-//        existingRegis.setDes(registration.getDes());
-//        existingRegis.setStatus(registration.isStatus());
         // save updated studio object
         registrationService.updateRegistration(existingRegis);
         return "redirect:/studios";
@@ -102,4 +137,6 @@ public class RegistrationController {
         registrationService.updateRegistration(registration);
         return "redirect:/registration/management/registrations";
     }
+
+
 }

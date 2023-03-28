@@ -40,6 +40,11 @@ public interface ServicesService {
 
     List<ServicesDTO> getServiceOfStudio(String id,Long cat);
     List<ServicesDTO> getAllServiceOfStudio(String id);
+
     List<ServicesDTO> getServicesPT();
     List<Services> getServicesById(String id);
+
+
+    boolean isServiceExistInStudio(String servicesId, String studioId);
+
 }

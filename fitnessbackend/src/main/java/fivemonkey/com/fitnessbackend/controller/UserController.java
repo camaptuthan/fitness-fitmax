@@ -3,10 +3,8 @@ package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.configuration.Utility;
 import fivemonkey.com.fitnessbackend.dto.*;
-import fivemonkey.com.fitnessbackend.entities.Registration;
-import fivemonkey.com.fitnessbackend.entities.Role;
+import fivemonkey.com.fitnessbackend.entities.*;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
-import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.service.service.*;
@@ -58,6 +56,9 @@ public class UserController {
     @Autowired
     private CityService cityService;
 
+    @Autowired
+    private DistrictService districtService;
+
     @GetMapping("/management/listusers")
     public String listUser(Model model, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword
             , @RequestParam(value = "cityName", required = false, defaultValue = "All") String cityName
@@ -93,6 +94,28 @@ public class UserController {
         return "management/UserManagement/UserList";
     }
 
+
+    @GetMapping("/management/listuserchangest")
+    public String listUserChangeSt(@AuthenticationPrincipal UserDetail userDetail, Model model){
+        model.addAttribute("list", userService.getUserSt(userDetail.getUser().getStudio().getId()));
+        return "management/UserManagement/ListUserST";
+    }
+
+
+    @RequestMapping( value = "/management/listuserchangest/accept/{email}",  method = {RequestMethod.PUT, RequestMethod.GET})
+    public String acceptUserChangeSt(@PathVariable("email") String email){
+        UserDTO userDTO = userService.getUserByEmail(email);
+        userService.accpectChangeSt(userDTO);
+
+        return "redirect:/user/management/listuserchangest";
+    }
+    @RequestMapping( value = "/management/listuserchangest/reject/{email}",  method = {RequestMethod.PUT, RequestMethod.GET})
+    public String rejectUserChangeSt(@PathVariable("email") String email){
+        UserDTO userDTO = userService.getUserByEmail(email);
+        userService.rejectChangeSt(userDTO);
+
+        return "redirect:/user/management/listuserchangest";
+    }
 
     @RequestMapping(value = "/listpt", method = {RequestMethod.GET, RequestMethod.POST})
     public String getPT(Model model, @RequestParam(value = "studioId", required = false, defaultValue = "All") String studioId
@@ -154,7 +177,7 @@ public class UserController {
         return "redirect:/user/management/listusers";
     }
 
-    @RequestMapping("/management/updateuser/{email}")
+    @RequestMapping("management/updateuser/{email}")
     public String getInformationUser(@PathVariable("email") String email, Model model) {
         List<Role> roleList = roleService.getRoleAdmin();
         UserDTO userDTO = userService.getUserByEmail(email);
@@ -164,7 +187,7 @@ public class UserController {
         return "management/UserManagement/UserUpdate";
     }
 
-    @PostMapping("/management/updateuser/{email}")
+    @PostMapping("/updateuser/{email}")
     public String userUpdate(@PathVariable("email") String email, @ModelAttribute("user") UserDTO userDTO) {
         try {
             userService.update(userDTO);
@@ -180,22 +203,24 @@ public class UserController {
     }
 
 
-    @RequestMapping("/management/avataruser/{email}")
+    @RequestMapping("/avataruser/{email}")
     public String getInformationUserAvatar(@PathVariable("email") String email, Model model) {
         UserDTO userDTO = userService.getUserByEmail(email);
         model.addAttribute("user", userDTO);
         return "myprofile";
     }
 
-    @PostMapping("/management/avataruser/{email}")
+    @PostMapping("/avataruser/{email}")
     public String userUpdate(@RequestParam("fileImage") MultipartFile multipartFile,
 
                              @ModelAttribute("user") UserDTO userDTO,
                              Model model) throws IOException {
         userService.saveThumbnail(imageUploader.upload(multipartFile), userDTO.getEmail());
 
-        return "redirect:/user/management/listusers";
+
+        return "redirect:/";
     }
+
 
 
     @RequestMapping("/ptdetail/{email}")
@@ -230,27 +255,54 @@ public class UserController {
         model.addAttribute("trainer", trainerDTO);
         return "redirect:/";
 
+
+    }
+    @RequestMapping("/changestudio")
+    public String getStudioTrainee(@AuthenticationPrincipal UserDetail userDetail,
+                                   @RequestParam(value = "cityName", required = false, defaultValue = "All") String cityName,
+                                   @RequestParam(value = "studioId", required = false, defaultValue = "All") String studioId,
+                                   Model model){
+        UserDTO userDTO = userService.getUserByEmail(userDetail.getUser().getEmail());
+
+        model.addAttribute("listCity", addressService.getCities());
+        model.addAttribute("regis", registrationService.getRegistrationByUser(userDetail.getUser().getEmail()));
+        model.addAttribute("listStudio", studioService.getAllStudio());
+        model.addAttribute("user", userDTO);
+        return "user/changeStudio";
+
     }
 
-//    @RequestMapping("/management/updateprofile")
-//    public String getInformationUserPro5(@AuthenticationPrincipal UserDetail userDetail, Model model) {
-//        UserDTO userDTO = userService.getUserByEmail(userDetail.getUser().getEmail());
-//        model.addAttribute("user", userDTO);
-//        return "myprofile";
-//    }
+    @PostMapping("/changestudio/{email}")
+    public String changeStuTrainee(@ModelAttribute("user") UserDTO userDTO,
+                                   @RequestParam(value = "studioId", required = false, defaultValue = "All") String studioId,
+                                   Model model){
 
-    @RequestMapping("/management/updateprofile/{email}")
-    public String getInformationUserPro5(@PathVariable("email") String email, Model model) {
-        UserDTO userDTO = userService.getUserByEmail(email);
+       userService.changeStatusChangeSt(userDTO.getEmail(), studioId);
+        System.out.println("Mai" + studioId + "gdfgdf" + userDTO.getEmail());
+        model.addAttribute("user", userDTO);
+        return "redirect:/";
+
+    }
+
+    @RequestMapping("/updateprofile")
+    public String getInformationUserPro5(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+        UserDTO userDTO = userService.getUserByEmail(userDetail.getUser().getEmail());
         model.addAttribute("user", userDTO);
         return "myprofile";
     }
 
+//    @RequestMapping("/updateprofile/{email}")
+//    public String getInformationUserPro5(@PathVariable("email") String email, Model model) {
+//        UserDTO userDTO = userService.getUserByEmail(email);
+//        model.addAttribute("user", userDTO);
+//        return "myprofile";
+//    }
 
-    @PostMapping("/management/updateprofile/{email}")
+
+    @PostMapping("/updateprofile/{email}")
     public String userUpdateAll(@ModelAttribute("user") UserDTO userDTO, Model model) throws IOException {
         userService.updateUser(userDTO);
-        return "redirect:/user/management/listusers";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -349,30 +401,18 @@ public class UserController {
     }
 
     @PostMapping("/reset-password-result")
-    public String resetPassword(@ModelAttribute("userDTO") User user, @RequestParam String repassword, @RequestParam String password, Model model) {
-        String path = "reset_password";
-        if (password.equals(repassword) && password.length() >= 6) {
-            userService.resetPassword(user.getEmail(), password);
-            model.addAttribute("message", "Password reset successful");
-            path = "reset_password";
-        }
-        if (!password.equals(repassword)) {
-            model.addAttribute("invalid", "Password not matches ");
-            path = "changepass";
-        } else if (password.length() < 6 || repassword.length() < 6) {
-            model.addAttribute("invalid", "Password must have length > 6");
-            path = "changepass";
-        }
+    public String resetPassword(@ModelAttribute("userDTO") User user,  @RequestParam String password, Model model) {
+        String path = "verify_status";
+        userService.resetPassword(user.getEmail(), password);
+        model.addAttribute("title", "Password reset successfully please login .");
         return path;
     }
 
-    @GetMapping("/profile")
-    public String myProfile(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+    @GetMapping("/myregistrations")
+    public String myRegistrations(@AuthenticationPrincipal UserDetail userDetail, Model model) {
         model.addAttribute("registrations", registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail()));
-        model.addAttribute("user", userDetail.getUser());
-        return "user/profile";
+        return "user/registration";
     }
-
 
 }
 

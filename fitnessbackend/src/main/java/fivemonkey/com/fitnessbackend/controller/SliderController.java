@@ -37,8 +37,10 @@ public class SliderController {
         String imageUrl = slider.getImage();
         if (fileName != null && !fileName.isEmpty()) {
             imageUrl = imageUploader.upload(file);
+            slider.setImage(imageUrl);
+        }else{
+            slider.setImage("https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_package_default.jpg?alt=media&token=d96f81d3-65fc-43ac-be80-b8c9b6f55951");
         }
-        slider.setImage(imageUrl);
         sliderService.insertSlider(slider.getImage(),slider.getTitle(),slider.getDes());
         return "redirect:/slider/management";
     }
@@ -69,8 +71,10 @@ public class SliderController {
         String imageUrl = slider.getImage();
         if (fileName != null && !fileName.isEmpty()) {
             imageUrl = imageUploader.upload(file);
+            slider.setImage(imageUrl);
+        }else{
+            slider.setImage("https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_package_default.jpg?alt=media&token=d96f81d3-65fc-43ac-be80-b8c9b6f55951");
         }
-        slider.setImage(imageUrl);
         slider.setTitle(title);
         slider.setDes(content);
         sliderRepository.save(slider);

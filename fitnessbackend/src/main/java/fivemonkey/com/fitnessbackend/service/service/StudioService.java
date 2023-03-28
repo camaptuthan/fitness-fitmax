@@ -30,4 +30,6 @@ public interface StudioService {
 
     List<StudioDTO> getAllStudio();
 
+    //update studio
+//    void updateStudio(StudioDTO studioDTO);
 }

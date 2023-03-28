@@ -37,6 +37,10 @@ public interface RegistrationRepository extends JpaRepository<Registration, Stri
     @Query(value = "select r from Registration r join Status st on st.type = 'service' and r.status = st.type_id")
     List<Registration> getRegistrationByAdmin();
 
+
+    @Query(value = "select r from Registration r where 1=1 and r.services.city.name =''")
+    List<Registration> getRegistrationByCity(String city);
+
     @Query(value = "select r from Registration r where r.trainer.email= :trainerEmail and r.trainee.email = :traineeEmail")
     Registration findRegistrationByTrainerAndTrainee(String trainerEmail, String traineeEmail);
 
@@ -45,5 +49,11 @@ public interface RegistrationRepository extends JpaRepository<Registration, Stri
 
     @Query("select count (r.id) from Registration r where r.trainer.email= :trainerEmail")
     int countRegistrationPT(String trainerEmail);
+
+    @Query("select r from Registration r where r.trainee.email = :traineeEmail  and r.status = 1 and r.services.serviceType.id = 1")
+    Registration getRegistrationByUser(String traineeEmail);
+
+    @Query("select r from Registration  r where r.services.id = ?1")
+    List<Registration> getRegistrationByServices(String serviceId);
 
 }

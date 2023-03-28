@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ServicesRepository extends JpaRepository<Services, String> {
@@ -29,10 +30,15 @@ public interface ServicesRepository extends JpaRepository<Services, String> {
     @Query("select s from Services s where s.studio.id = ?1")
     List<Services> getServicesByStudio(String id);
 
+
     @Query("select s from Services s where s.id = ?1")
     List<Services> getServicesById(String id);
 
 
 
+
+
+    @Query("select s from Services s where s.id = ?1 and s.studio.id = ?2")
+    Optional<Services> isServiceExistInStudio(String servicesId, String studioId);
 
 }

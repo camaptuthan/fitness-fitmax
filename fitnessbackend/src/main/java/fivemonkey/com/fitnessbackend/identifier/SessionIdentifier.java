@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public class SessionIdentifier implements IdentifierGenerator {
 
-    private String prefix = "SES" +  LocalDate.now().getYear();
+    private final String prefix = "SES" +  LocalDate.now().getYear();
     @Override
     public Serializable generate(SharedSessionContractImplementor sharedSessionContractImplementor, Object obj) throws HibernateException {
         String query = "select s.id from Session s order by s.id desc";

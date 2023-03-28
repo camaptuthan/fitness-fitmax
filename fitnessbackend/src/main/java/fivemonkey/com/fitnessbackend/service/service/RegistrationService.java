@@ -6,6 +6,7 @@ import fivemonkey.com.fitnessbackend.entities.Status;
 import fivemonkey.com.fitnessbackend.entities.Trainer;
 import fivemonkey.com.fitnessbackend.entities.User;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,10 +35,16 @@ public interface RegistrationService {
 
 
 
+
     RegistrationDTO doRegistrationPt(String trainerEmail, User user, String serviceId);
 
 //    List<Registration> getRegistrationBookPt(String studioId);
 
     public boolean countRegistrationPT(String trainerEmail);
+
+
+    List<RegistrationDTO> getRegistrationByFilter(String keyword, String city, String studio, String studioStatus);
+
+    Registration getRegistrationByUser(String traineeEmail);
 
 }

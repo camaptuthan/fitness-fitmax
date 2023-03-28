@@ -1,6 +1,5 @@
 package fivemonkey.com.fitnessbackend.dto;
 
-import fivemonkey.com.fitnessbackend.entities.District;
 import lombok.*;
 
 import java.util.Date;
@@ -14,12 +13,12 @@ public class StudioDTO {
     private String id;
     private String name;
     private String city;
+    private String road;
     private Long districtId;
     private String districtName;
-    private String districtRoad;
     private String districtCityName;
     private String contact;
-
+    private String address;
     private Date date;
 
     private String des;

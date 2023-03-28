@@ -11,7 +11,7 @@
   <th:block th:replace="fragments/head :: head"></th:block>
 
 </head>
-
+<th:block th:insert="fragments/header.html"></th:block>
 <body>
 <section class="s-out-trainer" style="background-image: url(/img/bg-contacts.svg);">
   <div class="container">
@@ -62,7 +62,7 @@
                       <div class="out-trainer-info">
                         <h3><a th:href="@{/user/ptdetail/{email}(email=${trainer.email})}" th:text="${trainer.userFirstName}+' '+${trainer.userLastName}"></a></h3>
                         <div class="prof">Weightlifting</div>
-                        <p th:text="${trainer.philosophy}+' '+${trainer.achievement}"></p>
+                        <p th:text= "${trainer.philosophy}+' '+${trainer.achievement}"></p>
 
 
 <!--                        <a th:href="@{/user/ptdetail/{email}(email=${trainer.email})}" class="btn">View</a>-->

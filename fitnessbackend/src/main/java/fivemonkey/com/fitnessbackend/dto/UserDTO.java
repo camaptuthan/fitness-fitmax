@@ -23,13 +23,19 @@ public class UserDTO {
     private String phone;
     private String avatar;
     private Date date;
+    private int statusChangeSt;
     private boolean status;
     private String roleId;
     private String roleName;
     private String studioName;
 
+    private String studioSt;
+
     private String studioId;
     private String vericode;
+
+
+
 
 
 

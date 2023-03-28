@@ -1,4 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <div class="ttr-sidebar">
     <div class="ttr-sidebar-wrapper content-scroll">
         <!-- side menu logo start -->
@@ -24,7 +26,7 @@
                         <span class="ttr-label">Class</span>
                     </a>
                 </li>
-                <li>
+                <li sec:authorize="hasAnyAuthority('ROLE01')">
                     <a class="ttr-material-button" href="/studio/management/studios">
                         <span class="ttr-icon"><i class="ti-calendar"></i></span>
                         <span class="ttr-label">Studio</span>
@@ -48,8 +50,8 @@
                         <span class="ttr-label">Blog</span>
                     </a>
                 </li>
-                <li>
-                    <a class="ttr-material-button" href="/slider/management">
+                <li sec:authorize="hasAnyAuthority('ROLE01')" >
+                    <a  class="ttr-material-button" href="/slider/management">
                         <span class="ttr-icon"><i class="ti-layout-accordion-list"></i></span>
                         <span class="ttr-label">Slider</span>
                     </a>

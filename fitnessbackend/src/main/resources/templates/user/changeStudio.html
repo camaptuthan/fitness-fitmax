@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Fitmax</title>
+  <!-- =================== META =================== -->
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <th:block th:replace="fragments/head :: head"></th:block>
+</head>
+
+<body id="home">
+<!--================ PRELOADER ================-->
+<div class="preloader-cover">
+  <div id="cube-loader">
+    <div class="caption">
+      <div class="cube-loader">
+        <div class="cube loader-1"></div>
+        <div class="cube loader-2"></div>
+        <div class="cube loader-4"></div>
+        <div class="cube loader-3"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--============== PRELOADER END ==============-->
+
+<!-- ================= HEADER ================= -->
+<div th:include="fragments/header.html"></div>
+<!-- =============== HEADER END =============== -->
+<div class="container mt-5">
+  <div class="main-body">
+    <div class="row gutters-sm" th:object="${user}">
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <img th:src="*{avatar != null ? avatar : 'https://bootdey.com/img/Content/avatar/avatar7.png'}"
+                   alt="Admin" class="rounded-circle" style="border: 1px solid rgba(242, 56, 73, .25)"
+                   width="150" src="">
+              <div class="mt-3">
+                <h4 th:utext="*{lastName + ' '+ firstName}"></h4>
+                <p class="text-secondary mb-1">sometshing</p>
+                <p class="font-size-sm">Bay Area, San s Francisco, CA</p>
+              </div>
+              <div class="col-sm-12">
+                <a class="btn" target="__blank"
+                   href="user/profile">Profile</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <div class="card-body">
+            <form class="contact-bx" th:action="@{/user/changestudio/{email} (email=${user.email})}"  method="post" th:object="${user}">
+              <div class="row">
+                <div class="col-sm-2">
+                  <h6 class="mb-0">Your old Studio</h6>
+                </div>
+                <div class="col-sm-10 text-secondary" >
+                  <a  class="form-control" type="text" th:text="${user.studioName}" > </a>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-2">
+                  <h6 class="mb-0">Your Service</h6>
+                </div>
+                <div class="col-sm-10 text-secondary" >
+                  <a class="form-control" type="text" th:text="${regis.services.name}" > </a>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-2">
+                  <h6 class="mb-0">Remaining sessions</h6>
+                </div>
+                <div class="col-sm-10 text-secondary" >
+                  <a class="form-control" type="text" > 20 sessions </a>
+                </div>
+              </div>
+<!--              <hr>-->
+<!--              <div class="row">-->
+<!--                <label class="col-sm-2 col-form-label"> City: </label>-->
+<!--                <div class="col-sm-4">-->
+<!--                  <select class="form-control" id="districtCityName" onchange="getDistrict()"-->
+<!--                          name="districtCityName">-->
+<!--                    <option th:each="list:${cityList}" th:text="${list.name}" th:value="${list.name}">-->
+<!--                    </option>-->
+<!--                  </select>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <hr>-->
+<!--              <div class="row">-->
+<!--                <label class="col-sm-2 col-form-label"> Dictrict: </label>-->
+<!--                <div class="col-sm-4">-->
+<!--                  <select class="form-control" id="districtCityNames" onchange="getDistrict()"-->
+<!--                          name="districtCityName">-->
+<!--                    <option th:each="list:${cityList}" th:text="${list.name}" th:value="${list.name}">-->
+<!--                    </option>-->
+<!--                  </select>-->
+<!--                </div>-->
+<!--              </div>-->
+              <hr>
+              <div class="row">
+                <label class="col-sm-2 col-form-label">New Studio: </label>
+                <div class="col-sm-4">
+                  <select class="form-control" th:name="studioId">
+                    <option th:each="list:${listStudio}" th:text="${list.name}" th:value="${list.id}">
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-2">
+                  <h6 class="mb-0">Reason for changing studio</h6>
+                </div>
+                <div class="col-sm-10 text-secondary" >
+                  <input name  class="form-control" type="text">
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <h6 style="color: red" th:text="${fail}"></h6>
+                <div class="col-sm-12" >
+                  <input class="btn" type="submit" value="Change Studio">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ================== FOOTER ================== -->
+
+<!-- ================== FOOTER ================== -->
+
+<div th:include="fragments/footer.html"></div>
+<!-- ================ FOOTER END ================ -->
+
+<!--=================== TO TOP ===================-->
+
+<!--================= TO TOP END =================-->
+
+<!--=================== SCRIPT	===================-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+<script th:src="@{/js/slick.min.js}"></script>
+<script th:src="@{/js/rx-lazy.js}"></script>
+<script th:src="@{/js/parallax.min.js}"></script>
+<script th:src="@{/js/scripts.js}"></script>
+<style>
+  .card {
+    --bs-card-bg: #202020;
+    --bs-card-border-color: rgba(242, 56, 73, .25)
+  }
+
+  .text-secondary {
+    color: white !important;
+  }
+
+  .nav-link {
+    color: white !important;
+  }
+
+  .nav-link.active {
+    color: #f23849 !important;
+    background-color: transparent !important;
+  }
+</style>
+</body>
+
+</html>

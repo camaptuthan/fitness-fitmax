@@ -1,10 +1,13 @@
 package fivemonkey.com.fitnessbackend.controller;
 
+import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.BlogDTO;
 import fivemonkey.com.fitnessbackend.dto.CategoryDTO;
 import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
 import fivemonkey.com.fitnessbackend.dto.CityDTO;
 import fivemonkey.com.fitnessbackend.dto.StudioDTO;
+import fivemonkey.com.fitnessbackend.entities.City;
+import fivemonkey.com.fitnessbackend.entities.District;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
@@ -15,10 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/studio")
@@ -31,10 +31,15 @@ public class StudioController {
     private CityService cityService;
 
     @Autowired
+    private DistrictService districtService;
+
+    @Autowired
     private CategoryService categoryService;
 
     @Autowired
     ServicesService servicesService;
+    @Autowired
+    private ModelMapperConfiguration<StudioDTO, Studio> modelMapper;
 
 //    list studio in homepage
     @GetMapping("/studio-details/{id}")
@@ -94,12 +99,23 @@ public class StudioController {
 
     //Add Studio
     @GetMapping("/management/addstudio")
-    public String newStudio(Model model) {
-         List<User> mlist = userService.getUserByRoleId("ROLE02");
+    public String newStudio(@AuthenticationPrincipal UserDetail userDetail,
+                            @RequestParam(value = "city", required = false, defaultValue = "") String city, Model model){
+
         Studio studio = new Studio();
-         model.addAttribute("list", mlist);
+        List<City> cityList = cityService.getNewCity();
+
+        if(city!=null && !city.equals("")){
+            List<District> districtList = districtService.getNewDistrict(city);
+            model.addAttribute("districtList", districtList);
+        }
+        else {
+            model.addAttribute("districtList", null);
+        }
+        model.addAttribute("cityList", cityList);
         model.addAttribute("studio", studio);
         return "./management/StudioManagement/add_studio";
+
     }
     //Update Studio Status
     @GetMapping("/management/statusstudios/{id}/{status}")
@@ -112,14 +128,53 @@ public class StudioController {
     //Update Studio
     @GetMapping("management/studios/edit/{id}")
     public String editStudioForm(@PathVariable String id, Model model) {
-        //StudioDTO studioDTO = studioService.getStudioById(id);
         model.addAttribute("studioDTO", studioService.getStudioDTOByStudioId(id));
         return "management/StudioManagement/updatestudio";
     }
-    //Save Studio
+
+    @PostMapping("management/studioupdate/{id}")
+    public String updateStudio(@PathVariable String id,
+                               @ModelAttribute("studioDTO") StudioDTO studio,
+                               Model model) {
+        // get studio from database by id
+        Studio existingStudio = studioService.getStudioByStudioId(id);
+        City city = cityService.getCityByName(studio.getDistrictCityName());
+        District currentDistrict = districtService.getDistrictByName(studio.getDistrictName());
+        city.setName(studio.getDistrictCityName());
+        currentDistrict.setCity(city);
+
+        existingStudio.setId(id);
+        existingStudio.setName(studio.getName());
+        existingStudio.setContact(studio.getContact());
+        existingStudio.setDes(studio.getDes());
+        existingStudio.setStatus(studio.isStatus());
+        existingStudio.setDistrict(currentDistrict);
+
+        //save updated studio object
+        studioService.saveStudio(existingStudio);
+        return "redirect:/studio/management/studios";
+    }
+    //Add Studio Post
     @PostMapping("/management/poststudio")
-    public String saveStudio( @ModelAttribute("studio") Studio studio) {
+    public String saveStudio( @ModelAttribute("studio") StudioDTO studioDTO , Model model, @RequestParam(value = "city", required =false, defaultValue = "") String city,
+                              @RequestParam(value = "", required =false, defaultValue = "") String district) {
+        Studio studio = new Studio();
         studio.setStatus(true);
+        studio.setName(studioDTO.getName());
+        studio.setContact(studioDTO.getContact());
+        studio.setDes(studioDTO.getDes());
+        studio.setDate(new Date());
+        studio.setAddress(studioDTO.getAddress());
+        studio.setImage(studioDTO.getImage());
+
+        //New District
+        District district1 = new District();
+        district1.setName(studioDTO.getDistrictName());
+        City city1 = cityService.getCityByName(studioDTO.getDistrictCityName());
+        district1.setCity(city1);
+        studio.setDistrict(district1);
+
+
         studioService.saveStudio(studio);
         return "redirect:/studio/management/studios";
     }

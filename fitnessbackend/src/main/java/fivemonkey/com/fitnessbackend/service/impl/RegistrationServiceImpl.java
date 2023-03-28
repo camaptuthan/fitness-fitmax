@@ -5,8 +5,12 @@ import fivemonkey.com.fitnessbackend.dto.RegistrationDTO;
 import fivemonkey.com.fitnessbackend.entities.*;
 import fivemonkey.com.fitnessbackend.repository.*;
 import fivemonkey.com.fitnessbackend.service.service.RegistrationService;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
+import org.hibernate.query.Query;
 
 import javax.persistence.EntityManager;
 import java.util.*;
@@ -21,7 +25,11 @@ public class RegistrationServiceImpl implements RegistrationService {
     private ClassRepository classRepository;
 
     @Autowired
+
     private TrainerRepository trainerRepository;
+    @Autowired
+    private SessionFactory sessionFactory;
+
     @Autowired
     private TraineeRepository traineeRepository;
     @Autowired
@@ -58,7 +66,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     private RegistrationDTO makeRegistrationDTO(Registration registration) {
         RegistrationDTO registrationDTO = modelMapper.map(registration, RegistrationDTO.class);
-        registrationDTO.setPath(registration.getClass() != null ? "/class" : "");
+        registrationDTO.setPath(registration.getClass() != null ? "/service/class/"+registrationDTO.getServicesId() : "");
         return registrationDTO;
     }
 
@@ -133,7 +141,35 @@ public class RegistrationServiceImpl implements RegistrationService {
         registration.setStartDate(services.getClazz() == null ? null : new Date());
         registration.setServices(services);
         registration.setDate(new Date());
-        return registration;
+        return registration;}
+
+    public List<RegistrationDTO> getRegistrationByFilter(@Param("keyword") String keyword,
+                                                      @Param("city") String city,
+                                                       @Param("studio") String studio,
+                                                      @Param("status") String registrationStatus) {
+        Session session = sessionFactory.openSession();
+        String hql = "select r from Registration r where 1=1 ";
+        if (keyword != null && !keyword.isEmpty()) {
+            hql += " and concat(r.services.name,r.services.price, r.services.serviceType, r.date) like '%" + keyword + "%' ";
+        }
+        if (city != null && !city.isEmpty()) {
+            hql += "and r.services.city.id = '" + city +"'";
+        }
+        if (studio != null && !studio.isEmpty()) {
+            hql += " and r.services.studio.name = '" + studio +"'";
+        }
+        if (registrationStatus != null && !registrationStatus.isEmpty()) {
+            hql += "and r.status = '" + registrationStatus +"'";
+        }
+
+        Query<Registration> query = session.createQuery(hql, Registration.class);
+        return modelMapper.mapList(query.getResultList(), RegistrationDTO.class);
+
+    }
+
+    @Override
+    public Registration getRegistrationByUser(String traineeEmail) {
+        return registrationRepository.getRegistrationByUser(traineeEmail);
     }
 
 
