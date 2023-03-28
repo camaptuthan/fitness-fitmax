@@ -28,4 +28,8 @@ public interface CityService {
     City createCity(City city);
 
     List<City> getNewCity();
+
+    List<City> getStudioCity();
+
+    List<City> getRegistrationCity();
 }

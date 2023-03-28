@@ -72,6 +72,8 @@ public class StudioServiceImpl implements StudioService {
         return modelMapper.mapList(studioRepository.findAll(), StudioDTO.class);
     }
 
+
+
 //    @Override
 //    public void updateStudio(Studio studioDTO) {
 //        StudioDTO studio = modelMapper.map(studioDTO, StudioDTO.class);
@@ -101,10 +103,13 @@ public class StudioServiceImpl implements StudioService {
     @Override
     public List<StudioDTO> getAllStudiosByFilter(@Param("keyword") String keyword,
                                                  @Param("city") String city,
-                                                 @Param("status") String studioStatus) {
+                                                 @Param("status") String studioStatus,
+                                                 int pageNumber) {
+        int pageSize = 5;
         Session session = sessionFactory.openSession();
         String hql = "select s from Studio s join District d on s.district.id = d.id where 1=1 ";
         if (!"".equals(keyword)) {
+            keyword = keyword.trim().replaceAll("\\s+", " ");
             hql += " and concat(s.name,s.contact, s.date) like '%" + keyword + "%' ";
         }
         if (!"".equals(city)) {
@@ -115,10 +120,38 @@ public class StudioServiceImpl implements StudioService {
         }
 
         Query<Studio> query = session.createQuery(hql, Studio.class);
+        query.setFirstResult(pageNumber * pageSize);
+        query.setMaxResults(pageSize);
         return modelMapper.mapList(query.getResultList(), StudioDTO.class);
-        //return query.getResultList();
+
     }
 
+    @Override
+    public int getTotalAllStudiosByFilter(@Param("keyword") String keyword,
+                                          @Param("city") String city,
+                                          @Param("status") String studioStatus) {
+        int pageSize = 5;
+        Session session = sessionFactory.openSession();
+        String sqlcount = "select count(s.id) from Studio s join District d on s.district.id = d.id where 1=1 ";
+        if (!"".equals(keyword)) {
+            keyword = keyword.trim().replaceAll("\\s+", " ");
+            sqlcount += " and concat(s.name,s.contact, s.date) like '%" + keyword + "%' ";
+        }
+        if (!"".equals(city)) {
+            sqlcount += " and s.district.id in (select d.id from District d where d.city.id = '" + city + "') ";
+        }
+        if (!"".equals(studioStatus)) {
+            sqlcount += " and s.status = '" + studioStatus + "' ";
+        }
+
+        Query queryCount = session.createQuery(sqlcount);
+        Long countResult = (Long) queryCount.uniqueResult();
+        if ((int) (countResult % pageSize) != 0) {
+            return (int) (countResult / pageSize) + 1;
+        } else {
+            return (int) (countResult / pageSize);
+        }
+    }
     @Override
     public StudioDTO getStudioDTOByStudioId(String id) {
         StudioDTO studioDTO = modelMapper.map(studioRepository.getStudioById(id), StudioDTO.class);

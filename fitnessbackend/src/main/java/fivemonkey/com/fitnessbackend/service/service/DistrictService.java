@@ -8,6 +8,8 @@ import java.util.List;
 @Service
 public interface DistrictService {
     List<District> getDistrictById(String id);
+
+    District getDistrictByDistrictId(String id);
     District getDistrictByName(String name);
 
     District createDistrict(District district);

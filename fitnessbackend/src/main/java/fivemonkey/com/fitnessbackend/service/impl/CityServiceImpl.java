@@ -68,4 +68,14 @@ public class CityServiceImpl implements CityService {
     public List<City> getNewCity() {
         return cityRepository.getNewCity();
     }
+
+    @Override
+    public List<City> getStudioCity() {
+        return cityRepository.getStudioCity();
+    }
+
+    @Override
+    public List<City> getRegistrationCity() {
+        return cityRepository.getRegistrationCity();
+    }
 }
