@@ -64,7 +64,7 @@
             </div>
             <div class="col-md-7 about-info-cover">
                 <h2 class="title-decor">About <span th:text="*{name}"></span></h2>
-                <div th:if="${!hasRegistered  &&  #authentication.principal.user.role.id.equals('ROLE05')}">
+                <div th:if="${!hasRegistered}">
 
                     <!-- Button trigger modal -->
                     <button class="btn btn-primary"

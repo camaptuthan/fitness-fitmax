@@ -113,7 +113,7 @@ public class ServicesController {
             model.addAttribute("userEmail", "");
             model.addAttribute("userPhone", "");
         }
-        model.addAttribute("userRole", userDetail.getUser().getRole().getId());
+
         model.addAttribute("hasRegistered", hasRegistered);
         model.addAttribute("packages", packagesMapList);
         model.addAttribute("package", s);

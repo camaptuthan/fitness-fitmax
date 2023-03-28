@@ -176,7 +176,7 @@
                                                                     data-bs-target="#ModalThumbNail"
                                                                     data-bs-toggle="modal" style="width: 23rem;"
                                                                     th:alt="${item.servicesName}"
-                                                                    th:src="${item.servicesImage == null ? 'https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg' : item.servicesImage}">
+                                                                    th:src="${item.servicesImage}">
                                                                 <!-- Modal -->
                                                                 <div aria-hidden="true"
                                                                     aria-labelledby="ModalThumbNailLabel"
@@ -572,6 +572,7 @@
         $.ajax({
             url: `${origin_path}/service/class/management/api/update`,
             type: 'POST',
+            cache: false,
             data: getFormData(classFormEle),
             contentType: 'application/json',
             success: function (data) {
@@ -608,9 +609,9 @@
                 console.log(error);
             }
         })
-
-
     }
+
+
     const updateSession = (id) => {
         const sessionFormEle = $(`form#sessions-form-${id}`);
         $.ajax({
