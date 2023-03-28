@@ -25,9 +25,10 @@
                         <i class="fa fa-user"></i>
                     </a>
                     <ul class="dropdown-menu" sec:authorize="isAuthenticated()">
-                        <li><a class="dropdown-item"  th:href="@{/user/myregistrations}">My Registration</a></li>
                         <li><a class="dropdown-item"  th:href="@{/user/management/updateprofile}" >Profile</a></li>
-                        <li><a class="dropdown-item" th:href="@{/user/profilechangepassword}">Change Password</a></li>
+                        <li><a class="dropdown-item"  th:href="@{/user/myregistrations}">My Registration</a></li>
+                        <li><a class="dropdown-item"  th:href="@{/dashboard}">My Dashboard</a></li>
+                        <li><a class="dropdown-item"  th:href="@{/user/profilechangepassword}">Change Password</a></li>
                         <li><a class="dropdown-item" href="/logout">Logout</a></li>
                     </ul>
                     <ul class="dropdown-menu" sec:authorize="!isAuthenticated()">

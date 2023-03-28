@@ -62,11 +62,8 @@
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
-                                <th>City</th>
-                                <th>District</i></th>
-                                <th>Manager</i></th>
-                                <th>Description</th>
-                                <th>Contact</i></th>
+                                <th>Studio</i></th>
+                                <th>Created Date</i></th>
                                 <th>Status</i></th>
                                 <th>Actions</th>
                             </tr>
@@ -76,11 +73,8 @@
                                 <tr>
                                     <td th:text=" ${item.id}"></td>
                                     <td th:text=" ${item.servicesName}"></td>
-                                    <td th:text=" ${item.servicesPrice}"></td>
-                                    <td th:utext=" ${item.servicesDes}"></td>
-                                    <td th:text="${item.servicesStudioId}"></td>
-                                    <td th:text="${item.servicesId}"></td>
-                                    <td th:text="${item.servicesStatus}"></td>
+                                    <td th:text="${item.servicesStudioId == null ? 'All': item.servicesStudioId}"></td>
+                                    <td th:text="${item.servicesDate}"></td>
                                     <td th:text="${item.servicesStatus}"></td>
                                     <td>
                                         <a class="btn btn-primary"
@@ -92,7 +86,27 @@
                             </th:block>
                             </tbody>
                         </table>
-                        <div id="pagination"></div>
+                        <div id="pagination">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item" th:classappend="${currentPage - 1 == 0 ? 'disabled':''}">
+                                        <a class="page-link"
+                                           tabindex="-1"
+                                           th:href="@{/service/class/management/classes(page=${currentPage}-1)}" >Previous</a>
+                                    </li>
+                                    <th:block th:each="page: ${#numbers.sequence(1, totalPage)}">
+                                        <li class="page-item" th:classappend="${currentPage == page} ? 'active' : ''">
+                                            <a class="page-link"
+                                               th:href="@{/service/class/management/classes(page=${page})}" th:text="${page}">1</a>
+                                        </li>
+                                    </th:block>
+                                    <li class="page-item" th:classappend="${currentPage + 1 > totalPage ? 'disabled':''}">
+                                        <a class="page-link"
+                                           th:href="@{/service/class/management/classes(page=${currentPage}+1)}">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -120,6 +134,8 @@
                 visible: false,
                 searchable: false
             }],
+            paging: false,
+            info: false,
             pagingType: 'full_numbers',
             bLengthChange: false,
             pageLength: 5,

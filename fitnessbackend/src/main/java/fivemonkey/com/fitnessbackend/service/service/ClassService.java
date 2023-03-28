@@ -14,7 +14,7 @@ public interface ClassService {
     ClassDTO getByServiceId(String serviceId);
 
     List<ClassDTO> getAll();
-    List<ClassDTO> getByUserRole(User user);
+    List<ClassDTO> getByUserRole(User user,int currentPage,int size);
 
     ClassDTO save(ClassDTO classDTO, User user);
 
@@ -27,4 +27,8 @@ public interface ClassService {
     List<ClassDTO> getClassesBy4Fields(String keyword, String cityname, String studio, Long category, int currentPage);
 
     int totalPageBy4Fields(String keyword, String cityname, String studio, Long category);
+
+    default int getAllSize(){
+        return this.getAll() == null ? 0 : this.getAll().size();
+    };
 }

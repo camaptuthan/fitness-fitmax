@@ -132,14 +132,14 @@
                                                                     th:id="city-selector"
                                                             >
                                                                 <th:block th:each="city : ${cities}">
-                                                                    <option th:selected="${city.id == item.servicesCityId || #authentication.getPrincipal().user.city.id == city.id}"
+                                                                    <option th:selected="${city.id == item.servicesCityId}"
                                                                             th:text="${city.name}"
                                                                             th:value="${city.name}"></option>
                                                                 </th:block>
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-4" th:if="${item.servicesId != null}">
+                                                    <div class="col-4" th:if="${item.servicesId == null}">
                                                         <div class="input-group flex-nowrap" id="studio-selector">
                                                 <span class="input-group-text"
                                                       id="addon-wrapping-studio">Studio</span>
