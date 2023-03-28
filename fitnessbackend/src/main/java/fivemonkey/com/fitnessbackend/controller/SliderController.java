@@ -45,7 +45,7 @@ public class SliderController {
         return "redirect:/slider/management";
     }
     @GetMapping("/management")
-    public String getAllServiceType( Model model) {
+    public String getAllSlider( Model model) {
         List<Slider> sliderList=sliderService.getAllSlider();
         model.addAttribute("listSlider",sliderList);
         return "/management/SliderManagement/slider-list";
