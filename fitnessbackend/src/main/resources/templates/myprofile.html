@@ -9,7 +9,11 @@
     <meta name="description" content="">
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <!-- jQuery Validation Plugin -->
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script th:src="@{/js/validate/validate-profile.js}"></script>
     <th:block th:replace="fragments/head :: head"></th:block>
 </head>
 
@@ -37,7 +41,7 @@
         <div class="row gutters-sm" th:object="${user}">
             <div class="col-md-4 mb-3">
                 <div class="card">
-                    <form th:action="@{/user/management/avataruser/{email} (email=${user.email})}" method="POST"
+                    <form  th:action="@{/user/avataruser/{email} (email=${user.email})}" method="POST"
                           th:object="${user}" enctype="multipart/form-data">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
@@ -122,7 +126,7 @@
 
             <div class="col-md-8">
                 <div class="card mb-3">
-                    <form th:action="@{/user/management/updateprofile/{email} (email=${user.email})}" method="POST"
+                    <form id="profile-form" th:action="@{/user/updateprofile/{email} (email=${user.email})}" method="POST"
                           th:object="${user}" enctype="multipart/form-data">
                         <div class="card-body">
                             <div class="row">
@@ -130,7 +134,7 @@
                                     <h6 class="mb-0">Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
+                                    <a  href="/cdn-cgi/l/email-protection" class="__cf_email__"
                                        data-cfemail="c6a0afb686acb3adabb3aee8a7aa" th:utext="*{email}"></a>
                                 </div>
                             </div>
@@ -145,8 +149,9 @@
                                             placeholder="Enter your first name"
                                             th:field="*{firstName}"
                                             type="text"
-                                            required=""
                                             style="background: #202020; color: whitesmoke"
+                                            id="firstname"
+                                            required
                                     />
 
                                 </div>
@@ -162,8 +167,9 @@
                                             placeholder="Enter your last name"
                                             th:field="*{lastName}"
                                             type="text"
-                                            required=""
+                                            required
                                             style="background: #202020; color: whitesmoke"
+                                            id="lastname"
                                     />
 
                                 </div>
@@ -180,8 +186,9 @@
                                             placeholder="Enter your phone"
                                             th:field="*{phone}"
                                             type="text"
-                                            required=""
+                                            required
                                             style="background: #202020; color: whitesmoke"
+                                            id="phone"
                                     />
 
                                 </div>
@@ -197,8 +204,9 @@
                                             placeholder="Enter your address"
                                             th:field="*{address}"
                                             type="text"
-                                            required=""
+                                            required
                                             style="background: #202020; color: whitesmoke"
+                                            id="address"
                                     />
                                 </div>
                             </div>

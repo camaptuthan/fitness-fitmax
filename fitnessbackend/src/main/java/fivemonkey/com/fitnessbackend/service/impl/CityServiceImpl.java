@@ -1,9 +1,7 @@
 package fivemonkey.com.fitnessbackend.service.impl;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
-import fivemonkey.com.fitnessbackend.dto.CategoryDTO;
 import fivemonkey.com.fitnessbackend.dto.CityDTO;
-import fivemonkey.com.fitnessbackend.entities.Category;
 import fivemonkey.com.fitnessbackend.entities.City;
 import fivemonkey.com.fitnessbackend.repository.CityRepository;
 import fivemonkey.com.fitnessbackend.service.service.CityService;

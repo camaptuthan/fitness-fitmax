@@ -151,7 +151,7 @@ public class UserController {
         return "redirect:/user/management/listusers";
     }
 
-    @RequestMapping("/management/updateuser/{email}")
+    @RequestMapping("management/updateuser/{email}")
     public String getInformationUser(@PathVariable("email") String email, Model model) {
         List<Role> roleList = roleService.getRoleAdmin();
         UserDTO userDTO = userService.getUserByEmail(email);
@@ -161,7 +161,7 @@ public class UserController {
         return "management/UserManagement/UserUpdate";
     }
 
-    @PostMapping("/management/updateuser/{email}")
+    @PostMapping("/updateuser/{email}")
     public String userUpdate(@PathVariable("email") String email, @ModelAttribute("user") UserDTO userDTO) {
         try {
             userService.update(userDTO);
@@ -177,21 +177,21 @@ public class UserController {
     }
 
 
-    @RequestMapping("/management/avataruser/{email}")
+    @RequestMapping("/avataruser/{email}")
     public String getInformationUserAvatar(@PathVariable("email") String email, Model model) {
         UserDTO userDTO = userService.getUserByEmail(email);
         model.addAttribute("user", userDTO);
         return "myprofile";
     }
 
-    @PostMapping("/management/avataruser/{email}")
+    @PostMapping("/avataruser/{email}")
     public String userUpdate(@RequestParam("fileImage") MultipartFile multipartFile,
 
                              @ModelAttribute("user") UserDTO userDTO,
                              Model model) throws IOException {
         userService.saveThumbnail(imageUploader.upload(multipartFile), userDTO.getEmail());
 
-        return "redirect:/user/management/updateprofile";}
+        return "redirect:/user/updateprofile";}
 
 
 
@@ -217,7 +217,7 @@ public class UserController {
         return "ptDetails";
     }
 
-    @RequestMapping("/management/updateprofile")
+    @RequestMapping("/updateprofile")
     public String getInformationUserPro5(@AuthenticationPrincipal UserDetail userDetail, Model model) {
         UserDTO userDTO = userService.getUserByEmail(userDetail.getUser().getEmail());
         model.addAttribute("user", userDTO);
@@ -225,10 +225,10 @@ public class UserController {
     }
 
 
-    @PostMapping("/management/updateprofile/{email}")
+    @PostMapping("/updateprofile/{email}")
     public String userUpdateAll(@ModelAttribute("user") UserDTO userDTO, Model model) throws IOException {
         userService.updateUser(userDTO);
-        return "redirect:/user/management/listusers";
+        return "redirect:/user/updateprofile";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -327,20 +327,10 @@ public class UserController {
     }
 
     @PostMapping("/reset-password-result")
-    public String resetPassword(@ModelAttribute("userDTO") User user, @RequestParam String repassword, @RequestParam String password, Model model) {
-        String path = "reset_password";
-        if (password.equals(repassword) && password.length() >= 6) {
-            userService.resetPassword(user.getEmail(), password);
-            model.addAttribute("message", "Password reset successful");
-            path = "reset_password";
-        }
-        if (!password.equals(repassword)) {
-            model.addAttribute("invalid", "Password not matches ");
-            path = "changepass";
-        } else if (password.length() < 6 || repassword.length() < 6) {
-            model.addAttribute("invalid", "Password must have length > 6");
-            path = "changepass";
-        }
+    public String resetPassword(@ModelAttribute("userDTO") User user,  @RequestParam String password, Model model) {
+        String path = "verify_status";
+        userService.resetPassword(user.getEmail(), password);
+        model.addAttribute("title", "Password reset successfully please login .");
         return path;
     }
 

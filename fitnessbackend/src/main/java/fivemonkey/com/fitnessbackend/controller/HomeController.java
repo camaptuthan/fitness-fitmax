@@ -2,7 +2,6 @@ package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.dto.*;
 import fivemonkey.com.fitnessbackend.entities.Slider;
-import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.service.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +63,9 @@ public class HomeController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(@AuthenticationPrincipal UserDetail userDetail) {
+    public String getAvatarUserDashboard(@AuthenticationPrincipal UserDetail userDetail,Model model) {
+        UserDTO userDTO = userService.getUserByEmail(userDetail.getUser().getEmail());
+        model.addAttribute("user", userDTO);
         return "/management/Dashboard/index";
 
     }
