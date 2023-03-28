@@ -32,7 +32,7 @@
                     <div class="wc-title row">
                         <h4>Class List</h4>
                         <div class="btn-light btn-outline-success ml-auto mr-3 row col-2"><a
-                                th:href="@{/studio/management/addstudio}">
+                                th:href="@{/service/class/management/classes/new}">
                             <i class="fa fa-plus-circle" style="font-size:18px"></i>
                             <spam clas="mb-5">Add new class</spam>
                         </a>
@@ -42,17 +42,6 @@
                     <div class="container-fluid row ml-5 mt-5">
                         <div class="col-lg-12 col-12 col-md-12 col-sm-12 row">
 
-                            <!--                            <form class="col-12 row" action="list" method="GET" id="filter">-->
-
-                            <!--                                <div class="search-box col-lg-3 col-3 col-md-1 col-sm-1 d-inline">-->
-                            <!--                                    <i class="fa fa-search ml-3"></i>-->
-                            <!--                                    <input type="text" class="form-control" placeholder="Search&hellip;" name="search">-->
-                            <!--                                </div>-->
-                            <!--                                <div class="search-box col-lg-2 col-1 col-md-1 col-sm-1">-->
-                            <!--                                    <input class="btn pl-3 pr-3" type="submit" value="Search">-->
-                            <!--                                </div>-->
-
-                            <!--                            </form>-->
                         </div>
                     </div>
 
@@ -60,13 +49,9 @@
                         <table class="table table-hover table-bordered sortable" id="class_table">
                             <thead>
                             <tr>
-                                <th>#</th>
                                 <th>Name</th>
-                                <th>City</th>
-                                <th>District</i></th>
-                                <th>Manager</i></th>
-                                <th>Description</th>
-                                <th>Contact</i></th>
+                                <th>Studio</i></th>
+                                <th>Created Date</i></th>
                                 <th>Status</i></th>
                                 <th>Actions</th>
                             </tr>
@@ -74,13 +59,9 @@
                             <tbody>
                             <th:block th:each="item : ${list}">
                                 <tr>
-                                    <td th:text=" ${item.id}"></td>
                                     <td th:text=" ${item.servicesName}"></td>
-                                    <td th:text=" ${item.servicesPrice}"></td>
-                                    <td th:utext=" ${item.servicesDes}"></td>
-                                    <td th:text="${item.servicesStudioId}"></td>
-                                    <td th:text="${item.servicesId}"></td>
-                                    <td th:text="${item.servicesStatus}"></td>
+                                    <td th:text="${item.servicesStudioId == null ? 'All': item.servicesStudioId}"></td>
+                                    <td th:text="${item.servicesDate}"></td>
                                     <td th:text="${item.servicesStatus}"></td>
                                     <td>
                                         <a class="btn btn-primary"
@@ -92,7 +73,29 @@
                             </th:block>
                             </tbody>
                         </table>
-                        <div id="pagination"></div>
+                        <div id="pagination">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item" th:classappend="${currentPage - 1 == 0 ? 'disabled':''}">
+                                        <a class="page-link"
+                                           tabindex="-1"
+                                           th:href="@{/service/class/management/classes(page=${currentPage}-1)}">Previous</a>
+                                    </li>
+                                    <th:block th:each="page: ${#numbers.sequence(1, totalPage)}">
+                                        <li class="page-item" th:classappend="${currentPage == page} ? 'active' : ''">
+                                            <a class="page-link"
+                                               th:href="@{/service/class/management/classes(page=${page})}"
+                                               th:text="${page}">1</a>
+                                        </li>
+                                    </th:block>
+                                    <li class="page-item"
+                                        th:classappend="${currentPage + 1 > totalPage ? 'disabled':''}">
+                                        <a class="page-link"
+                                           th:href="@{/service/class/management/classes(page=${currentPage}+1)}">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -113,19 +116,20 @@
 
 <script th:hidden="true" th:inline="javascript">
     $(document).ready(function () {
-        $('#class_table').DataTable({
-            // dom: 'rtip',
-            columnDefs: [{
-                target: 0,
-                visible: false,
-                searchable: false
-            }],
-            pagingType: 'full_numbers',
-            bLengthChange: false,
-            pageLength: 5,
-            searching: false,
-            stateSave: true
-        });
+        $('#class_table')
+            .DataTable({
+                // dom: 'rtip',
+                columnDefs: [{
+                    target: 0,
+                    visible: true,
+                    searchable: false
+                }],
+                pagingType: 'full_numbers',
+
+                paging: false,
+                info: false,
+                searching: false,
+            });
     });
 </script>
 </html>

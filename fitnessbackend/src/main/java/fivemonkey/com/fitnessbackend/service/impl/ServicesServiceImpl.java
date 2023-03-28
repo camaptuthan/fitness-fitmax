@@ -1,9 +1,7 @@
 package fivemonkey.com.fitnessbackend.service.impl;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
-import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
-import fivemonkey.com.fitnessbackend.entities.Clazz;
 import fivemonkey.com.fitnessbackend.entities.Services;
 import fivemonkey.com.fitnessbackend.repository.ServiceTypeRepository;
 import fivemonkey.com.fitnessbackend.repository.ServicesRepository;
@@ -44,7 +42,7 @@ public class ServicesServiceImpl implements ServicesService {
     public ServicesDTO saveThumbnail(String thumbNail, String serviceId) {
         if (thumbNail.isBlank()) return null;
         Services services = serviceRepository.getPackageById(serviceId);
-       services.setImage(thumbNail);
+        services.setImage(thumbNail);
 
         return modelMapper.map(serviceRepository.save(services), ServicesDTO.class);
     }
@@ -160,6 +158,11 @@ public class ServicesServiceImpl implements ServicesService {
     @Override
     public List<ServicesDTO> getAllServiceOfStudio(String id) {
         return modelMapper.mapList(serviceRepository.getServicesByStudio(id), ServicesDTO.class);
+    }
+
+    @Override
+    public boolean isServiceExistInStudio(String servicesId, String studioId) {
+        return serviceRepository.isServiceExistInStudio(servicesId, studioId).isPresent();
     }
 
 }

@@ -33,7 +33,7 @@
 
                     <div class="wc-title row">
                         <h4>Class List</h4>
-                        <div class="btn-light btn-outline-success ml-auto mr-3 row col-2"><a
+                        <div class="btn-light btn-outline-success ml-auto mr-3 row col-2" th:if="${item.servicesId == null}"><a
                                 th:href="@{/studio/management/addstudio}">
                             <i class="fa fa-plus-circle" style="font-size:18px"></i>
                             <spam clas="mb-5">Add new studio</spam>
@@ -50,154 +50,172 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12">
-                                    <form enctype="multipart/form-data" th:attr="id='class-form-'+${item.servicesId}">
-                                        <div class="row my-3">
-                                            <div class="col-4">
-                                                <div class="input-group flex-nowrap">
+                                    <form enctype="multipart/form-data"
+                                          th:attr="id='class-form-'+${item.servicesId == null ? 'new' : item.servicesId}">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <div class="row my-3">
+                                                    <div class="col-4">
+                                                        <div class="input-group flex-nowrap">
                                                     <span class="input-group-text"
                                                           id="addon-wrapping-service-id">Id</span>
-                                                    <input aria-describedby="addon-wrapping-updated-dat"
-                                                           aria-label="Username" class="form-control"
-                                                           disabled
-                                                           placeholder="Username" th:value="${item.servicesId}"
-                                                           type="text">
-                                                    <input name="servicesId" th:value="${item.servicesId}"
-                                                           type="hidden"/>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="input-group flex-nowrap">
-                                                    <span class="input-group-text" id="addon-wrapping-created-date">Created Date</span>
-                                                    <input aria-describedby="addon-wrapping-created-date"
-                                                           aria-label="Username" class="form-control"
-                                                           disabled
-                                                           placeholder="Username"
-                                                           th:value="${#dates.format(item.servicesDate, 'dd-MM-yyyy HH:mm')}"
-                                                           type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="input-group flex-nowrap">
-                                                    <span class="input-group-text" id="addon-wrapping-updated-date">Updated Date</span>
-                                                    <input aria-describedby="addon-wrapping-updated-date"
-                                                           aria-label="Username" class="form-control"
-                                                           disabled
-                                                           placeholder="Username"
-                                                           th:value="${#dates.format(item.servicesDate, 'dd-MM-yyyy HH:mm')}"
-                                                           type="text">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row my-3">
-                                            <div class="col-6">
-                                                <div class="input-group flex-nowrap">
-                                                    <span class="input-group-text" id="addon-wrapping-name">Name</span>
-                                                    <input aria-describedby="addon-wrapping-name" aria-label="Username"
-                                                           class="form-control"
-                                                           name="servicesName"
-                                                           placeholder="Class name" th:value="${item.servicesName}"
-                                                           type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="input-group flex-nowrap">
-                                                <span class="input-group-text"
-                                                      id="addon-wrapping-price">Price</span>
-                                                    <input aria-describedby="addon-wrapping-price"
-                                                           aria-label="Username" class="form-control"
-                                                           placeholder="Class name" th:value="${item.servicesPrice}"
-                                                           type="text">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row my-3">
-                                            <div class="col-3">
-                                                <div class="input-group flex-nowrap">
-                                                    <span class="input-group-text "
-                                                          id="addon-wrapping-city">City</span>
-                                                    <select aria-label="Default select example"
-                                                            class="form-select w-100"
-                                                            name="servicesCityId"
-                                                            onchange="studioGenerator(this.value)"
-                                                            th:id="city-selector"
-                                                    >
-                                                        <th:block th:each="city : ${cities}">
-                                                            <option th:selected="${city.id == item.servicesCityId}"
-                                                                    th:text="${city.name}"
-                                                                    th:value="${city.id}"></option>
-                                                        </th:block>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-3">
-                                                <div class="input-group flex-nowrap" id="studio-selector">
-                                                <span class="input-group-text"
-                                                      id="addon-wrapping-studio">Studio</span>
-                                                    <select
-                                                            aria-label="Default select example"
-                                                            class="form-select w-100" name="servicesStudioId">
-                                                        <th:block th:each="studio : ${studios}">
-                                                            <option th:selected="${studio.id == item.servicesStudioId}"
-                                                                    th:text="${studio.name}"
-                                                                    th:value="${studio.id}"></option>
-                                                        </th:block>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-3">
-                                                <div class="input-group flex-nowrap">
-                                                    <span class="input-group-text"
-                                                          id="addon-wrapping-trainer">Trainer</span>
-                                                    <select aria-label="Default select example"
-                                                            class="form-select w-100">
-                                                        <option selected>Open this select menu</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Thumbnail</label>
-                                                    <input accept="image/jpeg, image/png" class="form-control-file mb-2"
-                                                           id="classFileImage"
-                                                           name="classFileImage"
-                                                           onchange="imagePreview()"
-                                                           type="file">
-                                                    <!-- Button trigger modal -->
-
-
-                                                    <img class="img-thumbnail" data-bs-target="#ModalThumbNail"
-                                                         data-bs-toggle="modal" style="width: 23rem;"
-                                                         th:alt="${item.servicesName}" th:src="${item.servicesImage}">
-                                                    <!-- Modal -->
-                                                    <div aria-hidden="true" aria-labelledby="ModalThumbNailLabel"
-                                                         class="modal fade"
-                                                         id="ModalThumbNail" tabindex="-1">
-                                                        <div class="modal-dialog  modal-dialog-centered"
-                                                             style="max-width: 100rem;">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5"
-                                                                        id="ModalThumbNailLabel">Thumbnail</h1>
-                                                                </div>
-                                                                <div class="modal-body d-flex justify-content-center align-items-center">
-                                                                    <img class="img-thumbnail" id="image-preview"
-                                                                         th:alt="${item.servicesName}"
-                                                                         th:src="${item.servicesImage}">
-                                                                </div>
-
-                                                            </div>
+                                                            <input aria-describedby="addon-wrapping-updated-dat"
+                                                                   aria-label="Username" class="form-control"
+                                                                   disabled
+                                                                   th:value="${item.servicesId}"
+                                                                   type="text">
+                                                            <input name="servicesId" th:value="${item.servicesId}"
+                                                                   type="hidden"/>
                                                         </div>
                                                     </div>
+                                                    <div class="col-4">
+                                                        <div class="input-group flex-nowrap mb-2">
+                                                            <span class="input-group-text"
+                                                                  id="addon-wrapping-created-date">Created Date</span>
+                                                            <input aria-describedby="addon-wrapping-created-date"
+                                                                   aria-label="Username" class="form-control"
+                                                                   disabled
+                                                                   th:value="${#dates.format(item.servicesDate, 'dd-MM-yyyy HH:mm')}"
+                                                                   type="text">
+                                                        </div>
 
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="input-group flex-nowrap">
+                                                            <span class="input-group-text"
+                                                                  id="addon-wrapping-updated-date">Updated Date</span>
+                                                            <input aria-describedby="addon-wrapping-updated-date"
+                                                                   aria-label="Username" class="form-control"
+                                                                   disabled
+                                                                   th:value="${#dates.format(item.servicesDate, 'dd-MM-yyyy HH:mm')}"
+                                                                   type="text">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row my-3">
+                                                    <div class="col-4">
+                                                        <div class="input-group flex-nowrap">
+                                                            <span class="input-group-text"
+                                                                  id="addon-wrapping-name">Name</span>
+                                                            <input aria-describedby="addon-wrapping-name"
+                                                                   aria-label="Username"
+                                                                   class="form-control"
+                                                                   name="servicesName"
+                                                                   placeholder="Class name"
+                                                                   th:value="${item.servicesName}"
+                                                                   type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <div class="input-group flex-nowrap">
+                                                <span class="input-group-text"
+                                                      id="addon-wrapping-price">Price</span>
+                                                            <input aria-describedby="addon-wrapping-price"
+                                                                   aria-label="Username" class="form-control"
+                                                                   name="servicesPrice"
+                                                                   placeholder="Price" th:value="${item.servicesPrice}"
+                                                                   type="text">
+                                                            <span class="input-group-text"
+                                                                  id="addon-wrapping-$-unit">$</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row my-3">
+                                                    <div class="col-4">
+                                                        <div class="input-group flex-nowrap">
+                                                    <span class="input-group-text "
+                                                          id="addon-wrapping-city">City</span>
+                                                            <select aria-label="Default select example"
+                                                                    class="form-select w-100"
+                                                                    name="servicesCityName"
+                                                                    onchange="studioGenerator(this.value)"
+                                                                    th:id="city-selector"
+                                                            >
+                                                                <th:block th:each="city : ${cities}">
+                                                                    <option th:selected="${city.id == item.servicesCityId}"
+                                                                            th:text="${city.name}"
+                                                                            th:value="${city.name}"></option>
+                                                                </th:block>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4" th:if="${item.servicesId == null}">
+                                                        <div class="input-group flex-nowrap" id="studio-selector">
+                                                <span class="input-group-text"
+                                                      id="addon-wrapping-studio">Studio</span>
+                                                            <select
+                                                                    aria-label="Default select example"
+                                                                    class="form-select w-100" name="servicesStudioId">
+                                                                <th:block th:each="studio : ${studios}">
+                                                                    <option th:selected="${studio.id == item.servicesStudioId}"
+                                                                            th:text="${studio.name}"
+                                                                            th:value="${studio.id}"></option>
+                                                                </th:block>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4" th:if="${item.servicesId == null}">
+                                                        <div class="input-group flex-nowrap">
+                                                    <span class="input-group-text"
+                                                          id="addon-wrapping-trainer">Trainer</span>
+                                                            <select aria-label="Default select example"
+                                                                    class="form-select w-100">
+                                                                <option selected>Open this select menu</option>
+                                                                <option value="1">One</option>
+                                                                <option value="2">Two</option>
+                                                                <option value="3">Three</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Thumbnail</label>
+                                                            <input accept="image/jpeg, image/png"
+                                                                   class="form-control-file mb-2"
+                                                                   id="classFileImage"
+                                                                   name="classFileImage"
+                                                                   onchange="imagePreview()"
+                                                                   type="file">
+                                                            <!-- Button trigger modal -->
+
+                                                            <img class="img-thumbnail" data-bs-target="#ModalThumbNail"
+                                                                 data-bs-toggle="modal" style="width: 23rem;"
+                                                                 th:alt="${item.servicesName}"
+                                                                 th:src="${item.servicesImage == null ? 'https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg' : item.servicesImage}">
+                                                            <!-- Modal -->
+                                                            <div aria-hidden="true"
+                                                                 aria-labelledby="ModalThumbNailLabel"
+                                                                 class="modal fade"
+                                                                 id="ModalThumbNail" tabindex="-1">
+                                                                <div class="modal-dialog  modal-dialog-centered"
+                                                                     style="max-width: 100rem;">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h1 class="modal-title fs-5"
+                                                                                id="ModalThumbNailLabel">Thumbnail</h1>
+                                                                        </div>
+                                                                        <div class="modal-body d-flex justify-content-center align-items-center">
+                                                                            <img class="img-thumbnail"
+                                                                                 id="image-preview"
+                                                                                 th:alt="${item.servicesName}"
+                                                                                 th:src="${item.servicesImage == null ? 'https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg' : item.servicesImage}">
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+
+
                                         <div class="row my-3">
                                             <div class="col-12">
                                                 <div class="form-floating">
@@ -212,17 +230,17 @@
                                     </form>
                                 </div>
                             </div>
-                            <div th:if="${item.sessions.size() != 0 }">
+                            <div th:if="${item.servicesId != null}">
                                 <div class="row">
                                     <div class="wc-title col-12">
-                                        <h4>Class List</h4>
+                                        <h4>Session List</h4>
                                         <div class="ml-auto mr-3 row col-2">
                                             <button class="btn btn-primary text-white"
                                                     data-bs-target='#staticBackdropNew'
                                                     data-bs-toggle="modal"
                                                     type="button">
                                                 <i class="fa fa-plus-circle" style="font-size:18px"></i>
-                                                <spam clas="mb-5">Add new studio</spam>
+                                                <spam clas="mb-5">Add new session</spam>
                                             </button>
                                             <!-- Modal -->
                                             <div aria-hidden="true"
@@ -480,15 +498,16 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div>
-                                        <button class="btn btn-primary"
-                                                onclick="updateClass(this.id)"
-                                                th:id="${item.servicesId}"
-                                                type="button">
-                                            Save
-                                        </button>
-                                    </div>
+
+                            </div>
+                            <div class="row">
+                                <div>
+                                    <button class="btn btn-primary"
+                                            onclick="updateClass(this.id)"
+                                            th:id="${item.servicesId}"
+                                            type="button">
+                                        Save
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -552,7 +571,8 @@
     }
 
     const updateClass = (id) => {
-        const classFormEle = $(`form#class-form-${id}`);
+        const classFormEle = $(`form#class-form-${id ? id : 'new'}`);
+        console.log(getFormData(classFormEle));
         $.ajax({
             url: `${origin_path}/service/class/management/api/update`,
             type: 'POST',
@@ -578,13 +598,15 @@
                 }
 
                 const sessions = data.sessions;
-                sessions.forEach(session => {
-                    const sessionFormEle = $(`form#sessions-form-${session.id}-${id}`);
-                    if (sessionFormEle.data('changed')) {
-                        updateSession(`${session.id}-${id}`);
-                    }
-                })
-                location.reload();
+                if (sessions) {
+                    sessions.forEach(session => {
+                        const sessionFormEle = $(`form#sessions-form-${session.id}-${id}`);
+                        if (sessionFormEle.data('changed')) {
+                            updateSession(`${session.id}-${id}`);
+                        }
+                    })
+                }
+                window.location.replace(`${origin_path}/service/class/management/classes/${data.servicesId}`);
             },
             error: function (error) {
                 console.log(error);

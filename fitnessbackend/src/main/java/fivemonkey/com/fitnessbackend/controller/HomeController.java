@@ -60,7 +60,9 @@ public class HomeController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(@AuthenticationPrincipal UserDetail userDetail) {
+    public String getAvatarUserDashboard(@AuthenticationPrincipal UserDetail userDetail,Model model) {
+        UserDTO userDTO = userService.getUserByEmail(userDetail.getUser().getEmail());
+        model.addAttribute("user", userDTO);
         return "/management/Dashboard/index";
 
     }

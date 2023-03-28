@@ -22,4 +22,14 @@ public interface CityService {
     CityDTO getCityByUser(String email);
 
     List<CityDTO> getCities();
+
+    City saveCity(City city);
+
+    City createCity(City city);
+
+    List<City> getNewCity();
+
+    List<City> getStudioCity();
+
+    List<City> getRegistrationCity();
 }

@@ -18,7 +18,7 @@ public class StudioDTO {
     private String districtName;
     private String districtCityName;
     private String contact;
-
+    private String address;
     private Date date;
 
     private String des;

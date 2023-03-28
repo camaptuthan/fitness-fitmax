@@ -22,7 +22,7 @@ public interface StudioService {
 
     int getTotalPage(String cityname);
 
-    List<StudioDTO> getAllStudiosByFilter(String keyword, String city, String status);
+    List<StudioDTO> getAllStudiosByFilter(String keyword, String city, String status, int pageNumber);
     Studio saveStudio(Studio studio);
 
     List<StudioDTO> getAllByCity(String cityname);
@@ -35,4 +35,7 @@ public interface StudioService {
 
     List<StudioDTO> getAllStudio();
 
+    int getTotalAllStudiosByFilter(String keyword, String city, String status);
+    //update studio
+//    void updateStudio(StudioDTO studioDTO);
 }

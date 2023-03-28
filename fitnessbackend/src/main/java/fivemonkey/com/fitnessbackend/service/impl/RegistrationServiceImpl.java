@@ -11,8 +11,12 @@ import fivemonkey.com.fitnessbackend.repository.RegistrationRepository;
 import fivemonkey.com.fitnessbackend.repository.ServicesRepository;
 import fivemonkey.com.fitnessbackend.repository.TraineeRepository;
 import fivemonkey.com.fitnessbackend.service.service.RegistrationService;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
+import org.hibernate.query.Query;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,7 +31,8 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Autowired
     private ClassRepository classRepository;
 
-
+    @Autowired
+    private SessionFactory sessionFactory;
     @Autowired
     private TraineeRepository traineeRepository;
 
@@ -57,7 +62,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     private RegistrationDTO makeRegistrationDTO(Registration registration) {
         RegistrationDTO registrationDTO = modelMapper.map(registration, RegistrationDTO.class);
-        registrationDTO.setPath(registration.getClass() != null ? "/class" : "");
+        registrationDTO.setPath(registration.getClass() != null ? "/service/class/"+registrationDTO.getServicesId() : "");
         return registrationDTO;
     }
 
@@ -117,5 +122,31 @@ public class RegistrationServiceImpl implements RegistrationService {
     public List<Registration> getRegistrationByAssistant(String email) {
         return registrationRepository.getRegistrationByAssistant(email);
     }
+
+    @Override
+    public List<RegistrationDTO> getRegistrationByFilter(@Param("keyword") String keyword,
+                                                      @Param("city") String city,
+                                                       @Param("studio") String studio,
+                                                      @Param("status") String registrationStatus) {
+        Session session = sessionFactory.openSession();
+        String hql = "select r from Registration r where 1=1 ";
+        if (keyword != null && !keyword.isEmpty()) {
+            keyword = keyword.trim().replaceAll("\\s+", " ");
+            hql += " and concat(r.services.name,r.services.price, r.services.serviceType) like '%" + keyword + "%' ";
+        }
+        if (city != null && !city.isEmpty()) {
+            hql += "and r.services.city.id = '" + city +"'";
+        }
+        if (studio != null && !studio.isEmpty()) {
+            hql += " and r.services.studio.name = '" + studio +"'";
+        }
+        if (registrationStatus != null && !registrationStatus.isEmpty()) {
+            hql += "and r.status = '" + registrationStatus +"'";
+        }
+
+        Query<Registration> query = session.createQuery(hql, Registration.class);
+        return modelMapper.mapList(query.getResultList(), RegistrationDTO.class);
+    }
+
 
 }

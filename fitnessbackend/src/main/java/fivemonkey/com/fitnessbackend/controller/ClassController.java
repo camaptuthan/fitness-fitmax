@@ -22,9 +22,11 @@ import java.util.Map;
 @RequestMapping("/service/class")
 public class ClassController {
 
-
     @Autowired
     private ClassService classService;
+
+    @Autowired
+    private ServicesService servicesService;
     @Autowired
     private RegistrationService registrationService;
 
@@ -52,15 +54,13 @@ public class ClassController {
 
         Map<String, List<ClassDTO>> classDTOListMap = new HashMap<>();
 
-        int size = classDTOList.size() % 3 == 0 ? classDTOList.size() / 3 : classDTOList.size() / 3 + 1;
+        int size = classDTOList.size() % 3 == 0 ? classDTOList.size() / 3 : (classDTOList.size() / 3) + 1;
         for (int i = 0; i < size; i++) {
             List<ClassDTO> valueList = new ArrayList<>();
             for (int j = 0; j < 3; j++) {
-                if (i * 3 + j < size) {
-                    valueList.add(classDTOList.get(i * 3 + j));
-                }
+                valueList.add(classDTOList.get(i * 3 + j));
             }
-            classDTOListMap.put("page-" + i + 1, valueList);
+            classDTOListMap.put("page-" + (i + 1), valueList);
         }
 
 
@@ -73,36 +73,46 @@ public class ClassController {
         model.addAttribute("related_class", classDTOListMap);
         model.addAttribute("class", classDTO);
 
-
         return "class/profile";
     }
 
     @GetMapping("/management/classes")
-    public String classes(Model model, @AuthenticationPrincipal UserDetail userDetail) {
+    public String classes(Model model, @AuthenticationPrincipal UserDetail userDetail, @RequestParam(value = "page", defaultValue = "1") int page) {
         String path = "management/ClassManagement/classlist";
 
-        model.addAttribute("list", classService.getByUserRole(userDetail.getUser()));
+        int pageSize = 6;
+        int currentPage = page < 1 ? 1 : page >= pageSize ? pageSize - 1 : page;
+        List<ClassDTO> classDTOList = classService.getByUserRole(userDetail.getUser(), currentPage, pageSize);
+        model.addAttribute("currentPage", currentPage);
+        int totalPage = classService.getByUserRole(userDetail.getUser(), 0, 0).size() / pageSize == 0 ? 1 : classService.getByUserRole(userDetail.getUser(), 0, 0).size() / pageSize;
+        model.addAttribute("totalPage", totalPage);
+        model.addAttribute("list", classDTOList);
         return path;
     }
 
     @GetMapping("/management/classes/{id}")
     public String classes(Model model,
+                          @AuthenticationPrincipal UserDetail userDetail,
                           @PathVariable("id") String serviceId) {
         String path = "management/ClassManagement/class";
-        ClassDTO foundClass = classService.getByServiceId(serviceId);
-        model.addAttribute("trainers", trainerService.getAllAvailableTrainers());
-        model.addAttribute("cities", addressService.getCities());
-        model.addAttribute("studios", addressService.getStudioByCity(String.valueOf(foundClass.getServicesCityId())));
-        model.addAttribute("schedules", scheduleService.getAll(null, null));
-        model.addAttribute("item", foundClass);
+        ClassDTO foundClass = serviceId.equals("new") ? new ClassDTO() : classService.getByServiceId(serviceId);
+        if (foundClass.getId() != null && classService.getByUserRole(userDetail.getUser(), 0, 0).stream().noneMatch(o -> o.getId().equals(foundClass.getId()))) {
+            path = "redirect:/service/class/management/classes";
+        } else {
+            model.addAttribute("trainers", trainerService.getAllAvailableTrainersByStudio(foundClass.getServicesStudioId()));
+            model.addAttribute("cities", addressService.getCities());
+            model.addAttribute("studios", addressService.getStudioByCity(serviceId.equals("new") ? userDetail.getUser().getRole().getId().equalsIgnoreCase("role01") ? "Ha Noi" : userDetail.getUser().getCity().getName() : foundClass.getServicesCityName()));
+            model.addAttribute("schedules", scheduleService.getAll(null, null));
+            model.addAttribute("item", foundClass);
+        }
         return path;
     }
 
     @ResponseBody
     @PostMapping("/management/api/update/{id}")
-    public ClassDTO classes(@PathVariable("id") String serviceId,
-                            @RequestParam(value = "fileImage", defaultValue = "", required = false) MultipartFile multipartFile,
-                            Model model) throws IOException {
+    public ClassDTO updateClasses(@PathVariable("id") String serviceId,
+                                  @RequestParam(value = "fileImage", defaultValue = "", required = false) MultipartFile multipartFile,
+                                  Model model) throws IOException {
         return classService.saveThumbnail(imageUploader.upload(multipartFile), serviceId);
     }
 

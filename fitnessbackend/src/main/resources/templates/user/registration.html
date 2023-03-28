@@ -1,113 +1,200 @@
 <!DOCTYPE html>
-<html lang="en">
-<body>
-<section class="s-training-schedule p-0 pb-5"
-         style="background-image: url(assets/img/bg-table-1.svg);">
-    <div class="container">
-        <div class="training-schedule-cover">
-            <div class="training-schedule-table">
-                <table id="registration-table" class="table table-bordered table-hover">
-                    <thead>
-                    <th>#</th>
-                    <th>Service Name</th>
-                    <th>Registration Date</th>
-                    <th>Status</th>
-                    </thead>
-                    <tbody>
-                    <!--                    <th:block th:each="registration : ${registrations}">-->
-                    <!--                        <tr>-->
-                    <!--                            <td th:text="${registration.id}">9-00</td>-->
-                    <!--                            <td>-->
-                    <!--                                <h4>-->
-                    <!--                                    <a href="" th:text="${registration.servicesName}"></a>-->
-                    <!--                                </h4>-->
-                    <!--                            </td>-->
-                    <!--                            <td>-->
-                    <!--                                <div class="date" th:text="${registration.date}">9-00 – 11:00</div>-->
-                    <!--                            </td>-->
-                    <!--                            <td>-->
-                    <!--                                <div class="name text-light"-->
-                    <!--                                     th:text="${registration.isStatus()?'Current':'Expired'}">Mark-->
-                    <!--                                    Klark-->
-                    <!--                                </div>-->
-                    <!--                            </td>-->
-                    <!--                        </tr>-->
-                    <!--                    </th:block>-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+<head>
+    <meta charset="UTF-8">
+    <title>Fitmax</title>
+    <!-- =================== META =================== -->
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+    <th:block th:replace="fragments/head :: head"></th:block>
 
-                    </tbody>
-                </table>
+</head>
+
+<body id="home">
+<!--================ PRELOADER ================-->
+<div class="preloader-cover">
+    <div id="cube-loader">
+        <div class="caption">
+            <div class="cube-loader">
+                <div class="cube loader-1"></div>
+                <div class="cube loader-2"></div>
+                <div class="cube loader-4"></div>
+                <div class="cube loader-3"></div>
             </div>
         </div>
     </div>
-</section>
+</div>
+<!--============== PRELOADER END ==============-->
+
+<!-- ================= HEADER ================= -->
+<div th:include="fragments/header.html"></div>
+<!-- =============== HEADER END =============== -->
+<div class="container mt-5" style="min-height: 800px;">
+    <section class="s-training-schedule p-0 pb-5"
+             style="background-image: url(/assets/img/bg-table-1.svg);">
+        <div class="container">
+            <div class="training-schedule-cover">
+                <div class="training-schedule-table">
+                    <table class="table table-bordered table-hover" id="registration-table">
+                        <thead>
+                        <th>#</th>
+                        <th>Service Name</th>
+                        <th>Registration Date</th>
+                        <th>Status</th>
+                        <th>action</th>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="registration: ${registrations}">
+                            <tr>
+                                <td th:text="${registration.servicesId}"></td>
+                                <td>
+                                    <h4>
+                                        <a th:href="${registration.path}" th:text="${registration.servicesName}"></a>
+                                    </h4>
+                                </td>
+                                <td>
+                                    <div class="date" th:text="${registration.date}"></div>
+                                </td>
+                                <td>
+                                    <div class="name text-light" th:text="${registration.status}">
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <!-- Button trigger modal -->
+                                    <button class="btn btn-primary" data-bs-toggle="modal" th:attr="data-bs-target='#staticBackdrop'+${registration.servicesId}"
+                                            type="button"
+                                    >
+                                        view
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div aria-hidden="true" class="modal fade"
+                                         data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                         th:attr="aria-labelledby='staticBackdropLabel'+${registration.servicesId}"
+
+                                         th:id="'staticBackdrop'+${registration.servicesId}">
+                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                                             style="max-width: 66rem; ">
+                                            <div class="modal-content h-70" style="background-color: #202020;">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5 text-white"
+                                                        th:id="'staticBackdropLabel'+${registration.servicesId}">Your
+                                                        Registration: [[${registration.servicesId}]]</h1>
+                                                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
+                                                            type="button"></button>
+                                                </div>
+                                                <div class="modal-body text-white">
+                                                     <div class="container-fluid">
+                                                         <div class="row">
+                                                             <div class="col-3">
+                                                                    Service ID:
+                                                             </div>
+                                                             <div class="col-3" th:text="${registration.servicesId}"></div>
+                                                             <div class="col-3">
+                                                                 Service Name:
+                                                             </div>
+                                                             <div class="col-3" th:text="${registration.servicesName}"></div>
+                                                         </div>
+
+                                                         <div class="row">
+                                                             <div class="col-3">
+                                                                 Approved By:
+                                                             </div>
+                                                             <div class="col-3" th:text="${registration.traineeEmail}"></div>
+                                                             <div class="col-3">
+                                                                 Assigned To:
+                                                             </div>
+                                                             <div class="col-3" th:text="${registration.traineeEmail}"></div>
+                                                         </div>
+                                                     </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn" data-bs-dismiss="modal" type="button">Close
+                                                    </button>
+                                                    <button class="btn" type="button">Understood</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- ================== FOOTER ================== -->
+
+<!-- ================== FOOTER ================== -->
+
+<div th:include="fragments/footer.html"></div>
+<!-- ================ FOOTER END ================ -->
+
+<!--=================== TO TOP ===================-->
+
+<!--================= TO TOP END =================-->
+
+<!--=================== SCRIPT	===================-->
+<script crossorigin="anonymous"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+<script th:src="@{/js/slick.min.js}"></script>
+<script th:src="@{/js/rx-lazy.js}"></script>
+<script th:src="@{/js/parallax.min.js}"></script>
+<script th:src="@{/js/scripts.js}"></script>
+<style>
+    .card {
+        --bs-card-bg: #202020;
+        --bs-card-border-color: rgba(242, 56, 73, .25)
+    }
+
+    .text-secondary {
+        color: white !important;
+    }
+
+    .nav-link {
+        color: white !important;
+    }
+
+    .nav-link.active {
+        color: #f23849 !important;
+        background-color: transparent !important;
+    }
+</style>
+</body>
+
 <script>
     $(document).ready(function () {
-        $.ajax({
-            url: `${origin_path}/registration/api/profile`,
-            type: "GET",
-            success: function (data) {
-                console.log(data);
-                const registrationTable = $('#registration-table');
-                let body = `<thead>
-                    <th>#</th>
-                    <th>Service Name</th>
-                    <th>Registration Date</th>
-                    <th>Status</th>
-                    <th>action</th>
-                    </thead>
-                    <tbody>`;
-                data.forEach((registration, index) => {
-                    body += `<tr>
-                            <td>${registration.servicesId}</td>
-                            <td>
-                                <h4>
-                                    <a href="${registration.path}">${registration.servicesName}</a>
-                                </h4>
-                            </td>
-                            <td>
-                                <div class="date">${registration.date.slice(0, 10)}</div>
-                            </td>
-                            <td>
-                                <div class="name text-light">
-                                    ${registration.status ? 'Current' : 'Expired'}
-                                </div>
-                            </td>
-                            <td>
-                               <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${registration.servicesId}staticBackdrop">
-                              view
-                            </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="${registration.servicesId}staticBackdrop"
-                                data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                aria-labelledby="${registration.servicesId}staticBackdropLabel"
-                                aria-hidden="true">
-                              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 66rem; ">
-                                <div class="modal-content h-100">
-                                  <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="${registration.servicesId}staticBackdropLabel">Your Registration: ${registration.servicesId}</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                  </div>
-                                  <div class="modal-body">
-
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn">Understood</button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            </td>
-                        </tr>`;
-                });
-                body += `</tbody>`;
-                registrationTable.html(body);
-            }
+        $('.table').DataTable({
+            // dom: 'rtip',
+            columnDefs: [{
+                target: 0,
+                visible: true,
+                searchable: false
+            }],
+            paging: false,
+            info: false,
+            pagingType: 'full_numbers',
+            bLengthChange: false,
+            pageLength: 5,
+            searching: false,
+            stateSave: true
         });
     });
 </script>
-</body>
-</html>

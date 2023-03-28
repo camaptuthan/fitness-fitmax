@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface TrainerService {
 
-    List<TrainerDTO> getAllAvailableTrainers();
+    List<TrainerDTO> getAllAvailableTrainersByStudio(String studioId);
     List<TrainerDTO> getListPT(String studioId);
     TrainerDTO getTrainerByEmail(String email);
 

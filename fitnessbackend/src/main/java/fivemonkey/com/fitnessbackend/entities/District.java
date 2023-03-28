@@ -23,7 +23,7 @@ public class District {
 
     @Column(name = "district_name")
     private String name;
-    
+
     @Column(name = "type")
     private String type;
 

@@ -20,6 +20,9 @@ import java.util.List;
 @Entity
 @Table(name = "service", schema = "dbo")
 public class Services {
+    public Services(Date date) {
+        this.date = date;
+    }
     @Id
     @GeneratedValue(generator = "service_generator")
     @GenericGenerator(name = "service_generator", strategy = "fivemonkey.com.fitnessbackend.identifier.ServiceIdentifier")
@@ -39,6 +42,9 @@ public class Services {
     private Float price;
     @Column(name = "[description]", columnDefinition = "longtext")
     private String des;
+
+
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")
     private Date date;

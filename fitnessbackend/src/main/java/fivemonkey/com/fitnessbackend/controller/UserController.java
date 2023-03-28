@@ -151,7 +151,7 @@ public class UserController {
         return "redirect:/user/management/listusers";
     }
 
-    @RequestMapping("/management/updateuser/{email}")
+    @RequestMapping("management/updateuser/{email}")
     public String getInformationUser(@PathVariable("email") String email, Model model) {
         List<Role> roleList = roleService.getRoleAdmin();
         UserDTO userDTO = userService.getUserByEmail(email);
@@ -161,7 +161,7 @@ public class UserController {
         return "management/UserManagement/UserUpdate";
     }
 
-    @PostMapping("/management/updateuser/{email}")
+    @PostMapping("/updateuser/{email}")
     public String userUpdate(@PathVariable("email") String email, @ModelAttribute("user") UserDTO userDTO) {
         try {
             userService.update(userDTO);
@@ -177,21 +177,21 @@ public class UserController {
     }
 
 
-    @RequestMapping("/management/avataruser/{email}")
+    @RequestMapping("/avataruser/{email}")
     public String getInformationUserAvatar(@PathVariable("email") String email, Model model) {
         UserDTO userDTO = userService.getUserByEmail(email);
         model.addAttribute("user", userDTO);
         return "myprofile";
     }
 
-    @PostMapping("/management/avataruser/{email}")
+    @PostMapping("/avataruser/{email}")
     public String userUpdate(@RequestParam("fileImage") MultipartFile multipartFile,
 
                              @ModelAttribute("user") UserDTO userDTO,
                              Model model) throws IOException {
         userService.saveThumbnail(imageUploader.upload(multipartFile), userDTO.getEmail());
 
-        return "redirect:/user/management/updateprofile";}
+        return "redirect:/user/updateprofile";}
 
 
 
@@ -217,7 +217,7 @@ public class UserController {
         return "ptDetails";
     }
 
-    @RequestMapping("/management/updateprofile")
+    @RequestMapping("/updateprofile")
     public String getInformationUserPro5(@AuthenticationPrincipal UserDetail userDetail, Model model) {
         UserDTO userDTO = userService.getUserByEmail(userDetail.getUser().getEmail());
         model.addAttribute("user", userDTO);
@@ -225,10 +225,10 @@ public class UserController {
     }
 
 
-    @PostMapping("/management/updateprofile/{email}")
+    @PostMapping("/updateprofile/{email}")
     public String userUpdateAll(@ModelAttribute("user") UserDTO userDTO, Model model) throws IOException {
         userService.updateUser(userDTO);
-        return "redirect:/user/management/listusers";
+        return "redirect:/user/updateprofile";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -274,30 +274,29 @@ public class UserController {
         try {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             if (passwordEncoder.matches(cpassword, userDetail.getPassword()) && npassword.equals(cnpassword)) {
-                ra.addFlashAttribute("success", "Change your password successfully! Please login again!");
+                ra.addFlashAttribute("successchange", "Change your password successfully! Please login again!");
                 userDetail.getUser().setPassword(npassword);
                 userService.updateUserPassword(userDetail.getUser());
-                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cnpassword + "New: " + npassword + "Confirm New" + cnpassword);
                 path = "redirect:/logout";
             } else if (!passwordEncoder.matches(cpassword, userDetail.getPassword())) {
                 ra.addFlashAttribute("fail", "Current password is wrong! Please enter your password again!");
                 model.addAttribute("nPassword", npassword);
                 model.addAttribute("cnPassword", cnpassword);
                 model.addAttribute("cPassword", cpassword);
-                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cnpassword + "New: " + npassword + "Confirm New" + cnpassword);
-
-            } else {
+            } else if(!npassword.equals(cnpassword)) {
                 ra.addFlashAttribute("fail", "Confirm new password must be different from new password! Please enter confirm new password again!");
                 model.addAttribute("nPassword", npassword);
                 model.addAttribute("cnPassword", cnpassword);
                 model.addAttribute("cPassword", cpassword);
-                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
             }
+            else ra.addFlashAttribute("fail", "New password must be at least 6 characters! Please enter New password again!");
+            model.addAttribute("nPassword", npassword);
+            model.addAttribute("cnPassword", cnpassword);
+            model.addAttribute("cPassword", cpassword);
         } catch (Exception e) {
             e.printStackTrace();
             ra.addFlashAttribute("fail", "Fail");
         }
-        System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
         return path;
     }
 
@@ -327,30 +326,18 @@ public class UserController {
     }
 
     @PostMapping("/reset-password-result")
-    public String resetPassword(@ModelAttribute("userDTO") User user, @RequestParam String repassword, @RequestParam String password, Model model) {
-        String path = "reset_password";
-        if (password.equals(repassword) && password.length() >= 6) {
-            userService.resetPassword(user.getEmail(), password);
-            model.addAttribute("message", "Password reset successful");
-            path = "reset_password";
-        }
-        if (!password.equals(repassword)) {
-            model.addAttribute("invalid", "Password not matches ");
-            path = "changepass";
-        } else if (password.length() < 6 || repassword.length() < 6) {
-            model.addAttribute("invalid", "Password must have length > 6");
-            path = "changepass";
-        }
+    public String resetPassword(@ModelAttribute("userDTO") User user,  @RequestParam String password, Model model) {
+        String path = "verify_status";
+        userService.resetPassword(user.getEmail(), password);
+        model.addAttribute("title", "Password reset successfully please login .");
         return path;
     }
 
-    @GetMapping("/profile")
-    public String myProfile(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+    @GetMapping("/myregistrations")
+    public String myRegistrations(@AuthenticationPrincipal UserDetail userDetail, Model model) {
         model.addAttribute("registrations", registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail()));
-        model.addAttribute("user", userDetail.getUser());
-        return "user/profile";
+        return "user/registration";
     }
-
 
 }
 
