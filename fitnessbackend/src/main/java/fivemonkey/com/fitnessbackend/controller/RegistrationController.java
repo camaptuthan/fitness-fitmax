@@ -2,21 +2,26 @@ package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.dto.CityDTO;
 import fivemonkey.com.fitnessbackend.dto.RegistrationDTO;
+import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.City;
 import fivemonkey.com.fitnessbackend.entities.Registration;
 import fivemonkey.com.fitnessbackend.entities.Studio;
+import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.repository.RegistrationRepository;
 import fivemonkey.com.fitnessbackend.repository.StatusRepository;
+import fivemonkey.com.fitnessbackend.repository.UserRepository;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.service.service.CityService;
 import fivemonkey.com.fitnessbackend.service.service.RegistrationService;
 import fivemonkey.com.fitnessbackend.service.service.StatusService;
+import fivemonkey.com.fitnessbackend.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,23 +36,50 @@ public class RegistrationController {
 
     @Autowired
     private CityService cityService;
+
+    @Autowired
+    private UserService userService;
+
     @Autowired
     private StatusRepository statusRepository;
     @Autowired
     private StatusService statusService;
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping("/make")
-    public String doRegistration(@RequestParam("item_id") String serviceId, @AuthenticationPrincipal UserDetail userDetail) {
-//        String path = "redirect:/user/profile";
-//        if (userDetail == null) {
-//            path = "redirect:/login";
-//        }
-//        assert userDetail != null;
-//
-//        registrationService.doRegistration(userDetail.getUser(), serviceId);
-//        return path;
+    public String doRegistration(@AuthenticationPrincipal UserDetail userDetail,
+                                 @RequestParam("id") String serviceId,
+                                 @RequestParam("emailRegis") String email,
+                                 @RequestParam("phoneRegis") String phone,
+                                 HttpServletRequest request) {
+        String path = "redirect:/user/profile";
+        System.out.println("Email regis:"+email);
+        System.out.println("Phone regis:"+phone);
+        if (userDetail == null && userRepository.getUserByEmail(email) == null) {
+            //Cretae new user
+            User user = new User();
+            user.setEmail(email);
+            user.setPhone(phone);
+            user.setPassword("123456");
+            userService.registerUser(user);
 
-        return "redirect:/";
+            //Update status
+            User userNew = userRepository.getUserByEmail(email);
+            userNew.setStatus(true);
+            userRepository.save(userNew);
+
+            //Create new registration
+            registrationService.doRegistration(user, serviceId);
+
+            path = "redirect:/";
+        } else if (userDetail == null && userRepository.getUserByEmail(email) != null) {
+            //Send message This email already exists in the system, please use that account to register
+            path = "redirect:/";
+        } else if (userDetail != null) {
+            registrationService.doRegistration(userDetail.getUser(), serviceId);
+        }
+        return path;
     }
 
 

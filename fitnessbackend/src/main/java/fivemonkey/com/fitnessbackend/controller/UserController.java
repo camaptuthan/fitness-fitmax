@@ -267,7 +267,6 @@ public class UserController {
         model.addAttribute("user", userDetail.getUser());
         return "user/changepassword";
     }
-
     @PostMapping("/changepassword")
     public String passwordUpdate(@RequestParam("cPassword") String cpassword, @RequestParam("nPassword") String npassword, @RequestParam("cnPassword") String cnpassword, @AuthenticationPrincipal UserDetail userDetail, Model model, RedirectAttributes ra) {
         String path = "redirect:/user/profilechangepassword";

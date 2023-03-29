@@ -112,6 +112,7 @@
                                     <div class="club-card-item"
                                          th:style="'background-image: url(' + ${list.image} + ');'">
                                         <div class="price-cover">
+                                            <div name="item_id" hidden="" th:text="${list.id}" th:value="${list.id}"></div>
                                             <div class="price" th:text="${list.price}">price</div>
                                             <div class="date"><span th:text="${list.duration}"></span>months</div>
                                         </div>
