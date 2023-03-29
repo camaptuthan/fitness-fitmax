@@ -41,11 +41,79 @@
 
                     <div class="container-fluid row ml-5 mt-5">
                         <div class="col-lg-12 col-12 col-md-12 col-sm-12 row">
-                            <form>
-                                <div class="col-6">
-
+                            <form th:action="@{/service/class/management/classes}" th:method="get" class="col-12 row">
+                                <div class="col-3" id="city-selector">
+                                    <div class="input-group flex-nowrap">
+                                        <span class="input-group-text " id="addon-wrapping-city">City</span>
+                                        <select aria-label="Default select example"
+                                                class="form-select w-100" name="cityName"
+                                                onchange="studioGenerator(this.value)"
+                                                th:id="city-selector">
+                                            <option value="">All</option>
+                                            <th:block th:each="city : ${cities}">
+                                                <option
+                                                        th:selected="${city.name == currentCity}"
+                                                        th:text="${city.name}"
+                                                        th:value="${city.name}"></option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="input-group flex-nowrap" id="studio-selector">
+                                        <span class="input-group-text" id="addon-wrapping-studio">Studio</span>
+                                        <select aria-label="Default select example"
+                                                class="form-select w-100" name="studioId">
+                                            <option value="">All</option>
+                                            <th:block th:each="studio : ${studios}">
+                                                <option
+                                                        th:selected="${studio.id == currentStudio}"
+                                                        th:text="${studio.name}"
+                                                        th:value="${studio.id}"></option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="input-group flex-nowrap" id="status-selector">
+                                        <span class="input-group-text" id="addon-wrapping-status">Status</span>
+                                        <select aria-label="Default select example"
+                                                class="form-select w-100" name="status">
+                                            <option value="">All</option>
+                                            <th:block th:each="status : ${statuses}">
+                                                <option
+                                                        th:selected="${status.type_id == currentStatus}"
+                                                        th:text="${status.statusName}"
+                                                        th:value="${status.type_id}"></option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <button class="btn btn-primary" type="submit">View</button>
                                 </div>
                             </form>
+                            <script>
+                                const origin_path = window.location.origin;
+                                const studioGenerator = (cityId) => {
+
+                                    $.ajax({
+                                        url: `${origin_path}/address/studio/${cityId === "" ? '-1' : cityId}`,
+                                        type: "GET",
+                                        success: function (data) {
+                                            const studioSelector = $("#studio-selector");
+                                            studioSelector.html(``);
+                                            let body = ` <span class="input-group-text" id="addon-wrapping-studio">Studio</span>
+                                                             <select class="w-100"  name="studioId"><option value="">All</option>`;
+                                            data.forEach(studio => {
+                                                body += `<option value="${studio.id}">${studio.name}</option>`;
+                                            })
+                                            body += `</select>`;
+                                            studioSelector.html(body);
+                                        }
+                                    })
+                                }
+                            </script>
                         </div>
                     </div>
 
@@ -68,7 +136,10 @@
                                     <td th:text="${item.servicesStudioId == null ? 'All': item.servicesStudioId}"></td>
                                     <td th:text="${item.servicesCityName}"></td>
                                     <td th:text="${item.servicesDate}"></td>
-                                    <td th:text="${item.servicesStatus}"></td>
+                                    <th:block th:each="status : ${statuses}">
+                                        <td th:text="${status.statusName}" th:if="${status.type_id == item.servicesStatus}"></td>
+                                    </th:block>
+
                                     <td>
                                         <a class="btn btn-primary"
                                            th:href="@{/service/class/management/classes/{id}(id=${item.servicesId})}">
@@ -85,19 +156,19 @@
                                     <li class="page-item" th:classappend="${currentPage - 1 == 0 ? 'disabled':''}">
                                         <a class="page-link"
                                            tabindex="-1"
-                                           th:href="@{/service/class/management/classes(page=${currentPage}-1)}">Previous</a>
+                                           th:href="@{/service/class/management/classes(page=${currentPage}-1,cityName=${currentCity},studioId=${currentStudio},status=${currentStatus})}">Previous</a>
                                     </li>
                                     <th:block th:each="page: ${#numbers.sequence(1, totalPage)}">
                                         <li class="page-item" th:classappend="${currentPage == page} ? 'active' : ''">
                                             <a class="page-link"
-                                               th:href="@{/service/class/management/classes(page=${page})}"
+                                               th:href="@{/service/class/management/classes(page=${page},cityName=${currentCity},studioId=${currentStudio},status=${currentStatus})}"
                                                th:text="${page}">1</a>
                                         </li>
                                     </th:block>
                                     <li class="page-item"
                                         th:classappend="${currentPage + 1 > totalPage ? 'disabled':''}">
                                         <a class="page-link"
-                                           th:href="@{/service/class/management/classes(page=${currentPage}+1)}">Next</a>
+                                           th:href="@{/service/class/management/classes(page=${currentPage}+1,cityName=${currentCity},studioId=${currentStudio},status=${currentStatus})}">Next</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -138,4 +209,13 @@
             });
     });
 </script>
+<style>
+    .bootstrap-select .dropdown-toggle {
+        color: black !important;
+    }
+
+    .bootstrap-select .dropdown-toggle:hover {
+        color: black !important;
+    }
+</style>
 </html>

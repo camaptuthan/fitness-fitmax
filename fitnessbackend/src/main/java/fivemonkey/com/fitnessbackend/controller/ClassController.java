@@ -43,6 +43,12 @@ public class ClassController {
     private AddressService addressService;
 
     @Autowired
+    private StudioService studioService;
+
+    @Autowired
+    private StatusService statusService;
+
+    @Autowired
     private ImageUploader imageUploader;
 
     @GetMapping("{service_id}")
@@ -77,15 +83,27 @@ public class ClassController {
     }
 
     @GetMapping("/management/classes")
-    public String classes(Model model, @AuthenticationPrincipal UserDetail userDetail, @RequestParam(value = "page", defaultValue = "1") int page) {
+    public String classes(Model model,
+                          @AuthenticationPrincipal UserDetail userDetail,
+                          @RequestParam(name = "page", defaultValue = "1") int page,
+                          @RequestParam(name = "cityName", defaultValue = "") String cityName,
+                          @RequestParam(name = "studioId", defaultValue = "") String studioId,
+                          @RequestParam(name = "status", defaultValue = "") String status) {
         String path = "management/ClassManagement/classlist";
+        String[] keywords = new String[]{cityName, studioId, status};
 
-        int pageSize = 6;
-        int currentPage = page < 1 ? 1 : page >= pageSize ? pageSize - 1 : page;
-        List<ClassDTO> classDTOList = classService.getByUserRole(userDetail.getUser(), currentPage, pageSize);
-        model.addAttribute("currentPage", currentPage);
-        int totalPage = classService.getByUserRole(userDetail.getUser(), 0, 0).size() / pageSize == 0 ? 1 : classService.getByUserRole(userDetail.getUser(), 0, 0).size() / pageSize;
-        model.addAttribute("totalPage", totalPage);
+        int currentPage = page < 1 ? 1 : page;
+        List<ClassDTO> classDTOList = classService.getByUserRole(userDetail.getUser(), currentPage, keywords);
+        model.addAttribute("currentPage", Math.min(currentPage, classService.getTotalPage()));
+        model.addAttribute("totalPage", classService.getTotalPage());
+
+        model.addAttribute("currentCity", cityName);
+        model.addAttribute("currentStudio", studioId);
+        model.addAttribute("currentStatus", Integer.parseInt(status));
+
+        model.addAttribute("cities", addressService.getCities());
+        model.addAttribute("studios", cityName.isBlank() ? studioService.getAllStudio() : studioService.getAllByCity(cityName));
+        model.addAttribute("statuses", statusService.getStatusByClass());
         model.addAttribute("list", classDTOList);
         return path;
     }
@@ -96,14 +114,13 @@ public class ClassController {
                           @PathVariable("id") String serviceId) {
         String path = "management/ClassManagement/class";
         ClassDTO foundClass = serviceId.equals("new") ? new ClassDTO() : classService.getByServiceId(serviceId);
- 
-        if (foundClass.getId() != null && classService.getByUserRole(userDetail.getUser(), 0, 0).stream().noneMatch(o -> o.getId().equals(foundClass.getId()))) {
- 
+
+        if (foundClass.getId() != null && classService.getByUserRole(userDetail.getUser(), 0, new String[]{}).stream().noneMatch(o -> o.getId().equals(foundClass.getId()))) {
             path = "redirect:/service/class/management/classes";
         } else {
             model.addAttribute("trainers", trainerService.getAllAvailableTrainersByStudio(foundClass.getServicesStudioId()));
             model.addAttribute("cities", addressService.getCities());
- 
+
             model.addAttribute("studios", addressService.getStudioByCity(serviceId.equals("new") ? userDetail.getUser().getRole().getId().equalsIgnoreCase("role01") ? "Ha Noi" : userDetail.getUser().getCity().getName() : foundClass.getServicesCityName()));
             model.addAttribute("schedules", scheduleService.getAll(null, null));
             model.addAttribute("item", foundClass);

@@ -134,14 +134,14 @@
                                                         <div class="col-4" th:if="${item.servicesId == null}">
                                                             <div class="input-group flex-nowrap" id="studio-selector">
                                                                 <span class="input-group-text"
-                                                                    id="addon-wrapping-studio">Studio</span>
+                                                                      id="addon-wrapping-studio">Studio</span>
                                                                 <select aria-label="Default select example"
-                                                                    class="form-select w-100" name="servicesStudioId">
+                                                                        class="form-select w-100" name="servicesStudioId">
                                                                     <th:block th:each="studio : ${studios}">
                                                                         <option
-                                                                            th:selected="${studio.id == item.servicesStudioId}"
-                                                                            th:text="${studio.name}"
-                                                                            th:value="${studio.id}"></option>
+                                                                                th:selected="${studio.id == item.servicesStudioId}"
+                                                                                th:text="${studio.name}"
+                                                                                th:value="${studio.id}"></option>
                                                                     </th:block>
                                                                 </select>
                                                             </div>
@@ -603,7 +603,7 @@
                         }
                     })
                 }
-                window.location.replace(`${origin_path}/service/class/management/classes/${data.servicesId}`);
+                window.location = `${origin_path}/service/class/management/classes/${data.servicesId}?_=${new Date()}`;
             },
             error: function (error) {
                 console.log(error);

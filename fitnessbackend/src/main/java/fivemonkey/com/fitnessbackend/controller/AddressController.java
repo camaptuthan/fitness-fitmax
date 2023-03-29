@@ -39,11 +39,7 @@ public class AddressController {
 
     @ResponseBody
     @GetMapping("/studio/{city}")
-
     public List<StudioDTO> getStudioByCityId(@PathVariable("city") String cityName) {
-        return addressService.getStudioByCity(cityName);
-
-
-
+        return cityName.equals("-1") ? studioService.getAllStudio() : studioService.getAllStudiosByCity(cityName);
     }
 }

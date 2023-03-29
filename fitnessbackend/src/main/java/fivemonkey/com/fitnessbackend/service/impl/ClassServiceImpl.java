@@ -2,9 +2,7 @@ package fivemonkey.com.fitnessbackend.service.impl;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.ClassDTO;
-import fivemonkey.com.fitnessbackend.entities.Clazz;
-import fivemonkey.com.fitnessbackend.entities.Services;
-import fivemonkey.com.fitnessbackend.entities.User;
+import fivemonkey.com.fitnessbackend.entities.*;
 import fivemonkey.com.fitnessbackend.repository.*;
 import fivemonkey.com.fitnessbackend.service.service.ClassService;
 import org.hibernate.Session;
@@ -18,9 +16,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClassServiceImpl implements ClassService {
+
+    private int totalPage = -1;
     @Autowired
     private ClassRepository classRepository;
 
@@ -54,11 +55,30 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public List<ClassDTO> getByUserRole(User user, int currentPage, int size) {
-        Pageable pageable = currentPage == 0 || size == 0 ? Pageable.unpaged() : PageRequest.of(currentPage - 1, size, Sort.by("services.date").descending());
-        List<Clazz> clazzes = user.getStudio() == null ? classRepository.findAll(pageable).getContent() : classRepository.getClazzByUserEmail(user.getEmail(), pageable).getContent();
-        assert clazzes != null;
-        return modelMapper.mapList(clazzes, ClassDTO.class);
+    public List<ClassDTO> getByUserRole(User user, int currentPage, String[] keywords) {
+        int size = 6;
+        Pageable pageable = currentPage == 0 ? Pageable.unpaged() : PageRequest.of(currentPage - 1, size, Sort.by("services.date").descending());
+        List<Clazz> classes = user.getStudio() == null ? classRepository.findAll() : classRepository.getClazzByUserEmail(user.getEmail(), pageable).getContent();
+
+        for (String word : keywords) {
+            if (word.isBlank()) continue;
+            classes = classes.stream().filter(clazz -> {
+                Studio studio = clazz.getServices().getStudio();
+                City city = clazz.getServices().getCity();
+                if (studio == null || city == null) return false;
+                return studio.getId().equals(word) || city.getName().equals(word) || String.valueOf(clazz.getServices().getStatus()).equals(word);
+            }).collect(Collectors.toList());
+        }
+
+        if (this.totalPage != 0) {
+            this.totalPage = classes.isEmpty() ? 1 : classes.size() % size == 0 ? classes.size() / size : classes.size() / size + 1;
+        }
+        return modelMapper.mapList(classes.subList((currentPage - 1) * size, Math.min((++currentPage - 1) * size, classes.size())), ClassDTO.class);
+    }
+
+    @Override
+    public int getTotalPage() {
+        return this.totalPage;
     }
 
     @Override
@@ -102,7 +122,7 @@ public class ClassServiceImpl implements ClassService {
     public List<ClassDTO> getClassesBy4Fields(String keyword, String cityname, String studio, Long category, int pageNumber) {
         int pageSize = 5;
         Session session = sessionFactory.openSession();
-        String query = "select c from Clazz c where c.services.serviceType.id = 3 and c.services.status = 1 ";
+        String query = "select c from Clazz c where c.services.serviceType.id = 3 and c.services.status = 2 ";
         if (!"".equals(keyword)) {
             query += " and concat(c.services.name,'',c.services.price,'',c.services.duration,'',c.services.des,'',c.services.date) like '%" + keyword + "%' ";
         }
