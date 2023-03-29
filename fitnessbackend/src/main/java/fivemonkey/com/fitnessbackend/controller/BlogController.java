@@ -194,14 +194,14 @@ public class BlogController {
         return "/management/BlogManagement/blog-waiting";
     }
 
-    @PostMapping("/approve")
+    @PostMapping("/approve/{id}")
     public String approveNewBlog(@PathVariable("id") Long id) {
         BlogDTO blogDTO = blogService.findBlogDTOById(id);
         blogDTO.setStatus(1);
         return "redirect:/blog";
     }
 
-    @PostMapping("/reject")
+    @PostMapping("/reject/{id}")
     public String rejectNewBlog(@PathVariable("id") Long id) {
         BlogDTO blogDTO = blogService.findBlogDTOById(id);
         blogDTO.setStatus(0);

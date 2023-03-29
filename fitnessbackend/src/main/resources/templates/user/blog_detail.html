@@ -79,14 +79,12 @@
                 </div>
                 <th:block sec:authorize="hasAnyAuthority('ROLE01','ROLE02','ROLE03')"
                           th:if="${b.status== 0} ">
-                    <form method="post" th:action="@{/blog/approve}">
-                        <input type="hidden" name="" th:value="${b.id}">
+                    <form method="post" th:action="@{/blog/approve/{id} (id = ${b.id})}">
                         <button class="btn btn-success" style="background-color: #1e7e34; border: 2px solid #1e7e34">
                             Approve
                         </button>
                     </form>
-                    <form method="post" th:action="@{/blog/reject}">
-                        <input type="hidden" name="" th:value="${b.id}">
+                    <form method="post" th:action="@{/blog/reject/{id} (id = ${b.id})}">
                         <button class="btn btn-primary">Reject</button>
                     </form>
                 </th:block>
