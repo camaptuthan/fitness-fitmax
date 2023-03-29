@@ -109,7 +109,6 @@ public class UserServiceImpl implements UserService {
         UserDTO userDTO = mapper.map(user, UserDTO.class);
         return userDTO;
     }
-
     @Override
     public List<UserDTO> listUserByAdmin() {
         List<User> userList = userRepository.listUserByAdmin();

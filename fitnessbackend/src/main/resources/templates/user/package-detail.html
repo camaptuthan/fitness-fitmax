@@ -63,7 +63,9 @@
                 </div>
             </div>
             <div class="col-md-7 about-info-cover">
+                <h1 name="service" hidden="" th:value="*{id}"></h1>
                 <h2 class="title-decor">About <span th:text="*{name}"></span></h2>
+                <h3 class="about-subtitle">Price: <span th:text="*{price}"></span> VNĐ</h3>
                 <div th:if="${!hasRegistered}" >
 
                     <!-- Button trigger modal -->
@@ -81,12 +83,11 @@
                                     <h2 class="title-decor">Registration <span>Form</span></h2>
                                 </div>
                                 <div class="modal-body">
-                                    <form method="post" th:action="@{/registration/make}">
                                         <section class="s-contacts"
                                                  style="background-image: url(/img/bg-contacts.svg); padding: 0">
                                             <div class="container">
-                                                <p class="slogan">
-                                                </p>
+                                                <h2 class="title-decor">About <span th:text="*{name}"></span></h2>
+                                                <h3 class="about-subtitle">Price: <span th:text="*{price}"></span> VNĐ</h3>
                                                 <div class="row">
                                                     <div class="col-md-5 col-lg-4">
                                                         <div class="contact-item">
@@ -132,16 +133,19 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-7 col-lg-8">
-                                                        <form id='contactform1' name="contactform">
+                                                        <form method="post" th:action="@{/registration/make}">
                                                             <ul class="form-cover">
                                                                 <li class="inp-name">
-                                                                    <label>Email * (required)</label>
-                                                                    <input id="name2" name="your-email" th:value="${userEmail}"
+                                                                    <input id="id"  name="id" hidden="hidden" th:value="${id}" th:text="*{name}">
+                                                                </li>
+                                                                <li class="inp-name">
+                                                                    <label>Email <span style="color: red"> *</span></label>
+                                                                    <input id="emailRegis" name="emailRegis" required="" th:text="${userEmail}" th:value="${userEmail}"
                                                                            type="email">
                                                                 </li>
                                                                 <li class="inp-email">
-                                                                    <label>Phone * (required)</label>
-                                                                    <input id="phone" name="your-phone" th:value="${userPhone}"
+                                                                    <label>Phone <span style="color: red"> *</span></label>
+                                                                    <input id="phoneRegis" name="phoneRegis" required="" th:text="${userPhone}" th:value="${userPhone}"
                                                                            type="tel">
                                                                 </li>
                                                                 <li class="inp-text">
@@ -170,7 +174,7 @@
                                                 </div>
                                             </div>
                                         </section>
-                                    </form>
+
                                 </div>
 
                             </div>

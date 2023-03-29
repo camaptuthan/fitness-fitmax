@@ -63,7 +63,6 @@ public class ClassController {
             classDTOListMap.put("page-" + (i + 1), valueList);
         }
 
-
         boolean hasRegistered = false;
         if (userDetail != null) {
             hasRegistered = registrationService.hasRegistration(classDTO.getServicesId(), userDetail.getUser().getEmail());
