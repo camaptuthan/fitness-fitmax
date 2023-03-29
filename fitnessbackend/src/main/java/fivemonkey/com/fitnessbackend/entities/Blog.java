@@ -36,7 +36,7 @@ public class Blog {
     private String thumbnail;
 
     @Min(value = 0)
-    @Max(value = 2)
+    @Max(value = 3)
     @Column(name = "status", nullable = false)
     private int status;
 

@@ -11,69 +11,69 @@ insert into role(role_id,role_name,description) values ('ROLE05','Trainee','');
 -- ----------------------------
     -- Records of city
     -- ----------------------------
-    INSERT INTO `city` VALUES ('01', 'Thanh pho Ha Noi', 'Thanh pho Trung uong');
-    INSERT INTO `city` VALUES ('02', 'Tinh Ha Giang', 'Tinh');
-    INSERT INTO `city` VALUES ('04', 'Tinh Cao Bang', 'Tinh');
-    INSERT INTO `city` VALUES ('06', 'Tinh Bac Kan', 'Tinh');
-    INSERT INTO `city` VALUES ('08', 'Tinh Tuyen Quang', 'Tinh');
-    INSERT INTO `city` VALUES ('10', 'Tinh Lao Cai', 'Tinh');
-    INSERT INTO `city` VALUES ('11', 'Tinh Dien Bien', 'Tinh');
-    INSERT INTO `city` VALUES ('12', 'Tinh Lai Chau', 'Tinh');
-    INSERT INTO `city` VALUES ('14', 'Tinh Son La', 'Tinh');
-    INSERT INTO `city` VALUES ('15', 'Tinh Yen Bai', 'Tinh');
-    INSERT INTO `city` VALUES ('17', 'Tinh Hoa Binh', 'Tinh');
-    INSERT INTO `city` VALUES ('19', 'Tinh Thai Nguyen', 'Tinh');
-    INSERT INTO `city` VALUES ('20', 'Tinh Lang Son', 'Tinh');
-    INSERT INTO `city` VALUES ('22', 'Tinh Quang Ninh', 'Tinh');
-    INSERT INTO `city` VALUES ('24', 'Tinh Bac Giang', 'Tinh');
-    INSERT INTO `city` VALUES ('25', 'Tinh Phu Tho', 'Tinh');
-    INSERT INTO `city` VALUES ('26', 'Tinh Vinh Phuc', 'Tinh');
-    INSERT INTO `city` VALUES ('27', 'Tinh Bac Ninh', 'Tinh');
-    INSERT INTO `city` VALUES ('30', 'Tinh Hai Duong', 'Tinh');
-    INSERT INTO `city` VALUES ('31', 'Thanh pho Hai Phong', 'Thanh pho Trung uong');
-    INSERT INTO `city` VALUES ('33', 'Tinh Hung Yen', 'Tinh');
-    INSERT INTO `city` VALUES ('34', 'Tinh Thai Binh', 'Tinh');
-    INSERT INTO `city` VALUES ('35', 'Tinh Ha Nam', 'Tinh');
-    INSERT INTO `city` VALUES ('36', 'Tinh Nam Dinh', 'Tinh');
-    INSERT INTO `city` VALUES ('37', 'Tinh Ninh Binh', 'Tinh');
-    INSERT INTO `city` VALUES ('38', 'Tinh Thanh Hoa', 'Tinh');
-    INSERT INTO `city` VALUES ('40', 'Tinh Nghe An', 'Tinh');
-    INSERT INTO `city` VALUES ('42', 'Tinh Ha Tinh', 'Tinh');
-    INSERT INTO `city` VALUES ('44', 'Tinh Quang Binh', 'Tinh');
-    INSERT INTO `city` VALUES ('45', 'Tinh Quang Tri', 'Tinh');
-    INSERT INTO `city` VALUES ('46', 'Tinh Thua Thien Hue', 'Tinh');
-    INSERT INTO `city` VALUES ('48', 'Thanh pho Da Nang', 'Thanh pho Trung uong');
-    INSERT INTO `city` VALUES ('49', 'Tinh Quang Nam', 'Tinh');
-    INSERT INTO `city` VALUES ('51', 'Tinh Quang Ngai', 'Tinh');
-    INSERT INTO `city` VALUES ('52', 'Tinh Binh Dinh', 'Tinh');
-    INSERT INTO `city` VALUES ('54', 'Tinh Phu Yen', 'Tinh');
-    INSERT INTO `city` VALUES ('56', 'Tinh Khanh Hoa', 'Tinh');
-    INSERT INTO `city` VALUES ('58', 'Tinh Ninh Thuan', 'Tinh');
-    INSERT INTO `city` VALUES ('60', 'Tinh Binh Thuan', 'Tinh');
-    INSERT INTO `city` VALUES ('62', 'Tinh Kon Tum', 'Tinh');
-    INSERT INTO `city` VALUES ('64', 'Tinh Gia Lai', 'Tinh');
-    INSERT INTO `city` VALUES ('66', 'Tinh Dak Lak', 'Tinh');
-    INSERT INTO `city` VALUES ('67', 'Tinh Dak Nong', 'Tinh');
-    INSERT INTO `city` VALUES ('68', 'Tinh Lam Dong', 'Tinh');
-    INSERT INTO `city` VALUES ('70', 'Tinh Binh Phuoc', 'Tinh');
-    INSERT INTO `city` VALUES ('72', 'Tinh Tay Ninh', 'Tinh');
-    INSERT INTO `city` VALUES ('74', 'Tinh Binh Duong', 'Tinh');
-    INSERT INTO `city` VALUES ('75', 'Tinh Dong Nai', 'Tinh');
-    INSERT INTO `city` VALUES ('77', 'Tinh Ba Ria - Vung Tau', 'Tinh');
-    INSERT INTO `city` VALUES ('79', 'Thanh pho Ho Chi Minh', 'Thanh pho Trung uong');
-    INSERT INTO `city` VALUES ('80', 'Tinh Long An', 'Tinh');
-    INSERT INTO `city` VALUES ('82', 'Tinh Tien Giang', 'Tinh');
-    INSERT INTO `city` VALUES ('83', 'Tinh Ben Tre', 'Tinh');
-    INSERT INTO `city` VALUES ('84', 'Tinh Tra Vinh', 'Tinh');
-    INSERT INTO `city` VALUES ('86', 'Tinh Vinh Long', 'Tinh');
-    INSERT INTO `city` VALUES ('87', 'Tinh Dong Thap', 'Tinh');
-    INSERT INTO `city` VALUES ('89', 'Tinh An Giang', 'Tinh');
-    INSERT INTO `city` VALUES ('91', 'Tinh Kien Giang', 'Tinh');
-    INSERT INTO `city` VALUES ('92', 'Thanh pho Can Tho', 'Thanh pho Trung uong');
-    INSERT INTO `city` VALUES ('93', 'Tinh Hau Giang', 'Tinh');
-    INSERT INTO `city` VALUES ('94', 'Tinh Soc Trang', 'Tinh');
-    INSERT INTO `city` VALUES ('95', 'Tinh Bac Lieu', 'Tinh');
-    INSERT INTO `city` VALUES ('96', 'Tinh Ca Mau', 'Tinh');
+    INSERT INTO `city` VALUES ('01', 'Ha Noi', 'Thanh pho Trung uong');
+    INSERT INTO `city` VALUES ('02', 'Ha Giang', 'Tinh');
+    INSERT INTO `city` VALUES ('04', 'Cao Bang', 'Tinh');
+    INSERT INTO `city` VALUES ('06', 'Bac Kan', 'Tinh');
+    INSERT INTO `city` VALUES ('08', 'Tuyen Quang', 'Tinh');
+    INSERT INTO `city` VALUES ('10', 'Lao Cai', 'Tinh');
+    INSERT INTO `city` VALUES ('11', 'Dien Bien', 'Tinh');
+    INSERT INTO `city` VALUES ('12', 'Lai Chau', 'Tinh');
+    INSERT INTO `city` VALUES ('14', 'Son La', 'Tinh');
+    INSERT INTO `city` VALUES ('15', 'Yen Bai', 'Tinh');
+    INSERT INTO `city` VALUES ('17', 'Hoa Binh', 'Tinh');
+    INSERT INTO `city` VALUES ('19', 'Thai Nguyen', 'Tinh');
+    INSERT INTO `city` VALUES ('20', 'Lang Son', 'Tinh');
+    INSERT INTO `city` VALUES ('22', 'Quang Ninh', 'Tinh');
+    INSERT INTO `city` VALUES ('24', 'Bac Giang', 'Tinh');
+    INSERT INTO `city` VALUES ('25', 'Phu Tho', 'Tinh');
+    INSERT INTO `city` VALUES ('26', 'Vinh Phuc', 'Tinh');
+    INSERT INTO `city` VALUES ('27', 'Bac Ninh', 'Tinh');
+    INSERT INTO `city` VALUES ('30', 'Hai Duong', 'Tinh');
+    INSERT INTO `city` VALUES ('31', 'Hai Phong', 'Thanh pho Trung uong');
+    INSERT INTO `city` VALUES ('33', 'Hung Yen', 'Tinh');
+    INSERT INTO `city` VALUES ('34', 'Thai Binh', 'Tinh');
+    INSERT INTO `city` VALUES ('35', 'Ha Nam', 'Tinh');
+    INSERT INTO `city` VALUES ('36', 'Nam Dinh', 'Tinh');
+    INSERT INTO `city` VALUES ('37', 'Ninh Binh', 'Tinh');
+    INSERT INTO `city` VALUES ('38', 'Thanh Hoa', 'Tinh');
+    INSERT INTO `city` VALUES ('40', 'Nghe An', 'Tinh');
+    INSERT INTO `city` VALUES ('42', 'Ha Tinh', 'Tinh');
+    INSERT INTO `city` VALUES ('44', 'Quang Binh', 'Tinh');
+    INSERT INTO `city` VALUES ('45', 'Quang Tri', 'Tinh');
+    INSERT INTO `city` VALUES ('46', 'Thua Thien Hue', 'Tinh');
+    INSERT INTO `city` VALUES ('48', 'Da Nang', 'Thanh pho Trung uong');
+    INSERT INTO `city` VALUES ('49', 'Quang Nam', 'Tinh');
+    INSERT INTO `city` VALUES ('51', 'Quang Ngai', 'Tinh');
+    INSERT INTO `city` VALUES ('52', 'Binh Dinh', 'Tinh');
+    INSERT INTO `city` VALUES ('54', 'Phu Yen', 'Tinh');
+    INSERT INTO `city` VALUES ('56', 'Khanh Hoa', 'Tinh');
+    INSERT INTO `city` VALUES ('58', 'Ninh Thuan', 'Tinh');
+    INSERT INTO `city` VALUES ('60', 'Binh Thuan', 'Tinh');
+    INSERT INTO `city` VALUES ('62', 'Kon Tum', 'Tinh');
+    INSERT INTO `city` VALUES ('64', 'Gia Lai', 'Tinh');
+    INSERT INTO `city` VALUES ('66', 'Dak Lak', 'Tinh');
+    INSERT INTO `city` VALUES ('67', 'Dak Nong', 'Tinh');
+    INSERT INTO `city` VALUES ('68', 'Lam Dong', 'Tinh');
+    INSERT INTO `city` VALUES ('70', 'Binh Phuoc', 'Tinh');
+    INSERT INTO `city` VALUES ('72', 'Tay Ninh', 'Tinh');
+    INSERT INTO `city` VALUES ('74', 'Binh Duong', 'Tinh');
+    INSERT INTO `city` VALUES ('75', 'Dong Nai', 'Tinh');
+    INSERT INTO `city` VALUES ('77', 'Ba Ria - Vung Tau', 'Tinh');
+    INSERT INTO `city` VALUES ('79', 'Ho Chi Minh', 'Thanh pho Trung uong');
+    INSERT INTO `city` VALUES ('80', 'Long An', 'Tinh');
+    INSERT INTO `city` VALUES ('82', 'Tien Giang', 'Tinh');
+    INSERT INTO `city` VALUES ('83', 'Ben Tre', 'Tinh');
+    INSERT INTO `city` VALUES ('84', 'Tra Vinh', 'Tinh');
+    INSERT INTO `city` VALUES ('86', 'Vinh Long', 'Tinh');
+    INSERT INTO `city` VALUES ('87', 'Dong Thap', 'Tinh');
+    INSERT INTO `city` VALUES ('89', 'An Giang', 'Tinh');
+    INSERT INTO `city` VALUES ('91', 'Kien Giang', 'Tinh');
+    INSERT INTO `city` VALUES ('92', 'Can Tho', 'Thanh pho Trung uong');
+    INSERT INTO `city` VALUES ('93', 'Hau Giang', 'Tinh');
+    INSERT INTO `city` VALUES ('94', 'Soc Trang', 'Tinh');
+    INSERT INTO `city` VALUES ('95', 'Bac Lieu', 'Tinh');
+    INSERT INTO `city` VALUES ('96', 'Ca Mau', 'Tinh');
 -- ----------------------------
 -- Records of district
 -- ----------------------------
@@ -792,9 +792,6 @@ INSERT INTO `district` VALUES ('666', 'Huyen Dak R\'Lap', 'Huyen', '67');
     INSERT INTO `district` VALUES ('973', 'Huyen Ngoc Hien', 'Huyen', '96');
     
 
-    
-    
-
 /*select * from studio*/
 insert into studio(studio_id,district_id,contact,image,studio_name,address,status,created_date) values ('STU001',007,'','https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym2.jpg?alt=media&token=83b7d65e-b33d-48d5-aa24-a490b076c19c','Gym Ha Noi A','458 Minh Khai',1,CURDATE());
 insert into studio(studio_id,district_id,contact,image,studio_name,address,status,created_date) values ('STU002',006,'','https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym3.jpg?alt=media&token=c9ec6f49-a56f-40c8-84fe-b81d1ea34ef3','Gym Ha Noi B','88 Lang Ha',1,CURDATE());
@@ -1136,7 +1133,8 @@ insert into status(type,type_id,status_name) values ('service',2,'In Progress');
 insert into status(type,type_id,status_name) values ('service',3,'Expired');
 insert into status(type,type_id,status_name) values ('blog',0,'Waiting');
 insert into status(type,type_id,status_name) values ('blog',1,'Approved');
-insert into status(type,type_id,status_name) values ('blog',2,'Expired');
+insert into status(type,type_id,status_name) values ('blog',2,'Rejected');
+insert into status(type,type_id,status_name) values ('blog',3,'Expired');
 
 
 
