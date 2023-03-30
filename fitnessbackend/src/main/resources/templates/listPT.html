@@ -62,7 +62,7 @@
                       <div class="out-trainer-info">
                         <h3><a th:href="@{/user/ptdetail/{email}(email=${trainer.email})}" th:text="${trainer.userFirstName}+' '+${trainer.userLastName}"></a></h3>
                         <div class="prof">Weightlifting</div>
-                        <p th:text="${trainer.philosophy}+' '+${trainer.achievement}"></p>
+                        <p th:text= "${trainer.philosophy}+' '+${trainer.achievement}"></p>
 
 
 <!--                        <a th:href="@{/user/ptdetail/{email}(email=${trainer.email})}" class="btn">View</a>-->

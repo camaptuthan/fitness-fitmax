@@ -38,4 +38,6 @@ public interface StudioService {
     int getTotalAllStudiosByFilter(String keyword, String city, String status);
     //update studio
 //    void updateStudio(StudioDTO studioDTO);
+
+    List<StudioDTO>  listStudioByService(String servicesId);
 }

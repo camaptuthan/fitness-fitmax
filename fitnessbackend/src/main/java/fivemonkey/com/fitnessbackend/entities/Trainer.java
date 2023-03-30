@@ -43,6 +43,8 @@ public class Trainer {
     @Column(name = "status", nullable = false)
     private boolean status;
 
+
+
     //trainer-session relationship
     @OneToMany(mappedBy = "trainer",cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
     private List<Session> sessions;

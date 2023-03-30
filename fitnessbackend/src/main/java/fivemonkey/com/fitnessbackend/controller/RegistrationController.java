@@ -158,9 +158,6 @@ public class RegistrationController {
         Registration existingRegis = registrationService.getRegistrationById(id);
         existingRegis.setId(id);
         existingRegis.setStatus(registration.getStatus());
-//        existingRegis.getDate();
-//        existingRegis.setDes(registration.getDes());
-//        existingRegis.setStatus(registration.isStatus());
         // save updated studio object
         registrationService.updateRegistration(existingRegis);
         return "redirect:/studios";

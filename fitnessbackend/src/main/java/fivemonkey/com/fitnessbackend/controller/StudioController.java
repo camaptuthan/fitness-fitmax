@@ -113,6 +113,7 @@ public class StudioController {
     public String newStudio(@AuthenticationPrincipal UserDetail userDetail,
                             @RequestParam(value = "city", required = false, defaultValue = "") String city, Model model){
 
+
         Studio studio = new Studio();
         List<City> cityList = cityService.getNewCity();
 
@@ -120,17 +121,13 @@ public class StudioController {
             List<District> districtList = districtService.getNewDistrict(city);
             model.addAttribute("districtList", districtList);
         }
-//        else {
-//            List<District> districtList = districtService.getNewDistrict(city);
-//            model.addAttribute("districtList", districtList);
-//        }
         else {
             model.addAttribute("districtList", null);
         }
-            //List<District> districtList = districtService.getNewDistrict(city);
         model.addAttribute("cityList", cityList);
         model.addAttribute("studio", studio);
         return "./management/StudioManagement/add_studio";
+
     }
     //Update Studio Status
     @GetMapping("/management/statusstudios/{id}/{status}")

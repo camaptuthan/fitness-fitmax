@@ -40,4 +40,6 @@ public class RegistrationDTO {
     private String traineeImage;
     private String traineeAddress;
     private String trainerEmail;
+
 }
+

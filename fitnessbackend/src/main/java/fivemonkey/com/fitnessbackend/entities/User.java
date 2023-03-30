@@ -8,6 +8,8 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.HashSet;
@@ -38,6 +40,9 @@ public class User {
     private String address;
     @Column(name = "phone")
     private String phone;
+
+//    @Column(name = "studio_st")
+//    private String studioSt;
     @Column(name = "avatar")
     private String avatar;
     @Temporal(TemporalType.DATE)
@@ -45,6 +50,11 @@ public class User {
     private Date date;
     @Column(name = "status", nullable = false)
     private boolean status;
+
+//    @Min(value = 0)
+//    @Max(value = 3)
+//    @Column(name = "statusChangeSt", nullable = false)
+//    private int statusChangeSt;
 
     //role-user relationship
     @ManyToOne
@@ -68,8 +78,11 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private Trainer trainer;
 
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private History history;
+
     //studio-user relationship
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "studio_id", referencedColumnName = "studio_id", nullable = true)
     private Studio studio;
 

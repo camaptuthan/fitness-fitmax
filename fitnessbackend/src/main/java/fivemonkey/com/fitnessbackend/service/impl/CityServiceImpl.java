@@ -70,8 +70,8 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public List<City> getStudioCity() {
-        return cityRepository.getStudioCity();
+    public List<City> getStudioCity(String cityName) {
+        return cityRepository.getStudioCity(cityName);
     }
 
     @Override

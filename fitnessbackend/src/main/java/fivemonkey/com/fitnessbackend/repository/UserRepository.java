@@ -62,8 +62,6 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query("select s from Services s where s.studio.id =?1")
     List<Services> listServicesID(String studioId);
 
-    @Query("select r from Registration r where r.services.id = ?1")
-    List<Registration> getRegistration(String servicesId);
 
     @Query("select u from User u where  u.email =?1 and u.role.id not in('ROLE01','ROLE02')")
     List<User> getUserByManage(String email);
@@ -88,4 +86,10 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Query("SELECT u FROM User u where u.role.name='Studio Manager' and u.studio.id=?1")
     User getManagerOfStudio(String studioId);
+
+
+//    @Query("SELECT u FROM User u where u.statusChangeSt = 1 and u.studioSt = :studioId")
+//    List<User> getUserSt(String studioId);
+
+
 }

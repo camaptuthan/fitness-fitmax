@@ -23,6 +23,7 @@ public class UserDTO {
     private String phone;
     private String avatar;
     private Date date;
+    private int statusChangeSt;
     private boolean status;
     private String roleId;
     private String roleName;
@@ -30,6 +31,9 @@ public class UserDTO {
 
     private String studioId;
     private String vericode;
+
+
+
 
 
 

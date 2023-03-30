@@ -2,7 +2,9 @@ package fivemonkey.com.fitnessbackend.service.impl;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
+import fivemonkey.com.fitnessbackend.dto.StudioDTO;
 import fivemonkey.com.fitnessbackend.entities.Services;
+import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.repository.ServiceTypeRepository;
 import fivemonkey.com.fitnessbackend.repository.ServicesRepository;
 import fivemonkey.com.fitnessbackend.service.service.ServicesService;
@@ -185,8 +187,30 @@ public class ServicesServiceImpl implements ServicesService {
     }
 
     @Override
+    public List<ServicesDTO> getServicesByCity(String cityName) {
+        return modelMapper.mapList(serviceRepository.getServicesByCity(cityName), ServicesDTO.class);
+    }
+
+    @Override
+
+    public List<ServicesDTO> getServicesPT() {
+        return modelMapper.mapList(serviceRepository.getServicesByPT(), ServicesDTO.class);
+    }
+
+    @Override
+    public List<Services> getServicesById(String id) {
+        return serviceRepository.getServicesById(id);}
+@Override
     public boolean isServiceExistInStudio(String servicesId, String studioId) {
         return serviceRepository.isServiceExistInStudio(servicesId, studioId).isPresent();
+
     }
+
+    @Override
+    public boolean findCityStudioByService(String servicesId) {
+        return serviceRepository.findStudioByService(servicesId).isPresent();
+    }
+
+
 
 }

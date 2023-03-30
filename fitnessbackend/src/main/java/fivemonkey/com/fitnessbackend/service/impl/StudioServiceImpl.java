@@ -3,6 +3,7 @@ package fivemonkey.com.fitnessbackend.service.impl;
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.StudioDTO;
 import fivemonkey.com.fitnessbackend.entities.Studio;
+import fivemonkey.com.fitnessbackend.repository.ServicesRepository;
 import fivemonkey.com.fitnessbackend.repository.StudioRepository;
 import fivemonkey.com.fitnessbackend.repository.UserRepository;
 import fivemonkey.com.fitnessbackend.service.service.StudioService;
@@ -25,6 +26,9 @@ public class StudioServiceImpl implements StudioService {
     private SessionFactory sessionFactory;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ServicesRepository servicesRepository;
     @Autowired
     private ModelMapperConfiguration<Studio, StudioDTO> modelMapper;
 
@@ -204,6 +208,11 @@ public class StudioServiceImpl implements StudioService {
     @Override
     public Long countStudio() {
         return studioRepository.countStudio();
+    }
+
+    @Override
+    public List<StudioDTO> listStudioByService(String servicesId) {
+        return modelMapper.mapList(servicesRepository.listStudioByService(servicesId),StudioDTO.class);
     }
 
 
