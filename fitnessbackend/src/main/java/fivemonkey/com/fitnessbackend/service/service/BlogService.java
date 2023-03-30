@@ -17,7 +17,11 @@ public interface BlogService {
 
     Blog findBlogById(Long id);
 
-    BlogDTO doBlog(BlogDTO blogDTO,User user, Category category);
+    BlogDTO doBlog(BlogDTO blogDTO, User user, Category category);
+
+    String writeBlogToTextFile(BlogDTO blogDTO);
+
+    String readBlogFromTextFile(Blog blog);
 
     Blog update(BlogDTO b);
 

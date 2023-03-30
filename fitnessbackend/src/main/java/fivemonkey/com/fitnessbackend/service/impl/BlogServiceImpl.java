@@ -15,6 +15,9 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -69,11 +72,46 @@ public class BlogServiceImpl implements BlogService {
         blog.setDescription(blogDTO.getDescription());
         blog.setThumbnail(blogDTO.getThumbnail());
         blog.setDate(new Date());
-       return blog;
+        return blog;
     }
+
     @Override
-    public BlogDTO doBlog(BlogDTO blogDTO,User user, Category category) {
+    public BlogDTO doBlog(BlogDTO blogDTO, User user, Category category) {
         return modelMapper.map(blogRepository.save(makeBlog(blogDTO, user, category)), BlogDTO.class);
+    }
+
+    @Override
+    public String writeBlogToTextFile(BlogDTO blog) {
+        try {
+            Long blogId = blog.getId();
+            FileWriter blogFile = new FileWriter("sep490_g12_sep490\\fitnessbackend\\blog\\blog_" + blogId + ".txt", false);
+            blogFile.write(blog.getDescription());
+            blogFile.close();
+            return "sep490_g12_sep490\\fitnessbackend\\blog\\blog_" + blogId + ".txt";
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    @Override
+    public String readBlogFromTextFile(Blog blog) {
+        if (blog.getDescription() != null) {
+            try {
+                FileReader blogFile = new FileReader(blog.getDescription());
+                StringBuilder output = new StringBuilder();
+                int i;
+                while ((i = blogFile.read()) != -1) {
+                    System.out.print((char) i);
+                    output.append((char) i);
+                }
+                blogFile.close();
+                return output.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return "";
     }
 
     @Override
