@@ -10,13 +10,12 @@ import java.util.stream.Stream;
 
 public class RegistrationIdentifier implements IdentifierGenerator {
 
-    private String prefix = "REGIS";
+    private String prefix = "REGIS" + LocalDate.now().getYear();
     @Override
     public Serializable generate(SharedSessionContractImplementor sharedSessionContractImplementor, Object obj) throws HibernateException {
         String query = "select r.id from Registration r";
         Stream<String> ids = sharedSessionContractImplementor.createQuery(query,String.class).stream();
         Long max = ids.map(o -> o.replace(prefix,"")).mapToLong(Long::parseLong).max().orElse(0L);
-        LocalDate current_date = LocalDate.now();
-        return prefix + (String.format("%04d",max + 1)) + current_date.getYear();
+        return prefix + (String.format("%04d",max + 1));
     }
 }

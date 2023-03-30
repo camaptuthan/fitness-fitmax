@@ -66,7 +66,7 @@
                 <h2 class="title-decor">About <span th:text="*{servicesName}"></span>
                     <!-- Button trigger modal -->
                     <form method="post" th:action="@{/registration/make}" th:if="${hasRegistered == false}">
-                        <input th:name="item_id" th:value="*{servicesId}" type="hidden">
+                        <input  th:name="item_id" th:value="*{servicesId}" type="hidden">
                         <button class="btn" type="submit">
                             Enroll now
                         </button>

@@ -1,5 +1,6 @@
 package fivemonkey.com.fitnessbackend.controller;
 
+import fivemonkey.com.fitnessbackend.configuration.Utility;
 import fivemonkey.com.fitnessbackend.dto.CityDTO;
 import fivemonkey.com.fitnessbackend.dto.RegistrationDTO;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
@@ -20,8 +21,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,34 +56,62 @@ public class RegistrationController {
                                  @RequestParam("id") String serviceId,
                                  @RequestParam("emailRegis") String email,
                                  @RequestParam("phoneRegis") String phone,
-                                 HttpServletRequest request) {
-        String path = "redirect:/user/profile";
-        System.out.println("Email regis:"+email);
-        System.out.println("Phone regis:"+phone);
-        if (userDetail == null && userRepository.getUserByEmail(email) == null) {
-            //Cretae new user
+                                 HttpServletRequest request,
+                                 Model model
+    ) {
+        //truong hop login account verify register by input otp
+        if(userDetail!=null){
+            try {
+                userService.sendOTP(email);
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+            model.addAttribute("email", email);
+            model.addAttribute("idP",serviceId);
+            return "verify_registration";
+            //
+        }else if(userDetail==null ){
             User user = new User();
             user.setEmail(email);
             user.setPhone(phone);
             user.setPassword("123456");
+            user.setStatus(false);
             userService.registerUser(user);
-
-            //Update status
-            User userNew = userRepository.getUserByEmail(email);
-            userNew.setStatus(true);
-            userRepository.save(userNew);
+            String siteUrl = Utility.getSiteURL(request);
+            try {
+                userService.sendVerificationEmail(user, siteUrl);
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
 
             //Create new registration
             registrationService.doRegistration(user, serviceId);
-
-            path = "redirect:/";
-        } else if (userDetail == null && userRepository.getUserByEmail(email) != null) {
-            //Send message This email already exists in the system, please use that account to register
-            path = "redirect:/";
-        } else if (userDetail != null) {
-            registrationService.doRegistration(userDetail.getUser(), serviceId);
+            model.addAttribute("title", "Check email registed to active account and completed register");
+            return "/verify_status";
         }
-        return path;
+        return "";
+    }
+
+    @PostMapping("/enrolled")
+    public String verifyEnrollByCode(@AuthenticationPrincipal UserDetail userDetail,
+                                     @RequestParam("idP") String idP,
+                                     @RequestParam("email") String email,
+                                     @RequestParam String otp
+                                    ,Model model ){
+        if (userService.verifyOTP(email, otp)) {
+            User u= userRepository.getUserByEmail(email);
+            // check email exist
+            registrationService.doRegistration(u, idP);
+            return "redirect:/user/myregistrations";
+        } else {
+            model.addAttribute("error", "Invalid OTP");
+            return "verify_registration";
+        }
+
     }
 
 
@@ -96,7 +128,7 @@ public class RegistrationController {
             //model.addAttribute("registrations", registrationService.getAllRegistrations());
 
         } else if (userDetail.getUser().getRole().getName().equals("Manager")) {
-           //model.addAttribute("registrations", registrationService.getRegistrationByManager(userDetail.getUser().getStudio().getId()));
+            //model.addAttribute("registrations", registrationService.getRegistrationByManager(userDetail.getUser().getStudio().getId()));
         } else if (userDetail.getUser().getRole().getName().equals("Assistant")) {
             //model.addAttribute("registrations", registrationService.getRegistrationByAssistant(userDetail.getUser().getEmail()));
         }
@@ -148,6 +180,5 @@ public class RegistrationController {
         registrationService.updateRegistration(registration);
         return "redirect:/registration/management/registrations";
     }
-
 
 }
