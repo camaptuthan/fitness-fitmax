@@ -33,6 +33,9 @@ public class Registration {
     @Column(name = "status", nullable = false)
     private int status;
 
+    @Column(name = "message")
+    private String message;
+
     @Column(name = "approved_by")
     private String approvedBy;
 

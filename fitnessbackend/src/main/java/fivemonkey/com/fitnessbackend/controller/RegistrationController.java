@@ -150,7 +150,18 @@ public class RegistrationController {
         model.addAttribute("statusList", statusService.getStatusByRegistration());
         return "management/RegistrationManagement/registration";
     }
-    @PostMapping("management/registrationpost/{id}")
+
+    //Get Details Registration
+    @GetMapping("/management/registrations/{id}")
+    public String getRegistrationById(@PathVariable String id, Model model) {
+        Registration registration = registrationService.getRegistrationById(id);
+        model.addAttribute("registration", registration);
+        model.addAttribute("statusList", statusService.getStatusByRegistration());
+
+        return "management/RegistrationManagement/registrationdetails";
+    }
+
+    @PostMapping("management/registrationpost")
     public String updateStudio(@PathVariable String id,
                                @ModelAttribute("registration") Registration registration,
                                Model model) {
@@ -175,6 +186,7 @@ public class RegistrationController {
         model.addAttribute("registration", registrationService.getRegistrationById("SER0001"));
         return "management/RegistrationManagement/registrationdetails";
     }
+
     //Approve and reject Registration
     @GetMapping("/management/statusregistrations/{id}/{status}")
     public String updateStatus(@AuthenticationPrincipal UserDetail userDetail,@PathVariable String id, @PathVariable int status) {
