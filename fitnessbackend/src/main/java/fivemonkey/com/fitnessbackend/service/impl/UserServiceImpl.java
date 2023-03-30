@@ -5,9 +5,11 @@ import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.*;
+import fivemonkey.com.fitnessbackend.repository.RegistrationRepository;
 import fivemonkey.com.fitnessbackend.repository.RoleRepository;
 import fivemonkey.com.fitnessbackend.repository.StudioRepository;
 import fivemonkey.com.fitnessbackend.repository.UserRepository;
+import fivemonkey.com.fitnessbackend.service.service.StudioService;
 import fivemonkey.com.fitnessbackend.service.service.UserService;
 import net.bytebuddy.utility.RandomString;
 import org.hibernate.Session;
@@ -32,6 +34,9 @@ public class UserServiceImpl implements UserService {
     private Map<String, String> otpMap = new HashMap<>();
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    private RegistrationRepository registrationRepository;
     @Autowired
     RoleRepository roleRepository;
     @Autowired
@@ -60,7 +65,6 @@ public class UserServiceImpl implements UserService {
         }
         return userDTOList;
     }
-
 
 
     @Override
@@ -144,6 +148,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user1);
 
     }
+
     @Override
     public void updateUserAvatar(UserDTO userDTO) {
 
@@ -158,7 +163,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO saveThumbnail(String thumbNail, String email) {
         if (thumbNail.isBlank()) return null;
         User user = userRepository.getUserByEmail(email);
-         user.setAvatar(thumbNail);
+        user.setAvatar(thumbNail);
         return modelMapper.map(userRepository.save(user), UserDTO.class);
     }
 
@@ -182,7 +187,7 @@ public class UserServiceImpl implements UserService {
         user.setDate(new Date());
         user.setStatus(false);
         //save to trainee table
-        Trainee trainee= new Trainee();
+        Trainee trainee = new Trainee();
         trainee.setEmail(user.getEmail());
         trainee.setUser(user);
         user.setTrainee(trainee);
@@ -215,7 +220,7 @@ public class UserServiceImpl implements UserService {
         String senderName = "Fitness Service Management System";
         String subject = "Please verify your registration";
         String verifyURL = siteUrl + "/user/verify?code=" + user.getVerificationCode();
-        String content = "Dear " + user.getFirstName() + user.getLastName()+",<br>"
+        String content = "Dear " + user.getFirstName() + user.getLastName() + ",<br>"
                 + "Please click the link below to verify your registration:<br>"
                 + "<h3><a href=\"" + verifyURL + "\" >VERIFY</a></h3>"
                 + "Thank you,<br>"
@@ -247,10 +252,9 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
     //send otp to forgot password
     @Override
-    public void sendOTP(String email)  throws MessagingException, UnsupportedEncodingException{
+    public void sendOTP(String email) throws MessagingException, UnsupportedEncodingException {
         String otp = generateOTP();
         // send the OTP to the user's email
         otpMap.put(email, otp);
@@ -269,8 +273,8 @@ public class UserServiceImpl implements UserService {
 
         String content = "Dear ,<br>"
                 + "This is your otp please verify otp now :<br>"
-                + "<h3>" + otp +"</h3> <br>"
-                +"<a>"+"It's expired time after "+OTP_EXPIRATION_TIME_MINUTES+ " minutes </a><br>"
+                + "<h3>" + otp + "</h3> <br>"
+                + "<a>" + "It's expired time after " + OTP_EXPIRATION_TIME_MINUTES + " minutes </a><br>"
                 + "Thank you,<br>"
                 + "From FSM.";
 
@@ -291,9 +295,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
-
-
     private String generateOTP() {
         // generate a random 6-digit OTP
         Random random = new Random();
@@ -302,9 +303,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void resetPassword(String email,String password) {
+    public void resetPassword(String email, String password) {
         User user = userRepository.findUserByEmail(email);
-        BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
     }
@@ -320,17 +321,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> listUserByManage(String studioId,String keyword,String roleId) {
+    public List<UserDTO> listUserByManage(String studioId, String keyword, String roleId) {
         List<UserDTO> userList = null;
         List<Registration> registrationList = null;
         List<Services> listServices = userRepository.listServicesID(studioId);
 
         for (Services s : listServices) {
-            registrationList = userRepository.getRegistration(s.getId());
+            registrationList = registrationRepository.getRegistrationByServices(s.getId());
             if (registrationList != null) {
                 for (Registration r : registrationList) {
-
-                        userList = getUserByFieldsByManager(r.getTrainee().getEmail(),keyword,roleId);
+                    userList = getUserByFieldsByManager(r.getTrainee().getEmail(), keyword, roleId);
                 }
             }
         }
@@ -338,36 +338,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> listUserByAssistant(String studioId,String keyword,String roleId) {
+    public List<UserDTO> listUserByAssistant(String studioId, String keyword, String roleId) {
         List<UserDTO> userList = null;
         List<Registration> registrationList = null;
         List<Services> listServices = userRepository.listServicesID(studioId);
 
         for (Services s : listServices) {
-            registrationList = userRepository.getRegistration(s.getId());
+            registrationList = registrationRepository.getRegistrationByServices(s.getId());
             if (registrationList != null) {
                 for (Registration r : registrationList) {
-                    userList = getUserByFieldsByAssistant(r.getTrainee().getEmail(),keyword,roleId);
+                    userList = getUserByFieldsByAssistant(r.getTrainee().getEmail(), keyword, roleId);
                 }
             }
         }
         return userList;
     }
-//    @Override
-//    public List<UserDTO> listUserByAssistant(String studioId,String keyword, String cityName ,String roleId) {
-//        List<User> userList = null;
-//        List<Registration> registrationList = null;
-//        List<Services> listServices = userRepository.listServicesID(studioId);
-//        for (Services s : listServices) {
-//            registrationList = userRepository.getRegistration(s.getId());
-//            if (registrationList != null) {
-//                for (Registration r : registrationList) {
-//                   userList = userRepository.getUserByAssistant(r.getTrainee().getEmail());
-//                }
-//            }
-//        }
-//        return modelMapperConfiguration.mapList(userList, UserDTO.class);
-//    }
 
     public List<User> getUserByRoleId(String roleId) {
         return userRepository.listAllTrainer(roleId);
@@ -376,7 +361,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<UserDTO> getUserByFieldsByAdmin( String keyword, String cityName ,String roleId, String studioId) {
+    public List<UserDTO> getUserByFieldsByAdmin(String keyword, String cityName, String roleId, String studioId) {
         Session session = sessionFactory.openSession();
         String query = "select u from User u where u.role.id not in('ROLE01') ";
         if (!"".equals(keyword)) {
@@ -397,7 +382,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<UserDTO> getUserByFieldsByManager(String email, String keyword,String roleId) {
+    public List<UserDTO> getUserByFieldsByManager(String email, String keyword, String roleId) {
         Session session = sessionFactory.openSession();
         String query = "select u from User u where u.role.id not in('ROLE01','ROLE02') ";
         if (!"".equals(email)) {
@@ -416,7 +401,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> getUserByFieldsByAssistant(String email, String keyword,String roleId) {
+    public List<UserDTO> getUserByFieldsByAssistant(String email, String keyword, String roleId) {
         Session session = sessionFactory.openSession();
         String query = "select u from User u where u.role.id not in('ROLE01','ROLE02','ROLE03') ";
         if (!"".equals(email)) {
@@ -434,15 +419,42 @@ public class UserServiceImpl implements UserService {
         return modelMapperConfiguration.mapList(query1.getResultList(), UserDTO.class);
     }
 
-    @Override
-    public User getManagerOfStudio(String id) {
-        return userRepository.getManagerOfStudio(id) ;
-    }
 
     @Override
+    public User getManagerOfStudio(String id) {
+        return userRepository.getManagerOfStudio(id);
+    }
+
+//    @Override
+//    public void changeStatusChangeSt(String email, String studioId) {
+//        User user = userRepository.getUserByEmail(email);
+//        user.setStatusChangeSt(1);
+//        user.setStudioSt(studioId);
+//        userRepository.save(user);
+//    }
+
+
+//
+//    @Override
+//    public void rejectChangeSt(UserDTO userDTO) {
+//        User user = userRepository.getUserByEmail(userDTO.getEmail());
+//        user.setStatusChangeSt(0);
+//        user.setStudioSt("");
+//        userRepository.save(user);
+//    }
+
+//    @Override
+//    public void changeSt(UserDTO userDTO) {
+//        User user = userRepository.getUserByEmail(userDTO.getEmail());
+//        user.setStatusChangeSt(1);
+//        user.setStudioSt(userDTO.getStudioSt());
+//         userRepository.save(user);
+//    }
+
     public User getUserById(Long id) {
         return userRepository.findUsersById(id);
     }
+
 
 
 }

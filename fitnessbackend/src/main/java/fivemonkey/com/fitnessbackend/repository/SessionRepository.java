@@ -11,6 +11,7 @@ import java.util.List;
 @Repository
 public interface SessionRepository extends JpaRepository<Session, String> {
 
+
     @Query("select s from Session s where s.schedule.id = ?1")
     List<Session> getSessionsBySchedule(String scheduleId);
 

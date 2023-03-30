@@ -29,7 +29,7 @@ public interface CityService {
 
     List<City> getNewCity();
 
-    List<City> getStudioCity();
+    List<City> getStudioCity(String cityName);
 
     List<City> getRegistrationCity();
 }
