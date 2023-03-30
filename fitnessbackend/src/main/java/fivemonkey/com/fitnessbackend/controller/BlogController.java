@@ -74,10 +74,12 @@ public class BlogController {
                                            @RequestParam(name = "pageNumber", required = false, defaultValue = "1") String pageNumber) {
         int totalPage = blogService.totalPageBy2Fields(keyword, Long.parseLong(category));
         BlogDTO blogDTO = blogService.findBlogDTOById(id);
+        Blog blog = blogService.findBlogById(id);
         List<Category> categoryList = categoryService.findBlogCategories();
         List<Blog> list = blogService.findBlogBy2Fields(keyword, Long.parseLong(category), Integer.parseInt(pageNumber) - 1);
         List<BlogDTO> listBlog = modelMapper.mapList(list, BlogDTO.class);
         List<Blog> listNewestBlog = blogService.findTop3NewestBlogs();
+        blogDTO.setDescription(blogService.readBlogFromTextFile(blog));
         model.addAttribute("currentUser", userDetail);
         model.addAttribute("listBlog", listBlog);
         model.addAttribute("size", list.size());
@@ -98,6 +100,9 @@ public class BlogController {
     @GetMapping("/updateblog/{id}")
     public String getBlogInformation(@PathVariable("id") Long id, @AuthenticationPrincipal UserDetail userDetail, Model model) {
         BlogDTO blogDTO = blogService.findBlogDTOById(id);
+        Blog b = blogService.findBlogById(id);
+        blogService.readBlogFromTextFile(b);
+        blogDTO.setDescription(b.getDescription());
         List<Category> categoryList = categoryService.findBlogCategories();
         model.addAttribute("catelist", categoryList);
         model.addAttribute("blogDTO", blogDTO);
@@ -120,7 +125,7 @@ public class BlogController {
             blog.setTitle(blogDTO.getTitle());
         }
         blog.setCategory(categoryService.getCategoryById(blogDTO.getCategoryId()));
-        blog.setDescription(blogDTO.getDescription());
+        blogService.writeBlogToTextFile(blogDTO);
         if (userDetail.getUser().getRole().getId().equals("ROLE01") || userDetail.getUser().getRole().getId().equals("ROLE02") || userDetail.getUser().getRole().getId().equals("ROLE03")) {
             blog.setStatus(1);
         } else {
@@ -129,6 +134,8 @@ public class BlogController {
         blog.setDate(new Date());
         blog.setUser(userService.getUserById(userDetail.getUser().getId()));
         blogRepository.save(blog);
+
+
         return "redirect:/blog";
     }
 
@@ -158,7 +165,7 @@ public class BlogController {
             b.setTitle(blogDTO.getTitle());
         }
         b.setCategory(categoryService.getCategoryById(blogDTO.getCategoryId()));
-        b.setDescription(blogDTO.getDescription());
+
         if (userDetail.getUser().getRole().getId().equals("ROLE01") || userDetail.getUser().getRole().getId().equals("ROLE02") || userDetail.getUser().getRole().getId().equals("ROLE03")) {
             b.setStatus(1);
         } else {
@@ -166,7 +173,13 @@ public class BlogController {
         }
         b.setDate(new Date());
         b.setUser(userService.getUserById(userDetail.getUser().getId()));
-        blogRepository.save(b);
+        Blog newBlog = blogRepository.save(b);
+
+
+        blogDTO.setId(newBlog.getId());
+        newBlog.setDescription(blogService.writeBlogToTextFile(blogDTO));
+        blogRepository.save(newBlog);
+
         return "redirect:/blog";
     }
 

@@ -25,7 +25,7 @@ public class Blog {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "description", columnDefinition = "longtext")
+    @Column(name = "description", columnDefinition = "text")
     private String description;
 
     @Temporal(TemporalType.TIMESTAMP)

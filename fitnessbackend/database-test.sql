@@ -966,11 +966,11 @@ insert into category(description,category_name,type) values ('','Shoulder','serv
 
 
 /*select * from blog;*/
-insert into blog(title,writer_id,thumbnail,description,status,created_date,category_id) values ('Advertise 1',7,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_blog_thumbnail_1.jpg?alt=media&token=3973baad-c698-469c-95ce-f05d77028e07','Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque. Ultricies tristique nulla aliquet enim tortor. Ultricies tristique nulla aliquet enim tortor. Arcu bibendum at varius vel pharetra vel turpis nunc eget. Et leo duis ut diam quam nulla. Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque.',1,now(),5);
+/*insert into blog(title,writer_id,thumbnail,description,status,created_date,category_id) values ('Advertise 1',7,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_blog_thumbnail_1.jpg?alt=media&token=3973baad-c698-469c-95ce-f05d77028e07','Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque. Ultricies tristique nulla aliquet enim tortor. Ultricies tristique nulla aliquet enim tortor. Arcu bibendum at varius vel pharetra vel turpis nunc eget. Et leo duis ut diam quam nulla. Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque.',1,now(),5);
 insert into blog(title,writer_id,thumbnail,description,status,created_date,category_id) values ('Advertise 2',7,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_blog_thumbnail_2.jpg?alt=media&token=d9930a69-ab8a-461c-b13a-2f18b3755660','Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque. Ultricies tristique nulla aliquet enim tortor. Ultricies tristique nulla aliquet enim tortor. Arcu bibendum at varius vel pharetra vel turpis nunc eget. Et leo duis ut diam quam nulla. Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque.',1,now(),5);
 insert into blog(title,writer_id,thumbnail,description,status,created_date,category_id) values ('Advertise 3',7,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_blog_thumbnail_3.jpg?alt=media&token=5d0aa508-d507-44e9-8c8a-a64bc919fcc5','Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque. Ultricies tristique nulla aliquet enim tortor. Ultricies tristique nulla aliquet enim tortor. Arcu bibendum at varius vel pharetra vel turpis nunc eget. Et leo duis ut diam quam nulla. Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque.',1,now(),5);
 insert into blog(title,writer_id,thumbnail,description,status,created_date,category_id) values ('Advertise 4',7,'https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_blog_thumbnail_4.jpg?alt=media&token=15505224-9b3d-4bf2-ba5d-52dcff4bfa3c','Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque. Ultricies tristique nulla aliquet enim tortor. Ultricies tristique nulla aliquet enim tortor. Arcu bibendum at varius vel pharetra vel turpis nunc eget. Et leo duis ut diam quam nulla. Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque.',1,now(),5);
-
+*/
 
 
 /*select * from schedule;*/
@@ -1143,9 +1143,9 @@ INSERT INTO slider(description,image,title,user_id) VALUES('ELITE FITNESS X VPBA
 INSERT INTO slider(description,image,title,user_id) VALUES('ELITE FITNESS X VPBANK | TẬP LUYỆN THẢ GA - CHẲNG LO VỀ GIÁ','https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/slide-2.jpg?alt=media&token=48de613b-77df-4ca8-aa73-c0876c5b5aa0','A New California',1);
 INSERT INTO slider(description,image,title,user_id) VALUES('ELITE FITNESS X VPBANK | TẬP LUYỆN THẢ GA - CHẲNG LO VỀ GIÁ','https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/slide-1.jpg?alt=media&token=0e0571e6-4c9a-4afd-a272-4ec4a8afc618','A New California',1);
 
+select max(b.blog_id) from blog b order by b.blog_id desc;
 
-
-
+select * from blog b;
 
 
     
