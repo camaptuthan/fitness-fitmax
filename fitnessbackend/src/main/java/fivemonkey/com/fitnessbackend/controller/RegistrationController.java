@@ -59,6 +59,7 @@ public class RegistrationController {
                                  HttpServletRequest request,
                                  Model model
     ) {
+        String path="/verify_status";
         //truong hop login account verify register by input otp
         if(userDetail!=null){
             try {
@@ -70,9 +71,15 @@ public class RegistrationController {
             }
             model.addAttribute("email", email);
             model.addAttribute("idP",serviceId);
-            return "verify_registration";
+            path= "verify_registration";
             //
         }else if(userDetail==null ){
+            User u= userRepository.getUserByEmail(email);
+            //user exist
+            if(u!=null){
+                model.addAttribute("title","Email enroll already exist in system, please login to enroll service");
+                return "/verify_status";
+            }
             User user = new User();
             user.setEmail(email);
             user.setPhone(phone);
@@ -90,10 +97,11 @@ public class RegistrationController {
 
             //Create new registration
             registrationService.doRegistration(user, serviceId);
-            model.addAttribute("title", "Check email registed to active account and completed register");
-            return "/verify_status";
+            String message="Check email registed to active account and completed enroll and waiting result";
+            model.addAttribute("title", message);
+            path= "/verify_status";
         }
-        return "";
+        return path;
     }
 
     @PostMapping("/enrolled")
@@ -104,7 +112,6 @@ public class RegistrationController {
                                     ,Model model ){
         if (userService.verifyOTP(email, otp)) {
             User u= userRepository.getUserByEmail(email);
-            // check email exist
             registrationService.doRegistration(u, idP);
             return "redirect:/user/myregistrations";
         } else {
