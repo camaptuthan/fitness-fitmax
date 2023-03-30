@@ -152,7 +152,9 @@ public class ServicesController {
                                  @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
                                  @RequestParam(value = "city", required = false, defaultValue = "All") String cityname,
                                  @RequestParam(value = "studio", required = false, defaultValue = "All") String studio,
-                                 @RequestParam(value = "category", required = false, defaultValue = "0") String category) {
+                                 @RequestParam(value = "category", required = false, defaultValue = "0") String category,
+                                 @RequestParam(value = "page", required = false, defaultValue = "1") String page) {
+        int totalPage = servicesService.totalPackageDashboardPage(keyword, cityname, studio, Long.parseLong(category));
         List<CityDTO> listCity = new ArrayList<>();
         switch (userDetail.getUser().getRole().getId()) {
             case "ROLE01":
@@ -167,7 +169,7 @@ public class ServicesController {
         }
         List<CategoryDTO> listCategory = categoryService.getAllCategoriesByType("service");
         List<StudioDTO> listStudio = studioService.getAllStudiosByCity(cityname);
-        List<ServicesDTO> listPKG = servicesService.getPackagesBy4Fields(keyword, cityname, studio, Long.parseLong(category));
+        List<ServicesDTO> listPKG = servicesService.getPackagesBy4Fields(keyword, cityname, studio, Long.parseLong(category),Integer.parseInt(page) - 1);
         List<Status> statusList = statusService.getStatusByPackage();
         model.addAttribute("packages", listPKG);
         model.addAttribute("size", listPKG.size());
@@ -179,6 +181,12 @@ public class ServicesController {
         model.addAttribute("currentKeyword", keyword);
         model.addAttribute("currentCategory", category);
         model.addAttribute("statusList", statusList);
+        model.addAttribute("currentPage", Integer.parseInt(page));
+        if (totalPage == 0) {
+            model.addAttribute("totalPage", totalPage + 1);
+        }else {
+            model.addAttribute("totalPage",totalPage);
+        }
         return "management/PackageManagement/package-list";
     }
 

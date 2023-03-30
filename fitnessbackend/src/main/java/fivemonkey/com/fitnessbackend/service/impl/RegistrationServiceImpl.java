@@ -82,7 +82,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         Services services = servicesRepository.findById(serviceId).orElseGet(() -> classRepository.getClazzByServices(serviceId).getServices());
         registration.setServices(services);
         registration.setDate(new Date());
-        registration.setStartDate(services.getClazz().getSessions().isEmpty() ? null : services.getClazz().getSessions().get(0).getHappenedDate());
+        registration.setStartDate(services.getClazz()== null ? null : services.getClazz().getSessions().get(0).getHappenedDate());
         return registration;
     }
 
@@ -90,6 +90,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     public RegistrationDTO doRegistration(User user, String itemId) {
         return modelMapper.map(registrationRepository.save(makeRegistration(user, itemId)), RegistrationDTO.class);
     }
+
 
     @Override
     public List<Registration> getAllRegistrations() {

@@ -86,7 +86,7 @@ public class ServicesServiceImpl implements ServicesService {
         Session session = sessionFactory.openSession();
         String query = "select s from Services s where s.serviceType.id = 1 and s.status = 2 ";
         if (!"".equals(keyword)) {
-            query += " and concat(s.name,'',s.price,'',s.duration,'',s.des,'',s.date) like '%" + keyword + "%' ";
+            query += " and concat(s.name,'',s.price,'',s.duration,'',s.date) like '%" + keyword + "%' ";
         }
         if (!"All".equals(cityname)) {
             query += " and s.city.name = '" + cityname + "' ";
@@ -99,15 +99,12 @@ public class ServicesServiceImpl implements ServicesService {
     }
 
     @Override
-    public List<ServicesDTO> getPackagesBy4Fields(@Param("keyword") String keyword,
-                                                  @Param("cityname") String cityname,
-                                                  @Param("studio") String studio,
-                                                  @Param("category") Long category) {
+    public List<ServicesDTO> getPackagesBy4Fields(String keyword, String cityname, String studio, Long category,int page) {
         int pageSize = 5;
         Session session = sessionFactory.openSession();
         String sql = "select s from Services s where s.serviceType.id = 1 ";
         if (!"".equals(keyword)) {
-            sql += " and concat(s.name,'',s.price,'',s.duration,'',s.des,'',s.date) like '%" + keyword + "%' ";
+            sql += " and concat(s.name,'',s.price,'',s.duration,'',s.date) like '%" + keyword + "%' ";
         }
         if (!"All".equals(cityname)) {
             sql += " and s.city.name = '" + cityname + "' ";
@@ -118,9 +115,36 @@ public class ServicesServiceImpl implements ServicesService {
         if (category != 0L) {
             sql += " and s.category.id = " + category + " ";
         }
-
         Query<Services> query = session.createQuery(sql, Services.class);
+        query.setFirstResult(page * pageSize);
+        query.setMaxResults(pageSize);
         return modelMapper.mapList(query.getResultList(), ServicesDTO.class);
+    }
+
+    @Override
+    public int totalPackageDashboardPage(String keyword, String cityname, String studio, Long category) {
+        int pageSize = 5;
+        Session session = sessionFactory.openSession();
+        String sql = "select count(s.id) from Services s where s.serviceType.id = 1 ";
+        if (!"".equals(keyword)) {
+            sql += " and concat(s.name,'',s.price,'',s.duration,'',s.date) like '%" + keyword + "%' ";
+        }
+        if (!"All".equals(cityname)) {
+            sql += " and s.city.name = '" + cityname + "' ";
+        }
+        if (!"All".equals(studio)) {
+            sql += " and s.studio.id = '" + studio + "' ";
+        }
+        if (category != 0L) {
+            sql += " and s.category.id = " + category + " ";
+        }
+        Query queryCount = session.createQuery(sql);
+        Long countResult = (Long) queryCount.uniqueResult();
+        if ((int) (countResult % pageSize) != 0) {
+            return (int) (countResult / pageSize) + 1;
+        } else {
+            return (int) (countResult / pageSize);
+        }
     }
 
     @Override

@@ -44,6 +44,7 @@ public interface RegistrationRepository extends JpaRepository<Registration, Stri
     @Query(value = "select r from Registration r where r.trainer.email= :trainerEmail and r.trainee.email = :traineeEmail")
     Registration findRegistrationByTrainerAndTrainee(String trainerEmail, String traineeEmail);
 
+<<<<<<< HEAD
     @Query("select r from Registration r where r.trainer.email is not null and r.trainee.email is not null and r.trainer.user.studio.id = ?1 ")
     List<Registration> getRegistrationBookPt(String studioId);
 
@@ -56,4 +57,6 @@ public interface RegistrationRepository extends JpaRepository<Registration, Stri
     @Query("select r from Registration  r where r.services.id = ?1")
     List<Registration> getRegistrationByServices(String serviceId);
 
+=======
+>>>>>>> a350894a12d3aff146ecd572a5ebbcb0c0356a89
 }
