@@ -88,8 +88,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     User getManagerOfStudio(String studioId);
 
 
-    @Query("SELECT u FROM User u where u.statusChangeSt = 1 and u.studioSt = :studioId")
-    List<User> getUserSt(String studioId);
+//    @Query("SELECT u FROM User u where u.statusChangeSt = 1 and u.studioSt = :studioId")
+//    List<User> getUserSt(String studioId);
 
 
 }

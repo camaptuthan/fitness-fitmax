@@ -29,8 +29,6 @@ public class UserDTO {
     private String roleName;
     private String studioName;
 
-    private String studioSt;
-
     private String studioId;
     private String vericode;
 

@@ -1,6 +1,7 @@
 package fivemonkey.com.fitnessbackend.repository;
 
 import fivemonkey.com.fitnessbackend.entities.Services;
+import fivemonkey.com.fitnessbackend.entities.Studio;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -30,6 +31,9 @@ public interface ServicesRepository extends JpaRepository<Services, String> {
     @Query("select s from Services s where s.studio.id = ?1")
     List<Services> getServicesByStudio(String id);
 
+    @Query("select s from Services s where s.city.name = ?1 and s.serviceType.id = 1")
+    List<Services> getServicesByCity(String cityName);
+
 
     @Query("select s from Services s where s.id = ?1")
     List<Services> getServicesById(String id);
@@ -40,5 +44,13 @@ public interface ServicesRepository extends JpaRepository<Services, String> {
 
     @Query("select s from Services s where s.id = ?1 and s.studio.id = ?2")
     Optional<Services> isServiceExistInStudio(String servicesId, String studioId);
+
+
+    @Query("select s.studio from Services s where s.id= ?1")
+    Optional<Studio>  findStudioByService(String servicesId);
+
+    @Query("select s.studio from Services s where s.id= ?1")
+    List<Studio>  listStudioByService(String servicesId);
+
 
 }

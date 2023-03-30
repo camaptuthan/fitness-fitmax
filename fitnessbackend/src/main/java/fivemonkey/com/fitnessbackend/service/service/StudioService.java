@@ -17,7 +17,12 @@ public interface StudioService {
     Studio getStudioByManagerId(String id);
 
     List<StudioDTO> getAllStudiosByCity(String cityname);
-    List<StudioDTO> getAllStudiosByFilter(String keyword, String city, String status);
+
+    List<StudioDTO> getStudioByCity(String cityname, int page);
+
+    int getTotalPage(String cityname);
+
+    List<StudioDTO> getAllStudiosByFilter(String keyword, String city, String status, int pageNumber);
     Studio saveStudio(Studio studio);
 
     List<StudioDTO> getAllByCity(String cityname);
@@ -30,6 +35,9 @@ public interface StudioService {
 
     List<StudioDTO> getAllStudio();
 
+    int getTotalAllStudiosByFilter(String keyword, String city, String status);
     //update studio
 //    void updateStudio(StudioDTO studioDTO);
+
+    List<StudioDTO>  listStudioByService(String servicesId);
 }

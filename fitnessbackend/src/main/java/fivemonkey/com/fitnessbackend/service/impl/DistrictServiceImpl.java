@@ -19,6 +19,11 @@ public class DistrictServiceImpl implements DistrictService {
     }
 
     @Override
+    public District getDistrictByDistrictId(String id) {
+        return districtRepository.getDistrictByDistrictId(Long.valueOf(id));
+    }
+
+    @Override
     public District getDistrictByName(String name) {
         return districtRepository.getDistrictsByName(name);
     }

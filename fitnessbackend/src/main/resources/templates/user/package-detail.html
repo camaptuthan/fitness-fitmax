@@ -64,11 +64,11 @@
             </div>
             <div class="col-md-7 about-info-cover">
                 <h2 class="title-decor">About <span th:text="*{name}"></span></h2>
-                <div th:if="${!hasRegistered  &&  #authentication.principal.user.role.id.equals('ROLE05')}">
+                <div th:if="${!hasRegistered}" >
 
                     <!-- Button trigger modal -->
                     <button class="btn btn-primary"
-                            data-bs-target="#exampleModal" data-bs-toggle="modal"   type="button">
+                            data-bs-target="#exampleModal" data-bs-toggle="modal" type="button">
                         Enroll
                     </button>
 
@@ -81,8 +81,7 @@
                                     <h2 class="title-decor">Registration <span>Form</span></h2>
                                 </div>
                                 <div class="modal-body">
-                                    <form method="post" th:action="@{/registration/make}"
-                                          th:if="${hasRegistered == false && #authentication.principal != null}">
+                                    <form method="post" th:action="@{/registration/make}">
                                         <section class="s-contacts"
                                                  style="background-image: url(/img/bg-contacts.svg); padding: 0">
                                             <div class="container">

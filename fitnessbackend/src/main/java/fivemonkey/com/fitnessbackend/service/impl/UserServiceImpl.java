@@ -420,42 +420,29 @@ public class UserServiceImpl implements UserService {
         return modelMapperConfiguration.mapList(query1.getResultList(), UserDTO.class);
     }
 
-    @Override
-    public List<UserDTO> getUserSt(String studioId) {
-        return modelMapperConfiguration.mapList(userRepository.getUserSt(studioId), UserDTO.class);
-    }
 
     @Override
     public User getManagerOfStudio(String id) {
         return userRepository.getManagerOfStudio(id);
     }
 
-    @Override
-    public void changeStatusChangeSt(String email, String studioId) {
-        User user = userRepository.getUserByEmail(email);
-        user.setStatusChangeSt(1);
-        user.setStudioSt(studioId);
-        userRepository.save(user);
-    }
+//    @Override
+//    public void changeStatusChangeSt(String email, String studioId) {
+//        User user = userRepository.getUserByEmail(email);
+//        user.setStatusChangeSt(1);
+//        user.setStudioSt(studioId);
+//        userRepository.save(user);
+//    }
 
-    @Override
-    public void accpectChangeSt(UserDTO userDTO) {
-        User user = userRepository.getUserByEmail(userDTO.getEmail());
-        user.setStatusChangeSt(2);
-        Studio studio = new Studio();
-        studio.setId(userDTO.getStudioSt());
-        user.setStudio(studio);
-        user.setStudioSt("");
-        userRepository.save(user);
-    }
 
-    @Override
-    public void rejectChangeSt(UserDTO userDTO) {
-        User user = userRepository.getUserByEmail(userDTO.getEmail());
-        user.setStatusChangeSt(0);
-        user.setStudioSt("");
-        userRepository.save(user);
-    }
+//
+//    @Override
+//    public void rejectChangeSt(UserDTO userDTO) {
+//        User user = userRepository.getUserByEmail(userDTO.getEmail());
+//        user.setStatusChangeSt(0);
+//        user.setStudioSt("");
+//        userRepository.save(user);
+//    }
 
 //    @Override
 //    public void changeSt(UserDTO userDTO) {
@@ -464,6 +451,11 @@ public class UserServiceImpl implements UserService {
 //        user.setStudioSt(userDTO.getStudioSt());
 //         userRepository.save(user);
 //    }
+
+    public User getUserById(Long id) {
+        return userRepository.findUsersById(id);
+    }
+
 
 
 }

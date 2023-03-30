@@ -74,16 +74,20 @@ public interface UserService {
 
     List<UserDTO> getUserByFieldsByAssistant(String email, String keyword, String roleId);
 
-    List<UserDTO> getUserSt(String studioId);
+//    List<UserDTO> getUserSt(String studioId);
 
 
     List<User> getUserByRoleId(String roleId);
 
     User getManagerOfStudio(String id);
 
-    void changeStatusChangeSt(String email , String studioId);
-    void accpectChangeSt(UserDTO userDTO);
 
-    void rejectChangeSt(UserDTO userDTO);
+//    void changeStatusChangeSt(String email , String studioId);
+//    void accpectChangeSt(UserDTO userDTO);
+//
+//    void rejectChangeSt(UserDTO userDTO);
 //    void changeSt(UserDTO userDTO);
+
+    User getUserById(Long id);
+
 }

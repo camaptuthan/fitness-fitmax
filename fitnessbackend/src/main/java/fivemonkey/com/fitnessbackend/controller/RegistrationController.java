@@ -2,6 +2,7 @@ package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.dto.CityDTO;
 import fivemonkey.com.fitnessbackend.dto.RegistrationDTO;
+import fivemonkey.com.fitnessbackend.entities.City;
 import fivemonkey.com.fitnessbackend.entities.Registration;
 import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.repository.RegistrationRepository;
@@ -37,44 +38,18 @@ public class RegistrationController {
 
     @PostMapping("/make")
     public String doRegistration(@RequestParam("item_id") String serviceId, @AuthenticationPrincipal UserDetail userDetail) {
-        String path = "redirect:/user/profile";
-        if (userDetail == null) {
-            path = "redirect:/login";
-        }
-        assert userDetail != null;
+//        String path = "redirect:/user/profile";
+//        if (userDetail == null) {
+//            path = "redirect:/login";
+//        }
+//        assert userDetail != null;
+//
+//        registrationService.doRegistration(userDetail.getUser(), serviceId);
+//        return path;
 
-        registrationService.doRegistration(userDetail.getUser(), serviceId);
-        return path;
+        return "redirect:/";
     }
 
-
-
-    //Get Registration List
-
-    @GetMapping("management/registrationsd")
-    public String listRegistration(@AuthenticationPrincipal UserDetail userDetail,
-                                   @RequestParam(value ="keyword" , required = false, defaultValue = "") String keyword,
-                                   @RequestParam(value ="city" ,required = false, defaultValue = "") String city,
-                                   @RequestParam(value = "studio", required = false, defaultValue = "") String studio,
-                                   @RequestParam(value ="studioStatus", required = false, defaultValue = "") String studioStatus,
-                                   Model model) {
-        List<CityDTO> listCity = new ArrayList<>();
-        if (userDetail.getUser().getRole().getName().equals("Admin")) {
-            listCity = cityService.getAllCities();
-            model.addAttribute("registrations", registrationService.getAllRegistrations());
-        } else if (userDetail.getUser().getRole().getName().equals("Manager")) {
-            model.addAttribute("registrations", registrationService.getRegistrationByManager(userDetail.getUser().getStudio().getId()));
-        } else if (userDetail.getUser().getRole().getName().equals("Assistant")) {
-            model.addAttribute("registrations", registrationService.getRegistrationByAssistant(userDetail.getUser().getEmail()));
-        }
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("status", studioStatus);
-        model.addAttribute("listCity", listCity);
-        model.addAttribute("currentCity", city);
-        model.addAttribute("statusList", statusService.getStatusByPackage());
-        model.addAttribute("registrations", registrationService.getAllRegistrations());
-        return "management/RegistrationManagement/registration";
-    }
 
     //Get Registration List by Filter
     @GetMapping("/management/registrations")
@@ -84,15 +59,16 @@ public class RegistrationController {
                                           @RequestParam(value = "studio", required = false, defaultValue = "") String studio,
                                           @RequestParam(value ="studioStatus", required = false, defaultValue = "") String studioStatus,
                                           Model model) {
-        List<CityDTO> listCity = new ArrayList<>();
+        List<City> listCity = new ArrayList<>();
         if (userDetail.getUser().getRole().getName().equals("Admin")) {
             //model.addAttribute("registrations", registrationService.getAllRegistrations());
-            listCity = cityService.getAllCities();
+
         } else if (userDetail.getUser().getRole().getName().equals("Manager")) {
            //model.addAttribute("registrations", registrationService.getRegistrationByManager(userDetail.getUser().getStudio().getId()));
         } else if (userDetail.getUser().getRole().getName().equals("Assistant")) {
             //model.addAttribute("registrations", registrationService.getRegistrationByAssistant(userDetail.getUser().getEmail()));
         }
+        listCity = cityService.getRegistrationCity();
         List<RegistrationDTO> registrationDTOS = registrationService.getRegistrationByFilter(keyword, city, studio, studioStatus);
         model.addAttribute("registrations", registrationDTOS);
 
@@ -100,7 +76,7 @@ public class RegistrationController {
         model.addAttribute("status", studioStatus);
         model.addAttribute("listCity", listCity);
         model.addAttribute("currentCity", city);
-        model.addAttribute("statusList", statusService.getStatusByPackage());
+        model.addAttribute("statusList", statusService.getStatusByRegistration());
         return "management/RegistrationManagement/registration";
     }
     @PostMapping("management/registrationpost/{id}")

@@ -35,81 +35,78 @@
 <div th:include="fragments/header.html"></div>
 <!-- =============== HEADER END =============== -->
 
-<!-- ============ S-CROSSFIT-SLIDER ============ -->
-
-<!-- ========== S-CROSSFIT-SLIDER END ========== -->
-
-<!-- ============== S-CROSSFIT END ============== -->
-
-<!-- ============== S-OUR-PROGRAMS ============== -->
-<!--<th:block th:insert="fragments/home_program"></th:block>-->
-
-<!-- ============ S-OUR-PROGRAMS END ============ -->
-
-<!-- =============== S-OUT-TRAINER =============== -->
-
-<!-- ============= S-OUT-TRAINER END ============= -->
-
-<!-- ============ S-CROSSFIT-BANNER ============ -->
-
-<!-- ========== S-CROSSFIT-BANNER END ========== -->
-
-<!-- ============== S-CLUB-CARDS ============== -->
-
-<!-- ============ S-CLUB-CARDS END ============ -->
-
-<!-- ============== S-TESTIMONIALS ============== -->
-
-<!-- ============ S-TESTIMONIALS END ============ -->
-
-<!--================ RELATED POSTS ================-->
 <section class="s-related-posts home-related-posts">
   <div class="container">
       <h2 class="title-decor">Studio <span>Fitness</span></h2>
       <div class="custom-select" style="width:400px;">
-          <form id="searchAndFilter" th:action="@{/studio}" method="get">
-              City: <select th:name="cityname" style="width:30%" onchange="submitForm()">
-              <option >All</option>
+          <form id="filterCity" method="get" th:action="@{/studio}">
+              City: <select th:name="cityname" onchange="submitForm()" style="width:30%">
+              <option th:href="@{/studio(page=${currentPage})}">All</option>
               <th:block th:each="city : ${cities}">
-                  <option th:value="${city.name}" th:text="${city.name}" th:selected="${city.name == currentCity }"  ></option>
+                  <option th:href="@{/studio(page=${currentPage},cityname=${city.name})}"
+                          th:text="${city.name}" th:selected="${city.name == currentCity}"></option>
               </th:block>
           </select>
           </form>
       </div>
-      <p class="slogan">Fitmax's mission is to bring the right awareness to the community in physical training to have great health and spirit, always firmly overcome all challenges in life.</p>
-      <!--    <th:block th:insert="/fragments/admin_fragment/city"></th:block>-->
-<th:block th:each="item,iter : ${studios}">
-    <div th:classappend="${iter.index == 0} ? active : '' ">
-      <div class="row" >
-          <div class="col-md-6 related-post-col" th:each="s : ${item.value}">
-              <div class="post-item-cover">
-                  <div class="post-header">
-                      <div class="related-post-categ">fitness</div>
-                      <div class="post-thumbnail" >
-                          <a th:href="@{/studio/studio-details/{id} (id=${s.id})}"> <img th:src="${s.image}" alt="img"></a>
+      <p class="slogan">Fitmax's mission is to bring the right awareness to the community in physical training to have
+          great health and spirit, always firmly overcome all challenges in life.</p>
+      <div>
+          <div class="row">
+              <th:block th:each="s : ${studios}">
+                  <div class="col-md-6 related-post-col">
+                      <div class="post-item-cover">
+                          <div class="post-header">
+                              <div class="related-post-categ">fitness</div>
+                              <div class="post-thumbnail">
+                                  <a th:href="@{/studio/studio-details/{id} (id=${s.id})}"> <img alt="img"
+                                                                                                 th:src="${s.image}"></a>
+                              </div>
+                          </div>
+                          <div class="post-content">
+                              <div class="meta">
+                            <span class="post-date"><i aria-hidden="true" class="fa fa-calendar"
+                                                       th:text="${#dates.format(s.date, 'dd-MM-yyyy')}"></i></span>
+                              </div>
+                              <h3 class="title" th:text="${s.name}"><a href="single-blog.html"></a></h3>
+                              <div class="text">
+                                  <p th:text="${s.des}"></p>
+                              </div>
+                          </div>
+                          <div class="post-footer">
+                              <div class="meta">
+                                  <span class="post-by"><i aria-hidden="true" class="fa fa-user"></i><a href="#"
+                                                                                                        th:text="${s.getDistrictName()}+', '+${s.getRoad()}"></a></span>
+                              </div>
+                              <a class="btn"
+                                 th:href="@{/studio/studio-details/{id} (id=${s.id})}"><span>Detail</span></a>
+                          </div>
                       </div>
                   </div>
-                  <div class="post-content">
-                      <div class="meta">
-                          <span class="post-date"><i class="fa fa-calendar" aria-hidden="true" th:text="${#dates.format(s.date, 'dd-MM-yyyy')}"></i></span>
-                      </div>
-                      <h3 class="title" th:text="${s.name}"><a href="single-blog.html"></a></h3>
-                      <div class="text">
-                          <p th:text="${s.des}"></p>
-                      </div>
-                  </div>
-                  <div class="post-footer">
-                      <div class="meta">
-                          <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a href="#" th:text="${s.getDistrictName()}+', '+${s.getRoad()}"></a></span>
-                          <span th:text="${s.contact}" class="post-comment"><i class="fa fa-comment" aria-hidden="true"></i><a href="#">2 Comments(s)</a></span>
-                      </div>
-                      <a th:href="@{/studio/studio-details/{id} (id=${s.id})}" class="btn"><span>Detail</span></a>
-                  </div>
-              </div>
+              </th:block>
+
           </div>
       </div>
+      <div class="pagination-cover">
+          <ul class="pagination">
+              <li class="pagination-item item-prev" th:classappend="${currentPage -1 == 0} ? 'disabled':''"
+                  th:if="${currentPage -1 > 0}">
+                  <a th:href="@{/studio(page=${currentPage - 1},city=${currentCity})}">
+                      <i aria-hidden="true" class="fa fa-angle-left"></i>
+                  </a>
+              </li>
+              <li class="pagination-item "
+                  th:classappend="${currentPage == i}? 'active' :'' "
+                  th:each="i: ${#numbers.sequence(1,totalPage)}"><a
+                      th:href="@{/studio(page=${i},city=${currentCity})}"
+                      th:text="${i}"></a></li>
+              <li class="pagination-item item-next"
+                  th:classappend="${currentPage == totalPage}  ? 'disabled':''"
+                  th:if="${currentPage < totalPage}"><a
+                      th:href="@{/studio(page=${currentPage + 1},city=${currentCity})}"><i
+                      aria-hidden="true" class="fa fa-angle-right"></i></a></li>
+          </ul>
       </div>
-    </th:block>
 
   </div>
 </section>
@@ -169,7 +166,7 @@
 <script th:src="@{/js/scripts.js}"></script>
 <script type="text/javascript">
     function submitForm() {
-        document.getElementById("searchAndFilter").submit();
+        document.getElementById("filterCity").submit();
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"

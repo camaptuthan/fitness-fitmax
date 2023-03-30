@@ -2,8 +2,10 @@ package fivemonkey.com.fitnessbackend.service.service;
 
 import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
+import fivemonkey.com.fitnessbackend.dto.StudioDTO;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.Services;
+import fivemonkey.com.fitnessbackend.entities.Studio;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,11 +42,16 @@ public interface ServicesService {
 
     List<ServicesDTO> getServiceOfStudio(String id,Long cat);
     List<ServicesDTO> getAllServiceOfStudio(String id);
+    List<ServicesDTO> getServicesByCity(String cityName);
 
     List<ServicesDTO> getServicesPT();
     List<Services> getServicesById(String id);
 
 
     boolean isServiceExistInStudio(String servicesId, String studioId);
+
+    boolean  findCityStudioByService(String servicesId);
+
+
 
 }

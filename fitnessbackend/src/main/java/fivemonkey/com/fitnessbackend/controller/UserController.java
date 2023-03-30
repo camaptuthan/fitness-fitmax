@@ -44,7 +44,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private TrainerService trainerService;
-
+    @Autowired
+    private TraineeService traineeService;
     @Autowired
     private RegistrationService registrationService;
 
@@ -96,23 +97,24 @@ public class UserController {
 
 
     @GetMapping("/management/listuserchangest")
-    public String listUserChangeSt(@AuthenticationPrincipal UserDetail userDetail, Model model){
-        model.addAttribute("list", userService.getUserSt(userDetail.getUser().getStudio().getId()));
+    public String listTraineeSwitch(@AuthenticationPrincipal UserDetail userDetail, Model model){
+//        model.addAttribute("list", traineeService.getUserSt(userDetail.getUser().getStudio().getId()));
+        model.addAttribute("list", traineeService.getTraineeSw(userDetail.getUser().getCity().getName()));
         return "management/UserManagement/ListUserST";
     }
 
 
     @RequestMapping( value = "/management/listuserchangest/accept/{email}",  method = {RequestMethod.PUT, RequestMethod.GET})
     public String acceptUserChangeSt(@PathVariable("email") String email){
-        UserDTO userDTO = userService.getUserByEmail(email);
-        userService.accpectChangeSt(userDTO);
+        TraineeDTO traineeDTO = traineeService.getTraineeByEmail(email);
+        traineeService.accpectSwichSt(traineeDTO);
 
         return "redirect:/user/management/listuserchangest";
     }
     @RequestMapping( value = "/management/listuserchangest/reject/{email}",  method = {RequestMethod.PUT, RequestMethod.GET})
     public String rejectUserChangeSt(@PathVariable("email") String email){
-        UserDTO userDTO = userService.getUserByEmail(email);
-        userService.rejectChangeSt(userDTO);
+        TraineeDTO traineeDTO = traineeService.getTraineeByEmail(email);
+        traineeService.rerejectSwichSt(traineeDTO);
 
         return "redirect:/user/management/listuserchangest";
     }
@@ -259,27 +261,28 @@ public class UserController {
     }
     @RequestMapping("/changestudio")
     public String getStudioTrainee(@AuthenticationPrincipal UserDetail userDetail,
-                                   @RequestParam(value = "cityName", required = false, defaultValue = "All") String cityName,
+                                   @RequestParam(value = "city", required = false, defaultValue = "") String city,
                                    @RequestParam(value = "studioId", required = false, defaultValue = "All") String studioId,
                                    Model model){
-        UserDTO userDTO = userService.getUserByEmail(userDetail.getUser().getEmail());
-
-        model.addAttribute("listCity", addressService.getCities());
+        TraineeDTO traineeDTO = traineeService.getTraineeByEmail(userDetail.getUser().getEmail());
+        model.addAttribute("listCity", cityService.getStudioCity(userDetail.getUser().getCity().getName()));
         model.addAttribute("regis", registrationService.getRegistrationByUser(userDetail.getUser().getEmail()));
         model.addAttribute("listStudio", studioService.getAllStudio());
-        model.addAttribute("user", userDTO);
+        model.addAttribute("trainee", traineeDTO);
         return "user/changeStudio";
 
     }
 
     @PostMapping("/changestudio/{email}")
-    public String changeStuTrainee(@ModelAttribute("user") UserDTO userDTO,
+    public String changeStuTrainee(@ModelAttribute("trainee") TraineeDTO traineeDTO,
+                                   @RequestParam(value = "cityName", required = false, defaultValue = "") String city,
                                    @RequestParam(value = "studioId", required = false, defaultValue = "All") String studioId,
+                                   @RequestParam(value = "serviceName", required = false, defaultValue = "") String serviceId,
                                    Model model){
-
-       userService.changeStatusChangeSt(userDTO.getEmail(), studioId);
-        System.out.println("Mai" + studioId + "gdfgdf" + userDTO.getEmail());
-        model.addAttribute("user", userDTO);
+       traineeService.changeStatusChangeSt(traineeDTO.getEmail(),city,studioId,serviceId);
+//       userService.changeStatusChangeSt(userDTO.getEmail(), studioId);
+        System.out.println("Mai" + studioId + "gdfgdf" + traineeDTO.getEmail());
+        model.addAttribute("trainee", traineeDTO);
         return "redirect:/";
 
     }
@@ -348,30 +351,29 @@ public class UserController {
         try {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             if (passwordEncoder.matches(cpassword, userDetail.getPassword()) && npassword.equals(cnpassword)) {
-                ra.addFlashAttribute("success", "Change your password successfully! Please login again!");
+                ra.addFlashAttribute("successchange", "Change your password successfully! Please login again!");
                 userDetail.getUser().setPassword(npassword);
                 userService.updateUserPassword(userDetail.getUser());
-                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cnpassword + "New: " + npassword + "Confirm New" + cnpassword);
                 path = "redirect:/logout";
             } else if (!passwordEncoder.matches(cpassword, userDetail.getPassword())) {
                 ra.addFlashAttribute("fail", "Current password is wrong! Please enter your password again!");
                 model.addAttribute("nPassword", npassword);
                 model.addAttribute("cnPassword", cnpassword);
                 model.addAttribute("cPassword", cpassword);
-                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cnpassword + "New: " + npassword + "Confirm New" + cnpassword);
-
-            } else {
+            } else if(!npassword.equals(cnpassword)) {
                 ra.addFlashAttribute("fail", "Confirm new password must be different from new password! Please enter confirm new password again!");
                 model.addAttribute("nPassword", npassword);
                 model.addAttribute("cnPassword", cnpassword);
                 model.addAttribute("cPassword", cpassword);
-                System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
             }
+            else ra.addFlashAttribute("fail", "New password must be at least 6 characters! Please enter New password again!");
+            model.addAttribute("nPassword", npassword);
+            model.addAttribute("cnPassword", cnpassword);
+            model.addAttribute("cPassword", cpassword);
         } catch (Exception e) {
             e.printStackTrace();
             ra.addFlashAttribute("fail", "Fail");
         }
-        System.out.println("Password details: " + userDetail.getPassword() + "Password3: " + userDetail.getUser().getPassword() + "Current: " + cpassword + "New: " + npassword + "Confirm New" + cnpassword);
         return path;
     }
 

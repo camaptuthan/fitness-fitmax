@@ -25,7 +25,7 @@
 
         <div class="row">
             <div class="col-lg-12 m-b30">
-                <form method="POST" th:action="@{/studio/management/poststudio}" th:object="${studioDTO}">
+                <form method="POST" th:action="@{/studio/management/studioupdate}" th:object="${studioDTO}">
                     <div class="form-group">
                         <input
                                 class="form-control"
@@ -54,6 +54,7 @@
                                     name="manager"
                                     placeholder="Enter Manager"
                                     required=""
+                                    disabled=""
                                     th:field="*{managerEmail}"
                                     type="text"
                             />
@@ -65,6 +66,7 @@
                             <input
                                     class="form-control"
                                     name="city"
+                                    disabled=""
                                     placeholder="Enter Studio City"
                                     required=""
                                     th:field="*{districtCityName}"
@@ -76,6 +78,7 @@
                             <input
                                     class="form-control"
                                     name="district"
+                                    disabled=""
                                     placeholder="Enter Studio District"
                                     required=""
                                     th:field="*{districtName}"

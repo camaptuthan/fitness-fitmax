@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -33,13 +33,28 @@
     <!-- =============== HEADER END =============== -->
 
     <!-- =============== HEADER-TITLE =============== -->
-    <section class="s-header-title" style="background-image: url(static/img/bg-1-min.png);">
+    <section class="s-header-title" style="background-image: url(/img/bg-1-min.png);">
         <div class="container">
-            <h1 class="title">News</h1>
+            <h1 class="title">Blog</h1>
             <ul class="breadcrambs">
-                <li><a href="index-2.html">Home</a></li>
-                <li>News</li>
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/blog}">Blog</a></li>
             </ul>
+            <th:block sec:authorize="hasAnyAuthority('ROLE01','ROLE02','ROLE03','ROLE04')">
+                <ul class="breadcrambs">
+                    <li><a th:href="@{/blog/newblog}">Create New Blog</a></li>
+                </ul>
+            </th:block>
+            <th:block sec:authorize="hasAnyAuthority('ROLE01','ROLE02','ROLE03','ROLE04')">
+                <ul class="breadcrambs">
+                    <li><a th:href="@{/blog/myblog}">My Blog</a></li>
+                </ul>
+            </th:block>
+            <th:block sec:authorize="hasAnyAuthority('ROLE01','ROLE02','ROLE03')">
+                <ul class="breadcrambs">
+                    <li><a th:href="@{/blog/waiting-blog}">Waiting Blogs</a></li>
+                </ul>
+            </th:block>
         </div>
     </section>
     <!-- ============= HEADER-TITLE END ============= -->
@@ -65,7 +80,7 @@
                                     <span class="post-date"><i class="fa fa-calendar"></i><a
                                             th:text="${#dates.format(blog.date, 'dd-MM-yyyy')}"></a></span>
                                     <span class="post-category"><i class="fa fa-tag"></i><a
-                                            th:text="${blog.category.name}"></a></span>
+                                            th:text="${blog.categoryName}"></a></span>
                                 </div>
                                 <h2 class="title"><a th:href="@{/blog/blog-details/{id} (id=${blog.id})}" th:text="${blog.title}"></a></h2>
                                 <div class="text">
@@ -136,7 +151,7 @@
                             <h3 class="title">Recent Blog Posts</h3>
                             <ul th:each="blogNew:${listNewestBlog}">
                                 <li>
-                                    <a href="#" th:text="${blogNew.title}"></a>
+                                    <a th:href="@{/blog/blog-details/{id} (id = ${blogNew.id})}" th:text="${blogNew.title}"></a>
                                     <div class="date" th:text="${#dates.format(blogNew.date, 'dd-MM-yyyy')}"><i
                                             aria-hidden="true" class="fa fa-calendar"></i>
                                     </div>
