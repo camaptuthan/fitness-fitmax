@@ -1,31 +1,27 @@
-package fivemonkey.com.fitnessbackend.service.impl;
+package fivemonkey.com.fitnessbackend.service;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.TraineeDTO;
-import fivemonkey.com.fitnessbackend.dto.TrainerDTO;
-import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.*;
 import fivemonkey.com.fitnessbackend.repository.TraineeRepository;
-import fivemonkey.com.fitnessbackend.service.service.TraineeService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class TraineeServiceImpl implements TraineeService {
+public class TraineeService {
     @Autowired
     private TraineeRepository traineeRepository;
     @Autowired
     ModelMapperConfiguration<Trainee, TraineeDTO> modelMapperConfiguration;
 
-    @Override
+       
     public List<TraineeDTO> getTraineeSw(String cityName) {
         return modelMapperConfiguration.mapList(traineeRepository.getTraineeSw(cityName), TraineeDTO.class);
     }
 
-    @Override
+       
     public void changeStatusChangeSt(String email,String cityName ,String studioId, String serviceId) {
         Trainee trainee = traineeRepository.getTraineeByEmail(email);
         trainee.setStatusSw(1);
@@ -35,12 +31,12 @@ public class TraineeServiceImpl implements TraineeService {
         traineeRepository.save(trainee);
     }
 
-    @Override
+       
     public TraineeDTO getTraineeByEmail(String email) {
         return modelMapperConfiguration.map(traineeRepository.getTraineeByEmail(email), TraineeDTO.class);
     }
 
-    @Override
+       
     public void accpectSwichSt(TraineeDTO traineeDTO) {
         Trainee trainee = traineeRepository.getTraineeByEmail(traineeDTO.getEmail());
         trainee.setStatusSw(2);
@@ -51,7 +47,7 @@ public class TraineeServiceImpl implements TraineeService {
         traineeRepository.save(trainee);
     }
 
-    @Override
+       
     public void rerejectSwichSt(TraineeDTO traineeDTO) {
         Trainee trainee = traineeRepository.getTraineeByEmail(traineeDTO.getEmail());
         trainee.setStatusSw(0);
@@ -61,7 +57,7 @@ public class TraineeServiceImpl implements TraineeService {
     }
 
 //
-//    @Override
+//       
 //    public void rejectChangeSt(UserDTO userDTO) {
 //        User user = userRepository.getUserByEmail(userDTO.getEmail());
 //        user.setStatusChangeSt(0);

@@ -1,13 +1,10 @@
 package fivemonkey.com.fitnessbackend.controller;
-
-
 import fivemonkey.com.fitnessbackend.dto.ScheduleDTO;
 import fivemonkey.com.fitnessbackend.dto.SessionDTO;
-import fivemonkey.com.fitnessbackend.service.service.ScheduleService;
-import fivemonkey.com.fitnessbackend.service.service.SessionService;
+import fivemonkey.com.fitnessbackend.service.ScheduleService;
+import fivemonkey.com.fitnessbackend.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

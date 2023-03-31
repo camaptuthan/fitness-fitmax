@@ -1,30 +1,29 @@
-package fivemonkey.com.fitnessbackend.service.impl;
+package fivemonkey.com.fitnessbackend.service;
 
 import fivemonkey.com.fitnessbackend.entities.Status;
 import fivemonkey.com.fitnessbackend.repository.StatusRepository;
-import fivemonkey.com.fitnessbackend.service.service.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class StatusServiceImpl implements StatusService {
+public class StatusService {
 
     @Autowired
     private StatusRepository statusRepository;
 
-    @Override
+         
     public List<Status> getStatusByPackage() {
         return statusRepository.getStatusByPackage();
     }
 
-    @Override
+         
     public List<Status> getStatusByClass() {
         return statusRepository.getStatusByClass();
     }
 
-    @Override
+         
     public List<Status> getStatusByRegistration() {
         return statusRepository.getStatusByRegistration();
     }

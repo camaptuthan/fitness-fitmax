@@ -1,4 +1,4 @@
-package fivemonkey.com.fitnessbackend.service.impl;
+package fivemonkey.com.fitnessbackend.service;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.ClassDTO;
@@ -6,7 +6,6 @@ import fivemonkey.com.fitnessbackend.entities.Clazz;
 import fivemonkey.com.fitnessbackend.entities.Services;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.repository.*;
-import fivemonkey.com.fitnessbackend.service.service.ClassService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -20,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class ClassServiceImpl implements ClassService {
+public class ClassService {
     @Autowired
     private ClassRepository classRepository;
 
@@ -43,17 +42,17 @@ public class ClassServiceImpl implements ClassService {
     @Autowired
     private SessionFactory sessionFactory;
 
-    @Override
+       
     public ClassDTO getByServiceId(String serviceId) {
         return modelMapper.map(classRepository.getClazzByServices(serviceId), ClassDTO.class);
     }
 
-    @Override
+       
     public List<ClassDTO> getAll() {
         return modelMapper.mapList(classRepository.findAll(), ClassDTO.class);
     }
 
-    @Override
+       
     public List<ClassDTO> getByUserRole(User user, int currentPage, int size) {
         Pageable pageable = currentPage == 0 || size == 0 ? Pageable.unpaged() : PageRequest.of(currentPage - 1, size, Sort.by("services.date").descending());
         List<Clazz> clazzes = user.getStudio() == null ? classRepository.findAll(pageable).getContent() : classRepository.getClazzByUserEmail(user.getEmail(), pageable).getContent();
@@ -61,7 +60,7 @@ public class ClassServiceImpl implements ClassService {
         return modelMapper.mapList(clazzes, ClassDTO.class);
     }
 
-    @Override
+       
     public ClassDTO save(ClassDTO classDTO, User user) {
         Clazz clazz = classRepository.findByServicesId(classDTO.getServicesId()).orElse(new Clazz());
         Services services = clazz.getServices() == null ? new Services(new Date()) : clazz.getServices();
@@ -81,7 +80,7 @@ public class ClassServiceImpl implements ClassService {
         return modelMapper.map(classRepository.save(clazz), ClassDTO.class);
     }
 
-    @Override
+       
     public ClassDTO saveThumbnail(String thumbNail, String serviceId) {
         if (thumbNail.isBlank()) return null;
         Clazz clazz = classRepository.findByServicesId(serviceId).orElse(new Clazz());
@@ -93,12 +92,12 @@ public class ClassServiceImpl implements ClassService {
         return modelMapper.map(classRepository.getClassById(id), ClassDTO.class);
     }
 
-    @Override
+       
     public List<ClassDTO> getAllClass() {
         return modelMapper.mapList(classRepository.getAllClass(), ClassDTO.class);
     }
 
-    @Override
+       
     public List<ClassDTO> getClassesBy4Fields(String keyword, String cityname, String studio, Long category, int pageNumber) {
         int pageSize = 5;
         Session session = sessionFactory.openSession();
@@ -121,7 +120,7 @@ public class ClassServiceImpl implements ClassService {
         return modelMapper.mapList(query1.getResultList(), ClassDTO.class);
     }
 
-    @Override
+       
     public int totalPageBy4Fields(String keyword, String cityname, String studio, Long category) {
         int pageSize = 5;
         Session session = sessionFactory.openSession();

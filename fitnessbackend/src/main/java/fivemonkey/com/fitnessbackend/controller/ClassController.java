@@ -4,7 +4,7 @@ import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.SessionDTO;
 import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
-import fivemonkey.com.fitnessbackend.service.service.*;
+import fivemonkey.com.fitnessbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -66,6 +66,8 @@ public class ClassController {
         boolean hasRegistered = false;
         if (userDetail != null) {
             hasRegistered = registrationService.hasRegistration(classDTO.getServicesId(), userDetail.getUser().getEmail());
+            model.addAttribute("userEmail", userDetail.getUser().getEmail());
+            model.addAttribute("userPhone", userDetail.getUser().getPhone());
         }
 
         model.addAttribute("hasRegistered", hasRegistered);

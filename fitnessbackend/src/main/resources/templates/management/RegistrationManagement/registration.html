@@ -79,15 +79,15 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Service Studio</th>
+                                <th>User</th>
                                 <th>Studio</th>
                                 <th>Service Name</th>
                                 <th>Service Type</th>
                                 <th>Service Price</th>
-                                <th>Customer Information</th>
+<!--                                <th>Customer Information</th>-->
                                 <th>Customer Phone</th>
-                                <th>Started Date</th>
-                                <th>Started Email Trainer</th>
+<!--                                <th>Started Date</th>-->
+<!--                                <th>Started Email Trainer</th>-->
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -96,14 +96,14 @@
 
                             <tr th:each="registration: ${registrations}">
                                 <td th:text="${registration.id}"></td>
-                                <td th:text="${registration.trainerEmail}"></td>
+                                <td th:text="${registration.traineeEmail}"></td>
                                 <td th:text="${registration.servicesStudioName}"></td>
                                 <td th:text="${registration.servicesName}"></td>
                                 <td th:text="${registration.servicesType}"></td>
                                 <td th:text="${registration.servicesPrice}"></td>
-                                <td th:text="${registration.traineeEmail + registration.traineeName}" ></td>
+<!--                                <td th:text="${registration.traineeEmail + registration.traineeName}" ></td>-->
                                 <td th:text="${registration.traineePhone}"></td>
-                                <td th:text="${registration.startDate}"></td>
+<!--                                <td th:text="${registration.startDate}"></td>-->
                                 <span th:if="${registration.status ==0}">
                         <td>Pending</td>
                     </span>

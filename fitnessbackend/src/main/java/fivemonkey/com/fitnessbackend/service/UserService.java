@@ -1,16 +1,12 @@
-package fivemonkey.com.fitnessbackend.service.impl;
+package fivemonkey.com.fitnessbackend.service;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
-import fivemonkey.com.fitnessbackend.dto.ClassDTO;
-import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.*;
 import fivemonkey.com.fitnessbackend.repository.RegistrationRepository;
 import fivemonkey.com.fitnessbackend.repository.RoleRepository;
 import fivemonkey.com.fitnessbackend.repository.StudioRepository;
 import fivemonkey.com.fitnessbackend.repository.UserRepository;
-import fivemonkey.com.fitnessbackend.service.service.StudioService;
-import fivemonkey.com.fitnessbackend.service.service.UserService;
 import net.bytebuddy.utility.RandomString;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -28,7 +24,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserService {
     private final int OTP_EXPIRATION_TIME_MINUTES = 5;
 
     private Map<String, String> otpMap = new HashMap<>();
@@ -54,7 +50,6 @@ public class UserServiceImpl implements UserService {
     ModelMapperConfiguration<User, UserDTO> modelMapperConfiguration;
 
 
-    @Override
     public List<UserDTO> findAll() {
         // Find all user from mapper
         List<User> userList = userRepository.findAll();
@@ -67,14 +62,13 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Override
     public User save(UserDTO u) {
         User user = new User();
         user.setStatus(true);
         return userRepository.save(user);
     }
 
-    @Override
+
     public User update(UserDTO u) {
         try {
             User user = userRepository.getUserByEmail(u.getEmail());
@@ -91,14 +85,14 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    @Override
+
     public void disableUser(String email) {
         User user = userRepository.getUserByEmail(email);
         user.setStatus(false);
         userRepository.save(user);
     }
 
-    @Override
+
     public void enableById(String email) {
         User user = userRepository.getUserByEmail(email);
         user.setStatus(true);
@@ -106,21 +100,20 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
+
     public UserDTO getUserByEmail(String email) {
         User user = userRepository.getUserByEmail(email);
         ModelMapper mapper = new ModelMapper();
         UserDTO userDTO = mapper.map(user, UserDTO.class);
         return userDTO;
     }
-    @Override
+
     public List<UserDTO> listUserByAdmin() {
         List<User> userList = userRepository.listUserByAdmin();
         return modelMapperConfiguration.mapList(userList, UserDTO.class);
     }
 
 
-    @Override
     public List<UserDTO> findAllUser(String keyword) {
         ModelMapper mapper = new ModelMapper();
         List<UserDTO> userDTOList1 = new ArrayList<>();
@@ -132,12 +125,12 @@ public class UserServiceImpl implements UserService {
         return userDTOList1;
     }
 
-    @Override
+
     public List<User> findAllUserNameContaining(String email) {
         return userRepository.findAll();
     }
 
-    @Override
+
     public void updateUser(UserDTO userDTO) {
 
         User user1 = userRepository.getUserByEmail(userDTO.getEmail());
@@ -149,7 +142,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
+
     public void updateUserAvatar(UserDTO userDTO) {
 
         User user2 = userRepository.getUserByEmail(userDTO.getEmail());
@@ -159,7 +152,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
+
     public UserDTO saveThumbnail(String thumbNail, String email) {
         if (thumbNail.isBlank()) return null;
         User user = userRepository.getUserByEmail(email);
@@ -167,7 +160,7 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(userRepository.save(user), UserDTO.class);
     }
 
-    @Override
+
     public void updateUserPassword(User user) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
@@ -199,7 +192,7 @@ public class UserServiceImpl implements UserService {
     }
 
     //check email exist ,phone may be optional
-    @Override
+
     public List<Object> isUserPresent(User user) {
         boolean userExists = false;
         String message = null;
@@ -213,7 +206,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
+
     public void sendVerificationEmail(User user, String siteUrl) throws MessagingException, UnsupportedEncodingException {
         String toAddress = user.getEmail();
         String fromAddress = "ducnvhe141646@fpt.edu.vn";
@@ -223,6 +216,7 @@ public class UserServiceImpl implements UserService {
         String content = "Dear " + user.getFirstName() + user.getLastName() + ",<br>"
                 + "Please click the link below to verify your registration:<br>"
                 + "<h3><a href=\"" + verifyURL + "\" >VERIFY</a></h3>"
+                + "Password:123456 <br>"
                 + "Thank you,<br>"
                 + "From FSM.";
 
@@ -238,7 +232,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Override
+     
     public boolean verify(String code) {
         User u = userRepository.findByVerificationCode(code);
         if (u == null) {
@@ -253,7 +247,7 @@ public class UserServiceImpl implements UserService {
 
 
     //send otp to forgot password
-    @Override
+     
     public void sendOTP(String email) throws MessagingException, UnsupportedEncodingException {
         String otp = generateOTP();
         // send the OTP to the user's email
@@ -261,7 +255,7 @@ public class UserServiceImpl implements UserService {
         // set the expiration time for the OTP
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
-            @Override
+             
             public void run() {
                 otpMap.remove(email);
             }
@@ -287,7 +281,7 @@ public class UserServiceImpl implements UserService {
         mailSender.send(message);
     }
 
-    @Override
+    
     public boolean verifyOTP(String email, String otp) {
         String storedOTP = otpMap.get(email);
         //check otp equal or not >>>
@@ -302,7 +296,7 @@ public class UserServiceImpl implements UserService {
         return String.valueOf(otp);
     }
 
-    @Override
+     
     public void resetPassword(String email, String password) {
         User user = userRepository.findUserByEmail(email);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -310,17 +304,17 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    @Override
+     
     public long countTrainer(String roleId) {
         return userRepository.getCountOfTrainer("ROLE04");
     }
 
-    @Override
+     
     public List<User> listAllTrainer(String role) {
         return null;
     }
 
-    @Override
+     
     public List<UserDTO> listUserByManage(String studioId, String keyword, String roleId) {
         List<UserDTO> userList = null;
         List<Registration> registrationList = null;
@@ -337,7 +331,7 @@ public class UserServiceImpl implements UserService {
         return userList;
     }
 
-    @Override
+     
     public List<UserDTO> listUserByAssistant(String studioId, String keyword, String roleId) {
         List<UserDTO> userList = null;
         List<Registration> registrationList = null;
@@ -360,7 +354,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Override
+     
     public List<UserDTO> getUserByFieldsByAdmin(String keyword, String cityName, String roleId, String studioId) {
         Session session = sessionFactory.openSession();
         String query = "select u from User u where u.role.id not in('ROLE01') ";
@@ -381,7 +375,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Override
+     
     public List<UserDTO> getUserByFieldsByManager(String email, String keyword, String roleId) {
         Session session = sessionFactory.openSession();
         String query = "select u from User u where u.role.id not in('ROLE01','ROLE02') ";
@@ -400,7 +394,7 @@ public class UserServiceImpl implements UserService {
         return modelMapperConfiguration.mapList(query1.getResultList(), UserDTO.class);
     }
 
-    @Override
+     
     public List<UserDTO> getUserByFieldsByAssistant(String email, String keyword, String roleId) {
         Session session = sessionFactory.openSession();
         String query = "select u from User u where u.role.id not in('ROLE01','ROLE02','ROLE03') ";
@@ -420,12 +414,12 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Override
+     
     public User getManagerOfStudio(String id) {
         return userRepository.getManagerOfStudio(id);
     }
 
-//    @Override
+//     
 //    public void changeStatusChangeSt(String email, String studioId) {
 //        User user = userRepository.getUserByEmail(email);
 //        user.setStatusChangeSt(1);
@@ -435,7 +429,7 @@ public class UserServiceImpl implements UserService {
 
 
 //
-//    @Override
+//     
 //    public void rejectChangeSt(UserDTO userDTO) {
 //        User user = userRepository.getUserByEmail(userDTO.getEmail());
 //        user.setStatusChangeSt(0);
@@ -443,7 +437,7 @@ public class UserServiceImpl implements UserService {
 //        userRepository.save(user);
 //    }
 
-//    @Override
+//     
 //    public void changeSt(UserDTO userDTO) {
 //        User user = userRepository.getUserByEmail(userDTO.getEmail());
 //        user.setStatusChangeSt(1);
@@ -454,7 +448,6 @@ public class UserServiceImpl implements UserService {
     public User getUserById(Long id) {
         return userRepository.findUsersById(id);
     }
-
 
 
 }

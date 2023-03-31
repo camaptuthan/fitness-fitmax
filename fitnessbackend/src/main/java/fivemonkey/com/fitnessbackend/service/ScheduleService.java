@@ -1,4 +1,4 @@
-package fivemonkey.com.fitnessbackend.service.impl;
+package fivemonkey.com.fitnessbackend.service;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.ScheduleDTO;
@@ -6,8 +6,6 @@ import fivemonkey.com.fitnessbackend.entities.Schedule;
 import fivemonkey.com.fitnessbackend.repository.ClassRepository;
 import fivemonkey.com.fitnessbackend.repository.RegistrationRepository;
 import fivemonkey.com.fitnessbackend.repository.ScheduleRepository;
-import fivemonkey.com.fitnessbackend.service.service.ScheduleService;
-import fivemonkey.com.fitnessbackend.service.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class ScheduleServiceImpl implements ScheduleService {
+public class ScheduleService {
 
     @Autowired
     private SessionService sessionService;
@@ -33,7 +31,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     private ModelMapperConfiguration<Schedule, ScheduleDTO> modelMapperConfiguration;
 
-    @Override
     public List<ScheduleDTO> getAll(Date startTime, Date endTime) {
         List<ScheduleDTO> scheduleDTOS = new ArrayList<>();
         scheduleRepository.findAll().forEach(schedule -> {
