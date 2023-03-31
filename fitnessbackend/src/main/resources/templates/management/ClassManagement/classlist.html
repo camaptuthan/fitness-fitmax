@@ -82,9 +82,9 @@
                                             <option value="">All</option>
                                             <th:block th:each="status : ${statuses}">
                                                 <option
-                                                        th:selected="${status.type_id == currentStatus}"
+                                                        th:selected="${status.id == currentStatus}"
                                                         th:text="${status.statusName}"
-                                                        th:value="${status.type_id}"></option>
+                                                        th:value="${status.id}"></option>
                                             </th:block>
                                         </select>
                                     </div>
@@ -135,11 +135,10 @@
                                     <td th:text=" ${item.servicesName}"></td>
                                     <td th:text="${item.servicesStudioId == null ? 'All': item.servicesStudioId}"></td>
                                     <td th:text="${item.servicesCityName}"></td>
-                                    <td th:text="${item.servicesDate}"></td>
+                                    <td th:text="${#dates.format(item.servicesDate, 'dd-MM-yyyy HH:mm')}"></td>
                                     <th:block th:each="status : ${statuses}">
-                                        <td th:text="${status.statusName}" th:if="${status.type_id == item.servicesStatus}"></td>
+                                        <td th:text="${status.statusName}" th:if="${status.id == item.servicesStatus}"></td>
                                     </th:block>
-
                                     <td>
                                         <a class="btn btn-primary"
                                            th:href="@{/service/class/management/classes/{id}(id=${item.servicesId})}">

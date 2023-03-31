@@ -1,8 +1,6 @@
 package fivemonkey.com.fitnessbackend.service.service;
 
 import fivemonkey.com.fitnessbackend.dto.ClassDTO;
-import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
-import fivemonkey.com.fitnessbackend.entities.Clazz;
 import fivemonkey.com.fitnessbackend.entities.User;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +12,10 @@ public interface ClassService {
     ClassDTO getByServiceId(String serviceId);
 
     List<ClassDTO> getAll();
-    List<ClassDTO> getByUserRole(User user,int currentPage, String[] keywords);
+
+    List<ClassDTO> getAllRelatedClass(String serviceId);
+
+    List<ClassDTO> getByUserRole(User user, int currentPage, String[] keywords);
 
     ClassDTO save(ClassDTO classDTO, User user);
 

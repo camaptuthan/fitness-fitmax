@@ -18,8 +18,8 @@ public interface ClassRepository extends JpaRepository<Clazz, Long> {
     Clazz getClazzByServices(String servicesId);
 
 
-    @Query("select c from Clazz c where c.services.studio.id is null or c.services.studio.id in (select u.studio.id from User u where u.email = ?1)")
-    Page<Clazz> getClazzByUserEmail(String studioManagerEmail, Pageable pageable);
+    @Query("select c from Clazz c where c.services.studio.id is null or c.services.studio.id in (select u.studio.id from User u where u.email = ?1) order by c.services.date desc")
+    List<Clazz> getClazzByUserEmail(String studioManagerEmail);
 
     @Query("select c from Clazz c where c.services.id = ?1")
     Optional<Clazz> findByServicesId(String servicesId);

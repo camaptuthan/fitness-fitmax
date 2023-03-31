@@ -95,13 +95,16 @@
                 </ul>
                 <ul class="social-list">
                     <li><a href="https://www.facebook.com/rovadex" target="_blank"><i aria-hidden="true"
-                                                                                      class="fa fa-facebook"></i></a></li>
+                                                                                      class="fa fa-facebook"></i></a>
+                    </li>
                     <li><a href="https://twitter.com/RovadexStudio" target="_blank"><i aria-hidden="true"
-                                                                                       class="fa fa-twitter"></i></a></li>
+                                                                                       class="fa fa-twitter"></i></a>
+                    </li>
                     <li><a href="https://www.youtube.com/" target="_blank"><i aria-hidden="true"
                                                                               class="fa fa-youtube"></i></a></li>
                     <li><a href="https://www.instagram.com/rovadex" target="_blank"><i aria-hidden="true"
-                                                                                       class="fa fa-instagram"></i></a></li>
+                                                                                       class="fa fa-instagram"></i></a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -149,7 +152,8 @@
             <th:block th:each="sessionItem,iter : ${class.sessions}">
                 <div class="accordion-item" th:if="${iter.index < 5 || hasRegistered}">
                     <h2 class="accordion-header">
-                        <button aria-expanded="false" class="accordion-button collapsed text-white" data-bs-target="#flush-collapseOne"
+                        <button aria-expanded="false" class="accordion-button collapsed text-white"
+                                data-bs-target="#flush-collapseOne"
                                 data-bs-toggle="collapse"
                                 th:attr="data-bs-target='#flush-collapseOne'+${sessionItem.id}"
                                 th:attrappend=" aria-controls='flush-collapseOne'+${sessionItem.id}"
@@ -170,7 +174,7 @@
                 </div>
             </th:block>
         </div>
-        <form method="post" class="my-3" style="text-align: center" th:action="@{/registration/make}"
+        <form class="my-3" method="post" style="text-align: center" th:action="@{/registration/make}"
               th:if="${hasRegistered == false}">
             <input th:name="item_id" th:value="*{servicesId}" type="hidden">
             <button class="btn" type="submit">
@@ -200,7 +204,7 @@
                     <div class="carousel-item col-12 p-2" th:classappend="${iter.index == 0} ? active : '' ">
                         <div class="row">
                             <th:block th:each="class : ${item.value}">
-                                <div class="col-md-4 club-card-col">
+                                <div class="col-md-4 club-card-col" >
                                     <div class="club-card-item">
                                         <div class="price-cover">
                                             <div class="price" th:text="${class.servicesPrice}">price</div>
@@ -208,11 +212,11 @@
                                             </div>
                                         </div>
                                         <ul class="list">
-                                            <li>Maecenas consequat</li>
-                                            <li>ex id lobortis venenatis</li>
-                                            <li>Mauris id erat enim</li>
-                                            <li class="item-excluded">Morbi dolor dolortin</li>
-                                            <li class="item-excluded">lorem ut, venenatis dapibus mi</li>
+                                            <th:block th:each="sessionItem,iter : ${class.sessions}">
+                                                <li th:if="${iter.index < 5}"
+                                                    th:text="${sessionItem.name}">Maecenas consequat
+                                                </li>
+                                            </th:block>
                                         </ul>
                                         <a class="btn" th:href="@{/service/class/{id} (id=${class.servicesId})}">order
                                             now</a>
@@ -247,7 +251,7 @@
 <!-- ============ S-OUR-PROGRAMS END ============ -->
 
 <!-- =========== S-TRAINING-SCHEDULE =========== -->
-<div th:if="*{servicesStatus == 1}" th:include="management/ScheduleManagement/schedule_table"></div>
+<div th:if="*{servicesStatus == 2}" th:include="management/ScheduleManagement/schedule_table"></div>
 <!-- ========= S-TRAINING-SCHEDULE END ========= -->
 
 <!-- ================ S-CONTACTS ================ -->

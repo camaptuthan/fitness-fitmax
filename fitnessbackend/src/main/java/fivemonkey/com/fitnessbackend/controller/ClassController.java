@@ -56,7 +56,7 @@ public class ClassController {
 
 
         ClassDTO classDTO = classService.getByServiceId(id);
-        List<ClassDTO> classDTOList = classService.getAll();
+        List<ClassDTO> classDTOList = classService.getAllRelatedClass(classDTO.getServicesId());
 
         Map<String, List<ClassDTO>> classDTOListMap = new HashMap<>();
 
@@ -64,7 +64,9 @@ public class ClassController {
         for (int i = 0; i < size; i++) {
             List<ClassDTO> valueList = new ArrayList<>();
             for (int j = 0; j < 3; j++) {
-                valueList.add(classDTOList.get(i * 3 + j));
+                int index = i * 3 + j;
+                if (index >= classDTOList.size()) break;
+                valueList.add(classDTOList.get(index));
             }
             classDTOListMap.put("page-" + (i + 1), valueList);
         }
@@ -99,7 +101,7 @@ public class ClassController {
 
         model.addAttribute("currentCity", cityName);
         model.addAttribute("currentStudio", studioId);
-        model.addAttribute("currentStatus", Integer.parseInt(status));
+        model.addAttribute("currentStatus", status.isBlank() ? "" : Integer.parseInt(status));
 
         model.addAttribute("cities", addressService.getCities());
         model.addAttribute("studios", cityName.isBlank() ? studioService.getAllStudio() : studioService.getAllByCity(cityName));
@@ -121,8 +123,9 @@ public class ClassController {
             model.addAttribute("trainers", trainerService.getAllAvailableTrainersByStudio(foundClass.getServicesStudioId()));
             model.addAttribute("cities", addressService.getCities());
 
-            model.addAttribute("studios", addressService.getStudioByCity(serviceId.equals("new") ? userDetail.getUser().getRole().getId().equalsIgnoreCase("role01") ? "Ha Noi" : userDetail.getUser().getCity().getName() : foundClass.getServicesCityName()));
+            model.addAttribute("studios", addressService.getStudioByCity(serviceId.equals("new") ? userDetail.getUser().getRole().getId().equalsIgnoreCase("role01") ? "Thanh Pho Ha Noi" : userDetail.getUser().getCity().getName() : foundClass.getServicesCityName()));
             model.addAttribute("schedules", scheduleService.getAll(null, null));
+            model.addAttribute("statuses", statusService.getStatusByClass());
             model.addAttribute("item", foundClass);
         }
         return path;

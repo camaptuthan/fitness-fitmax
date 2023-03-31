@@ -17,6 +17,8 @@ public class ClassDTO {
 
     private Date servicesDate;
 
+    private Date servicesUpdatedDate;
+
     private Float servicesPrice;
 
     private String servicesId;
