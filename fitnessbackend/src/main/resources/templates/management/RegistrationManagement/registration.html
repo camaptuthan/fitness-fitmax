@@ -78,16 +78,13 @@
                         <table class="table table-hover table-bordered sortable" id="studio_table">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>User</th>
                                 <th>Studio</th>
                                 <th>Service Name</th>
                                 <th>Service Type</th>
                                 <th>Service Price</th>
-<!--                                <th>Customer Information</th>-->
+                                <th>Customer Information</th>
                                 <th>Customer Phone</th>
-<!--                                <th>Started Date</th>-->
-<!--                                <th>Started Email Trainer</th>-->
+                                <th>Started Date</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -95,30 +92,23 @@
                             <tbody>
 
                             <tr th:each="registration: ${registrations}">
-                                <td th:text="${registration.id}"></td>
-                                <td th:text="${registration.traineeEmail}"></td>
                                 <td th:text="${registration.servicesStudioName}"></td>
                                 <td th:text="${registration.servicesName}"></td>
                                 <td th:text="${registration.servicesType}"></td>
                                 <td th:text="${registration.servicesPrice}"></td>
-<!--                                <td th:text="${registration.traineeEmail + registration.traineeName}" ></td>-->
+                                <td th:text="${registration.traineeEmail +' '+ registration.traineeName}" ></td>
                                 <td th:text="${registration.traineePhone}"></td>
-<!--                                <td th:text="${registration.startDate}"></td>-->
+                                <td th:text="${registration.startDate}"></td>
                                 <span th:if="${registration.status ==0}">
                         <td>Pending</td>
                     </span>
                                 <span th:if="${registration.status == 1}">
                     <td>Verified</td>
-</span>
+                    </span>
                                 <span th:if="${registration.status == 2}">
-
-                    <td>Rejected</td>
-</span>
-                                <span th:if="${registration.status == 3}">
-
                     <td>Cancel</td>
-</span>
-                                        <span th:if="${registration.status == 3}">
+                    </span>
+                                <span th:if="${registration.status == 3}">
                     <td>In progress</td>
                     </span>
                                 <span th:if="${registration.status == 4}">
@@ -126,9 +116,9 @@
                     <td>Expired</td>
                     </span>
                                 <td>
-<!--                                    <a class="edit" data-toggle="tooltip"-->
-<!--                                       th:href="@{/management/registrationsedit/{id} (id=${registration.id})}"-->
-<!--                                       title="Edit"><i class="material-icons fa" style="font-size: 25px" data-hover-only="Edit">&#xf044;</i></a>-->
+                                    <a class="edit" data-toggle="tooltip"
+                                       th:href="@{/registration/management/registrations/{id} (id=${registration.id})}"
+                                       title="Edit"><i class="material-icons fa" style="font-size: 25px" data-hover-only="Edit">&#xf044;</i></a>
                                     <a class="active" data-toggle="tooltip" onclick="return confirm('Are you sure you want to verify this Registration?')"
                                        th:href="@{/registration/management/statusregistrations/{id}/{status} (status=${1}, id=${registration.id} )}"
                                        th:if="${registration.status == 0}"><i
