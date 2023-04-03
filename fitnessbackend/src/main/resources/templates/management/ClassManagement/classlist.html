@@ -133,7 +133,7 @@
                             <th:block th:each="item : ${list}">
                                 <tr>
                                     <td th:text=" ${item.servicesName}"></td>
-                                    <td th:text="${item.servicesStudioId == null ? 'All': item.servicesStudioId}"></td>
+                                    <td th:text="${item.servicesStudioId == null ? 'All': item.servicesStudioName}"></td>
                                     <td th:text="${item.servicesCityName}"></td>
                                     <td th:text="${#dates.format(item.servicesDate, 'dd-MM-yyyy HH:mm')}"></td>
                                     <th:block th:each="status : ${statuses}">

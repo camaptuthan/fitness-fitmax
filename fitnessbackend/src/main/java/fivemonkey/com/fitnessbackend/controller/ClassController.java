@@ -102,10 +102,10 @@ public class ClassController {
 
         model.addAttribute("currentCity", cityName);
         model.addAttribute("currentStudio", studioId);
-        model.addAttribute("currentStatus", status.isBlank() ? "" : Integer.parseInt(status));
+        model.addAttribute("currentStatus", status.isEmpty() ? "" : Integer.parseInt(status));
 
         model.addAttribute("cities", addressService.getCities());
-        model.addAttribute("studios", cityName.isBlank() ? studioService.getAllStudio() : studioService.getAllByCity(cityName));
+        model.addAttribute("studios", cityName.isEmpty() ? studioService.getAllStudio() : studioService.getAllByCity(cityName));
         model.addAttribute("statuses", statusService.getStatusByClass());
         model.addAttribute("list", classDTOList);
         return path;

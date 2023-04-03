@@ -75,7 +75,7 @@ public class ClassService {
 
         classes.sort((o1, o2) -> o2.getServices().getDate().compareTo(o1.getServices().getDate()));
         for (String word : keywords) {
-            if (word.isBlank()) continue;
+            if (word.isEmpty()) continue;
             classes = classes.stream().filter(clazz -> {
                 Studio studio = clazz.getServices().getStudio();
                 City city = clazz.getServices().getCity();

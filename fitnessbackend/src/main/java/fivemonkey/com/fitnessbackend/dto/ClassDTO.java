@@ -43,6 +43,8 @@ public class ClassDTO {
 
     private String servicesStudioId;
 
+    private String servicesStudioName;
+
     private int servicesStatusType_id;
 
     private String servicesStatusStatus;
