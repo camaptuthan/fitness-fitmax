@@ -1,21 +1,17 @@
 package fivemonkey.com.fitnessbackend.controller;
-
 import fivemonkey.com.fitnessbackend.dto.*;
 import fivemonkey.com.fitnessbackend.entities.Services;
 import fivemonkey.com.fitnessbackend.entities.Status;
 import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
 import fivemonkey.com.fitnessbackend.repository.ServicesRepository;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
-import fivemonkey.com.fitnessbackend.service.service.*;
+import fivemonkey.com.fitnessbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.*;
 
 @Controller

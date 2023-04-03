@@ -1,27 +1,25 @@
 package fivemonkey.com.fitnessbackend.controller;
-
-import fivemonkey.com.fitnessbackend.dto.CityDTO;
+import fivemonkey.com.fitnessbackend.configuration.Utility;
 import fivemonkey.com.fitnessbackend.dto.RegistrationDTO;
-import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.City;
 import fivemonkey.com.fitnessbackend.entities.Registration;
-import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.repository.RegistrationRepository;
 import fivemonkey.com.fitnessbackend.repository.StatusRepository;
 import fivemonkey.com.fitnessbackend.repository.UserRepository;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
-import fivemonkey.com.fitnessbackend.service.service.CityService;
-import fivemonkey.com.fitnessbackend.service.service.RegistrationService;
-import fivemonkey.com.fitnessbackend.service.service.StatusService;
-import fivemonkey.com.fitnessbackend.service.service.UserService;
+import fivemonkey.com.fitnessbackend.service.CityService;
+import fivemonkey.com.fitnessbackend.service.RegistrationService;
+import fivemonkey.com.fitnessbackend.service.StatusService;
+import fivemonkey.com.fitnessbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,34 +50,69 @@ public class RegistrationController {
                                  @RequestParam("id") String serviceId,
                                  @RequestParam("emailRegis") String email,
                                  @RequestParam("phoneRegis") String phone,
-                                 HttpServletRequest request) {
-        String path = "redirect:/user/profile";
-        System.out.println("Email regis:"+email);
-        System.out.println("Phone regis:"+phone);
-        if (userDetail == null && userRepository.getUserByEmail(email) == null) {
-            //Cretae new user
+                                 HttpServletRequest request,
+                                 Model model
+    ) {
+        String path="/verify_status";
+        //truong hop login account verify register by input otp
+        if(userDetail!=null){
+            try {
+                userService.sendOTP(email);
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+            model.addAttribute("email", email);
+            model.addAttribute("idP",serviceId);
+            path= "verify_registration";
+            //
+        }else if(userDetail==null ){
+            User u= userRepository.getUserByEmail(email);
+            //user exist
+            if(u!=null){
+                model.addAttribute("title","Email enroll already exist in system, please login to enroll service");
+                return "/verify_status";
+            }
             User user = new User();
             user.setEmail(email);
             user.setPhone(phone);
             user.setPassword("123456");
+            user.setStatus(false);
             userService.registerUser(user);
-
-            //Update status
-            User userNew = userRepository.getUserByEmail(email);
-            userNew.setStatus(true);
-            userRepository.save(userNew);
+            String siteUrl = Utility.getSiteURL(request);
+            try {
+                userService.sendVerificationEmail(user, siteUrl);
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
 
             //Create new registration
             registrationService.doRegistration(user, serviceId);
-
-            path = "redirect:/";
-        } else if (userDetail == null && userRepository.getUserByEmail(email) != null) {
-            //Send message This email already exists in the system, please use that account to register
-            path = "redirect:/";
-        } else if (userDetail != null) {
-            registrationService.doRegistration(userDetail.getUser(), serviceId);
+            String message="Check email registed to active account and completed enroll and waiting result";
+            model.addAttribute("title", message);
+            path= "/verify_status";
         }
         return path;
+    }
+
+    @PostMapping("/enrolled")
+    public String verifyEnrollByCode(@AuthenticationPrincipal UserDetail userDetail,
+                                     @RequestParam("idP") String idP,
+                                     @RequestParam("email") String email,
+                                     @RequestParam String otp
+                                    ,Model model ){
+        if (userService.verifyOTP(email, otp)) {
+            User u= userRepository.getUserByEmail(email);
+            registrationService.doRegistration(u, idP);
+            return "redirect:/user/myregistrations";
+        } else {
+            model.addAttribute("error", "Invalid OTP");
+            return "verify_registration";
+        }
+
     }
 
 
@@ -96,7 +129,7 @@ public class RegistrationController {
             //model.addAttribute("registrations", registrationService.getAllRegistrations());
 
         } else if (userDetail.getUser().getRole().getName().equals("Manager")) {
-           //model.addAttribute("registrations", registrationService.getRegistrationByManager(userDetail.getUser().getStudio().getId()));
+            //model.addAttribute("registrations", registrationService.getRegistrationByManager(userDetail.getUser().getStudio().getId()));
         } else if (userDetail.getUser().getRole().getName().equals("Assistant")) {
             //model.addAttribute("registrations", registrationService.getRegistrationByAssistant(userDetail.getUser().getEmail()));
         }
@@ -111,7 +144,18 @@ public class RegistrationController {
         model.addAttribute("statusList", statusService.getStatusByRegistration());
         return "management/RegistrationManagement/registration";
     }
-    @PostMapping("management/registrationpost/{id}")
+
+    //Get Details Registration
+    @GetMapping("/management/registrations/{id}")
+    public String getRegistrationById(@PathVariable String id, Model model) {
+        Registration registration = registrationService.getRegistrationById(id);
+        model.addAttribute("registration", registration);
+        model.addAttribute("statusList", statusService.getStatusByRegistration());
+
+        return "management/RegistrationManagement/registrationdetails";
+    }
+
+    @PostMapping("management/registrationpost")
     public String updateStudio(@PathVariable String id,
                                @ModelAttribute("registration") Registration registration,
                                Model model) {
@@ -136,6 +180,7 @@ public class RegistrationController {
         model.addAttribute("registration", registrationService.getRegistrationById("SER0001"));
         return "management/RegistrationManagement/registrationdetails";
     }
+
     //Approve and reject Registration
     @GetMapping("/management/statusregistrations/{id}/{status}")
     public String updateStatus(@AuthenticationPrincipal UserDetail userDetail,@PathVariable String id, @PathVariable int status) {
@@ -145,6 +190,5 @@ public class RegistrationController {
         registrationService.updateRegistration(registration);
         return "redirect:/registration/management/registrations";
     }
-
 
 }

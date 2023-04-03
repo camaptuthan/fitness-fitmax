@@ -1,224 +1,7 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">-->
-<!--<head>-->
-<!--  <link rel="stylesheet" th:href="@{../css/font-awesome.min.css}">-->
-<!--  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">-->
-<!--</head>-->
-
-<!--&lt;!&ndash; Mirrored from educhamp.themetrades.com/demo/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Feb 2019 13:08:15 GMT &ndash;&gt;-->
-<!--<th:block th:insert="/fragments/admin_fragment/head"></th:block>-->
-<!--<th:block th:insert="/fragments/admin_fragment/header"></th:block>-->
-<!--<body class="ttr-opened-sidebar ttr-pinned-sidebar">-->
-<!--<th:block th:insert="/fragments/admin_fragment/sidebar_fragment"></th:block>-->
-<!--&lt;!&ndash; Left sidebar menu end &ndash;&gt;-->
-<!--&lt;!&ndash;Main container start &ndash;&gt;-->
-<!--<main class="ttr-wrapper">-->
-<!--  <div class="container-fluid">-->
-<!--    <div class="db-breadcrumb">-->
-<!--      <h4 class="breadcrumb-title">Studio Details</h4>-->
-<!--      <ul class="db-breadcrumb-list">-->
-<!--        <li><a href="#"><i class="fa fa-home"></i>Home</a></li>-->
-<!--        <li>Studio</li>-->
-<!--        <li>Studio Details</li>-->
-<!--      </ul>-->
-<!--    </div>-->
-
-<!--    <div class="row">-->
-<!--      <div class="col-lg-12 m-b30">-->
-<!--        <form method="POST" th:action="@{/poststudio}" th:object="${registration}">-->
-<!--          <div class="form-group">-->
-<!--            <input-->
-<!--                    class="form-control"-->
-<!--                    hidden="true"-->
-<!--                    name="id"-->
-<!--                    th:field="*{id}"-->
-<!--                    type="text"-->
-<!--            />-->
-<!--          </div>-->
-<!--          <div class="form-group row">-->
-<!--            <label class="col-sm-2 col-form-label"> Studio Name: </label>-->
-<!--            <div class="col-sm-4">-->
-<!--              <input-->
-<!--                      class="form-control"-->
-<!--                      name="name"-->
-<!--                      required=""-->
-<!--                      placeholder="Enter Studio Name"-->
-<!--                      th:field="*{services}"-->
-<!--                      type="text"-->
-<!--              />-->
-<!--            </div>-->
-
-
-
-<!--          <div class="form-group row">-->
-<!--            <label class="col-sm-2 col-form-label"> Studio City: </label>-->
-<!--            <div class="col-sm-4">-->
-<!--              <input-->
-<!--                      required=""-->
-<!--                      class="form-control"-->
-<!--                      name="city"-->
-<!--                      placeholder="Enter Studio City"-->
-<!--                      th:field="*{status}"-->
-<!--                      type="text"-->
-<!--              />-->
-<!--            </div>-->
-<!--            <label class="col-sm-2 col-form-label "> District: </label>-->
-<!--            <div class="col-sm-4">-->
-<!--              <input-->
-<!--                      required=""-->
-<!--                      class="form-control"-->
-<!--                      name="district"-->
-<!--                      placeholder="Enter Studio District"-->
-<!--                      th:field="*{status}"-->
-<!--                      type="text"-->
-<!--              />-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <label class="col-sm-2 col-form-label"> Studio City: </label>-->
-<!--          <div class="col-sm-4">-->
-<!--            <th:block th:insert="/fragments/admin_fragment/city"></th:block>-->
-<!--          </div>-->
-<!--          <div class="form-group row">-->
-<!--            <label class="col-sm-2 col-form-label"> Studio Contact: </label>-->
-<!--            <div class="col-sm-4">-->
-<!--              <input-->
-<!--                      class="form-control"-->
-<!--                      name="contact"-->
-<!--                      placeholder="Mobile Number (10 digits only)"-->
-<!--                      th:field="*{status}"-->
-<!--                      type="tel"-->
-<!--                      pattern="[0]{1}[0-9]{9}"-->
-<!--                      required-->
-<!--                      oninvalid="this.setCustomValidity('Enter Phone number')"-->
-<!--                      oninput="this.setCustomValidity('')">-->
-
-<!--              <p class="alert alert-danger" th:if="${#fields.hasErrors('contact')}" th:errors="*{services.name}" />-->
-
-
-<!--            </div>-->
-<!--            <label class="col-sm-2 col-form-label "> District: </label>-->
-<!--            <div class="col-sm-4">-->
-<!--              <div>-->
-<!--                <input th:type="radio" th:value="true"-->
-<!--                       th:checked="*{status}" name = "status" th:field="*{status}"/>-->
-<!--                Active-->
-<!--                <input th:type="radio" th:value="false"-->
-<!--                       th:checked="*{status==false}" th:field="*{status}" name = "status" />-->
-<!--                Inactive-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-
-
-
-<!--          <div class="form-group">-->
-<!--            <label> Description </label>-->
-
-<!--            <textarea-->
-<!--                    class="form-control"-->
-<!--                    name="description"-->
-<!--                    placeholder="Enter description"-->
-<!--                    th:field="*{services.name}"-->
-<!--                    rows ="5"-->
-<!--                    type="textarea"-->
-<!--            />    </textarea>-->
-<!--          </div>-->
-
-<!--          <div class="box-footer">-->
-<!--            <button class="btn btn-primary" type="submit">-->
-<!--              Submit-->
-<!--            </button>-->
-<!--          </div>-->
-<!--          </div>-->
-<!--        </form>-->
-
-
-<!--        <div class="widget-inner">-->
-
-
-<!--          <div id="pagination"></div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-
-<!--</main>-->
-<!--<div class="ttr-overlay"></div>-->
-<!--<th:block th:insert="/fragments/admin_fragment/script"></th:block>-->
-<!--<div>-->
-<!--  <select class="form-select form-select-sm mb-3" id="cityvn" aria-label=".form-select-sm">-->
-<!--    <option value="" selected>Ch?n t?nh thành</option>-->
-<!--  </select>-->
-
-<!--  <select class="form-select form-select-sm mb-3" id="districtvn" aria-label=".form-select-sm">-->
-<!--    <option value="" selected>Ch?n qu?n huy?n</option>-->
-<!--  </select>-->
-
-<!--  <select class="form-select form-select-sm" id="wardvn" aria-label=".form-select-sm">-->
-<!--    <option value="" selected>Ch?n ph??ng xã</option>-->
-<!--  </select>-->
-<!--</div>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>-->
-<!--<script>-->
-<!--  var citis = document.getElementById("cityvn");-->
-<!--  var districts = document.getElementById("districtvn");-->
-<!--  var wards = document.getElementById("wardvn");-->
-<!--  var Parameter = {-->
-<!--    url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",-->
-<!--    method: "GET",-->
-<!--    responseType: "json",-->
-<!--  };-->
-<!--  var promise = axios(Parameter);-->
-<!--  promise.then(function (result) {-->
-<!--    renderCity(result.data);-->
-<!--  });-->
-
-<!--  function renderCity(data) {-->
-<!--    for (const x of data) {-->
-<!--      citis.options[citis.options.length] = new Option(x.Name, x.Id);-->
-<!--    }-->
-<!--    citis.onchange = function () {-->
-<!--      districtvn.length = 1;-->
-<!--      wardvn.length = 1;-->
-<!--      if(this.value != ""){-->
-<!--        const result = data.filter(n => n.Id === this.value);-->
-
-<!--        for (const k of result[0].Districts) {-->
-<!--          districtvn.options[districtvn.options.length] = new Option(k.Name, k.Id);-->
-<!--        }-->
-<!--      }-->
-<!--    };-->
-<!--    districtvn.onchange = function () {-->
-<!--      wardvn.length = 1;-->
-<!--      const dataCity = data.filter((n) => n.Id === citis.value);-->
-<!--      if (this.value != "") {-->
-<!--        const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;-->
-
-<!--        for (const w of dataWards) {-->
-<!--          wards.options[wards.options.length] = new Option(w.Name, w.Id);-->
-<!--        }-->
-<!--      }-->
-<!--    };-->
-<!--  }-->
-<!--</script>-->
-<!--</body>-->
-<!--<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>-->
-<!--<script>-->
-<!--  $(document).ready(function () {-->
-<!--    $('#studio_table').DataTable({-->
-<!--      dom: 'rtip',-->
-<!--      columnDefs: [],-->
-<!--      pageLength: '6',-->
-<!--      pagingType:'full_numbers',-->
-<!--    });-->
-<!--  });-->
-<!--</script>-->
-
-<!--</html>-->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+  <link rel="stylesheet" th:href="@{../css/font-awesome.min.css}">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
 </head>
 
@@ -242,7 +25,7 @@
 
     <div class="row">
       <div class="col-lg-12 m-b30">
-        <form method="POST" th:action="@{/postregistration}" th:object="${registration}">
+        <form method="POST" th:action="@{/studio/management/studioupdate}" th:object="${registration}">
           <div class="form-group">
             <input
                     class="form-control"
@@ -253,97 +36,110 @@
             />
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label"> Studio Name: </label>
+            <label class="col-sm-2 col-form-label"> Customer Name:</label>
             <div class="col-sm-4">
               <input
                       class="form-control"
                       name="name"
                       required=""
-                      placeholder="Enter Studio Name"
-                      th:field="*{id}"
+                      disabled=""
+                      th:value="${registration.trainee.user.lastName} + ' ' + ${registration.trainee.user.firstName}"
                       type="text"
               />
             </div>
-
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label"> Studio City: </label>
+            <label class="col-sm-2 col-form-label">Service:</label>
             <div class="col-sm-4">
               <input
+                      class="form-control"
+                      name="manager"
                       required=""
+                      disabled=""
+                      th:field="*{services.name}"
+                      type="text"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Customer Email: </label>
+            <div class="col-sm-4">
+              <input
                       class="form-control"
                       name="city"
-                      placeholder="Enter Studio City"
-                      th:field="*{id}"
+                      disabled=""
+                      required=""
+                      th:field="*{trainee.email}"
                       type="text"
               />
             </div>
-            <label class="col-sm-2 col-form-label "> District: </label>
+            <label class="col-sm-2 col-form-label ">Customer Phone: </label>
             <div class="col-sm-4">
               <input
-                      required=""
                       class="form-control"
                       name="district"
-                      placeholder="Enter Studio District"
-                      th:field="*{id}"
+                      disabled=""
+                      required=""
+                      th:field="*{services.user.phone}"
                       type="text"
               />
             </div>
           </div>
-          <label class="col-sm-2 col-form-label"> Studio City: </label>
-          <div class="col-sm-4">
-            <th:block th:insert="/fragments/admin_fragment/city"></th:block>
-          </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label"> Studio Contact: </label>
+            <label class="col-sm-2 col-form-label"> Customer : </label>
             <div class="col-sm-4">
               <input
                       class="form-control"
                       name="contact"
-                      placeholder="Mobile Number (10 digits only)"
-                      th:field="*{id}"
-                      type="tel"
-                      pattern="[0]{1}[0-9]{9}"
-                      required
-                      oninvalid="this.setCustomValidity('Enter Phone number')"
-                      oninput="this.setCustomValidity('')">
-
-              <p class="alert alert-danger" th:if="${#fields.hasErrors('contact')}" th:errors="*{id}" />
-
-
+                      disabled=""
+                      th:field="*{services.user.phone}"
+                      type="tel">
             </div>
-            <label class="col-sm-2 col-form-label "> District: </label>
+            <label class="col-sm-2 col-form-label "> Registration Status: </label>
             <div class="col-sm-4">
-              <div>
-                <input th:type="radio" th:value="true"
-                       th:checked="*{status}" name = "status" th:field="*{status}"/>
-                Active
-                <input th:type="radio" th:value="false"
-                       th:checked="*{status==false}" th:field="*{status}" name = "status" />
-                Inactive
-              </div>
+            <span th:if="${registration.status ==0}">
+                        <input class="form-control" disabled="" th:value="Pending">
+                    </span>
+              <span th:if="${registration.status == 1}">
+
+                <input class="form-control" disabled="" th:value="Verified">
+</span>
+              <span th:if="${registration.status == 2}">
+
+                <input class="form-control" disabled="" th:value="Cancel">
+</span>
+              <span th:if="${registration.status == 3}">
+
+                <input class="form-control" disabled="" th:value="Inprogress">
+                    </span>
+              <span th:if="${registration.status == 4}">
+
+                <input class="form-control" disabled="" th:value="Expired">
+                    </span>
+
+          </div>
+          </div>
+
+            <div class="form-group">
+              <label>Message from customer: </label>
+
+              <textarea
+                      class="form-control"
+                      name="message"
+
+                      disabled=""
+                      rows="5"
+
+                      placeholder="Customer did not send any message"
+                      th:field="*{message}"
+                      type="textarea"
+                >
+                  </textarea>
             </div>
-          </div>
 
-
-
-          <div class="form-group">
-            <label> Description </label>
-
-            <textarea
-                    class="form-control"
-                    name="description"
-                    placeholder="Enter description"
-                    th:field="*{id}"
-                    rows ="5"
-                    type="textarea"
-            />    </textarea>
-          </div>
 
           <div class="box-footer">
             <button class="btn btn-primary" type="submit">
               Submit
             </button>
-          </div>
           </div>
         </form>
 
@@ -360,62 +156,7 @@
 </main>
 <div class="ttr-overlay"></div>
 <th:block th:insert="/fragments/admin_fragment/script"></th:block>
-<div>
-  <select class="form-select form-select-sm mb-3" id="cityvn" aria-label=".form-select-sm">
-    <option value="" selected>Ch?n t?nh thành</option>
-  </select>
 
-  <select class="form-select form-select-sm mb-3" id="districtvn" aria-label=".form-select-sm">
-    <option value="" selected>Ch?n qu?n huy?n</option>
-  </select>
-
-  <select class="form-select form-select-sm" id="wardvn" aria-label=".form-select-sm">
-    <option value="" selected>Ch?n ph??ng xã</option>
-  </select>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-<script>
-  var citis = document.getElementById("cityvn");
-  var districts = document.getElementById("districtvn");
-  var wards = document.getElementById("wardvn");
-  var Parameter = {
-    url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-    method: "GET",
-    responseType: "json",
-  };
-  var promise = axios(Parameter);
-  promise.then(function (result) {
-    renderCity(result.data);
-  });
-
-  function renderCity(data) {
-    for (const x of data) {
-      citis.options[citis.options.length] = new Option(x.Name, x.Id);
-    }
-    citis.onchange = function () {
-      districtvn.length = 1;
-      wardvn.length = 1;
-      if(this.value != ""){
-        const result = data.filter(n => n.Id === this.value);
-
-        for (const k of result[0].Districts) {
-          districtvn.options[districtvn.options.length] = new Option(k.Name, k.Id);
-        }
-      }
-    };
-    districtvn.onchange = function () {
-      wardvn.length = 1;
-      const dataCity = data.filter((n) => n.Id === citis.value);
-      if (this.value != "") {
-        const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
-
-        for (const w of dataWards) {
-          wards.options[wards.options.length] = new Option(w.Name, w.Id);
-        }
-      }
-    };
-  }
-</script>
 </body>
 <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
 <script>
@@ -424,7 +165,7 @@
       dom: 'rtip',
       columnDefs: [],
       pageLength: '6',
-      pagingType:'full_numbers',
+      pagingType: 'full_numbers',
     });
   });
 </script>

@@ -1,17 +1,15 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.entities.Slider;
-import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
 import fivemonkey.com.fitnessbackend.repository.SliderRepository;
-import fivemonkey.com.fitnessbackend.service.service.SliderService;
+import fivemonkey.com.fitnessbackend.service.SliderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
 
 @Controller
@@ -45,7 +43,7 @@ public class SliderController {
         return "redirect:/slider/management";
     }
     @GetMapping("/management")
-    public String getAllServiceType( Model model) {
+    public String getAllSlider( Model model) {
         List<Slider> sliderList=sliderService.getAllSlider();
         model.addAttribute("listSlider",sliderList);
         return "/management/SliderManagement/slider-list";

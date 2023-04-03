@@ -218,9 +218,15 @@
                                                     </button>
                                                 </div>
                                             </form>
+                                        </div>
+                                    </div>
+                                </div>
                     </div>
                 </div>
+<<<<<<< HEAD
             </div>
+=======
+>>>>>>> 813544e36c2f231c2725cdb645cd7189ae13041b
 </section>
 
 <!-- ============= HEADER-TITLE END ============= -->
@@ -418,25 +424,25 @@
 
 
 
-            </div>
-        </div>
-    </div>
+</div>
+</div>
+</div>
 
-    <script type="text/javascript">
-        function cancelForm() {
+<script type="text/javascript">
+    function cancelForm() {
+        window.location = "[[@{/user/listpt}]]";
+    }
+
+    function submitForm() {
+        if (confirm("Do you want to book this PT?") == true) {
+            document.getElementById('updateform1').submit
+
+        } else {
             window.location = "[[@{/user/listpt}]]";
         }
+    }
 
-        function submitForm() {
-            if (confirm("Do you want to book this PT?") == true) {
-                document.getElementById('updateform1').submit
-
-            } else {
-                window.location = "[[@{/user/listpt}]]";
-            }
-        }
-
-    </script>
+</script>
 </div>
 <!-- ============ S-TESTIMONIALS END ============ -->
 
