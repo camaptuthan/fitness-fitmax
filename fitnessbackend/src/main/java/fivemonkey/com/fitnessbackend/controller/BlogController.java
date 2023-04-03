@@ -134,8 +134,6 @@ public class BlogController {
         blog.setDate(new Date());
         blog.setUser(userService.getUserById(userDetail.getUser().getId()));
         blogRepository.save(blog);
-
-
         return "redirect:/blog";
     }
 

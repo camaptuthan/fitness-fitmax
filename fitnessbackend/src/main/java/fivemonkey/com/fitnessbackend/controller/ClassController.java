@@ -72,7 +72,7 @@ public class ClassController {
         model.addAttribute("related_class", classDTOListMap);
         model.addAttribute("class", classDTO);
 
-        return "class/profile";
+        return "user/class-detail";
     }
 
     @GetMapping("/management/classes")

@@ -13,6 +13,8 @@ public interface CityService {
 
     CityDTO getCityById(Long id);
 
+    City getCityByCityId(Long id);
+
     City getCityByName(String name);
 
     CityDTO getCityByAssistant(String email);
@@ -32,4 +34,8 @@ public interface CityService {
     List<City> getStudioCity(String cityName);
 
     List<City> getRegistrationCity();
+
+    List<CityDTO> getAllCityByKeyword(String keyword, int page);
+
+    int getTotalPageCity(String keyword);
 }
