@@ -1,10 +1,9 @@
-package fivemonkey.com.fitnessbackend.service.impl;
+package fivemonkey.com.fitnessbackend.service;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.DistrictDTO;
 import fivemonkey.com.fitnessbackend.entities.District;
 import fivemonkey.com.fitnessbackend.repository.DistrictRepository;
-import fivemonkey.com.fitnessbackend.service.service.DistrictService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DistrictServiceImpl implements DistrictService {
+public class DistrictService {
 
     @Autowired
     private DistrictRepository districtRepository;
@@ -25,42 +24,43 @@ public class DistrictServiceImpl implements DistrictService {
     @Autowired
     private SessionFactory sessionFactory;
 
-    @Override
     public List<DistrictDTO> getDistrictByCityId(Long id) {
-        return modelMapper.mapList(districtRepository.getDistrictsByCity(id), DistrictDTO.class);
+        return modelMapper.mapList(districtRepository.getDistrictsByCity(id), DistrictDTO.class);}
+
+    public List<District> getDistrictById(String id) {
+        return districtRepository.getDistrictsByCity(Long.valueOf(id));
     }
 
-    @Override
+      
     public District getDistrictByDistrictId(String id) {
         return districtRepository.getDistrictByDistrictId(Long.valueOf(id));
     }
 
-    @Override
+      
     public District getDistrictByName(String name) {
         return districtRepository.getDistrictsByName(name);
     }
 
-    @Override
+      
     public District createDistrict(District district) {
         return districtRepository.save(district);
     }
 
-    @Override
+      
     public District saveDistrict(District district) {
         return districtRepository.save(district);
     }
 
-    @Override
+      
     public District getDistrictByCityAndDistrict(String city, String district) {
         return districtRepository.getDistrictsByCityAndDistrict(city, district);
     }
 
-    @Override
+      
     public List<District> getNewDistrict(String city) {
         return districtRepository.getDistrictsByCity(Long.valueOf(city));
     }
 
-    @Override
     public List<DistrictDTO> getDistrictByCity(Long cityid, String keyword, int pageNumber) {
         int pageSize = 5;
         Session session = sessionFactory.openSession();
@@ -77,7 +77,6 @@ public class DistrictServiceImpl implements DistrictService {
         return modelMapper.mapList(query.getResultList(), DistrictDTO.class);
     }
 
-    @Override
     public int totalPageDistrictByCity(Long cityid, String keyword) {
         int pageSize = 5;
         Session session = sessionFactory.openSession();

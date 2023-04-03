@@ -1,5 +1,4 @@
 package fivemonkey.com.fitnessbackend.controller;
-
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.BlogDTO;
 import fivemonkey.com.fitnessbackend.entities.Blog;
@@ -7,9 +6,9 @@ import fivemonkey.com.fitnessbackend.entities.Category;
 import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
 import fivemonkey.com.fitnessbackend.repository.BlogRepository;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
-import fivemonkey.com.fitnessbackend.service.service.BlogService;
-import fivemonkey.com.fitnessbackend.service.service.CategoryService;
-import fivemonkey.com.fitnessbackend.service.service.UserService;
+import fivemonkey.com.fitnessbackend.service.BlogService;
+import fivemonkey.com.fitnessbackend.service.CategoryService;
+import fivemonkey.com.fitnessbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

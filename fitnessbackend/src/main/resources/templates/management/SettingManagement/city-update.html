@@ -19,10 +19,10 @@
 <main class="ttr-wrapper">
     <div class="container-fluid">
         <div class="db-breadcrumb">
-            <h4 class="breadcrumb-title">Class</h4>
+            <h4 class="breadcrumb-title">District</h4>
             <ul class="db-breadcrumb-list">
                 <li><a href="#"><i class="fa fa-home"></i>Home</a></li>
-                <li><a th:href="@{/class/management/classes}"><i class="fa fa-home"></i>Class</a></li>
+                <li><a th:href="@{/setting/management/city}"><i class="fa fa-home"></i>City</a></li>
             </ul>
         </div>
 
@@ -31,10 +31,10 @@
             <div class="col-lg-12 m-b30">
                 <div class="widget-box">
                     <div class="wc-title row">
-                        <h4>Class List</h4>
+                        <h4>District List</h4>
                         <div class="btn-light btn-outline-success ml-auto mr-3 row col-2">
                             <i class="fa fa-plus-circle" style="font-size:18px"></i>
-                            <spam clas="mb-5">Add new studio</spam>
+                            <spam clas="mb-5">Add new District</spam>
                             </a>
                         </div>
                     </div>
@@ -162,7 +162,7 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="singlebutton"></label>
                                     <div class="col-md-4">
-                                        <button class="btn btn-primary" id="singlebutton" name="singlebutton"
+                                        <button class="btn btn-success" id="singlebutton" name="singlebutton" style="background-color: #00a834"
                                                 type="submit">Update
                                         </button>
                                         <a class="btn btn-danger" th:href="@{/setting/management/city}">Cancel </a>

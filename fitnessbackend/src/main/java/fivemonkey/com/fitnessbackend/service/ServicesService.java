@@ -1,13 +1,10 @@
-package fivemonkey.com.fitnessbackend.service.impl;
+package fivemonkey.com.fitnessbackend.service;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
-import fivemonkey.com.fitnessbackend.dto.StudioDTO;
 import fivemonkey.com.fitnessbackend.entities.Services;
-import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.repository.ServiceTypeRepository;
 import fivemonkey.com.fitnessbackend.repository.ServicesRepository;
-import fivemonkey.com.fitnessbackend.service.service.ServicesService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -18,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ServicesServiceImpl implements ServicesService {
+public class ServicesService {
 
     @Autowired
     private ModelMapperConfiguration<Services, ServicesDTO> modelMapper;
@@ -32,7 +29,7 @@ public class ServicesServiceImpl implements ServicesService {
     @Autowired
     private ServiceTypeRepository serviceTypeRepository;
 
-    @Override
+          
     public void updatePackageImg(ServicesDTO servicesDTO) {
         Services services = serviceRepository.getPackageById(servicesDTO.getId());
         services.setImage(servicesDTO.getImage());
@@ -40,7 +37,7 @@ public class ServicesServiceImpl implements ServicesService {
 
     }
 
-    @Override
+          
     public ServicesDTO saveThumbnail(String thumbNail, String serviceId) {
         if (thumbNail.isBlank()) return null;
         Services services = serviceRepository.getPackageById(serviceId);
@@ -49,37 +46,37 @@ public class ServicesServiceImpl implements ServicesService {
         return modelMapper.map(serviceRepository.save(services), ServicesDTO.class);
     }
 
-    @Override
+          
     public List<ServicesDTO> getAllServices() {
         return modelMapper.mapList(serviceRepository.findAll(), ServicesDTO.class);
     }
 
-    @Override
+          
     public List<ServicesDTO> getAllPackages() {
         return modelMapper.mapList(serviceRepository.getServicesByPackage(), ServicesDTO.class);
     }
 
-    @Override
+          
     public ServicesDTO getPackageDTOById(String id) {
         return modelMapper.map(serviceRepository.getPackageById(id), ServicesDTO.class);
     }
 
-    @Override
+          
     public Services getPackageById(String id) {
         return serviceRepository.getPackageById(id);
     }
 
-    @Override
+          
     public List<ServicesDTO> getAllClasses() {
         return modelMapper.mapList(serviceRepository.getServicesByClass(), ServicesDTO.class);
     }
 
-    @Override
+          
     public List<ServicesDTO> getAllPTs() {
         return modelMapper.mapList(serviceRepository.getServicesByPT(), ServicesDTO.class);
     }
 
-    @Override
+          
     public List<ServicesDTO> getPackagesBy3Fields(@Param("keyword") String keyword,
                                                   @Param("cityname") String cityname,
                                                   @Param("category") Long category) {
@@ -98,7 +95,7 @@ public class ServicesServiceImpl implements ServicesService {
         return modelMapper.mapList(query1.getResultList(), ServicesDTO.class);
     }
 
-    @Override
+          
     public List<ServicesDTO> getPackagesBy4Fields(String keyword, String cityname, String studio, Long category,int page) {
         int pageSize = 5;
         Session session = sessionFactory.openSession();
@@ -121,7 +118,7 @@ public class ServicesServiceImpl implements ServicesService {
         return modelMapper.mapList(query.getResultList(), ServicesDTO.class);
     }
 
-    @Override
+          
     public int totalPackageDashboardPage(String keyword, String cityname, String studio, Long category) {
         int pageSize = 5;
         Session session = sessionFactory.openSession();
@@ -147,22 +144,22 @@ public class ServicesServiceImpl implements ServicesService {
         }
     }
 
-    @Override
+          
     public List<Services> getClassesByFields(String keyword, String cityname, String studio, Long category) {
         return null;
     }
 
-    @Override
+          
     public List<Services> getPTsByFields(String keyword, String cityname, String studio, Long category) {
         return null;
     }
 
-    @Override
+          
     public ServicesDTO getServiceById(String id) {
         return modelMapper.map(serviceRepository.getById(id), ServicesDTO.class);
     }
 
-    @Override
+          
     public Services addNewPackage(ServicesDTO s) {
         Services services = new Services();
         services.setId(s.getId());
@@ -176,37 +173,37 @@ public class ServicesServiceImpl implements ServicesService {
         return serviceRepository.save(services);
     }
 
-    @Override
+          
     public List<ServicesDTO> getServiceOfStudio(String id, Long idC) {
         return modelMapper.mapList(serviceRepository.getServicesByStudioIdAndCateId(id, idC), ServicesDTO.class);
     }
 
-    @Override
+          
     public List<ServicesDTO> getAllServiceOfStudio(String id) {
         return modelMapper.mapList(serviceRepository.getServicesByStudio(id), ServicesDTO.class);
     }
 
-    @Override
+          
     public List<ServicesDTO> getServicesByCity(String cityName) {
         return modelMapper.mapList(serviceRepository.getServicesByCity(cityName), ServicesDTO.class);
     }
 
-    @Override
+          
 
     public List<ServicesDTO> getServicesPT() {
         return modelMapper.mapList(serviceRepository.getServicesByPT(), ServicesDTO.class);
     }
 
-    @Override
+          
     public List<Services> getServicesById(String id) {
         return serviceRepository.getServicesById(id);}
-@Override
+          
     public boolean isServiceExistInStudio(String servicesId, String studioId) {
         return serviceRepository.isServiceExistInStudio(servicesId, studioId).isPresent();
 
     }
 
-    @Override
+          
     public boolean findCityStudioByService(String servicesId) {
         return serviceRepository.findStudioByService(servicesId).isPresent();
     }

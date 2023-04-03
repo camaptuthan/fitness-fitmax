@@ -1,5 +1,4 @@
-package fivemonkey.com.fitnessbackend.service.impl;
-
+package fivemonkey.com.fitnessbackend.service;
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.BlogDTO;
 import fivemonkey.com.fitnessbackend.entities.Blog;
@@ -8,7 +7,6 @@ import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.repository.BlogRepository;
 import fivemonkey.com.fitnessbackend.repository.CategoryRepository;
 import fivemonkey.com.fitnessbackend.repository.UserRepository;
-import fivemonkey.com.fitnessbackend.service.service.BlogService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -24,7 +22,7 @@ import java.util.List;
 
 
 @Service
-public class BlogServiceImpl implements BlogService {
+public class BlogService{
 
     @Autowired
     private BlogRepository blogRepository;
@@ -40,7 +38,7 @@ public class BlogServiceImpl implements BlogService {
     private SessionFactory sessionFactory;
 
     //get all blogs
-    @Override
+         
     public List<BlogDTO> findAllBlogs() {
         List<BlogDTO> blogDTOS = new ArrayList<>();
         List<Blog> blogs = blogRepository.findAll();
@@ -52,12 +50,12 @@ public class BlogServiceImpl implements BlogService {
     }
 
     //find blog by id
-    @Override
+         
     public BlogDTO findBlogDTOById(Long id) {
         return modelMapper.map(blogRepository.getById(id), BlogDTO.class);
     }
 
-    @Override
+         
     public Blog findBlogById(Long id) {
         return blogRepository.getById(id);
     }
@@ -75,12 +73,12 @@ public class BlogServiceImpl implements BlogService {
         return blog;
     }
 
-    @Override
+         
     public BlogDTO doBlog(BlogDTO blogDTO, User user, Category category) {
         return modelMapper.map(blogRepository.save(makeBlog(blogDTO, user, category)), BlogDTO.class);
     }
 
-    @Override
+         
     public String writeBlogToTextFile(BlogDTO blog) {
         try {
             Long blogId = blog.getId();
@@ -94,7 +92,7 @@ public class BlogServiceImpl implements BlogService {
         return "";
     }
 
-    @Override
+         
     public String readBlogFromTextFile(Blog blog) {
         if (blog.getDescription() != null) {
             try {
@@ -114,7 +112,7 @@ public class BlogServiceImpl implements BlogService {
         return "";
     }
 
-    @Override
+         
     public Blog update(BlogDTO b) {
         try {
             Blog blog = blogRepository.getById(b.getId());
@@ -130,21 +128,21 @@ public class BlogServiceImpl implements BlogService {
         return null;
     }
 
-    @Override
+         
     public void disableBlogById(Long id) {
         Blog blog = blogRepository.getById(id);
         blog.setStatus(0);
         blogRepository.save(blog);
     }
 
-    @Override
+         
     public void enableBlogById(Long id) {
         Blog blog = blogRepository.getById(id);
         blog.setStatus(1);
         blogRepository.save(blog);
     }
 
-    @Override
+         
     public List<Blog> findTop3NewestBlogs() {
         Session session = sessionFactory.openSession();
         String sql = "SELECT  b FROM Blog b ORDER BY b.date DESC";
@@ -154,7 +152,7 @@ public class BlogServiceImpl implements BlogService {
         return query.getResultList();
     }
 
-    @Override
+         
     public List<Blog> findBlogBy2Fields(String keyword, Long category, int pageNumber) {
         int pageSize = 3;
         Session session = sessionFactory.openSession();
@@ -171,7 +169,7 @@ public class BlogServiceImpl implements BlogService {
         return query.getResultList();
     }
 
-    @Override
+         
     public List<Blog> findMyBlogBy2Fields(Long userId, String keyword, Long category, int pageNumber) {
         int pageSize = 3;
         Session session = sessionFactory.openSession();
@@ -191,7 +189,7 @@ public class BlogServiceImpl implements BlogService {
         return query.getResultList();
     }
 
-    @Override
+         
     public List<Blog> getAllWaitingBlog(String keyword, Long category, int pageNumber) {
         int pageSize = 3;
         Session session = sessionFactory.openSession();
@@ -208,7 +206,7 @@ public class BlogServiceImpl implements BlogService {
         return query.getResultList();
     }
 
-    @Override
+         
     public int totalPageBy2Fields(String keyword, Long category) {
         int pageSize = 3;
         Session session = sessionFactory.openSession();
@@ -228,7 +226,7 @@ public class BlogServiceImpl implements BlogService {
         }
     }
 
-    @Override
+         
     public int myBlogtotalPage(Long userId, String keyword, Long category) {
         int pageSize = 3;
         Session session = sessionFactory.openSession();
@@ -251,7 +249,7 @@ public class BlogServiceImpl implements BlogService {
         }
     }
 
-    @Override
+         
     public int totalWaitingBlogPage(String keyword, Long category) {
         int pageSize = 3;
         Session session = sessionFactory.openSession();

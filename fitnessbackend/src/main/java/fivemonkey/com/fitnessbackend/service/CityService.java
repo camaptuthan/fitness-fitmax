@@ -1,11 +1,9 @@
-package fivemonkey.com.fitnessbackend.service.impl;
+package fivemonkey.com.fitnessbackend.service;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.CityDTO;
-import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.entities.City;
 import fivemonkey.com.fitnessbackend.repository.CityRepository;
-import fivemonkey.com.fitnessbackend.service.service.CityService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -15,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CityServiceImpl implements CityService {
+public class CityService {
 
     @Autowired
     private CityRepository cityRepository;
@@ -26,71 +24,69 @@ public class CityServiceImpl implements CityService {
     @Autowired
     private SessionFactory sessionFactory;
 
-    @Override
+        
     public List<CityDTO> getAllCities() {
         return modelMapper.mapList(cityRepository.findAll(), CityDTO.class);
     }
 
-    @Override
+        
     public CityDTO getCityById(Long id) {
         return modelMapper.map(cityRepository.getCityById(id), CityDTO.class);
     }
 
-    @Override
     public City getCityByCityId(Long id) {
         return cityRepository.getCityById(id);
     }
 
-    @Override
+
     public City getCityByName(String name) {
         return cityRepository.getCityByName(name);
     }
 
-    @Override
+        
     public CityDTO getCityByAssistant(String email) {
         return modelMapper.map(cityRepository.getCityByStudioManager(email), CityDTO.class);
     }
 
-    @Override
+        
     public CityDTO getCityByStudioManager(String email) {
         return modelMapper.map(cityRepository.getCityByStudioManager(email), CityDTO.class);
     }
 
-    @Override
+        
     public CityDTO getCityByUser(String email) {
         return modelMapper.map(cityRepository.getCityByUser(email), CityDTO.class);
     }
-    @Override
+        
     public List<CityDTO> getCities() {
         return modelMapper.mapList(cityRepository.findAll(), CityDTO.class);
     }
 
-    @Override
+        
     public City saveCity(City city) {
         return cityRepository.save(city);
     }
 
-    @Override
+        
     public City createCity(City city) {
         return cityRepository.save(city);
     }
 
-    @Override
+        
     public List<City> getNewCity() {
         return cityRepository.getNewCity();
     }
 
-    @Override
+        
     public List<City> getStudioCity(String cityName) {
         return cityRepository.getStudioCity(cityName);
     }
 
-    @Override
+        
     public List<City> getRegistrationCity() {
         return cityRepository.getRegistrationCity();
     }
 
-    @Override
     public List<CityDTO> getAllCityByKeyword(String keyword, int page) {
         int pageSize = 5;
         Session session = sessionFactory.openSession();
@@ -104,7 +100,6 @@ public class CityServiceImpl implements CityService {
         return modelMapper.mapList(query1.getResultList(), CityDTO.class);
     }
 
-    @Override
     public int getTotalPageCity(String keyword) {
         int pageSize = 5;
         Session session = sessionFactory.openSession();

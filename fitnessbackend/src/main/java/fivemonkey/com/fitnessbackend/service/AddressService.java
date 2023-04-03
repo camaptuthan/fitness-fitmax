@@ -1,4 +1,4 @@
-package fivemonkey.com.fitnessbackend.service.impl;
+package fivemonkey.com.fitnessbackend.service;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.CityDTO;
@@ -10,7 +10,7 @@ import fivemonkey.com.fitnessbackend.entities.Studio;
 import fivemonkey.com.fitnessbackend.repository.CityRepository;
 import fivemonkey.com.fitnessbackend.repository.DistrictRepository;
 import fivemonkey.com.fitnessbackend.repository.StudioRepository;
-import fivemonkey.com.fitnessbackend.service.service.AddressService;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AddressServiceImpl implements AddressService {
+public class AddressService {
 
     @Autowired
     private CityRepository cityRepository;
@@ -36,17 +36,17 @@ public class AddressServiceImpl implements AddressService {
 
     @Autowired
     private ModelMapperConfiguration<Studio, StudioDTO> modelMapperStudio;
-    @Override
+
     public List<CityDTO> getCities() {
         return modelMapperCity.mapList(cityRepository.findAll(), CityDTO.class);
     }
 
-    @Override
+
     public List<DistrictDTO> getDistrictsByCityName(String cityName) {
         return modelMapperDistrict.mapList(districtRepository.getDistrictByCityName(cityName), DistrictDTO.class);
     }
 
-    @Override
+
     public List<StudioDTO> getStudioByCity(String cityName) {
         return modelMapperStudio.mapList(studioRepository.getStudioByCity(cityName), StudioDTO.class);
     }
