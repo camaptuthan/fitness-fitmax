@@ -17,6 +17,8 @@ public class ClassDTO {
 
     private Date servicesDate;
 
+    private Date servicesUpdatedDate;
+
     private Float servicesPrice;
 
     private String servicesId;
@@ -40,6 +42,8 @@ public class ClassDTO {
     private Long servicesCityId;
 
     private String servicesStudioId;
+
+    private String servicesStudioName;
 
     private int servicesStatusType_id;
 
