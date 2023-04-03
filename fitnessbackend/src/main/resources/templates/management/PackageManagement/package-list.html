@@ -266,7 +266,31 @@
                                     </tr>
                                     </tbody>
                                 </table>
-
+                            </div>
+                            <div id="pagination">
+                                <nav>
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item" th:classappend="${currentPage - 1 == 0 ? 'disabled':''}"
+                                            th:if="${currentPage -1 > 0}">
+                                            <a class="page-link" th:href="@{/service/management/packages(page=${currentPage - 1},keyword=${currentKeyword},category=${currentCategory},city=${currentCity},studio=${currentStudio})}">
+                                                Prev
+                                            </a>
+                                        </li>
+                                        <li class="page-item" th:classappend="${currentPage == i}? 'active' :'' "
+                                            th:each="i: ${#numbers.sequence(1,totalPage)}">
+                                            <a class="page-link" th:href="@{/service/management/packages(page=${i},keyword=${currentKeyword},category=${currentCategory},city=${currentCity},studio=${currentStudio})}"
+                                               th:text="${i}">
+                                            </a>
+                                        </li>
+                                        <li class="page-item"
+                                            th:classappend="${currentPage == totalPage}  ? 'disabled':''"
+                                            th:if="${currentPage < totalPage}">
+                                            <a class="page-link" th:href="@{/service/management/packages(page=${currentPage + 1},keyword=${currentKeyword},category=${currentCategory},city=${currentCity},studio=${currentStudio})}">
+                                                Next
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
                     </div>
@@ -288,9 +312,10 @@
                 visible: false,
                 searchable: false
             }],
-            pagingType:'full_numbers',
+            pagingType: 'full_numbers',
             bLengthChange: false,
-            pageLength: 5,
+            paging: false,
+            info: false,
             searching: false,
 
         });

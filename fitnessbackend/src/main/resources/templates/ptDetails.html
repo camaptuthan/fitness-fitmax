@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="zxx"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
     <meta charset="UTF-8">
@@ -99,7 +99,132 @@
             </div>
         </form>
     </div>
+    <div th:if="${!hasRegistered}" sec:authorize="hasAnyAuthority('ROLE05')">
+
+        <!-- Button trigger modal -->
+        <div class="col-sm-12" style="text-align: center">
+            <button class="btn btn-primary"
+                    data-bs-target="#exampleModal" data-bs-toggle="modal" type="button">
+                Book PT
+            </button>
+            <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Cancel</button>
+        </div>
+
+        <!-- Modal -->
+        <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModal"
+             tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered" style="max-width: 60rem;">
+                <div class="modal-content" style="background-color: #202020 !important;">
+                    <div class="modal-header">
+                        <h2 class="title-decor">Registration <span>Form</span></h2>
+                    </div>
+                    <div class="modal-body">
+                        <form th:action="@{/user/ptdetail/{email}(email=${trainer.email})}" method="POST" th:object="${trainer}"
+                              th:if="${hasRegistered == false && #authentication.principal != null}">
+                            <section class="s-contacts"
+                                     style="background-image: url(/img/bg-contacts.svg); padding: 0">
+                                <div class="container">
+                                    <p class="slogan">
+                                    </p>
+                                    <div class="row">
+                                        <div class="col-md-5 col-lg-4">
+                                            <div class="contact-item">
+                                                <div class="contact-item-left">
+                                                    <img alt="img" src="/img/icon-1.svg">
+                                                    <h4>need help</h4>
+                                                </div>
+                                                <div class="contact-item-right">
+                                                    <ul class="contact-item-list">
+                                                        <li><a href="tel:18004886040">1-800-488-6040</a>
+                                                        </li>
+                                                        <li><a href="tel:18005784090">1-800-578-4090</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="contact-item">
+                                                <div class="contact-item-left">
+                                                    <img alt="img" src="/img/icon-2.svg">
+                                                    <h4>questions</h4>
+                                                </div>
+                                                <div class="contact-item-right">
+                                                    <ul class="contact-item-list">
+                                                        <li>
+                                                            <a href="mailto:team@gmail.com">team@gmail.com</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="mailto:help@gmail.com">help@gmail.com</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="contact-item">
+                                                <div class="contact-item-left">
+                                                    <img alt="img" src="/img/icon-3.svg">
+                                                    <h4>address</h4>
+                                                </div>
+                                                <div class="contact-item-right">
+                                                    <ul class="contact-item-list">
+                                                        <li>8500, Lorem Street, Chicago, IL, 55030</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7 col-lg-8">
+                                            <form id='contactform1' name="contactform">
+                                                <ul class="form-cover">
+                                                    <li class="inp-name">
+                                                        <label>Personal Trainer</label>
+                                                        <a id="name" style="color: yellow"
+                                                           th:utext="${trainer.userFirstName}+' '+${trainer.userLastName}"
+                                                           type="text"></a>
+                                                    </li>
+                                                    <li class="inp-name">
+                                                        <label>Email * </label>
+                                                        <input id="name2" name="your-email" th:value="${userEmail}"
+                                                               type="text">
+                                                    </li>
+                                                    <li class="inp-email">
+                                                        <label>Phone * </label>
+                                                        <input id="phone" name="your-phone" th:value="${userPhone}"
+                                                               type="phone" style="background-color: #272a31; color: #ffffff;  border-color: yellow; width: 100%";>
+                                                    </li>
+
+                                                    <li class="inp-number">
+                                                        <label>Number Of Training Sessions * </label>
+
+                                                        <select th:name="servicePt"
+                                                                style="background-color: #272a31; color: #ffffff;  border-color: yellow; width: 100%"; >
+                                                            <th:block th:each="service : ${listservice}">
+                                                                <option th:value="${service.id}" th:text="${service.name}"></option>
+                                                            </th:block>
+                                                        </select>
+
+                                                    </li>
+                                                </ul>
+                                                <div class="checkbox-wrap">
+                                                    <div class="checkbox-cover">
+                                                        <input type="checkbox">
+                                                        <p>By using this form you agree with the storage and
+                                                            handling of your data by this website.</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="btn-form-cover">
+                                                    <button class="btn" id="#submit1" type="submit">submit
+                                                    </button>
+                                                    <button class="btn btn-secondary" data-bs-dismiss="modal"
+                                                            type="button">Close
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                    </div>
+                </div>
 </section>
+
 <!-- ============= HEADER-TITLE END ============= -->
 
 <!-- ============= S-TRAINER-AWARDS ============= -->
@@ -293,301 +418,171 @@
     </div>
 </section>
 
-    <div th:if="${!hasRegistered  &&  #authentication.principal.user.role.id.equals('ROLE05')}">
 
-        <!-- Button trigger modal -->
-        <div class="col-sm-12" style="text-align: center">
-            <button class="btn btn-primary"
-                    data-bs-target="#exampleModal" data-bs-toggle="modal" type="button">
-                Book PT
-            </button>
-            <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Cancel</button>
-        </div>
 
-        <!-- Modal -->
-        <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModal"
-             tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered" style="max-width: 60rem;">
-                <div class="modal-content" style="background-color: #202020 !important;">
-                    <div class="modal-header">
-                        <h2 class="title-decor">Registration <span>Form</span></h2>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post" th:action="@{/registration/make}" th:object="${trainer}"
-                              th:if="${hasRegistered == false && #authentication.principal != null}">
-                            <section class="s-contacts"
-                                     style="background-image: url(/img/bg-contacts.svg); padding: 0">
-                                <div class="container">
-                                    <p class="slogan">
-                                    </p>
-                                    <div class="row">
-                                        <div class="col-md-5 col-lg-4">
-                                            <div class="contact-item">
-                                                <div class="contact-item-left">
-                                                    <img alt="img" src="/img/icon-1.svg">
-                                                    <h4>need help</h4>
-                                                </div>
-                                                <div class="contact-item-right">
-                                                    <ul class="contact-item-list">
-                                                        <li><a href="tel:18004886040">1-800-488-6040</a>
-                                                        </li>
-                                                        <li><a href="tel:18005784090">1-800-578-4090</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="contact-item">
-                                                <div class="contact-item-left">
-                                                    <img alt="img" src="/img/icon-2.svg">
-                                                    <h4>questions</h4>
-                                                </div>
-                                                <div class="contact-item-right">
-                                                    <ul class="contact-item-list">
-                                                        <li>
-                                                            <a href="mailto:team@gmail.com">team@gmail.com</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="mailto:help@gmail.com">help@gmail.com</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="contact-item">
-                                                <div class="contact-item-left">
-                                                    <img alt="img" src="/img/icon-3.svg">
-                                                    <h4>address</h4>
-                                                </div>
-                                                <div class="contact-item-right">
-                                                    <ul class="contact-item-list">
-                                                        <li>8500, Lorem Street, Chicago, IL, 55030</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-7 col-lg-8">
-                                            <form id='contactform1' name="contactform">
-                                                <ul class="form-cover">
-                                                    <li class="inp-name">
-                                                        <label>Personal Trainer</label>
-                                                        <a id="name" style="color: yellow"
-                                                           th:utext="${trainer.userFirstName}+' '+${trainer.userLastName}"
-                                                           type="text"></a>
-                                                    </li>
-                                                    <li class="inp-name">
-                                                        <label>Email * </label>
-                                                        <input id="name2" name="your-email" th:value="${userEmail}"
-                                                               type="text">
-                                                    </li>
-                                                    <li class="inp-email">
-                                                        <label>Phone * </label>
-                                                        <input id="phone" name="your-phone" th:value="${userPhone}"
-                                                               type="email">
-                                                    </li>
+</div>
+</div>
+</div>
 
-                                                    <li class="inp-number">
-                                                        <label>Number Of Training Sessions * </label>
-                                                        <input id="number" name="quantity" min="1" max="90"
-                                                               type="number" style="background-color: #272a31; color: #ffffff; border-color: yellow; width: 100%">
-                                                    </li>
+<script type="text/javascript">
+    function cancelForm() {
+        window.location = "[[@{/user/listpt}]]";
+    }
 
-                                                    <li class="inp-time">
-                                                        <label>Practice Time * </label>
-                                                        <input id="time" name="quantity" min="1" max="90"
-                                                               type="number" style="background-color: #272a31; color: #ffffff;  border-color: yellow; width: 100%">
-                                                    </li>
+    function submitForm() {
+        if (confirm("Do you want to book this PT?") == true) {
+            document.getElementById('updateform1').submit
 
-                                                    <li class="inp-text">
-                                                        <label>Message</label>
-                                                        <textarea id="comments1"
-                                                                  name="your-text"></textarea>
-                                                    </li>
-                                                </ul>
-                                                <div class="checkbox-wrap">
-                                                    <div class="checkbox-cover">
-                                                        <input type="checkbox">
-                                                        <p>By using this form you agree with the storage and
-                                                            handling of your data by this website.</p>
-                                                    </div>
-                                                </div>
+        } else {
+            window.location = "[[@{/user/listpt}]]";
+        }
+    }
 
-                                                <div class="btn-form-cover">
-                                                    <button class="btn" id="#submit1" type="submit">submit
-                                                    </button>
-                                                    <button class="btn btn-secondary" data-bs-dismiss="modal"
-                                                            type="button">Close
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                        </form>
-                    </div>
+</script>
+</div>
+<!-- ============ S-TESTIMONIALS END ============ -->
 
-                </div>
+<!-- ============== S-BEST-TRAINER ============== -->
+<!--<section class="s-best-trainer">-->
+<!--    <div class="container">-->
+<!--        <h2 class="title-decor">Best <span>Trainer</span></h2>-->
+<!--        <p class="slogan">Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor-->
+<!--            tincidunt lorem ut, venenatis dapibus miq.</p>-->
+<!--    </div>-->
+<!--    <div class="best-trainer-slider">-->
+<!--        <a href="trainer.html" class="best-trainer-slide">-->
+<!--            <div class="best-trainer-img">-->
+<!--                <img src="/img/single-1.jpg" alt="img">-->
+<!--            </div>-->
+<!--            <h3 class="name">Samanta</h3>-->
+<!--            <h3 class="surname">Piters</h3>-->
+<!--            <div class="prof">weightlifting</div>-->
+<!--        </a>-->
+<!--        <a href="trainer.html" class="best-trainer-slide">-->
+<!--            <div class="best-trainer-img">-->
+<!--                <img src="/img/single-2.jpg" alt="img">-->
+<!--            </div>-->
+<!--            <h3 class="name">Artur</h3>-->
+<!--            <h3 class="surname">Piters</h3>-->
+<!--            <div class="prof">weightlifting</div>-->
+<!--        </a>-->
+<!--        <a href="trainer.html" class="best-trainer-slide">-->
+<!--            <div class="best-trainer-img">-->
+<!--                <img src="/img/single-3.jpg" alt="img">-->
+<!--            </div>-->
+<!--            <h3 class="name">Kim</h3>-->
+<!--            <h3 class="surname">Piters</h3>-->
+<!--            <div class="prof">weightlifting</div>-->
+<!--        </a>-->
+<!--        <a href="trainer.html" class="best-trainer-slide">-->
+<!--            <div class="best-trainer-img">-->
+<!--                <img src="/img/single-4.jpg" alt="img">-->
+<!--            </div>-->
+<!--            <h3 class="name">Sam</h3>-->
+<!--            <h3 class="surname">Piters</h3>-->
+<!--            <div class="prof">weightlifting</div>-->
+<!--        </a>-->
+<!--        <a href="trainer.html" class="best-trainer-slide">-->
+<!--            <div class="best-trainer-img">-->
+<!--                <img src="/img/single-5.jpg" alt="img">-->
+<!--            </div>-->
+<!--            <h3 class="name">Anna</h3>-->
+<!--            <h3 class="surname">Piters</h3>-->
+<!--            <div class="prof">weightlifting</div>-->
+<!--        </a>-->
+<!--    </div>-->
+<!--</section>-->
+<!-- ============ S-BEST-TRAINER END ============ -->
+
+<!-- ================== FOOTER ================== -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-lg-3 footer-item-logo">
+                <a href="index-2.html" class="logo-footer"><img src="/img/footer-logo2.svg" alt="logo"></a>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p>
+                <ul class="social-list">
+                    <li><a target="_blank" href="https://www.facebook.com/rovadex"><i class="fa fa-facebook"
+                                                                                      aria-hidden="true"></i></a>
+                    </li>
+                    <li><a target="_blank" href="https://twitter.com/RovadexStudio"><i class="fa fa-twitter"
+                                                                                       aria-hidden="true"></i></a>
+                    </li>
+                    <li><a target="_blank" href="https://www.youtube.com/"><i class="fa fa-youtube"
+                                                                              aria-hidden="true"></i></a></li>
+                    <li><a target="_blank" href="https://www.instagram.com/rovadex"><i class="fa fa-instagram"
+                                                                                       aria-hidden="true"></i></a>
+                    </li>
+                </ul>
             </div>
-        </div>
-
-        <script type="text/javascript">
-            function cancelForm() {
-                window.location = "[[@{/user/listpt}]]";
-            }
-
-            function submitForm() {
-                if (confirm("Do you want to book this PT?") == true) {
-                    document.getElementById('updateform1').submit
-
-                } else {
-                    window.location = "[[@{/user/listpt}]]";
-                }
-            }
-
-        </script>
-    </div>
-    <!-- ============ S-TESTIMONIALS END ============ -->
-
-    <!-- ============== S-BEST-TRAINER ============== -->
-    <!--<section class="s-best-trainer">-->
-    <!--    <div class="container">-->
-    <!--        <h2 class="title-decor">Best <span>Trainer</span></h2>-->
-    <!--        <p class="slogan">Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor-->
-    <!--            tincidunt lorem ut, venenatis dapibus miq.</p>-->
-    <!--    </div>-->
-    <!--    <div class="best-trainer-slider">-->
-    <!--        <a href="trainer.html" class="best-trainer-slide">-->
-    <!--            <div class="best-trainer-img">-->
-    <!--                <img src="/img/single-1.jpg" alt="img">-->
-    <!--            </div>-->
-    <!--            <h3 class="name">Samanta</h3>-->
-    <!--            <h3 class="surname">Piters</h3>-->
-    <!--            <div class="prof">weightlifting</div>-->
-    <!--        </a>-->
-    <!--        <a href="trainer.html" class="best-trainer-slide">-->
-    <!--            <div class="best-trainer-img">-->
-    <!--                <img src="/img/single-2.jpg" alt="img">-->
-    <!--            </div>-->
-    <!--            <h3 class="name">Artur</h3>-->
-    <!--            <h3 class="surname">Piters</h3>-->
-    <!--            <div class="prof">weightlifting</div>-->
-    <!--        </a>-->
-    <!--        <a href="trainer.html" class="best-trainer-slide">-->
-    <!--            <div class="best-trainer-img">-->
-    <!--                <img src="/img/single-3.jpg" alt="img">-->
-    <!--            </div>-->
-    <!--            <h3 class="name">Kim</h3>-->
-    <!--            <h3 class="surname">Piters</h3>-->
-    <!--            <div class="prof">weightlifting</div>-->
-    <!--        </a>-->
-    <!--        <a href="trainer.html" class="best-trainer-slide">-->
-    <!--            <div class="best-trainer-img">-->
-    <!--                <img src="/img/single-4.jpg" alt="img">-->
-    <!--            </div>-->
-    <!--            <h3 class="name">Sam</h3>-->
-    <!--            <h3 class="surname">Piters</h3>-->
-    <!--            <div class="prof">weightlifting</div>-->
-    <!--        </a>-->
-    <!--        <a href="trainer.html" class="best-trainer-slide">-->
-    <!--            <div class="best-trainer-img">-->
-    <!--                <img src="/img/single-5.jpg" alt="img">-->
-    <!--            </div>-->
-    <!--            <h3 class="name">Anna</h3>-->
-    <!--            <h3 class="surname">Piters</h3>-->
-    <!--            <div class="prof">weightlifting</div>-->
-    <!--        </a>-->
-    <!--    </div>-->
-    <!--</section>-->
-    <!-- ============ S-BEST-TRAINER END ============ -->
-
-    <!-- ================== FOOTER ================== -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6 col-lg-3 footer-item-logo">
-                    <a href="index-2.html" class="logo-footer"><img src="/img/footer-logo2.svg" alt="logo"></a>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p>
-                    <ul class="social-list">
-                        <li><a target="_blank" href="https://www.facebook.com/rovadex"><i class="fa fa-facebook"
-                                                                                          aria-hidden="true"></i></a>
-                        </li>
-                        <li><a target="_blank" href="https://twitter.com/RovadexStudio"><i class="fa fa-twitter"
-                                                                                           aria-hidden="true"></i></a>
-                        </li>
-                        <li><a target="_blank" href="https://www.youtube.com/"><i class="fa fa-youtube"
-                                                                                  aria-hidden="true"></i></a></li>
-                        <li><a target="_blank" href="https://www.instagram.com/rovadex"><i class="fa fa-instagram"
-                                                                                           aria-hidden="true"></i></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-sm-6 col-lg-3 footer-item footer-item-list">
-                    <h3>Links</h3>
-                    <ul class="footer-link">
-                        <li><a href="#">Sed ut perspiciatis unde</a></li>
-                        <li><a href="#">Omnis iste natus error sit</a></li>
-                        <li><a href="#">Voluptatem accusantium</a></li>
-                        <li><a href="#">Doloremque laudantium</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-6 col-lg-3 footer-item">
-                    <h3>Contact us</h3>
-                    <ul class="footer-cont">
-                        <li><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:18004886040">1-800-488-6040</a>
-                        </li>
-                        <li><i class="fa fa-envelope" aria-hidden="true"></i><a href="mailto:crossFit@gmail.com">CrossFit@gmail.com</a>
-                        </li>
-                        <li><i class="fa fa-map-marker" aria-hidden="true"></i><a href="contacts.html">London,Street
-                            225r.21</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-6 col-lg-3 footer-item">
-                    <h3>Blog</h3>
-                    <ul class="footer-blog">
-                        <li>
-                            <a href="user/blog.html" class="img-cover"><img src="/img/footer-icon-1.jpg" alt="img"></a>
-                            <div class="footer-blog-info">
-                                <div class="name"><a href="user/blog.html">Sed ut perspiciatis</a></div>
-                                <p>Omnis iste natus error sit voluptatem…</p>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="user/blog.html" class="img-cover"><img src="/img/footer-icon-2.jpg" alt="img"></a>
-                            <div class="footer-blog-info">
-                                <div class="name"><a href="user/blog.html">Sed ut perspiciatis</a></div>
-                                <p>Omnis iste natus error sit voluptatem…</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+            <div class="col-sm-6 col-lg-3 footer-item footer-item-list">
+                <h3>Links</h3>
+                <ul class="footer-link">
+                    <li><a href="#">Sed ut perspiciatis unde</a></li>
+                    <li><a href="#">Omnis iste natus error sit</a></li>
+                    <li><a href="#">Voluptatem accusantium</a></li>
+                    <li><a href="#">Doloremque laudantium</a></li>
+                </ul>
             </div>
-            <div class="footer-bottom">
-                <div class="copyright"><a href="#" target="_blank"></a></div>
-                <ul class="footer-menu">
-                    <li><a href="index-2.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="user/blog.html">News</a></li>
-                    <li><a href="contacts.html">Contacts</a></li>
+            <div class="col-sm-6 col-lg-3 footer-item">
+                <h3>Contact us</h3>
+                <ul class="footer-cont">
+                    <li><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:18004886040">1-800-488-6040</a>
+                    </li>
+                    <li><i class="fa fa-envelope" aria-hidden="true"></i><a href="mailto:crossFit@gmail.com">CrossFit@gmail.com</a>
+                    </li>
+                    <li><i class="fa fa-map-marker" aria-hidden="true"></i><a href="contacts.html">London,Street
+                        225r.21</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-6 col-lg-3 footer-item">
+                <h3>Blog</h3>
+                <ul class="footer-blog">
+                    <li>
+                        <a href="user/blog.html" class="img-cover"><img src="/img/footer-icon-1.jpg" alt="img"></a>
+                        <div class="footer-blog-info">
+                            <div class="name"><a href="user/blog.html">Sed ut perspiciatis</a></div>
+                            <p>Omnis iste natus error sit voluptatem…</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="user/blog.html" class="img-cover"><img src="/img/footer-icon-2.jpg" alt="img"></a>
+                        <div class="footer-blog-info">
+                            <div class="name"><a href="user/blog.html">Sed ut perspiciatis</a></div>
+                            <p>Omnis iste natus error sit voluptatem…</p>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
-    </footer>
-    <!-- ================ FOOTER END ================ -->
+        <div class="footer-bottom">
+            <div class="copyright"><a href="#" target="_blank"></a></div>
+            <ul class="footer-menu">
+                <li><a href="index-2.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="user/blog.html">News</a></li>
+                <li><a href="contacts.html">Contacts</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+<!-- ================ FOOTER END ================ -->
 
-    <!--=================== TO TOP ===================-->
-    <a class="to-top" href="#home">
-        <i class="fa fa-chevron-up" aria-hidden="true"></i>
-    </a>
-    <!--================= TO TOP END =================-->
+<!--=================== TO TOP ===================-->
+<a class="to-top" href="#home">
+    <i class="fa fa-chevron-up" aria-hidden="true"></i>
+</a>
+<!--================= TO TOP END =================-->
 
-    <!--=================== SCRIPT	===================-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-            crossorigin="anonymous"></script>
-    <script th:src="@{/js/slick.min.js}"></script>
-    <script th:src="@{/js/rx-lazy.js}"></script>
-    <script th:src="@{/js/parallax.min.js}"></script>
-    <script th:src="@{/js/scripts.js}"></script>
+<!--=================== SCRIPT	===================-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+<script th:src="@{/js/slick.min.js}"></script>
+<script th:src="@{/js/rx-lazy.js}"></script>
+<script th:src="@{/js/parallax.min.js}"></script>
+<script th:src="@{/js/scripts.js}"></script>
 </body>
 
 </html>

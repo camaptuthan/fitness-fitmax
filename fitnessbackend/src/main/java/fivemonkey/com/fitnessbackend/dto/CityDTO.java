@@ -16,4 +16,5 @@ public class CityDTO {
 
     private String name;
 
+    private String type;
 }

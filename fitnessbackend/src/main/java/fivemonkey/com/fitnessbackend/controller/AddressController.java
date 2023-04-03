@@ -2,9 +2,11 @@ package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.dto.CityDTO;
 import fivemonkey.com.fitnessbackend.dto.DistrictDTO;
+import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
 import fivemonkey.com.fitnessbackend.dto.StudioDTO;
-import fivemonkey.com.fitnessbackend.service.service.AddressService;
-import fivemonkey.com.fitnessbackend.service.service.StudioService;
+import fivemonkey.com.fitnessbackend.service.AddressService;
+import fivemonkey.com.fitnessbackend.service.ServicesService;
+import fivemonkey.com.fitnessbackend.service.StudioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,9 @@ import java.util.List;
 public class AddressController {
     @Autowired
     private AddressService addressService;
+
+    @Autowired
+    private ServicesService servicesService;
 
     @Autowired
     private StudioService studioService;
@@ -40,6 +45,25 @@ public class AddressController {
     @ResponseBody
     @GetMapping("/studio/{city}")
     public List<StudioDTO> getStudioByCityId(@PathVariable("city") String cityName) {
-        return cityName.equals("-1") ? studioService.getAllStudio() : studioService.getAllStudiosByCity(cityName);
+        return addressService.getStudioByCity(cityName);
+
     }
+
+    @ResponseBody
+    @GetMapping("/services/{cityid}")
+    public List<ServicesDTO> getServices(@PathVariable("cityid") String cityName) {
+        return servicesService.getServicesByCity(cityName);
+    }
+
+    @ResponseBody
+    @GetMapping("/studio/{serviceid}/{cityid}")
+    public List<StudioDTO> getStudio(@PathVariable("serviceid") String serviceId,
+                                     @PathVariable("cityid") String cityName) {
+        boolean hasStudio = servicesService.findCityStudioByService(serviceId);
+        if(hasStudio == false){
+        return studioService.getAllByCity(cityName);
+    }
+        else {
+            return studioService.listStudioByService(serviceId);
+        }}
 }

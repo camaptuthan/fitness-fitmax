@@ -72,9 +72,10 @@
                                 <span class="post-category"><i class="fa fa-tag"></i><a
                                         th:text="${blog.categoryName}"></a></span>
                                 <span class="post-status">
-                                    <a th:if="${blog.status == 0}">Waiting</a>
-                                    <a th:if="${blog.status == 1}">Approved</a>
-                                    <a th:if="${blog.status == 2}">Expired</a>
+                                    <a th:if="${blog.status == 0}" style="color: #1a73e8">Waiting</a>
+                                    <a th:if="${blog.status == 1}" style="color: #00a834">Approved</a>
+                                    <a th:if="${blog.status == 2}" style="color: #bd081d">Rejected</a>
+                                    <a th:if="${blog.status == 3}" style="color: #d8a409">Expired</a>
                                 </span>
 
                             </div>

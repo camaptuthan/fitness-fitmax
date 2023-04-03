@@ -3,6 +3,9 @@ package fivemonkey.com.fitnessbackend.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
@@ -23,6 +26,25 @@ public class Trainee {
     @Column(name = "weight")
     private Double weight;
 
+    @Column(name = "status", nullable = false)
+    private boolean status;
+
+    @Column(name = "city_switch")
+    private String citySwitch;
+
+    @Column(name = "studio_switch")
+    private String studioSwitch;
+
+    @Column(name = "service_switch")
+    private String serviceSwitch;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "created_date")
+    private Date date;
+    @Min(value = 0)
+    @Max(value = 3)
+    @Column(name = "status_sw",nullable = false)
+    private int statusSw;
     //trainee-tracking relationship
     @OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY)
     private List<Tracking> trackings;

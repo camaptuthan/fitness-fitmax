@@ -35,7 +35,7 @@
 <!-- =============== HEADER END =============== -->
 <div class="container mt-5" style="min-height: 800px;">
     <section class="s-training-schedule p-0 pb-5"
-             style="background-image: url(/assets/img/bg-table-1.svg);">
+             style="background-image: url(/img/bg-table-1.svg);">
         <div class="container">
             <div class="training-schedule-cover">
                 <div class="training-schedule-table">
@@ -60,8 +60,11 @@
                                     <div class="date" th:text="${registration.date}"></div>
                                 </td>
                                 <td>
-                                    <div class="name text-light" th:text="${registration.status}">
-
+                                    <div th:if="${registration.status==0}" class="name text-light" th:text="Pending">
+                                    </div>
+                                    <div th:if="${registration.status==1}" class="name text-light" th:text="Completed">
+                                    </div>
+                                    <div th:if="${registration.status==2}" class="name text-light" th:text="Cancel">
                                     </div>
                                 </td>
                                 <td>
@@ -89,29 +92,29 @@
                                                             type="button"></button>
                                                 </div>
                                                 <div class="modal-body text-white">
-                                                     <div class="container-fluid">
-                                                         <div class="row">
-                                                             <div class="col-3">
-                                                                    Service ID:
-                                                             </div>
-                                                             <div class="col-3" th:text="${registration.servicesId}"></div>
-                                                             <div class="col-3">
-                                                                 Service Name:
-                                                             </div>
-                                                             <div class="col-3" th:text="${registration.servicesName}"></div>
-                                                         </div>
+                                                    <div class="container-fluid">
+                                                        <div class="row">
+                                                            <div class="col-3">
+                                                                Service ID:
+                                                            </div>
+                                                            <div class="col-3" th:text="${registration.servicesId}"></div>
+                                                            <div class="col-3">
+                                                                Service Name:
+                                                            </div>
+                                                            <div class="col-3" th:text="${registration.servicesName}"></div>
+                                                        </div>
 
-                                                         <div class="row">
-                                                             <div class="col-3">
-                                                                 Approved By:
-                                                             </div>
-                                                             <div class="col-3" th:text="${registration.traineeEmail}"></div>
-                                                             <div class="col-3">
-                                                                 Assigned To:
-                                                             </div>
-                                                             <div class="col-3" th:text="${registration.traineeEmail}"></div>
-                                                         </div>
-                                                     </div>
+                                                        <div class="row">
+                                                            <div class="col-3">
+                                                                Approved By:
+                                                            </div>
+                                                            <div class="col-3" th:text="${registration.traineeEmail}"></div>
+                                                            <div class="col-3">
+                                                                Assigned To:
+                                                            </div>
+                                                            <div class="col-3" th:text="${registration.traineeEmail}"></div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button class="btn" data-bs-dismiss="modal" type="button">Close
@@ -198,3 +201,4 @@
         });
     });
 </script>
+

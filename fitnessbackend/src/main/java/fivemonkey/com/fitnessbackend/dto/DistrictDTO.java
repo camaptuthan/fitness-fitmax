@@ -10,6 +10,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DistrictDTO {
+
     private Long id;
+
     private String name;
+
+    private String type;
 }
