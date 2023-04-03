@@ -52,7 +52,7 @@
                 </li>
                 <li>
                     <a class="ttr-material-button" href="/blog/management">
-                        <span class="ttr-icon"><i class="ti-settings"></i></span>
+                        <span class="ttr-icon"><i class="ti-layout-accordion-list"></i></span>
                         <span class="ttr-label">Blog</span>
                     </a>
                 </li>
@@ -61,6 +61,21 @@
                         <span class="ttr-icon"><i class="ti-layout-accordion-list"></i></span>
                         <span class="ttr-label">Slider</span>
                     </a>
+                </li>
+                <li>
+                    <a href="add-listing.html" class="ttr-material-button">
+                        <span class="ttr-icon"><i class="ti-settings"></i></span>
+                        <span class="ttr-label">Setting</span>
+                        <span class="ttr-arrow-icon"><i class="fa fa-angle-down"></i></span>
+                    </a>
+                    <ul>
+                        <li>
+                            <a th:href="@{/setting/management/city}" class="ttr-material-button"><span class="ttr-label">City/District</span></a>
+                        </li>
+                        <li>
+                            <a href="teacher-profile.html" class="ttr-material-button"><span class="ttr-label">Category</span></a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="ttr-seperate"></li>
             </ul>

@@ -2,29 +2,31 @@ package fivemonkey.com.fitnessbackend.service;
 
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.ClassDTO;
-import fivemonkey.com.fitnessbackend.entities.Clazz;
-import fivemonkey.com.fitnessbackend.entities.Services;
-import fivemonkey.com.fitnessbackend.entities.User;
+import fivemonkey.com.fitnessbackend.entities.*;
 import fivemonkey.com.fitnessbackend.repository.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClassService {
+
+    private int totalPage = -1;
     @Autowired
     private ClassRepository classRepository;
 
     @Autowired
     private CityRepository cityRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private ServicesRepository servicesRepository;
@@ -52,12 +54,47 @@ public class ClassService {
         return modelMapper.mapList(classRepository.findAll(), ClassDTO.class);
     }
 
-       
-    public List<ClassDTO> getByUserRole(User user, int currentPage, int size) {
-        Pageable pageable = currentPage == 0 || size == 0 ? Pageable.unpaged() : PageRequest.of(currentPage - 1, size, Sort.by("services.date").descending());
-        List<Clazz> clazzes = user.getStudio() == null ? classRepository.findAll(pageable).getContent() : classRepository.getClazzByUserEmail(user.getEmail(), pageable).getContent();
-        assert clazzes != null;
-        return modelMapper.mapList(clazzes, ClassDTO.class);
+     
+    public List<ClassDTO> getAllRelatedClass(String serviceId) {
+        Clazz clazz = classRepository.getClazzByServices(serviceId);
+        List<Clazz> classes = classRepository.getAllClass();
+        classes = classes.stream().filter(clazzItem -> {
+            Services currentServices = clazz.getServices();
+            Services itemServices = clazzItem.getServices();
+            if (currentServices.getId().equals(itemServices.getId())) return false;
+            return currentServices.getStudio().getId().equals(itemServices.getStudio().getId())
+                    || currentServices.getCity().getId().equals(itemServices.getCity().getId());
+        }).collect(Collectors.toList());
+        return modelMapper.mapList(classes, ClassDTO.class);
+    }
+
+    
+    public List<ClassDTO> getByUserRole(User user, int currentPage, String[] keywords) {
+        int size = 6;
+        List<Clazz> classes = user.getStudio() == null ? classRepository.findAll(Sort.by(Sort.Direction.DESC, "services.date")) : classRepository.getClazzByUserEmail(user.getEmail());
+
+        classes.sort((o1, o2) -> o2.getServices().getDate().compareTo(o1.getServices().getDate()));
+        for (String word : keywords) {
+            if (word.isEmpty()) continue;
+            classes = classes.stream().filter(clazz -> {
+                Studio studio = clazz.getServices().getStudio();
+                City city = clazz.getServices().getCity();
+                if (studio == null || city == null) return false;
+                return studio.getId().equals(word)
+                        || city.getName().equals(word)
+                        || String.valueOf(clazz.getServices().getStatus()).equals(word);
+            }).collect(Collectors.toList());
+        }
+
+
+        this.totalPage = classes.isEmpty() ? 1 : classes.size() % size == 0 ? classes.size() / size : classes.size() / size + 1;
+
+        return modelMapper.mapList(currentPage == 0 ? classes : classes.subList((currentPage - 1) * size, Math.min((++currentPage - 1) * size, classes.size())), ClassDTO.class);
+    }
+
+   
+    public int getTotalPage() {
+        return this.totalPage;
     }
 
        
@@ -69,8 +106,10 @@ public class ClassService {
         services.setPrice(classDTO.getServicesPrice());
         services.setName(classDTO.getServicesName());
         services.setDes(classDTO.getServicesDes());
-        services.setStatus(classDTO.getServicesStatus());
+        services.setUpdatedDate(new Date());
+        services.setStatus(services.getId() != null ? classDTO.getServicesStatus() : 2);
         if (services.getId() == null) {
+            services.setCategory(categoryRepository.getById(3L));
             services.setServiceType(serviceTypeRepository.getServiceTypeById(3L));
             services.setDuration(10);
             services.setUser(userRepository.getUserByEmail(user.getEmail()));

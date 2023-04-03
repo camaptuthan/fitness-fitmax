@@ -1168,7 +1168,7 @@ textarea {
     font-family: "Poppins", sans-serif !important;
     background-color: #272a31;
     border: 0.5px solid transparent;
-    border-color: #ffff00;
+    border-color: white;
     color: #fff;
     font-weight: 400;
     transition: 0.25s ease-in;
@@ -6517,4 +6517,15 @@ blockquote:before {
     .widget-instagram li img {
         height: 100px;
     }
+}
+
+
+.form-select {
+    background-color: #202020;
+    color: white;
+}
+
+.form-select:focus {
+    border-color: #f23849;
+    box-shadow: unset;
 }

@@ -1,13 +1,14 @@
 package fivemonkey.com.fitnessbackend.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-
-import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
-
-import java.util.*;
+import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor

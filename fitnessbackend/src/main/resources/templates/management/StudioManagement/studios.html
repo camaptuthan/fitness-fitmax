@@ -113,12 +113,8 @@
                                 <td th:text="${s.address}"></td>
                                 <td th:text="${s.getManagerEmail()}"></td>
                                 <td th:text="${s.contact}"></td>
-                                <span th:if="${s.status == true}">
-                        <td>Active</td>
-                    </span>
-                                <span th:if="${s.status == false}">
-                    <td>Inactive</td>
-                    </span>
+                                <span th:if="${s.status == true}"><td>Active</td></span>
+                                <span th:if="${s.status == false}"><td>Inactive</td></span>
                                 <td>
                                     <a class="edit" data-toggle="tooltip"
                                        th:href="@{/studio/management/studios/edit/{id} (id=${s.id})}"
@@ -185,7 +181,9 @@
                 visible: false,
                 searchable: false
             }],
-            pagingType:'full_numbers',
+            paging: false,
+            info: false,
+            pagingType: 'full_numbers',
             bLengthChange: false,
             pageLength: 5,
             searching: false,

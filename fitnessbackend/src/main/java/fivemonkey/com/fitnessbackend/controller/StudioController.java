@@ -1,8 +1,9 @@
 package fivemonkey.com.fitnessbackend.controller;
+
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.CategoryDTO;
-import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
 import fivemonkey.com.fitnessbackend.dto.CityDTO;
+import fivemonkey.com.fitnessbackend.dto.ServicesDTO;
 import fivemonkey.com.fitnessbackend.dto.StudioDTO;
 import fivemonkey.com.fitnessbackend.entities.City;
 import fivemonkey.com.fitnessbackend.entities.District;
