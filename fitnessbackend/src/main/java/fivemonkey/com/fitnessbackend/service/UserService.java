@@ -13,6 +13,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -216,19 +217,16 @@ public class UserService {
         String content = "Dear " + user.getFirstName() + user.getLastName() + ",<br>"
                 + "Please click the link below to verify your registration:<br>"
                 + "<h3><a href=\"" + verifyURL + "\" >VERIFY</a></h3>"
-                + "Password:123456 <br>"
+                + "<br>"
                 + "Thank you,<br>"
                 + "From FSM.";
-
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-        helper.setFrom(fromAddress, senderName);
-        helper.setTo(toAddress);
-        helper.setSubject(subject);
-        helper.setText(content, true);
-        mailSender.send(message);
-
-
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
+            helper.setFrom(fromAddress, senderName);
+            helper.setTo(toAddress);
+            helper.setSubject(subject);
+            helper.setText(content, true);
+            mailSender.send(message);
     }
 
 
@@ -272,13 +270,18 @@ public class UserService {
                 + "Thank you,<br>"
                 + "From FSM.";
 
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-        helper.setFrom(fromAddress, senderName);
-        helper.setTo(toAddress);
-        helper.setSubject(subject);
-        helper.setText(content, true);
-        mailSender.send(message);
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
+            helper.setFrom(fromAddress, senderName);
+            helper.setTo(toAddress);
+            helper.setSubject(subject);
+            helper.setText(content, true);
+            mailSender.send(message);
+        } catch (MailException e) {
+            e.printStackTrace();
+        }
+
     }
 
     
@@ -309,12 +312,8 @@ public class UserService {
         return userRepository.getCountOfTrainer("ROLE04");
     }
 
-     
-    public List<User> listAllTrainer(String role) {
-        return null;
-    }
 
-     
+
     public List<UserDTO> listUserByManage(String studioId, String keyword, String roleId) {
         List<UserDTO> userList = null;
         List<Registration> registrationList = null;

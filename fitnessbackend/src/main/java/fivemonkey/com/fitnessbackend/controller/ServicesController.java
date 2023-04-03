@@ -232,7 +232,7 @@ public class ServicesController {
 
     //update package b2
     @PostMapping("/management/update-package/{id}")
-    public String PackageUpdate(@PathVariable("id") String id, @AuthenticationPrincipal UserDetail userDetail,
+    public String updatePackage(@PathVariable("id") String id, @AuthenticationPrincipal UserDetail userDetail,
                                 @RequestParam(value = "status_type_id", required = false) String status_type_id,
                                 @RequestParam(value = "city", required = false) String cityname,
                                 @RequestParam(value = "studio", required = false) String studio,
