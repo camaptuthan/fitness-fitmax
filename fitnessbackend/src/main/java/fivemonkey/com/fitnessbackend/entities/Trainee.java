@@ -49,6 +49,10 @@ public class Trainee {
     @OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY)
     private List<Tracking> trackings;
 
+    //trainee-history relationship
+    @OneToMany(mappedBy = "trainee", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<History> histories;
+
     //trainee-user relationship
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "trainee_id", referencedColumnName = "user_id", unique = true)

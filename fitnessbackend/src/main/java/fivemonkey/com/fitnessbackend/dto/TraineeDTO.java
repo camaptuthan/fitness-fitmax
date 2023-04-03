@@ -34,6 +34,7 @@ public class TraineeDTO {
     private String serviceSwitch;
     private int status;
 
+    private int statusSw;
     private String userStudioName;
 
     private String userStudioId;
@@ -44,4 +45,8 @@ public class TraineeDTO {
     private String userFirstName;
 
     private String userCityName;
+
+    private  String userServiceName;
+
+
 }

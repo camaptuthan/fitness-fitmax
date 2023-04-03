@@ -47,7 +47,7 @@ public interface ServicesService {
     List<ServicesDTO> getServicesByCity(String cityName);
 
     List<ServicesDTO> getServicesPT();
-    List<Services> getServicesById(String id);
+   Services getServicesById(String id);
 
 
     boolean isServiceExistInStudio(String servicesId, String studioId);

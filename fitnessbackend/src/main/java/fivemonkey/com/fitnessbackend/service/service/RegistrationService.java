@@ -48,4 +48,6 @@ public interface RegistrationService {
 
     Registration getRegistrationByUser(String traineeEmail);
 
+    List<RegistrationDTO> getListRegistrationByUser(String traineeEmail);
+
 }

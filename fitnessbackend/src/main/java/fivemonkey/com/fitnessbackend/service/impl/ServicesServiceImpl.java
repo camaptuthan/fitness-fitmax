@@ -198,7 +198,7 @@ public class ServicesServiceImpl implements ServicesService {
     }
 
     @Override
-    public List<Services> getServicesById(String id) {
+    public Services getServicesById(String id) {
         return serviceRepository.getServicesById(id);}
 @Override
     public boolean isServiceExistInStudio(String servicesId, String studioId) {

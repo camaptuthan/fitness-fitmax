@@ -98,8 +98,17 @@ public class UserController {
 
     @GetMapping("/management/listuserchangest")
     public String listTraineeSwitch(@AuthenticationPrincipal UserDetail userDetail, Model model){
-//        model.addAttribute("list", traineeService.getUserSt(userDetail.getUser().getStudio().getId()));
-        model.addAttribute("list", traineeService.getTraineeSw(userDetail.getUser().getCity().getName()));
+        switch (userDetail.getUser().getRole().getId()) {
+            case "ROLE01":
+                model.addAttribute("list", traineeService.getTraineeSwByAdmin());
+                break;
+
+            case "ROLE02":
+                model.addAttribute("list", traineeService.getTraineeSw(userDetail.getUser().getCity().getName()));
+                break;
+
+        }
+
         return "management/UserManagement/ListUserST";
     }
 
@@ -266,7 +275,7 @@ public class UserController {
                                    Model model){
         TraineeDTO traineeDTO = traineeService.getTraineeByEmail(userDetail.getUser().getEmail());
         model.addAttribute("listCity", cityService.getStudioCity(userDetail.getUser().getCity().getName()));
-        model.addAttribute("regis", registrationService.getRegistrationByUser(userDetail.getUser().getEmail()));
+        model.addAttribute("regis", registrationService.getListRegistrationByUser(userDetail.getUser().getEmail()));
         model.addAttribute("listStudio", studioService.getAllStudio());
         model.addAttribute("trainee", traineeDTO);
         return "user/changeStudio";
@@ -278,10 +287,10 @@ public class UserController {
                                    @RequestParam(value = "cityName", required = false, defaultValue = "") String city,
                                    @RequestParam(value = "studioId", required = false, defaultValue = "All") String studioId,
                                    @RequestParam(value = "serviceName", required = false, defaultValue = "") String serviceId,
+                                   @RequestParam(value = "serviceOld", required = false, defaultValue = "") String serviceOld,
                                    Model model){
-       traineeService.changeStatusChangeSt(traineeDTO.getEmail(),city,studioId,serviceId);
-//       userService.changeStatusChangeSt(userDTO.getEmail(), studioId);
-        System.out.println("Mai" + studioId + "gdfgdf" + traineeDTO.getEmail());
+       traineeService.changeStatusChangeSt(traineeDTO.getEmail(),city,studioId,serviceId,serviceOld);
+
         model.addAttribute("trainee", traineeDTO);
         return "redirect:/";
 
@@ -294,12 +303,6 @@ public class UserController {
         return "myprofile";
     }
 
-//    @RequestMapping("/updateprofile/{email}")
-//    public String getInformationUserPro5(@PathVariable("email") String email, Model model) {
-//        UserDTO userDTO = userService.getUserByEmail(email);
-//        model.addAttribute("user", userDTO);
-//        return "myprofile";
-//    }
 
 
     @PostMapping("/updateprofile/{email}")

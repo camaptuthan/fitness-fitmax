@@ -18,19 +18,24 @@ public class HistoryDTO {
 
     private Long id;
 
+    private String traineeEmail;
 
+    private String traineeUserStudioName;
 
-    private String newStudioName;
+    private String traineeStudioSwitch;
 
-    private String newStudioId;
+    private Date traineeDate;
 
     private Date date;
 
+    private String traineeUserCityName;
 
-    private String userStudioName;
+    private String traineeCitySwitch;
 
-    private String userStudioId;
+    private String traineeServiceSwitch;
 
-    private String userEmail;
+    private  String traineeUserServiceName;
+
+    private int traineeStatusSw;
 
 }

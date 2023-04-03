@@ -41,8 +41,6 @@ public class User {
     @Column(name = "phone")
     private String phone;
 
-//    @Column(name = "studio_st")
-//    private String studioSt;
     @Column(name = "avatar")
     private String avatar;
     @Temporal(TemporalType.DATE)
@@ -51,10 +49,6 @@ public class User {
     @Column(name = "status", nullable = false)
     private boolean status;
 
-//    @Min(value = 0)
-//    @Max(value = 3)
-//    @Column(name = "statusChangeSt", nullable = false)
-//    private int statusChangeSt;
 
     //role-user relationship
     @ManyToOne
@@ -78,8 +72,7 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private Trainer trainer;
 
-    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    private History history;
+
 
     //studio-user relationship
     @ManyToOne()

@@ -425,31 +425,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.getManagerOfStudio(id);
     }
 
-//    @Override
-//    public void changeStatusChangeSt(String email, String studioId) {
-//        User user = userRepository.getUserByEmail(email);
-//        user.setStatusChangeSt(1);
-//        user.setStudioSt(studioId);
-//        userRepository.save(user);
-//    }
-
-
-//
-//    @Override
-//    public void rejectChangeSt(UserDTO userDTO) {
-//        User user = userRepository.getUserByEmail(userDTO.getEmail());
-//        user.setStatusChangeSt(0);
-//        user.setStudioSt("");
-//        userRepository.save(user);
-//    }
-
-//    @Override
-//    public void changeSt(UserDTO userDTO) {
-//        User user = userRepository.getUserByEmail(userDTO.getEmail());
-//        user.setStatusChangeSt(1);
-//        user.setStudioSt(userDTO.getStudioSt());
-//         userRepository.save(user);
-//    }
 
     public User getUserById(Long id) {
         return userRepository.findUsersById(id);

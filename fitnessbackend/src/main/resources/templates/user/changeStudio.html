@@ -66,19 +66,23 @@
                               method="post" th:object="${trainee}">
                             <div class="row">
                                 <div class="col-sm-2">
-                                    <h6 class="mb-0">Your old Studio</h6>
+                                    <h6 class="mb-0">Your Old City</h6>
                                 </div>
                                 <div class="col-sm-10 text-secondary">
                                     <a class="form-control" type="text" th:text="${trainee.userCityName}"> </a>
                                 </div>
                             </div>
+
                             <hr>
-                            <div class="row">
-                                <div class="col-sm-2">
-                                    <h6 class="mb-0">Your Service</h6>
-                                </div>
-                                <div class="col-sm-10 text-secondary">
-                                    <a class="form-control" type="text" th:text="${regis.services.name}"> </a>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label"> Old Service: </label>
+                                <div class="col-sm-4">
+                                    <select th:name="serviceOld" class="form-control" id="serviceOld">
+                                        <option value="all">Please select service </option>
+                                        <option th:each="list:${regis}" th:text="${list.servicesName}"
+                                                th:value="${list.id}">
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                             <hr>
@@ -109,7 +113,7 @@
                             <label class="col-sm-2 col-form-label"> New Service: </label>
                             <div class="col-sm-4" id="serviceName">
 
-                                <select class="form-control" name="serviceName" onchange="getStudio()" th:name="serviceName">
+                                <select class="form-control" name="serviceName" onchange="getStudio()">
                                     <option value="all">Please select city first</option>
                                     <option th:each="list:${servicesList}" th:text="${list.name}"
                                             th:value="${list.id}">
@@ -139,7 +143,7 @@
                                     currentCity = id;
                                     console.log(event.target.innerText);
                                     $.get(`http://localhost:8080/address/services/${id}`, (result) => {
-                                        let html = `<select class="form-control" onchange="getStudio()" name="districtName">
+                                        let html = `<select class="form-control" onchange="getStudio()" name="serviceName">
                                `
                                         result.forEach((item) => {
                                             html += `<option value="${item.id}">${item.name}</option>`
@@ -155,7 +159,7 @@
                                     const id = event.target.value;
                                     console.log(event.target.innerText);
                                     $.get(`http://localhost:8080/address/studio/${id}/${currentCity}`, (result) => {
-                                        let html = `<select class="form-control" name="studioName">`
+                                        let html = `<select class="form-control" name="studioId">`
                                         result.forEach((item) => {
                                             html += `<option value="${item.id}">${item.name}</option>`
                                         })

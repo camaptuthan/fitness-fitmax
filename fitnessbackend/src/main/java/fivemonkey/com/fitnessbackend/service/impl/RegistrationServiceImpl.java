@@ -174,5 +174,10 @@ public class RegistrationServiceImpl implements RegistrationService {
         return registrationRepository.getRegistrationByUser(traineeEmail);
     }
 
+    @Override
+    public List<RegistrationDTO> getListRegistrationByUser(String traineeEmail) {
+        return modelMapper.mapList(registrationRepository.getListRegistrationByUser(traineeEmail), RegistrationDTO.class);
+    }
+
 
 }
