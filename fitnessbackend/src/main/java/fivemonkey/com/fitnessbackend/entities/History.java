@@ -48,11 +48,7 @@ public class History {
     @Column(name = "studio_new")
     private String newStudio;
 
-    @Min(value = 0)
-    @Max(value = 3)
-    @Column(name = "status",nullable = false)
-    private int status;
-    @Temporal(TemporalType.DATE)
+
     @Column(name = "created_date")
     private Date date;
 

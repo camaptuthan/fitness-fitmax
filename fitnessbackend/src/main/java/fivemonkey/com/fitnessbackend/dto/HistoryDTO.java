@@ -16,25 +16,38 @@ import java.util.Date;
 @ToString
 public class HistoryDTO {
 
+
     private Long id;
 
-    private String traineeEmail;
 
-    private String traineeUserStudioName;
+    private String oldCity;
 
-    private String traineeStudioSwitch;
 
-    private Date traineeDate;
+    private String newCity;
+
+
+    private Float newPrice;
+
+
+    private Float oldPrice;
+
+
+    private String oldPackage;
+
+
+    private String newPackage;
+
+
+    private String oldStudio;
+
+    private String newStudio;
+
 
     private Date date;
 
-    private String traineeUserCityName;
 
-    private String traineeCitySwitch;
+    private Date traineeDate;
 
-    private String traineeServiceSwitch;
-
-    private  String traineeUserServiceName;
 
     private int traineeStatusSw;
 

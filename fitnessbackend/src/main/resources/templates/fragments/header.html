@@ -30,6 +30,7 @@
                         <li><a class="dropdown-item"  th:href="@{/user/updateprofile}" >Profile</a></li>
                         <li><a class="dropdown-item"  th:href="@{/user/myregistrations}">My Registration</a></li>
                         <li><a class="dropdown-item" th:href="@{/user/profilechangepassword}">Change Password</a></li>
+                        <li sec:authorize="hasAuthority('ROLE05')"><a class="dropdown-item" th:href="@{/user/history}">History Switch Studio</a></li>
                         <li sec:authorize="hasAuthority('ROLE05')"><a class="dropdown-item"  th:href="@{/user/changestudio}" >Switch Studio</a></li>
                         <li><a class="dropdown-item" href="/logout">Logout</a></li>
                     </ul>

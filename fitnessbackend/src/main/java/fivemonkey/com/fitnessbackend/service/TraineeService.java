@@ -53,7 +53,7 @@ public class TraineeService {
         history.setNewCity(trainee.getCitySwitch());
         history.setNewPackage(serviceId);
         history.setNewStudio(studioId);
-        history.setStatus(trainee.getStatusSw());
+
 
         User user = userRepository.getUserByEmail(email);
         Services servicesNew = servicesRepository.getServicesById(serviceId);
@@ -74,7 +74,7 @@ public class TraineeService {
     }
 
        
-    public void accpectSwichSt(TraineeDTO traineeDTO) {
+    public void acceptSwichSt(TraineeDTO traineeDTO) {
         Trainee trainee = traineeRepository.getTraineeByEmail(traineeDTO.getEmail());
         trainee.setStatusSw(2);
 
@@ -87,7 +87,7 @@ public class TraineeService {
     }
 
        
-    public void rerejectSwichSt(TraineeDTO traineeDTO) {
+    public void rejectSwichSt(TraineeDTO traineeDTO) {
         Trainee trainee = traineeRepository.getTraineeByEmail(traineeDTO.getEmail());
         trainee.setStatusSw(0);
         trainee.setCitySwitch("");
