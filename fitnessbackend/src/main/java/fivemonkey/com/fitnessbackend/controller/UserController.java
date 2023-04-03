@@ -35,6 +35,9 @@ public class UserController {
 
     @Autowired
     StudioService studioService;
+
+    @Autowired
+    HistoryService historyService;
     @Autowired
     private ImageUploader imageUploader;
     @Autowired
@@ -115,14 +118,14 @@ public class UserController {
     @RequestMapping( value = "/management/listuserchangest/accept/{email}",  method = {RequestMethod.PUT, RequestMethod.GET})
     public String acceptUserChangeSt(@PathVariable("email") String email){
         TraineeDTO traineeDTO = traineeService.getTraineeByEmail(email);
-        traineeService.accpectSwichSt(traineeDTO);
+        traineeService.acceptSwichSt(traineeDTO);
 
         return "redirect:/user/management/listuserchangest";
     }
     @RequestMapping( value = "/management/listuserchangest/reject/{email}",  method = {RequestMethod.PUT, RequestMethod.GET})
     public String rejectUserChangeSt(@PathVariable("email") String email){
         TraineeDTO traineeDTO = traineeService.getTraineeByEmail(email);
-        traineeService.rerejectSwichSt(traineeDTO);
+        traineeService.rejectSwichSt(traineeDTO);
 
         return "redirect:/user/management/listuserchangest";
     }
@@ -210,6 +213,13 @@ public class UserController {
         return "redirect:/user/management/listusers";
 
 
+    }
+
+    @GetMapping(value = "/history" )
+    public String getHistorySwitch(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+       List<HistoryDTO> history = historyService.getHistoryByTrainee(userDetail.getUser().getEmail());
+        model.addAttribute("history", history);
+        return "user/history";
     }
 
 

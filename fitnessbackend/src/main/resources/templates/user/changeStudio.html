@@ -78,7 +78,7 @@
                                 <label class="col-sm-2 col-form-label"> Old Service: </label>
                                 <div class="col-sm-4">
                                     <select th:name="serviceOld" class="form-control" id="serviceOld">
-                                        <option value="all">Please select service </option>
+                                        <option value="all">Please select service first</option>
                                         <option th:each="list:${regis}" th:text="${list.servicesName}"
                                                 th:value="${list.id}">
                                         </option>
@@ -159,7 +159,7 @@
                                     const id = event.target.value;
                                     console.log(event.target.innerText);
                                     $.get(`http://localhost:8080/address/studio/${id}/${currentCity}`, (result) => {
-                                        let html = `<select class="form-control" name="studioId">`
+                                        let html = `<select class="form-control" name="studioName">`
                                         result.forEach((item) => {
                                             html += `<option value="${item.id}">${item.name}</option>`
                                         })
