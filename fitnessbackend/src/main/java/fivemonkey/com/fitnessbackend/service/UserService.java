@@ -418,31 +418,6 @@ public class UserService {
         return userRepository.getManagerOfStudio(id);
     }
 
-//     
-//    public void changeStatusChangeSt(String email, String studioId) {
-//        User user = userRepository.getUserByEmail(email);
-//        user.setStatusChangeSt(1);
-//        user.setStudioSt(studioId);
-//        userRepository.save(user);
-//    }
-
-
-//
-//     
-//    public void rejectChangeSt(UserDTO userDTO) {
-//        User user = userRepository.getUserByEmail(userDTO.getEmail());
-//        user.setStatusChangeSt(0);
-//        user.setStudioSt("");
-//        userRepository.save(user);
-//    }
-
-//     
-//    public void changeSt(UserDTO userDTO) {
-//        User user = userRepository.getUserByEmail(userDTO.getEmail());
-//        user.setStatusChangeSt(1);
-//        user.setStudioSt(userDTO.getStudioSt());
-//         userRepository.save(user);
-//    }
 
     public User getUserById(Long id) {
         return userRepository.findUsersById(id);

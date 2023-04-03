@@ -32,6 +32,8 @@ public class UserDTO {
     private String studioId;
     private String vericode;
 
+    private  String serviceName;
+
 
 
 
