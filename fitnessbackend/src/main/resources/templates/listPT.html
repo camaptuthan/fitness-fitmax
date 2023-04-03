@@ -19,25 +19,26 @@
     <p class="slogan">
       Working out with a personal trainer is the fastest and most effective way for you to achieve your health and fitness goals. We design programs to suit the most common needs of our members, and we also create personalized workouts to suit each person's fitness and needs.</p>
     <div>
-      <form id="searchFilter"th:action="@{/user/listpt}" method="get">
-        <div class="col-md-4">
-          City: <select th:name="cityName" style="width:50% ; background: #202020; color: whitesmoke" onchange="submitForm()">
-          <option>All</option>
-          <th:block th:each="city : ${listCity}">
-            <option th:value="${city.name}" th:text="${city.name}"
-                    th:selected="${city.name == currentCity}"></option>
-          </th:block>
-        </select>
+      <form class="row" id="searchFilter" th:action="@{/user/listpt}" method="get">
+        <div class="input-group mb-3 col-3">
+          <label class="input-group-text" for="inputGroupSelectCity">City</label>
+          <select class="form-select" id="inputGroupSelectCity" name="cityName" onchange="submitForm()">
+            <option>All</option>
+            <th:block th:each="city : ${listCity}">
+              <option th:value="${city.name}" th:text="${city.name}"
+                      th:selected="${city.name == currentCity}"></option>
+            </th:block>
+          </select>
         </div>
-        <div>&nbsp</div>
-        <div class="col-md-4">
-          Studio: <select th:name="studioId" style="width:50% ; background: #202020; color: whitesmoke" onchange="submitForm()">
-          <option>All</option>
-          <th:block th:each="studio : ${listStudio}">
-            <option th:value="${studio.id}" th:text="${studio.name}"
-                    th:selected="${studio.id == currentStudio}"></option>
-          </th:block>
-        </select>
+        <div class="input-group mb-3 col-3">
+          <label class="input-group-text" for="inputGroupSelectStudio">City</label>
+          <select class="form-select" id="inputGroupSelectStudio" name="studioId" onchange="submitForm()">
+            <option>All</option>
+            <th:block th:each="studio : ${listStudio}">
+              <option th:value="${studio.id}" th:text="${studio.name}"
+                      th:selected="${studio.id == currentStudio}"></option>
+            </th:block>
+          </select>
         </div>
       </form>
     </div>
