@@ -8,6 +8,7 @@ import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.mail.MailException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -34,6 +35,9 @@ public class UserController {
 
     @Autowired
     StudioService studioService;
+
+    @Autowired
+    HistoryService historyService;
     @Autowired
     private ImageUploader imageUploader;
     @Autowired
@@ -96,8 +100,17 @@ public class UserController {
 
     @GetMapping("/management/listuserchangest")
     public String listTraineeSwitch(@AuthenticationPrincipal UserDetail userDetail, Model model){
-//        model.addAttribute("list", traineeService.getUserSt(userDetail.getUser().getStudio().getId()));
-        model.addAttribute("list", traineeService.getTraineeSw(userDetail.getUser().getCity().getName()));
+        switch (userDetail.getUser().getRole().getId()) {
+            case "ROLE01":
+                model.addAttribute("list", traineeService.getTraineeSwByAdmin());
+                break;
+
+            case "ROLE02":
+                model.addAttribute("list", traineeService.getTraineeSw(userDetail.getUser().getCity().getName()));
+                break;
+
+        }
+
         return "management/UserManagement/ListUserST";
     }
 
@@ -105,14 +118,14 @@ public class UserController {
     @RequestMapping( value = "/management/listuserchangest/accept/{email}",  method = {RequestMethod.PUT, RequestMethod.GET})
     public String acceptUserChangeSt(@PathVariable("email") String email){
         TraineeDTO traineeDTO = traineeService.getTraineeByEmail(email);
-        traineeService.accpectSwichSt(traineeDTO);
+        traineeService.acceptSwichSt(traineeDTO);
 
         return "redirect:/user/management/listuserchangest";
     }
     @RequestMapping( value = "/management/listuserchangest/reject/{email}",  method = {RequestMethod.PUT, RequestMethod.GET})
     public String rejectUserChangeSt(@PathVariable("email") String email){
         TraineeDTO traineeDTO = traineeService.getTraineeByEmail(email);
-        traineeService.rerejectSwichSt(traineeDTO);
+        traineeService.rejectSwichSt(traineeDTO);
 
         return "redirect:/user/management/listuserchangest";
     }
@@ -202,6 +215,13 @@ public class UserController {
 
     }
 
+    @GetMapping(value = "/history" )
+    public String getHistorySwitch(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+       List<HistoryDTO> history = historyService.getHistoryByTrainee(userDetail.getUser().getEmail());
+        model.addAttribute("history", history);
+        return "user/history";
+    }
+
 
     @RequestMapping("/avataruser/{email}")
     public String getInformationUserAvatar(@PathVariable("email") String email, Model model) {
@@ -264,7 +284,7 @@ public class UserController {
                                    Model model){
         TraineeDTO traineeDTO = traineeService.getTraineeByEmail(userDetail.getUser().getEmail());
         model.addAttribute("listCity", cityService.getStudioCity(userDetail.getUser().getCity().getName()));
-        model.addAttribute("regis", registrationService.getRegistrationByUser(userDetail.getUser().getEmail()));
+        model.addAttribute("regis", registrationService.getListRegistrationByUser(userDetail.getUser().getEmail()));
         model.addAttribute("listStudio", studioService.getAllStudio());
         model.addAttribute("trainee", traineeDTO);
         return "user/changeStudio";
@@ -276,10 +296,10 @@ public class UserController {
                                    @RequestParam(value = "cityName", required = false, defaultValue = "") String city,
                                    @RequestParam(value = "studioId", required = false, defaultValue = "All") String studioId,
                                    @RequestParam(value = "serviceName", required = false, defaultValue = "") String serviceId,
+                                   @RequestParam(value = "serviceOld", required = false, defaultValue = "") String serviceOld,
                                    Model model){
-       traineeService.changeStatusChangeSt(traineeDTO.getEmail(),city,studioId,serviceId);
-//       userService.changeStatusChangeSt(userDTO.getEmail(), studioId);
-        System.out.println("Mai" + studioId + "gdfgdf" + traineeDTO.getEmail());
+       traineeService.changeStatusChangeSt(traineeDTO.getEmail(),city,studioId,serviceId,serviceOld);
+
         model.addAttribute("trainee", traineeDTO);
         return "redirect:/";
 
@@ -292,12 +312,6 @@ public class UserController {
         return "myprofile";
     }
 
-//    @RequestMapping("/updateprofile/{email}")
-//    public String getInformationUserPro5(@PathVariable("email") String email, Model model) {
-//        UserDTO userDTO = userService.getUserByEmail(email);
-//        model.addAttribute("user", userDTO);
-//        return "myprofile";
-//    }
 
 
     @PostMapping("/updateprofile/{email}")
@@ -321,7 +335,11 @@ public class UserController {
             return "redirect:/register";
         }
         userService.registerUser(user);
-        userService.sendVerificationEmail(user, siteUrl);
+        try{
+            userService.sendVerificationEmail(user, siteUrl);
+        }catch (MailException e){
+            attributes.addFlashAttribute("message", "Connection Time Out --Sent Fail");
+        }
         attributes.addFlashAttribute("message", "You have to registered as a member.");
         attributes.addFlashAttribute("message2", "Please check your email verify account ");
         return "redirect:/register";

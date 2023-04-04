@@ -57,5 +57,8 @@ public interface RegistrationRepository extends JpaRepository<Registration, Stri
     @Query("select r from Registration  r where r.services.id = ?1")
     List<Registration> getRegistrationByServices(String serviceId);
 
+    @Query("select r from Registration r where r.trainee.email = :traineeEmail  and r.status = 1 ")
+    List<Registration> getListRegistrationByUser(String traineeEmail);
+
 
 }

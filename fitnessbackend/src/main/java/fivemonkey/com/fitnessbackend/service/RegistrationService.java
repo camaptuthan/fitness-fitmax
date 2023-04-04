@@ -173,4 +173,9 @@ public class RegistrationService {
     }
 
 
+    public List<RegistrationDTO> getListRegistrationByUser(String traineeEmail) {
+        return modelMapper.mapList(registrationRepository.getListRegistrationByUser(traineeEmail), RegistrationDTO.class);
+    }
+
+
 }

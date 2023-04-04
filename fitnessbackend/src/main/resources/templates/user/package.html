@@ -38,32 +38,33 @@
         <h2 class="title-decor">Packages <span>List</span></h2>
         <p class="slogan">Below is a list of packages for free trainees. People can search by city, package name,
             price... Details are in each package.</p>
-        <form id="searchAndFilter" th:action="@{/service/packages}" method="get">
-            <div>
-                City: <select th:name="city" style="width:30%" onchange="submitForm()">
-                <option>All</option>
-                <th:block th:each="city : ${cityList}">
-                    <option th:value="${city.name}" th:text="${city.name}"
-                            th:selected="${city.name == currentCity}"></option>
-                </th:block>
-            </select>
+        <form class="row" id="searchAndFilter" th:action="@{/service/packages}" method="get">
+            <div class="input-group mb-3 col-3">
+                <label class="input-group-text" for="inputGroupSelectCity">City</label>
+                <select class="form-select" id="inputGroupSelectCity" name="city" onchange="submitForm()">
+                    <option>All</option>
+                    <th:block th:each="city : ${cityList}">
+                        <option th:value="${city.name}" th:text="${city.name}"
+                                th:selected="${city.name == currentCity}"></option>
+                    </th:block>
+                </select>
             </div>
-            <div>&nbsp</div>
-            <div>
-                Category: <select th:name="category" style="width:30%" onchange="submitForm()">
-                <option th:value="0">All</option>
-                <th:block th:each="category : ${categoryList}">
-                    <option th:value="${category.id}" th:text="${category.name}"
-                            th:selected="${currentCategory.equals(''+category.id)}"></option>
-                </th:block>
-            </select>
+            <div class="input-group mb-3 col-3">
+                <label class="input-group-text" for="inputGroupSelectCategory">Category</label>
+                <select class="form-select" id="inputGroupSelectCategory" name="category" onchange="submitForm()">
+                    <option th:value="0">All</option>
+                    <th:block th:each="category : ${categoryList}">
+                        <option th:value="${category.id}" th:text="${category.name}"
+                                th:selected="${currentCategory.equals(''+category.id)}"></option>
+                    </th:block>
+                </select>
             </div>
-            <div>&nbsp</div>
-            <div>
-                Filter: <input type="text" th:name="keyword" style="color:red" th:value="${currentKeyword}"/>
-                &nbsp
-                <input id="btn-submit" type="submit" value="Search"/>
-                &nbsp
+            <div class="input-group mb-3 flex-nowrap col-3">
+                <span class="input-group-text" id="addon-wrapping">Filter</span>
+                <input type="text" class="form-control" th:name="keyword"  th:value="${currentKeyword}" id="wrapping">
+            </div>
+            <div class="input-group flex-nowrap col-3">
+                <input type="submit" class="btn form-control" style="max-width: 50%" th:value="Search">
             </div>
         </form>
         <div id="carousel-package" class="carousel slide">

@@ -36,7 +36,7 @@ public interface ServicesRepository extends JpaRepository<Services, String> {
 
 
     @Query("select s from Services s where s.id = ?1")
-    List<Services> getServicesById(String id);
+    Services getServicesById(String id);
 
 
 
@@ -52,5 +52,8 @@ public interface ServicesRepository extends JpaRepository<Services, String> {
     @Query("select s.studio from Services s where s.id= ?1")
     List<Studio>  listStudioByService(String servicesId);
 
+
+    @Query("select r.services from Registration r where r.id = ?1")
+    Services getServicesByRegistrationsId(String id);
 
 }

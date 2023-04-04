@@ -194,8 +194,10 @@ public class ServicesService {
         return modelMapper.mapList(serviceRepository.getServicesByPT(), ServicesDTO.class);
     }
 
+
+    public Services getServicesById(String id) {
+
           
-    public List<Services> getServicesById(String id) {
         return serviceRepository.getServicesById(id);}
           
     public boolean isServiceExistInStudio(String servicesId, String studioId) {
