@@ -31,7 +31,7 @@
           </select>
         </div>
         <div class="input-group mb-3 col-3">
-          <label class="input-group-text" for="inputGroupSelectStudio">City</label>
+          <label class="input-group-text" for="inputGroupSelectStudio">Studio</label>
           <select class="form-select" id="inputGroupSelectStudio" name="studioId" onchange="submitForm()">
             <option>All</option>
             <th:block th:each="studio : ${listStudio}">
@@ -61,13 +61,14 @@
                     <div class="out-trainer-item">
                       <a th:href="@{/user/ptdetail/{email}(email=${trainer.email})}" class="out-trainer-img"><img th:src="${trainer.userAvatar}" /></a>
                       <div class="out-trainer-info">
-                        <h3><a th:href="@{/user/ptdetail/{email}(email=${trainer.email})}" th:text="${trainer.userFirstName}+' '+${trainer.userLastName}"></a></h3>
-                        <div class="prof">Weightlifting</div>
-                        <p th:text= "${trainer.philosophy}+' '+${trainer.achievement}"></p>
+                        <h3><a th:href="@{/user/ptdetail/{email}(email=${trainer.email})}" th:text="${trainer.userFirstName}+' '+${trainer.userLastName}" style="text-align: center"></a></h3>
+                        <div class="prof" th:text= "${trainer.experience}"></div>
+                        <p th:utext= "${trainer.philosophy}">
+                          <br>
+                        <p th:utext= "${trainer.certi}" style="color: yellow">
 
-
+                        </p>
 <!--                        <a th:href="@{/user/ptdetail/{email}(email=${trainer.email})}" class="btn">View</a>-->
-
                       </div>
                     </div>
                   </div>
