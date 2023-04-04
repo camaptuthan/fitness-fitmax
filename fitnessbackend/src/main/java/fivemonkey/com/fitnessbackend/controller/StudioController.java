@@ -22,10 +22,13 @@ import java.util.*;
 @Controller
 @RequestMapping("/studio")
 public class StudioController {
+
     @Autowired
     private StudioService studioService;
+
     @Autowired
     private UserService userService;
+
     @Autowired
     private CityService cityService;
 
@@ -37,6 +40,7 @@ public class StudioController {
 
     @Autowired
     ServicesService servicesService;
+
     @Autowired
     private ModelMapperConfiguration<StudioDTO, Studio> modelMapper;
 

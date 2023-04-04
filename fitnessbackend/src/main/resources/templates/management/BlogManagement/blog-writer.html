@@ -106,9 +106,8 @@
                         <div class="mb-3">
                             <label class="form-label" for="blog_content">Blog Content</label>
                             <textarea id="blog_content" style="width: 100%" th:field="${blogDTO.description}"
-                                      th:name="blog_des"
-
-                            ></textarea>
+                                      th:name="blog_des">
+                            </textarea>
                         </div>
                         <button type="submit" class="btn btn-success" style="background-color: #1e7e34; border: 2px solid #1e7e34">Add</button>
                         <button class="btn btn-primary" th:href="@{/blog}">Cancel</button>

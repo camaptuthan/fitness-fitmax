@@ -952,6 +952,7 @@ insert into trainer(trainer_email,status) values ('trainer11.7@gmail.com',1);
 insert into trainer(trainer_email,status) values ('trainer11.8@gmail.com',1);
 
 /*select * from category;*/
+
 insert into category(description,category_name,type) values ('','Arm','service');
 insert into category(description,category_name,type) values ('','Leg','service');
 insert into category(description,category_name,type) values ('','Full Body','service');
