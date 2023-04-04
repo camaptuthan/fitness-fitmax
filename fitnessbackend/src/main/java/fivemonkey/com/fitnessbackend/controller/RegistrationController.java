@@ -57,7 +57,7 @@ public class RegistrationController {
         //truong hop login account verify register by input otp
         if(userDetail!=null){
             try {
-                userService.sendOTP(email);
+                userService.verifyCodeRegistration(email,serviceId);
             } catch (MessagingException e) {
                 throw new RuntimeException(e);
             } catch (UnsupportedEncodingException e) {

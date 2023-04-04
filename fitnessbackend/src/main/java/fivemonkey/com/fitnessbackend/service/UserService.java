@@ -3,10 +3,7 @@ package fivemonkey.com.fitnessbackend.service;
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.*;
-import fivemonkey.com.fitnessbackend.repository.RegistrationRepository;
-import fivemonkey.com.fitnessbackend.repository.RoleRepository;
-import fivemonkey.com.fitnessbackend.repository.StudioRepository;
-import fivemonkey.com.fitnessbackend.repository.UserRepository;
+import fivemonkey.com.fitnessbackend.repository.*;
 import net.bytebuddy.utility.RandomString;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,7 +28,11 @@ public class UserService {
     private Map<String, String> otpMap = new HashMap<>();
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    private ClassRepository classRepository;
 
+    @Autowired
+    private TraineeRepository traineeRepository;
     @Autowired
     private RegistrationRepository registrationRepository;
     @Autowired
@@ -46,7 +47,8 @@ public class UserService {
     @Autowired
     private ModelMapperConfiguration<User, UserDTO> modelMapper;
 
-
+    @Autowired
+    private ServicesRepository servicesRepository;
     @Autowired
     ModelMapperConfiguration<User, UserDTO> modelMapperConfiguration;
 
@@ -243,9 +245,6 @@ public class UserService {
         }
     }
 
-
-    //send otp to forgot password
-     
     public void sendOTP(String email) throws MessagingException, UnsupportedEncodingException {
         String otp = generateOTP();
         // send the OTP to the user's email
@@ -253,7 +252,7 @@ public class UserService {
         // set the expiration time for the OTP
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
-             
+
             public void run() {
                 otpMap.remove(email);
             }
@@ -284,7 +283,7 @@ public class UserService {
 
     }
 
-    
+
     public boolean verifyOTP(String email, String otp) {
         String storedOTP = otpMap.get(email);
         //check otp equal or not >>>
@@ -423,7 +422,52 @@ public class UserService {
         return userRepository.findUsersById(id);
     }
 
+    public void verifyCodeRegistration(String email,String serviceId) throws MessagingException, UnsupportedEncodingException {
+        String otp = generateOTP();
+        // send the OTP to the user's email
+        otpMap.put(email, otp);
+        // set the expiration time for the OTP
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
 
+            public void run() {
+                otpMap.remove(email);
+            }
+        }, OTP_EXPIRATION_TIME_MINUTES * 60 * 1000);
+        Registration registration = new Registration();
+        registration.setTrainee(traineeRepository.getById(email));
+        Services services = servicesRepository.findById(serviceId).orElseGet(() -> classRepository.getClazzByServices(serviceId).getServices());
+        registration.setServices(services);
+        registration.setDate(new Date());
+        registration.setStartDate(services.getClazz()== null ? null : services.getClazz().getSessions().get(0).getHappenedDate());
+        String toAddress = email;
+        String fromAddress = "ducnvhe141646@fpt.edu.vn";
+        String senderName = "Fitness Service Management System";
+        String subject = "Please verify ";
+
+        String content = "Dear ,<br>"
+                + "This is your otp please verify otp now :<br>"
+                + "<h3>" + otp + "</h3> <br>"
+                + "<h5>" + serviceId + "</h3> <br>"
+                + "<h5>" + registration.getDate()+ "</h3> <br>"
+                + "<h5>" + registration.getServices().getName()+ "</h3> <br>"
+                + "<a>" + "It's expired time after " + OTP_EXPIRATION_TIME_MINUTES + " minutes </a><br>"
+                + "Thank you,<br>"
+                + "From FSM.";
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
+            helper.setFrom(fromAddress, senderName);
+            helper.setTo(toAddress);
+            helper.setSubject(subject);
+            helper.setText(content, true);
+            mailSender.send(message);
+        } catch (MailException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
 
 
