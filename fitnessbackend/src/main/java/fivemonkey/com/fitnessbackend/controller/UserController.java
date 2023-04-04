@@ -8,6 +8,7 @@ import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.mail.MailException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -334,7 +335,11 @@ public class UserController {
             return "redirect:/register";
         }
         userService.registerUser(user);
-        userService.sendVerificationEmail(user, siteUrl);
+        try{
+            userService.sendVerificationEmail(user, siteUrl);
+        }catch (MailException e){
+            attributes.addFlashAttribute("message", "Connection Time Out --Sent Fail");
+        }
         attributes.addFlashAttribute("message", "You have to registered as a member.");
         attributes.addFlashAttribute("message2", "Please check your email verify account ");
         return "redirect:/register";

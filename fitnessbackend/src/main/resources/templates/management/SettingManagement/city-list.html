@@ -173,9 +173,8 @@
         <div class="db-breadcrumb">
             <h4 class="breadcrumb-title">City</h4>
             <ul class="db-breadcrumb-list">
-                <li><a href="#"><i class="fa fa-home"></i>Home</a></li>
+                <li><a th:href="@{/dashboard}"><i class="fa fa-home"></i>Dashboard</a></li>
                 <li>City</li>
-                <li>City Details</li>
             </ul>
         </div>
         <div class="row">
@@ -210,15 +209,13 @@
                                     <table class="table table-striped table-hover table-bordered" id="PackageTable">
                                         <thead>
                                         <tr>
-                                            <th>ID <i class="fa fa-sort"/></th>
-                                            <th>Name <i class="fa fa-sort"/></th>
-                                            <th>Type <i class="fa fa-sort"/></th>
+                                            <th>Name</th>
+                                            <th>Type</th>
                                             <th>Detail</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr th:each="city: ${listCity}">
-                                            <td th:text="${city.id}"></td>
                                             <td th:text="${city.name}"></td>
                                             <td th:if="${city.type.equals('Tinh')}">Province</td>
                                             <td th:if="${city.type.contains('Trung uong')}">City</td>
@@ -279,7 +276,6 @@
         $('#PackageTable').DataTable({
             "searching": false,
             columnDefs: [{
-                target: 0,
                 visible: false,
                 searchable: false
             }],

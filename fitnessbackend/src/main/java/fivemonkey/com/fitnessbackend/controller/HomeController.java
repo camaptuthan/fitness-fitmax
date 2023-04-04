@@ -41,9 +41,13 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/blog-writer")
-    public String blogWriter() {
-        return "/blog_writer";
+//    @GetMapping("/blog-writer")
+//    public String blogWriter() {
+//        return "/blog_writer";
+//    }
+    @GetMapping("/403")
+    public String exceptionHandle() {
+        return "/403";
     }
 
     @GetMapping("/register")

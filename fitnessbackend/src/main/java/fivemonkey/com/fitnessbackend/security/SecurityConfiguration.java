@@ -62,12 +62,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/user/management/**").hasAnyAuthority("ROLE02","ROLE01","ROLE04","ROLE03");
         http.authorizeRequests().antMatchers("/service/management/**").hasAnyAuthority("ROLE02","ROLE01","ROLE03");
         http.authorizeRequests().antMatchers("/dashboard").hasAnyAuthority("ROLE02","ROLE01","ROLE03");
-//        http.authorizeRequests().antMatchers("/user/**").authenticated();
+//       http.authorizeRequests().antMatchers("/user/**").authenticated();
         http.authorizeRequests().anyRequest().permitAll();
         // When the user has logged in as XX.
         // But access a page that requires role YY,
         // AccessDeniedException will be thrown.
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+
 
         // Config for Login Form
         http.authorizeRequests()
