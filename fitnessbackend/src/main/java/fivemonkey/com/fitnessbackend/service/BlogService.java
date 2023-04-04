@@ -1,4 +1,5 @@
 package fivemonkey.com.fitnessbackend.service;
+
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.BlogDTO;
 import fivemonkey.com.fitnessbackend.entities.Blog;
@@ -91,8 +92,7 @@ public class BlogService{
         }
         return "";
     }
-
-         
+    
     public String readBlogFromTextFile(Blog blog) {
         if (blog.getDescription() != null) {
             try {
@@ -112,7 +112,13 @@ public class BlogService{
         return "";
     }
 
-         
+    public BlogDTO saveThumbnail(String thumbNail, Long id) {
+        if (thumbNail.isBlank()) return null;
+        Blog blog = blogRepository.getById(id);
+        blog.setThumbnail(thumbNail);
+        return modelMapper.map(blogRepository.save(blog), BlogDTO.class);
+    }
+
     public Blog update(BlogDTO b) {
         try {
             Blog blog = blogRepository.getById(b.getId());

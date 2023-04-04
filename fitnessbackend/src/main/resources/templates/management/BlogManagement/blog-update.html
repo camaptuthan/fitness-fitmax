@@ -75,11 +75,12 @@
                                    th:name="blog_title" type="text">
                         </div>
                         <div class="mb-3">
-                            <label class="btn btn-primary" for="fileImage">Upload Thumbnail</label>
+                            <label class="btn btn-primary" for="fileImage">Change Thumbnail</label>
                             <input accept="image/jpeg, image/png" class="form-control-file" id="fileImage"
                                    name="fileImage"
                                    style="display: none" type="file"/>
                             <div class="my-3 w-100 h-100" id="blog_thumbnail">
+                                <img th:field="${blogDTO.thumbnail}" th:src="${blogDTO.thumbnail}" alt="img">
                             </div>
                         </div>
                         <script>
@@ -188,7 +189,7 @@
         }
     });
 
-    let editor1 = new RichTextEditor("#blog_content",{skin: "round-corner;blue",toolbar: "full", backColorItems: "#595555"});
+    let editor1 = new RichTextEditor("#blog_content",{contentCssText:"body{color:#f0f0f0;background-color:#3b3737}",fontSizeItems:"8,9,10,11,12,13,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66"});
 </script>
 
 </html>

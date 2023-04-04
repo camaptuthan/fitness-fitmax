@@ -15,7 +15,6 @@ import java.util.List;
 @Table(name = "trainer", schema = "dbo")
 public class Trainer {
 
-
     @Id
     @Column(name = "trainer_email")
     private String email;
@@ -42,8 +41,6 @@ public class Trainer {
 
     @Column(name = "status", nullable = false)
     private boolean status;
-
-
 
     //trainer-session relationship
     @OneToMany(mappedBy = "trainer",cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)

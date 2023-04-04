@@ -68,7 +68,8 @@
                         <div class="post-header">
                             <div class="post-thumbnail">
                                 <a  th:href="@{/blog/blog-details/{id} (id=${blog.id})}">
-                                    <img  alt="img" th:src="${blog.thumbnail}">
+                                    <img alt="img" style="object-fit: fill"
+                                         th:src="${blog.thumbnail}">
                                 </a>
                             </div>
                         </div>
