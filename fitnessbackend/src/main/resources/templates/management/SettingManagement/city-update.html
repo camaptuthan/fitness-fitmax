@@ -21,8 +21,10 @@
         <div class="db-breadcrumb">
             <h4 class="breadcrumb-title">District</h4>
             <ul class="db-breadcrumb-list">
-                <li><a href="#"><i class="fa fa-home"></i>Home</a></li>
-                <li><a th:href="@{/setting/management/city}"><i class="fa fa-home"></i>City</a></li>
+                <li><a th:href="@{/dashboard}"><i class="fa fa-home"></i>Dashboard</a></li>
+                <li><a th:href="@{/setting/management/city}"></i>City</a></li>
+                <li>City Details</li>
+
             </ul>
         </div>
 
@@ -46,7 +48,7 @@
 
                     <div class="widget-inner">
                         <form class="form-horizontal"
-                              enctype="multipart/form-data" id="form_update_package"
+                              id="form_update_package"
                               method="post" th:action="@{/setting/management/city/city-detail/{id} (id=${city.id})}"
                               th:object="${city}">
                             <fieldset>
@@ -101,28 +103,83 @@
                                                        id="PackageTable">
                                                     <thead>
                                                     <tr>
-                                                        <th>ID <i class="fa fa-sort"/></th>
-                                                        <th>Name <i class="fa fa-sort"/></th>
-                                                        <th>Type <i class="fa fa-sort"/></th>
-                                                        <th>Detail</th>
+                                                        <th style="width:50% !important;">Name</th>
+                                                        <th style="width:30% !important;">Type</th>
+                                                        <th style="width:20% !important;">Detail</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
                                                     <tr th:each="district: ${listDistrict}">
-                                                        <td th:text="${district.id}"></td>
                                                         <td th:text="${district.name}"></td>
                                                         <td th:if="${district.type.equals('Thi xa')}">Town</td>
                                                         <td th:if="${district.type.equals('Huyen')}">District</td>
                                                         <td th:if="${district.type.equals('Quan')}">Township</td>
                                                         <td th:if="${district.type.equals('Thanh pho')}">City</td>
                                                         <td>
-                                                            <a class="edit"
-                                                               data-toggle="tooltip"
-                                                               th:href="@{'/setting/management/city/city-detail/' + ${city.id}}"
-                                                               title="Edit">Detail
-                                                                &nbsp;<i class="material-icons">&#xE254;</i>
-                                                            </a>
+                                                            <button class="btn btn-primary" data-toggle="modal"
+                                                                    th:attr="data-target='#ModalCenter'+${district.id}"
+                                                                    type="button">
+                                                                Detail
+                                                            </button>
                                                         </td>
+                                                        <div aria-hidden="true" class="modal fade"
+                                                             role="dialog" tabindex="-1"
+                                                             th:attr="aria-labelledby='ModalCenterTitle'+${district.id}"
+                                                             th:id="ModalCenter+${district.id}">
+                                                            <div class="modal-dialog modal-dialog-centered"
+                                                                 role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title"
+                                                                            th:id="ModalCenterTitle+${district.id}">
+                                                                            District Detail</h5>
+                                                                        <button aria-label="Close" class="close"
+                                                                                data-dismiss="modal" type="button">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="col-4 form-group">
+                                                                            <label class="control-label"
+                                                                                   for="name">Name</label>
+                                                                            <div class="">
+                                                                                <input class="form-control input-md"
+                                                                                       name="name"
+                                                                                       placeholder=" Name" required
+                                                                                       th:value="${district.name}"
+                                                                                       type="text">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-4 form-group">
+                                                                            <label class="control-label">Type</label>
+                                                                            <div class="">
+                                                                                <select name="districtType"
+                                                                                        style="width:50%">
+                                                                                    <option th:selected="${district.type.equals('Thi xa')}"
+                                                                                            th:value="Town">Town
+                                                                                    </option>
+                                                                                    <option th:selected="${district.type.equals('Huyen')}"
+                                                                                            th:value="District">District
+                                                                                    </option>
+                                                                                    <option th:selected="${district.type.equals('Quan')}"
+                                                                                            th:value="Township">Township
+                                                                                    </option>
+                                                                                    <option th:selected="${district.type.equals('Thanh pho')}"
+                                                                                            th:value="City">City
+                                                                                    </option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button class="btn btn-secondary" data-dismiss="modal"
+                                                                                type="button">Close
+                                                                        </button>
+                                                                        <a class="btn btn-danger" th:href="@{/setting/management/city/city-detail/{id} (id=${city.id},page=${currentPage},keyword=${currentKeyword})}">Save Changes</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -198,7 +255,6 @@
         $('#PackageTable').DataTable({
             "searching": false,
             columnDefs: [{
-                target: 0,
                 visible: false,
                 searchable: false
             }],
@@ -213,5 +269,10 @@
     });
 
 </script>
+<style>
+    .bootstrap-select .dropdown-toggle {
+        color: black;
+    }
+</style>
 </html>
 

@@ -248,14 +248,11 @@ public class ServicesController {
                 s.setDes(servicesDTO.getDes());
                 s.setPrice(servicesDTO.getPrice());
                 s.setDate(servicesDTO.getDate());
-                s.setImage(imageUploader.upload(multipartFile));
+                servicesService.saveThumbnail(imageUploader.upload(multipartFile), id);
                 s.setStatus(Integer.parseInt(status_type_id));
                 s.setCity(cityService.getCityByName(cityname));
                 s.setStudio(studioService.getStudioById(studio));
                 s.setCategory(categoryService.getCategoryById(Long.parseLong(category)));
-                if(!multipartFile.isEmpty()){
-                    s.setImage(imageUploader.upload(multipartFile));
-                }
                 servicesRepository.save(s);
                 break;
             case "ROLE02":
@@ -270,9 +267,7 @@ public class ServicesController {
                 s.setCity(cityService.getCityByName(cityname));
                 s.setStudio(studioService.getStudioById(studio));
                 s.setCategory(categoryService.getCategoryById(Long.parseLong(category)));
-                if(!multipartFile.isEmpty()){
-                    s.setImage(imageUploader.upload(multipartFile));
-                }
+                servicesService.saveThumbnail(imageUploader.upload(multipartFile), id);
                 servicesRepository.save(s);
                 break;
             case "ROLE03":
@@ -287,9 +282,7 @@ public class ServicesController {
                 s.setCity(cityService.getCityByName(cityname));
                 s.setStudio(studioService.getStudioById(studio));
                 s.setCategory(categoryService.getCategoryById(Long.parseLong(category)));
-                if(!multipartFile.isEmpty()){
-                    s.setImage(imageUploader.upload(multipartFile));
-                }
+                servicesService.saveThumbnail(imageUploader.upload(multipartFile), id);
                 servicesRepository.save(s);
                 break;
         }

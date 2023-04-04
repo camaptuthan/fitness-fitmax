@@ -37,12 +37,10 @@ public class ServicesService {
 
     }
 
-          
     public ServicesDTO saveThumbnail(String thumbNail, String serviceId) {
         if (thumbNail.isBlank()) return null;
         Services services = serviceRepository.getPackageById(serviceId);
         services.setImage(thumbNail);
-
         return modelMapper.map(serviceRepository.save(services), ServicesDTO.class);
     }
 

@@ -91,7 +91,7 @@
                             <div class="col-sm-9 text-secondary">
                                 <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
                                    data-cfemail="c6a0afb686acb3adabb3aee8a7aa" th:text="${trainer.philosophy}"
-                                   style="color: yellow  "></a>
+                                   style="color: yellow"></a>
                             </div>
                         </div>
                     </div>
@@ -121,7 +121,7 @@
                     <div class="modal-body">
                         <form th:action="@{/user/ptdetail/{email}(email=${trainer.email})}" method="POST" th:object="${trainer}"
                               th:if="${hasRegistered == false && #authentication.principal != null}">
-                            <section class="s-contacts"
+                            <div class="s-contacts"
                                      style="background-image: url(/img/bg-contacts.svg); padding: 0">
                                 <div class="container">
                                     <p class="slogan">
@@ -221,12 +221,10 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                     </div>
                 </div>
-<<<<<<< HEAD
             </div>
-=======
->>>>>>> 813544e36c2f231c2725cdb645cd7189ae13041b
 </section>
 
 <!-- ============= HEADER-TITLE END ============= -->
@@ -242,22 +240,22 @@
             <div class="col-sm-6 col-lg-3 trainer-award-col">
                 <i class="fa fa-users" aria-hidden="true"></i>
                 <h3>body bulding</h3>
-                <p th:text="${trainer.specialication}"></p>
+                <p th:utext="${trainer.specialication}" style="color: yellow"></p>
             </div>
             <div class="col-sm-6 col-lg-3 trainer-award-col">
                 <i class="fa fa-trophy" aria-hidden="true"></i>
                 <h3>achievement</h3>
-                <p th:text="${trainer.achievement}"></p>
+                <p th:utext="${trainer.achievement}" style="color: yellow"></p>
             </div>
             <div class="col-sm-6 col-lg-3 trainer-award-col">
                 <i class="fa fa-certificate" aria-hidden="true"></i>
                 <h3>certificate</h3>
-                <p th:text="${trainer.certi}"></p>
+                <p th:utext="${trainer.certi}" style="color: yellow"></p>
             </div>
             <div class="col-sm-6 col-lg-3 trainer-award-col">
                 <i class="fa fa-tasks" aria-hidden="true"></i>
                 <h3>qualification</h3>
-                <p th:text="${trainer.qualification}"></p>
+                <p th:utext="${trainer.qualification}" style="color: yellow"></p>
             </div>
         </div>
     </div>

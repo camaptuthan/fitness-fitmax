@@ -62,6 +62,10 @@ public class CityService {
         return modelMapper.mapList(cityRepository.findAll(), CityDTO.class);
     }
 
+    public List<CityDTO> getStudiosCity() {
+        return modelMapper.mapList(cityRepository.getStudiosCity(), CityDTO.class);
+    }
+
         
     public City saveCity(City city) {
         return cityRepository.save(city);

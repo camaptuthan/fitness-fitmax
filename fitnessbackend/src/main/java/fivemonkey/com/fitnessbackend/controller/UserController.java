@@ -157,7 +157,7 @@ public class UserController {
         }
         model.addAttribute("currentStudio", studioId);
         model.addAttribute("currentCity", cityName);
-        model.addAttribute("listCity", addressService.getCities());
+        model.addAttribute("listCity", cityService.getStudiosCity());
         model.addAttribute("listStudio", addressService.getStudioByCity(cityName));
 
 

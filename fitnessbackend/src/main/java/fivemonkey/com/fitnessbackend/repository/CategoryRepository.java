@@ -16,4 +16,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Query("select c from Category c where c.id = ?1")
     Category findCategoryById(Long id);
 
+    @Query("select distinct c.type from Category c")
+    List<String> getAllCategoryType();
 }

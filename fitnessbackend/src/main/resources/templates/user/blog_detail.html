@@ -60,7 +60,7 @@
                 <div class="post-item-cover"  th:object="${b}">
                     <div class="post-header">
                         <div class="post-thumbnail">
-                            <img th:src="${b.thumbnail}" alt="img">
+                            <img th:src="${b.thumbnail}" alt="img" style="object-fit: fill">
                         </div>
                     </div>
                     <div class="post-content">
@@ -77,6 +77,7 @@
                         </div>
                     </div>
                 </div>
+                <div>&nbsp;</div>
                 <th:block sec:authorize="hasAnyAuthority('ROLE01','ROLE02','ROLE03')"
                           th:if="${b.status== 0} ">
                     <form method="post" th:action="@{/blog/approve/{id} (id = ${b.id})}">

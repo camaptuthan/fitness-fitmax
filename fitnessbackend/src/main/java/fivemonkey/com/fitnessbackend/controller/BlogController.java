@@ -100,8 +100,7 @@ public class BlogController {
     public String getBlogInformation(@PathVariable("id") Long id, @AuthenticationPrincipal UserDetail userDetail, Model model) {
         BlogDTO blogDTO = blogService.findBlogDTOById(id);
         Blog b = blogService.findBlogById(id);
-        blogService.readBlogFromTextFile(b);
-        blogDTO.setDescription(b.getDescription());
+        blogDTO.setDescription(blogService.readBlogFromTextFile(b));
         List<Category> categoryList = categoryService.findBlogCategories();
         model.addAttribute("catelist", categoryList);
         model.addAttribute("blogDTO", blogDTO);
@@ -113,11 +112,7 @@ public class BlogController {
     public String updateBlog(@ModelAttribute("blogDTO") BlogDTO blogDTO, @AuthenticationPrincipal UserDetail userDetail,
                              @RequestParam(name = "fileImage") MultipartFile multipartFile) {
         Blog blog = blogService.findBlogById(blogDTO.getId());
-        if (multipartFile.isEmpty()) {
-            blog.setThumbnail("https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/default_thumbnail.jpg?alt=media&token=ccac355b-48e3-4de5-95a1-6a8fc8905aaf");
-        } else {
-            blog.setThumbnail(imageUploader.upload(multipartFile));
-        }
+        blogService.saveThumbnail(imageUploader.upload(multipartFile),blogDTO.getId());
         if ("".equals(blogDTO.getTitle())) {
             blog.setTitle("Not have title yet.");
         } else {
