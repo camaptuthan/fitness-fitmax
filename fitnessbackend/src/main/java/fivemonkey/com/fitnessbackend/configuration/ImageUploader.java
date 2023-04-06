@@ -1,7 +1,7 @@
-package fivemonkey.com.fitnessbackend.imageuploader;
+package fivemonkey.com.fitnessbackend.configuration;
 
-import fivemonkey.com.fitnessbackend.constant.FireBaseConstant;
-import fivemonkey.com.fitnessbackend.utils.FireBaseUtils;
+import fivemonkey.com.fitnessbackend.configuration.FireBaseConstant;
+import fivemonkey.com.fitnessbackend.configuration.FireBaseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;

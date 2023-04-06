@@ -1,4 +1,4 @@
-package fivemonkey.com.fitnessbackend.constant;
+package fivemonkey.com.fitnessbackend.configuration;
 
 public class FireBaseConstant {
     private FireBaseConstant() {

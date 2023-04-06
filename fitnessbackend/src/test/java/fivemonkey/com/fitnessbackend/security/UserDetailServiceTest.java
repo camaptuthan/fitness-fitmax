@@ -2,24 +2,23 @@ package fivemonkey.com.fitnessbackend.security;
 
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.repository.UserRepository;
+import fivemonkey.com.fitnessbackend.service.UserDetailService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
+
 @SpringBootTest(classes = {UserDetailService.class})
 class UserDetailServiceTest {
     @Autowired

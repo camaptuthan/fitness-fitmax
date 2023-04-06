@@ -1,4 +1,4 @@
-package fivemonkey.com.fitnessbackend.datasource;
+package fivemonkey.com.fitnessbackend.configuration;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

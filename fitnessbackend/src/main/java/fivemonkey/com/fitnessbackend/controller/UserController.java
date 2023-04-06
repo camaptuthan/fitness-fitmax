@@ -3,7 +3,7 @@ import fivemonkey.com.fitnessbackend.configuration.Utility;
 import fivemonkey.com.fitnessbackend.dto.*;
 import fivemonkey.com.fitnessbackend.entities.*;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
-import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
+import fivemonkey.com.fitnessbackend.configuration.ImageUploader;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -238,7 +238,7 @@ public class UserController {
         userService.saveThumbnail(imageUploader.upload(multipartFile), userDTO.getEmail());
 
 
-        return "redirect:/";
+        return "redirect:/user/updateprofile";
     }
 
 
@@ -258,7 +258,7 @@ public class UserController {
             model.addAttribute("userEmail", "");
             model.addAttribute("userPhone", "");
         }
-        model.addAttribute("userRole", userDetail.getUser().getRole().getId());
+//        model.addAttribute("userRole", userDetail.getUser().getRole().getId());
         model.addAttribute("listservice", servicesService.getServicesPT());
         model.addAttribute("hasRegistered", hasRegistered);
         model.addAttribute("trainer", trainerDTO);
@@ -317,7 +317,7 @@ public class UserController {
     @PostMapping("/updateprofile/{email}")
     public String userUpdateAll(@ModelAttribute("user") UserDTO userDTO, Model model) throws IOException {
         userService.updateUser(userDTO);
-        return "redirect:/";
+        return "redirect:/user/updateprofile";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)

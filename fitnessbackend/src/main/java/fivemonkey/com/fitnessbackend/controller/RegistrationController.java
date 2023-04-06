@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/registration")
@@ -77,12 +78,16 @@ public class RegistrationController {
             User user = new User();
             user.setEmail(email);
             user.setPhone(phone);
-            user.setPassword("123456");
             user.setStatus(false);
+            Random random= new Random();
+            int randomPass = 100000 + random.nextInt(9000000);
+            //sent for new user new password random
+            String password=String.valueOf(randomPass);
+            user.setPassword(password);
             userService.registerUser(user);
             String siteUrl = Utility.getSiteURL(request);
             try {
-                userService.sendVerificationEmail(user, siteUrl);
+                userService.verifyNewUserEnrollService(user, siteUrl,serviceId,password);
             } catch (MessagingException e) {
                 throw new RuntimeException(e);
             } catch (UnsupportedEncodingException e) {

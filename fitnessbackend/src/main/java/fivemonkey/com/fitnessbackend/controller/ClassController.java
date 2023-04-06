@@ -2,7 +2,7 @@ package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.dto.ClassDTO;
 import fivemonkey.com.fitnessbackend.dto.SessionDTO;
-import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
+import fivemonkey.com.fitnessbackend.configuration.ImageUploader;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;

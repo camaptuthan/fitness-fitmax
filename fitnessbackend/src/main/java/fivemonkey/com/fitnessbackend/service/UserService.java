@@ -222,6 +222,7 @@ public class UserService {
                 + "<br>"
                 + "Thank you,<br>"
                 + "From FSM.";
+        try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
             helper.setFrom(fromAddress, senderName);
@@ -229,6 +230,9 @@ public class UserService {
             helper.setSubject(subject);
             helper.setText(content, true);
             mailSender.send(message);
+        } catch (MailException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -423,9 +427,9 @@ public class UserService {
     }
 
     public void verifyCodeRegistration(String email,String serviceId) throws MessagingException, UnsupportedEncodingException {
-        String otp = generateOTP();
+        String code = generateOTP();
         // send the OTP to the user's email
-        otpMap.put(email, otp);
+        otpMap.put(email, code);
         // set the expiration time for the OTP
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -445,13 +449,15 @@ public class UserService {
         String senderName = "Fitness Service Management System";
         String subject = "Please verify ";
 
-        String content = "Dear ,<br>"
-                + "This is your otp please verify otp now :<br>"
-                + "<h3>" + otp + "</h3> <br>"
-                + "<h5>" + serviceId + "</h3> <br>"
-                + "<h5>" + registration.getDate()+ "</h3> <br>"
-                + "<h5>" + registration.getServices().getName()+ "</h3> <br>"
-                + "<a>" + "It's expired time after " + OTP_EXPIRATION_TIME_MINUTES + " minutes </a><br>"
+        String content = "Dear <br>"
+                + "This is your code please verify enroll service now :<br>"
+                + "<h3>" + code + "</h3> "
+                + "<h4>" +"ServiceID: "+ serviceId + "</h4> "
+                + "<h4>" +"ServiceName: " +registration.getServices().getName()+ "</h4> "
+                + "<h4>" +"Price: " +registration.getServices().getPrice()+" VND"+ "</h4> "
+                + "<h4>" +"City: " +registration.getServices().getCity().getName()+ "</h4> "
+                + "<h4>" +"Date: "+registration.getDate()+ "</h4> "
+                + "<a>" + "Code expired time after " + OTP_EXPIRATION_TIME_MINUTES + " minutes </a>"
                 + "Thank you,<br>"
                 + "From FSM.";
 
@@ -467,6 +473,40 @@ public class UserService {
             e.printStackTrace();
         }
 
+    }
+
+
+    public void verifyNewUserEnrollService(User user, String siteUrl,String serviceId,String password) throws MessagingException, UnsupportedEncodingException {
+        Registration registration = new Registration();
+        registration.setTrainee(traineeRepository.getById(user.getEmail()));
+        Services services = servicesRepository.findById(serviceId).orElseGet(() -> classRepository.getClazzByServices(serviceId).getServices());
+        registration.setServices(services);
+        registration.setDate(new Date());
+        registration.setStartDate(services.getClazz()== null ? null : services.getClazz().getSessions().get(0).getHappenedDate());
+        String toAddress = user.getEmail();
+        String fromAddress = "ducnvhe141646@fpt.edu.vn";
+        String senderName = "Fitness Service Management System";
+        String subject = "Please verify your registration";
+        String verifyURL = siteUrl + "/user/verify?code=" + user.getVerificationCode();
+        String content = "Hear:  <br>"
+                + "Please click the link below to verify your registration:"
+                + "<h3><a href=\"" + verifyURL + "\" >VERIFY</a></h3>"
+                + "<h4>" +"Password: " +password+ "</h4> "
+                + "<h4>" +"ServiceID: "+ serviceId + "</h4> "
+                + "<h4>" +"ServiceName: " +registration.getServices().getName()+ "</h4> "
+                + "<h4>" +"Price: " +registration.getServices().getPrice()+" VND"+ "</h4> "
+                + "<h4>" +"City: " +registration.getServices().getCity().getName()+ "</h4> "
+                + "<h4>" +"Date: "+registration.getDate()+ "</h4> "
+                + "<br>"
+                + "Thank you,<br>"
+                + "From FSM.";
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+        helper.setText(content, true);
+        mailSender.send(message);
     }
 }
 

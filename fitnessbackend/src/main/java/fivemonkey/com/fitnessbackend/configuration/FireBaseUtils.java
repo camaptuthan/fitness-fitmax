@@ -1,4 +1,4 @@
-package fivemonkey.com.fitnessbackend.utils;
+package fivemonkey.com.fitnessbackend.configuration;
 
 import com.google.cloud.storage.Bucket;
 import lombok.AllArgsConstructor;
