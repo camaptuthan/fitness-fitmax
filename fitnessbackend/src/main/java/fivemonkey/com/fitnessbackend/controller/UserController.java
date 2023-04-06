@@ -254,11 +254,12 @@ public class UserController {
             hasRegistered = registrationService.hasRegistrationPt(email, userDetail.getUser().getEmail());
             model.addAttribute("userEmail", userDetail.getUser().getEmail());
             model.addAttribute("userPhone", userDetail.getUser().getPhone());
+            model.addAttribute("userRole", userDetail.getUser().getRole().getId());
         } else {
             model.addAttribute("userEmail", "");
             model.addAttribute("userPhone", "");
         }
-        model.addAttribute("userRole", userDetail.getUser().getRole().getId());
+
         model.addAttribute("listservice", servicesService.getServicesPT());
         model.addAttribute("hasRegistered", hasRegistered);
         model.addAttribute("trainer", trainerDTO);
