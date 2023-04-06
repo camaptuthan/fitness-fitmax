@@ -45,37 +45,52 @@ public class StudioController {
     private ModelMapperConfiguration<StudioDTO, Studio> modelMapper;
 
 //    list studio in homepage
-    @GetMapping("/studio-details/{id}")
-    public String homepageStudioDetail(@RequestParam(value = "category", required = false, defaultValue = "0") Long category,@PathVariable("id") String id, Model model) {
-        StudioDTO s=  studioService.getStudioDTOById(id);
-        User u= userService.getManagerOfStudio(id);
-        List<CategoryDTO> listCategory = categoryService.getAllCategoriesByType("service");
-        Map<String, List<ServicesDTO>> packagesMapList = new HashMap<>();
-        List<ServicesDTO> servicesDTOList;
-        if(category==0){
-            servicesDTOList=servicesService.getAllServiceOfStudio(id);
-        }else{
-            servicesDTOList=servicesService.getServiceOfStudio(id,category);
-        }
-        int size = servicesDTOList.size() % 3 == 0 ? servicesDTOList.size() / 3 : (servicesDTOList.size() / 3 + 1);
-        List<ServicesDTO> value = null;
-        for (int i = 0; i < size; i++) {
-            value = new ArrayList<>();
-            for (int j = 0; j < 3; j++) {
-                if (i * 3 + j < servicesDTOList.size()) {
-                    value.add(servicesDTOList.get(i * 3 + j));
-                }
-            }
-            packagesMapList.put("PKG-" + (i + 1), value);
-        }
-        model.addAttribute("studios",s);
-        model.addAttribute("managerStudio",u);
-        model.addAttribute("size", packagesMapList.size());
-        model.addAttribute("categoryList", listCategory);
-        model.addAttribute("listServiceOfStudio",packagesMapList);
-        model.addAttribute("currentCategory", category);
-        return "studio_details";
+@GetMapping("/studio-details/{id}")
+public String homepageStudioDetail(@PathVariable("id") String id, Model model, @RequestParam(value = "category", required = false, defaultValue = "0") Long category,
+                                   @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+                                   @RequestParam(value = "type", required = false, defaultValue = "All") String type) {
+    StudioDTO s = studioService.getStudioDTOById(id);
+    User u = userService.getManagerOfStudio(id);
+    List<CategoryDTO> listCategory = categoryService.getAllCategoriesByType("service");
+    Map<String, List<ServicesDTO>> packagesMapList = new HashMap<>();
+    List<ServicesDTO> servicesDTOList = new ArrayList<>();
+    List<String> listType = servicesService.getAllServiceType();
+    if ("All".equals(type)) {
+        servicesDTOList.addAll(servicesService.getPackageInStudio(keyword, s.getDistrictCityId(), category));
+        servicesDTOList.addAll(servicesService.getClassesInStudio(keyword, s.getDistrictCityId(), s.getId(), category));
+        servicesDTOList.addAll(servicesService.getPTsInStudio(keyword, s.getDistrictCityId(), s.getId(), category));
     }
+    if ("Packages".equals(type)) {
+        servicesDTOList = servicesService.getPackageInStudio(keyword, s.getDistrictCityId(), category);
+    }
+    if ("Classes".equals(type)) {
+        servicesDTOList = servicesService.getClassesInStudio(keyword, s.getDistrictCityId(), s.getId(), category);
+    }
+    if ("Personal Training".equals(type)) {
+        servicesDTOList = servicesService.getPTsInStudio(keyword, s.getDistrictCityId(), s.getId(), category);
+    }
+    int size = servicesDTOList.size() % 3 == 0 ? servicesDTOList.size() / 3 : (servicesDTOList.size() / 3 + 1);
+    List<ServicesDTO> value = null;
+    for (int i = 0; i < size; i++) {
+        value = new ArrayList<>();
+        for (int j = 0; j < 3; j++) {
+            if (i * 3 + j < servicesDTOList.size()) {
+                value.add(servicesDTOList.get(i * 3 + j));
+            }
+        }
+        packagesMapList.put("PKG-" + (i + 1), value);
+    }
+    model.addAttribute("listType", listType);
+    model.addAttribute("studios", s);
+    model.addAttribute("managerStudio", u);
+    model.addAttribute("size", packagesMapList.size());
+    model.addAttribute("categoryList", listCategory);
+    model.addAttribute("listServiceOfStudio", packagesMapList);
+    model.addAttribute("currentKeyword", keyword);
+    model.addAttribute("currentType", type);
+    model.addAttribute("currentCategory", category);
+    return "/user/studio_details";
+}
 
     @RequestMapping(value = "management/studios", method = {RequestMethod.GET, RequestMethod.POST})
     public String listStudios(@AuthenticationPrincipal UserDetail userDetail, Model model,

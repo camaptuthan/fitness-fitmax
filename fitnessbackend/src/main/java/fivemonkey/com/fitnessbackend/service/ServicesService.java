@@ -49,7 +49,6 @@ public class ServicesService {
         return modelMapper.mapList(serviceRepository.findAll(), ServicesDTO.class);
     }
 
-          
     public List<ServicesDTO> getAllPackages() {
         return modelMapper.mapList(serviceRepository.getServicesByPackage(), ServicesDTO.class);
     }
@@ -75,9 +74,9 @@ public class ServicesService {
     }
 
           
-    public List<ServicesDTO> getPackagesBy3Fields(@Param("keyword") String keyword,
-                                                  @Param("cityname") String cityname,
-                                                  @Param("category") Long category) {
+    public List<ServicesDTO> getPackagesBy3Fields(String keyword,
+                                                  String cityname,
+                                                  Long category) {
         Session session = sessionFactory.openSession();
         String query = "select s from Services s where s.serviceType.id = 1 and s.status = 2 ";
         if (!"".equals(keyword)) {
@@ -142,14 +141,57 @@ public class ServicesService {
         }
     }
 
-          
-    public List<Services> getClassesByFields(String keyword, String cityname, String studio, Long category) {
-        return null;
+    public List<ServicesDTO> getPackageInStudio(String keyword, Long cityid, Long category) {
+        Session session = sessionFactory.openSession();
+        String query = "select s from Services s where s.serviceType.id = 1 and s.status = 2 ";
+        if (!"".equals(keyword)) {
+            query += " and concat(s.name,'',s.price,'',s.duration,'',s.date) like '%" + keyword + "%' ";
+        }
+        if (cityid != 0L) {
+            query += " and s.city.id = " + cityid + " ";
+        }
+        if (category != 0L) {
+            query += " and s.category.id = " + category + " ";
+        }
+        Query<Services> query1 = session.createQuery(query, Services.class);
+        return modelMapper.mapList(query1.getResultList(), ServicesDTO.class);
+    }
+    public List<ServicesDTO> getClassesInStudio(String keyword, Long cityid, String studio, Long category) {
+        Session session = sessionFactory.openSession();
+        String query = "select s from Services s where s.serviceType.id = 3 and s.status = 2 ";
+        if (!"".equals(keyword)) {
+            query += " and concat(s.name,'',s.price,'',s.duration,'',s.date) like '%" + keyword + "%' ";
+        }
+        if (cityid != 0L) {
+            query += " and s.city.id = " + cityid + " ";
+        }
+        if (!"All".equals(studio)) {
+            query += " and s.studio.id = '" + studio + "' ";
+        }
+        if (category != 0L) {
+            query += " and s.category.id = " + category + " ";
+        }
+        Query<Services> query1 = session.createQuery(query, Services.class);
+        return modelMapper.mapList(query1.getResultList(), ServicesDTO.class);
     }
 
-          
-    public List<Services> getPTsByFields(String keyword, String cityname, String studio, Long category) {
-        return null;
+    public List<ServicesDTO> getPTsInStudio(String keyword, Long cityid, String studio, Long category) {
+        Session session = sessionFactory.openSession();
+        String query = "select s from Services s where s.serviceType.id = 2 and s.status = 2 ";
+        if (!"".equals(keyword)) {
+            query += " and concat(s.name,'',s.price,'',s.duration,'',s.date) like '%" + keyword + "%' ";
+        }
+        if (cityid != 0L) {
+            query += " and s.city.id = " + cityid + " ";
+        }
+        if (!"All".equals(studio)) {
+            query += " and s.studio.id = '" + studio + "' ";
+        }
+        if (category != 0L) {
+            query += " and s.category.id = " + category + " ";
+        }
+        Query<Services> query1 = session.createQuery(query, Services.class);
+        return modelMapper.mapList(query1.getResultList(), ServicesDTO.class);
     }
 
           
@@ -208,6 +250,8 @@ public class ServicesService {
         return serviceRepository.findStudioByService(servicesId).isPresent();
     }
 
-
+    public List<String> getAllServiceType(){
+        return serviceRepository.findAllServiceType();
+    }
 
 }
