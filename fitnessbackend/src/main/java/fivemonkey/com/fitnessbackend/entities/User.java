@@ -75,7 +75,7 @@ public class User {
 
 
     //studio-user relationship
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "studio_id", referencedColumnName = "studio_id", nullable = true)
     private Studio studio;
 

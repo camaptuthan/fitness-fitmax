@@ -102,11 +102,11 @@ public class UserController {
     public String listTraineeSwitch(@AuthenticationPrincipal UserDetail userDetail, Model model){
         switch (userDetail.getUser().getRole().getId()) {
             case "ROLE01":
-                model.addAttribute("list", traineeService.getTraineeSwByAdmin());
+//                model.addAttribute("list", traineeService.getTraineeSwByAdmin());
                 break;
 
             case "ROLE02":
-                model.addAttribute("list", traineeService.getTraineeSw(userDetail.getUser().getCity().getName()));
+//                model.addAttribute("list", traineeService.getTraineeSw(userDetail.getUser().getCity().getName()));
                 break;
 
         }
@@ -217,8 +217,8 @@ public class UserController {
 
     @GetMapping(value = "/history" )
     public String getHistorySwitch(@AuthenticationPrincipal UserDetail userDetail, Model model) {
-       List<HistoryDTO> history = historyService.getHistoryByTrainee(userDetail.getUser().getEmail());
-        model.addAttribute("history", history);
+//       List<HistoryDTO> history = historyService.getHistoryByTrainee(userDetail.getUser().getEmail());
+//        model.addAttribute("history", history);
         return "user/history";
     }
 
