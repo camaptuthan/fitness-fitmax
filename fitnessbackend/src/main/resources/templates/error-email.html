@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Error Report</title>
+</head>
+<body>
+<h1>Error Email Exception</h1>
+<a th:href="@{/}">Back Home Here</a>
+<p>There was an error processing your request:</p>
+<pre th:text="${errorMessage}" />
+</body>
+</html>

@@ -63,7 +63,12 @@ public class RegistrationController {
                 throw new RuntimeException(e);
             } catch (UnsupportedEncodingException e) {
                 throw new RuntimeException(e);
+            }catch (Exception e){
+                model.addAttribute("errorMessage", e);
+                path="error-email";
+                return path;
             }
+
             model.addAttribute("email", email);
             model.addAttribute("idP",serviceId);
             path= "verify_registration";
@@ -92,6 +97,10 @@ public class RegistrationController {
                 throw new RuntimeException(e);
             } catch (UnsupportedEncodingException e) {
                 throw new RuntimeException(e);
+            }catch (Exception e){
+                model.addAttribute("errorMessage", e);
+                path="error-email";
+                return path;
             }
 
             //Create new registration

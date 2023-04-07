@@ -338,8 +338,9 @@ public class UserController {
         userService.registerUser(user);
         try{
             userService.sendVerificationEmail(user, siteUrl);
-        }catch (MailException e){
-            attributes.addFlashAttribute("message", "Connection Time Out --Sent Fail");
+        }catch (Exception e){
+            attributes.addFlashAttribute("errorMessage", e);
+            return  "error-email";
         }
         attributes.addFlashAttribute("message", "You have to registered as a member.");
         attributes.addFlashAttribute("message2", "Please check your email verify account ");
@@ -397,10 +398,15 @@ public class UserController {
     public String resetPassGetOtp(@ModelAttribute("userDTO") User user, Model model, RedirectAttributes attributes) throws MessagingException, UnsupportedEncodingException {
         //validate email not exist
         List<Object> userPresentObj = userService.isUserPresent(user);
-        if ((Boolean) userPresentObj.get(0)) {
-            userService.sendOTP(user.getEmail());
-            model.addAttribute("email", user.getEmail());
-            return "verifyOTP";
+        try{
+            if ((Boolean) userPresentObj.get(0)) {
+                userService.sendOTP(user.getEmail());
+                model.addAttribute("email", user.getEmail());
+                return "verifyOTP";
+            }
+        }catch (Exception e){
+            attributes.addFlashAttribute("errorMessage", e);
+            return  "error-email";
         }
         attributes.addFlashAttribute("fail", "Email Invalid");
         return "redirect:/reset-password";

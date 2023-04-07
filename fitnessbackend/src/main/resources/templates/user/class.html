@@ -66,6 +66,7 @@
                             <span class="post-category"><i class="fa fa-tag"></i><a
                                     th:text="${class.servicesCategoryName}"></a></span>
                         </div>
+                        <h4 class="title" th:text="${(class.servicesPrice)+' VNĐ'}"></h4>
                         <h2 class="title"><a th:href="@{/service/class/{id} (id=${class.servicesId})}"
                                              th:text="${class.servicesName}"></a></h2>
                         <div class="text">
