@@ -46,6 +46,19 @@
 
                             </div>
                         </div>
+                        <div class="form-group row col-4 ">
+
+                            <div class="col-sm-8">
+                                <select class="form-control" th:name="studio" onchange="submitFormDashboard()">
+                                    <option  value="">All Studio</option>
+                                    <th:block th:each="studio : ${studioDTOList}">
+                                        <option th:value="${studio.id}" th:text="${studio.name}"
+                                                th:selected="${currentStudio.equals(''+studio.name)}"></option>
+                                    </th:block>
+                                </select>
+
+                            </div>
+                        </div>
                         <div class="form-group row col-4 ml-0">
 
                             <div class="col-sm-9">
@@ -78,8 +91,9 @@
                         <table class="table table-hover table-bordered sortable" id="studio_table">
                             <thead>
                             <tr>
-                                <th>Studio</th>
+                                <th>City</th>
                                 <th>Service Name</th>
+                                <th>Studio</th>
                                 <th>Service Type</th>
                                 <th>Service Price</th>
                                 <th>Customer Information</th>
@@ -92,12 +106,19 @@
                             <tbody>
 
                             <tr th:each="registration: ${registrations}">
-                                <td th:text="${registration.servicesStudioName}"></td>
+                                <td th:text="${registration.servicesCityCityName}"></td>
+<!--                                <td th:text="${registration.servicesStudioName}"></td>-->
                                 <td th:text="${registration.servicesName}"></td>
+                                <span th:if="${registration.servicesStudioName != null}">
+                        <td th:text="${registration.servicesStudioName}" ></td>
+                    </span>
+                                <span th:if="${registration.servicesStudioName == null}">
+                        <td>All studio</td>
+                    </span>
                                 <td th:text="${registration.servicesType}"></td>
                                 <td th:text="${registration.servicesPrice}"></td>
-                                <td th:text="${registration.traineeEmail +' '+ registration.traineeName}" ></td>
-                                <td th:text="${registration.traineePhone}"></td>
+                                <td th:text="${registration.traineeEmail +' '+ registration.traineeUserFirstName+' '+ registration.traineeUserLastName}" ></td>
+                                <td th:text="${registration.traineeUserPhone}"></td>
                                 <td th:text="${registration.startDate}"></td>
                                 <span th:if="${registration.status ==0}">
                         <td>Pending</td>
@@ -112,7 +133,6 @@
                     <td>In progress</td>
                     </span>
                                 <span th:if="${registration.status == 4}">
-
                     <td>Expired</td>
                     </span>
                                 <td>
@@ -124,11 +144,11 @@
                                        th:if="${registration.status == 0}"><i
                                             class="material-icons fa fa-check-circle" style="font-size: 25px" data-hover-only="Verify"></i></a>
                                     <a class="active" data-toggle="tooltip" onclick="return confirm('Are you sure you want to approve this Registration?')"
-                                       th:href="@{/registration/management/statusregistrations/{id}/{status} (status=${2}, id=${registration.id} )}"
+                                       th:href="@{/registration/management/statusregistrations/{id}/{status} (status=${3}, id=${registration.id} )}"
                                        th:if="${registration.status == 1}"><i
                                             class="material-icons fa fa-arrow-circle-up" style="font-size: 25px" data-hover-only="Approve"></i></a>
                                     <a class="active" data-toggle="tooltip" onclick="return confirm('Are you sure you want to cancel this Registration?')"
-                                       th:href="@{/registration/management/statusregistrations/{id}/{status} (status=${0}, id=${registration.id} )}"
+                                       th:href="@{/registration/management/statusregistrations/{id}/{status} (status=${2}, id=${registration.id} )}"
                                        th:if="${registration.status != 2 && registration.status!=4}"><i
                                             class="material-icons fa fa-arrow-circle-down" style="font-size: 25px" data-hover-only="Cancel"></i></a>
                                 </td>
@@ -136,7 +156,29 @@
                             </tr>
                             </tbody>
                         </table>
-                        <div id="pagination"></div>
+<!--                        <div id="pagination"></div>-->
+                        <div class="pagination-cover">
+                            <ul class="pagination">
+                                <li class="pagination-item item-prev"
+                                    th:classappend="${currentPage -1 == 0} ? 'disabled':''" th:if="${currentPage -1 > 0}">
+                                    <a th:href="@{/registration/management/registrations(pageNumber=${currentPage - 1},keyword=${currentKeyword},city=${currentCity},status=${currentStatus})}">
+                                        <i aria-hidden="true" class="fa fa-angle-left"></i>
+                                    </a>
+                                </li>
+                                <li class="pagination-item " th:classappend="${currentPage == i}? 'active' :'' "
+                                    th:each="i: ${#numbers.sequence(1,totalPage)}">
+                                    <a th:href="@{/registration/management/registrations(pageNumber=${i},city=${currentCity},keyword=${currentKeyword},status=${currentStatus})}"
+                                       th:text="${i}"></a>
+                                </li>
+                                <li class="pagination-item item-next"
+                                    th:classappend="${currentPage == totalPage}  ? 'disabled':''"
+                                    th:if="${currentPage < totalPage}">
+                                    <a th:href="@{/registration/management/registrations(pageNumber=${currentPage + 1},city=${currentCity},keyword=${currentKeyword},status=${currentStatus})}">
+                                        <i aria-hidden="true" class="fa fa-angle-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -156,18 +198,39 @@
         $('#studio_table').DataTable({
             // dom: 'rtip',
             columnDefs: [{
-                target: 0,
                 visible: false,
                 searchable: false
             }],
             pagingType: 'full_numbers',
             bLengthChange: false,
-            pageLength: 5,
+            "bInfo": false,
+            entries: false,
             searching: false,
+            paging: false,
+            pageLength: 5,
         });
     });
 </script>
+
 <script type="text/javascript">
+    const cities = $("#city");
+    const studios = $("studio");
+    function renderStudio(data) {
+        for (const x of data) {
+            cities.append(` <option value="${x.Name}">${x.Name}</option>`);
+        }
+        cities.onchange = function () {
+            studios.length = 1;
+            if (this.value != "") {
+                const result = data.filter(n => n.Name === this.value);
+                studios.html("");
+                for (const k of result[0].Districts) {
+                    studios.append(` <option value="${k.Name}">${k.Name}</option>`);
+                }
+            }
+        };
+
+    }
     function submitFormDashboard() {
         document.getElementById("searchAndFilterRegistration").submit();
     }

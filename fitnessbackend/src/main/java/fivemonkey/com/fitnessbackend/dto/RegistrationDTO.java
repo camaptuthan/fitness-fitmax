@@ -27,11 +27,14 @@ public class RegistrationDTO {
     private String servicesStudioName;
     private String servicesStudioAddress;
     private String servicesStudioCity;
+    private String servicesCityCityName;
     private String servicesStudioStatus;
     private String path;
     private String traineeEmail;
     private String traineeName;
-    private String traineePhone;
+    private String traineeUserFirstName;
+    private String traineeUserLastName;
+    private String traineeUserPhone;
     private String traineeGender;
     private String traineeAge;
     private String traineeWeight;

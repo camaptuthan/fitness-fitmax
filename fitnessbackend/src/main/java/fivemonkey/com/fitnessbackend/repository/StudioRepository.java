@@ -33,6 +33,9 @@ public interface StudioRepository extends JpaRepository<Studio, String> {
     @Query("select s from Studio s where s.district.city.name= ?1")
     List<Studio> getStudioByCity(String cityName);
 
+    @Query("select s from Studio s where s.district.city.id= ?1")
+    List<Studio> getStudioByCityId(Long id);
+
     //get studio by id
     @Query("SELECT s FROM Studio s WHERE s.id = ?1")
     Studio getStudioById(String id);

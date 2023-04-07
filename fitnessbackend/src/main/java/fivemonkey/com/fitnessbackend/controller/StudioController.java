@@ -99,18 +99,15 @@ public String homepageStudioDetail(@PathVariable("id") String id, Model model, @
                               @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
                               @RequestParam(name = "pageNumber", required = false, defaultValue = "1") String pageNumber) {
         int totalPage = studioService.getTotalAllStudiosByFilter(keyword,city, status);
-        List<CityDTO> listCity = new ArrayList<>();
+        List<City> listCity = new ArrayList<>();
         if (userDetail.getUser().getRole().getName().equals("Admin")) {
-
 
         } else if (userDetail.getUser().getRole().getName().equals("Studio Manager")) {
             model.addAttribute("studio", studioService.getStudioByManagerId(userDetail.getUser().getStudio().getId()));
         }
-        listCity = cityService.getAllCities();
+        listCity = cityService.getStudioCity();
         List<StudioDTO> listStudio = studioService.getAllStudiosByFilter(keyword,city, status, Integer.parseInt(pageNumber) - 1);
         model.addAttribute("studios", listStudio);
-        System.out.println("stusize"+listStudio.size());
-        System.out.println("totalPage: " + totalPage);
         model.addAttribute("cityList", listCity);
         model.addAttribute("currentCity", city);
         model.addAttribute("status", status);
@@ -130,7 +127,6 @@ public String homepageStudioDetail(@PathVariable("id") String id, Model model, @
     @GetMapping("/management/addstudio")
     public String newStudio(@AuthenticationPrincipal UserDetail userDetail,
                             @RequestParam(value = "city", required = false, defaultValue = "") String city, Model model){
-
 
         Studio studio = new Studio();
         List<City> cityList = cityService.getNewCity();
@@ -168,13 +164,6 @@ public String homepageStudioDetail(@PathVariable("id") String id, Model model, @
                                Model model) {
         // get studio from database by id
         Studio existingStudio = studioService.getStudioByStudioId(studio.getId());
-//        City city = cityService.getCityByName(studio.getDistrictCityName());
-//        District currentDistrict = districtService.getDistrictByName(studio.getDistrictName());
-//        city.setName(studio.getDistrictCityName());
-//        currentDistrict.setCity(city);
-//        existingStudio.setDistrict(currentDistrict);
-
-
         existingStudio.setName(studio.getName());
         existingStudio.setContact(studio.getContact());
         existingStudio.setDes(studio.getDes());

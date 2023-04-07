@@ -27,6 +27,11 @@ public interface CityRepository extends JpaRepository<City, Long> {
     @Query(value = "select * from city", nativeQuery = true)
     List<City> getNewCity();
 
+    @Query("select s.district.city from Studio s")
+    List<City> getCityStudio();
+
+    @Query(value = "SELECT * FROM city  where city_id in (select city_id from district where district_id in (select district_id from studio) ) ", nativeQuery = true)
+    List<City> getStudioCity();
     @Query(value = "SELECT * FROM city  where city_id in (select city_id from district where district_id in (select district_id from studio) ) and city_name != ?1 ", nativeQuery = true)
     List<City> getStudioCity(String cityName);
 

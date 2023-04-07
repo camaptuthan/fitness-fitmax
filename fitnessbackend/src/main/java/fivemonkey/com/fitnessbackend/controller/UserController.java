@@ -284,7 +284,7 @@ public class UserController {
                                    @RequestParam(value = "studioId", required = false, defaultValue = "All") String studioId,
                                    Model model){
         TraineeDTO traineeDTO = traineeService.getTraineeByEmail(userDetail.getUser().getEmail());
-        model.addAttribute("listCity", cityService.getStudioCity(userDetail.getUser().getCity().getName()));
+        //model.addAttribute("listCity", cityService.getStudioCity(userDetail.getUser().getCity().getName()));
         model.addAttribute("regis", registrationService.getListRegistrationByUser(userDetail.getUser().getEmail()));
         model.addAttribute("listStudio", studioService.getAllStudio());
         model.addAttribute("trainee", traineeDTO);

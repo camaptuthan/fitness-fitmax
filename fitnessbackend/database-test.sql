@@ -1136,6 +1136,12 @@ insert into status(type,type_id,status_name) values ('blog',1,'Approved');
 insert into status(type,type_id,status_name) values ('blog',2,'Rejected');
 insert into status(type,type_id,status_name) values ('blog',3,'Expired');
 
+insert into status(type,type_id,status_name) values ('registration',0,'Pending');
+insert into status(type,type_id,status_name) values ('registration',1,'Verified');
+insert into status(type,type_id,status_name) values ('registration',2,'Cancel');
+insert into status(type,type_id,status_name) values ('registration',3,'In progress');
+insert into status(type,type_id,status_name) values ('registration',4,'Expired');
+
 
 INSERT INTO slider(description,image,title,user_id) VALUES('ELITE FITNESS X VPBANK | TẬP LUYỆN THẢ GA - CHẲNG LO VỀ GIÁ','https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/slide-1.jpg?alt=media&token=0e0571e6-4c9a-4afd-a272-4ec4a8afc618','A New California',1);
 INSERT INTO slider(description,image,title,user_id) VALUES('ELITE FITNESS X VPBANK | TẬP LUYỆN THẢ GA - CHẲNG LO VỀ GIÁ','https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/slide-2.jpg?alt=media&token=48de613b-77df-4ca8-aa73-c0876c5b5aa0','A New California',1);

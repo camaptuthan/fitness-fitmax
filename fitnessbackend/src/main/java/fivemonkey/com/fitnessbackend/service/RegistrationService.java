@@ -145,9 +145,40 @@ public class RegistrationService {
     public List<RegistrationDTO> getRegistrationByFilter(@Param("keyword") String keyword,
                                                          @Param("city") String city,
                                                          @Param("studio") String studio,
-                                                         @Param("status") String registrationStatus) {
+                                                         @Param("status") String registrationStatus,
+                                                         int pageNumber) {
+        int pageSize = 5;
         Session session = sessionFactory.openSession();
         String hql = "select r from Registration r where 1=1 ";
+        if (keyword != null && !keyword.isEmpty()) {
+            keyword = keyword.trim().replaceAll("\\s+", " ");
+            hql += " and concat(r.services.name,r.services.price, r.services.serviceType) like '%" + keyword + "%' ";
+        }
+        if (city != null && !city.isEmpty()) {
+            hql += "and r.services.city.id = '" + city +"' ";
+        }
+        if (studio != null && !studio.isEmpty()) {
+            hql += " and r.services.studio.id = '" + studio +"' ";
+        }
+        if (registrationStatus != null && !registrationStatus.isEmpty()) {
+            hql += "and r.status = '" + registrationStatus +"' ";
+        }
+        Query<Registration> query = session.createQuery(hql, Registration.class);
+        query.setFirstResult(pageNumber * pageSize);
+        query.setMaxResults(pageSize);
+        return modelMapper.mapList(query.getResultList(), RegistrationDTO.class);
+    }
+
+
+    //Get total registration by filter
+    public int  getTotalRegistrationByFilter(@Param("keyword") String keyword,
+                                                         @Param("city") String city,
+                                                         @Param("studio") String studio,
+                                                         @Param("status") String registrationStatus
+                                                ) {
+        int pageSize = 5;
+        Session session = sessionFactory.openSession();
+        String hql = "select count(r.id) from Registration r where 1=1 ";
         if (keyword != null && !keyword.isEmpty()) {
             keyword = keyword.trim().replaceAll("\\s+", " ");
             hql += " and concat(r.services.name,r.services.price, r.services.serviceType) like '%" + keyword + "%' ";
@@ -161,12 +192,13 @@ public class RegistrationService {
         if (registrationStatus != null && !registrationStatus.isEmpty()) {
             hql += "and r.status = '" + registrationStatus +"'";
         }
-
-        Query<Registration> query = session.createQuery(hql, Registration.class);
-        return modelMapper.mapList(query.getResultList(), RegistrationDTO.class);
-
-    }
-
+        Query queryCount = session.createQuery(hql);
+        Long countResult = (Long) queryCount.uniqueResult();
+        if ((int) (countResult % pageSize) != 0) {
+            return (int) (countResult / pageSize) + 1;
+        } else {
+            return (int) (countResult / pageSize);
+        }}
      
     public Registration getRegistrationByUser(String traineeEmail) {
         return registrationRepository.getRegistrationByUser(traineeEmail);

@@ -31,19 +31,7 @@ public class StudioService  {
     @Autowired
     private ModelMapperConfiguration<Studio, StudioDTO> modelMapper;
 
-//        
-//    public List<StudioDTO> getAllStudios() {
-//        List<StudioDTO> studioDTOS = new ArrayList<>();
-//        studioRepository.findAll().forEach(studio -> {
-//            StudioDTO studioDTO = modelMapper.map(studio, StudioDTO.class);
-//            String managerEmail = userRepository.listManagerByStudio(studio.getId());
-//            studioDTO.setManagerEmail(managerEmail);
-//            studioDTOS.add(studioDTO);
-//        });
-//        return studioDTOS;
-//    }
 
-    //remove
         
     public List<StudioDTO> getAllStudios() {
         List<StudioDTO> studioDTOS = new ArrayList<>();
@@ -103,7 +91,9 @@ public class StudioService  {
         return modelMapper.mapList(studioRepository.getStudioByCity(cityname), StudioDTO.class);
     }
 
-        
+    public List<StudioDTO> getAllStudiosByCityId(Long id) {
+        return modelMapper.mapList(studioRepository.getStudioByCityId(id), StudioDTO.class);
+    }
     public List<StudioDTO> getStudioByCity(String cityname, int page) {
         int pageSize = 4;
         Session session = sessionFactory.openSession();
@@ -213,7 +203,5 @@ public class StudioService  {
     public List<StudioDTO> listStudioByService(String servicesId) {
         return modelMapper.mapList(servicesRepository.listStudioByService(servicesId),StudioDTO.class);
     }
-
-
 
 }

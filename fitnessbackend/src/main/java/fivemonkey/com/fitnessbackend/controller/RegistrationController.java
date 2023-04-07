@@ -1,17 +1,17 @@
 package fivemonkey.com.fitnessbackend.controller;
 import fivemonkey.com.fitnessbackend.configuration.Utility;
+import fivemonkey.com.fitnessbackend.dto.DistrictDTO;
 import fivemonkey.com.fitnessbackend.dto.RegistrationDTO;
+import fivemonkey.com.fitnessbackend.dto.StudioDTO;
 import fivemonkey.com.fitnessbackend.entities.City;
+import fivemonkey.com.fitnessbackend.entities.District;
 import fivemonkey.com.fitnessbackend.entities.Registration;
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.repository.RegistrationRepository;
 import fivemonkey.com.fitnessbackend.repository.StatusRepository;
 import fivemonkey.com.fitnessbackend.repository.UserRepository;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
-import fivemonkey.com.fitnessbackend.service.CityService;
-import fivemonkey.com.fitnessbackend.service.RegistrationService;
-import fivemonkey.com.fitnessbackend.service.StatusService;
-import fivemonkey.com.fitnessbackend.service.UserService;
+import fivemonkey.com.fitnessbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -37,7 +37,8 @@ public class RegistrationController {
 
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private StudioService studioService;
     @Autowired
     private StatusRepository statusRepository;
     @Autowired
@@ -117,13 +118,14 @@ public class RegistrationController {
 
 
     //Get Registration List by Filter
-    @GetMapping("/management/registrations")
+    @RequestMapping(value="/management/registrations",method = {RequestMethod.GET, RequestMethod.POST})
     public String getRegistrationByFilter(@AuthenticationPrincipal UserDetail userDetail,
                                           @RequestParam(value ="keyword" , required = false, defaultValue = "") String keyword,
                                           @RequestParam(value ="city" ,required = false, defaultValue = "") String city,
                                           @RequestParam(value = "studio", required = false, defaultValue = "") String studio,
                                           @RequestParam(value ="studioStatus", required = false, defaultValue = "") String studioStatus,
-                                          Model model) {
+                                          Model model,@RequestParam(name = "pageNumber", required = false, defaultValue = "1") String pageNumber) {
+        int totalPage = registrationService.getTotalRegistrationByFilter(keyword, city, studio, studioStatus);
         List<City> listCity = new ArrayList<>();
         if (userDetail.getUser().getRole().getName().equals("Admin")) {
             //model.addAttribute("registrations", registrationService.getAllRegistrations());
@@ -134,14 +136,33 @@ public class RegistrationController {
             //model.addAttribute("registrations", registrationService.getRegistrationByAssistant(userDetail.getUser().getEmail()));
         }
         listCity = cityService.getRegistrationCity();
-        List<RegistrationDTO> registrationDTOS = registrationService.getRegistrationByFilter(keyword, city, studio, studioStatus);
+        List<RegistrationDTO> registrationDTOS = registrationService.getRegistrationByFilter(keyword, city, studio, studioStatus,Integer.parseInt(pageNumber) - 1);
         model.addAttribute("registrations", registrationDTOS);
+
+        //Get Studio List
+        if(city!=null && !city.equals("")){
+            List<StudioDTO> studioDTOList = studioService.getAllStudiosByCityId(Long.parseLong(city));
+            model.addAttribute("studioDTOList", studioDTOList);
+        }
+        else {
+            model.addAttribute("studioDTOList", studioService.getAllStudios());
+        }
 
         model.addAttribute("keyword", keyword);
         model.addAttribute("status", studioStatus);
         model.addAttribute("listCity", listCity);
         model.addAttribute("currentCity", city);
+        model.addAttribute("currentStudio", studio);
         model.addAttribute("statusList", statusService.getStatusByRegistration());
+        model.addAttribute("currentPage", Integer.parseInt(pageNumber));
+        model.addAttribute("currentKeyword", keyword);
+        model.addAttribute("currentStatus", studioStatus);
+        model.addAttribute("currentPage", Integer.parseInt(pageNumber));
+        if (totalPage == 0) {
+            model.addAttribute("totalPage", totalPage + 1);
+        }else {
+            model.addAttribute("totalPage",totalPage);
+        }
         return "management/RegistrationManagement/registration";
     }
 

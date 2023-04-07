@@ -81,12 +81,12 @@ public class CityService {
         return cityRepository.getNewCity();
     }
 
-        
-    public List<City> getStudioCity(String cityName) {
-        return cityRepository.getStudioCity(cityName);
+    //Get existing city by studio
+    public List<City> getStudioCity() {
+        return cityRepository.getStudioCity();
     }
 
-        
+    //Get existing city by registration
     public List<City> getRegistrationCity() {
         return cityRepository.getRegistrationCity();
     }
