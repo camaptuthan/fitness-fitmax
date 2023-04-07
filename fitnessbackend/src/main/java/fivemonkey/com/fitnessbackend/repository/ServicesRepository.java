@@ -38,9 +38,8 @@ public interface ServicesRepository extends JpaRepository<Services, String> {
     @Query("select s from Services s where s.id = ?1")
     Services getServicesById(String id);
 
-
-
-
+    @Query("select distinct s.serviceType.type from Services s")
+    List<String> findAllServiceType();
 
     @Query("select s from Services s where s.id = ?1 and s.studio.id = ?2")
     Optional<Services> isServiceExistInStudio(String servicesId, String studioId);

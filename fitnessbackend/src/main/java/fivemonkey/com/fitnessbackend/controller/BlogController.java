@@ -51,6 +51,7 @@ public class BlogController {
         List<Blog> list = blogService.findBlogBy2Fields(keyword, Long.parseLong(category), Integer.parseInt(pageNumber) - 1);
         List<BlogDTO> listBlog = modelMapper.mapList(list, BlogDTO.class);
         List<Blog> listNewestBlog = blogService.findTop3NewestBlogs();
+        System.out.println("HAPH" + categoryList);
         model.addAttribute("listBlog", listBlog);
         model.addAttribute("size", list.size());
         model.addAttribute("listNewestBlog", listNewestBlog);

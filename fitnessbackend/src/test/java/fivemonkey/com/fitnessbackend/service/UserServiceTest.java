@@ -36,12 +36,14 @@ class UserServiceTest {
         User user= new User();
         user.setPassword("12345");
         user.setEmail("ducnvhe141646@fpt.edu.vn");
-        userService.getUserByEmail("ducnvhe141646@fpt.edu.vn");
-//        System.out.println(u.getRoleId());
-        userService.registerUser(user);
 
-        when(userRepository.findByEmail("ducnvhe141646@fpt.edu.vn")).thenReturn(Optional.of(user));
+//        System.out.println(u.getRoleId());
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        when(userRepository.save(user)).thenReturn(user);
+
+//        User saveUser=userService.save(user);
         verify(userRepository,times(1)).save(user);
+        verify(userRepository).findUserByEmail(user.getEmail());
 //        userService.isUserPresent(user);
 
     }
