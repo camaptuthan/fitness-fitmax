@@ -7,6 +7,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -53,4 +54,10 @@ public class Registration {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "assigned_email", referencedColumnName = "trainer_email", nullable = true)
     private Trainer trainer;
+
+    //registration-request relationship
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "request_id", referencedColumnName = "request_id", nullable = true, unique = true)
+    private Request request;
+
 }

@@ -16,11 +16,11 @@ public class HistoryService{
     @Autowired
     private HistoryRepository historyRepository;
     
-    public HistoryDTO getHistoryById(String cityName, String packageId) {
-        return modelMapperHistory.map(historyRepository.getHistoriesById(cityName,packageId), HistoryDTO.class);
-    }
+//    public HistoryDTO getHistoryById(String cityName, String packageId) {
+//        return modelMapperHistory.map(historyRepository.getHistoriesById(cityName,packageId), HistoryDTO.class);
+//    }
 
-    public List<HistoryDTO>  getHistoryByTrainee(String email) {
-        return modelMapperHistory.mapList(historyRepository.getHistoriesByTrainee(email), HistoryDTO.class);
-    }
+//    public List<HistoryDTO>  getHistoryByTrainee(String email) {
+//        return modelMapperHistory.mapList(historyRepository.getHistoriesByTrainee(email), HistoryDTO.class);
+//    }
 }

@@ -1,4 +1,4 @@
-/*create database fitmax; new*/
+/*create database fitmax;*/
 /*use fitmax;*/
 
 /*select * from role;*/
@@ -900,27 +900,27 @@ insert into user(email,password,first_name,last_name,role_id,city_id,status,crea
 insert into user(email,password,first_name,last_name,role_id,city_id,status,created_date) values ('traineecity3.6@fpt.edu.vn','123456','','','ROLE05',48,1,CURDATE()); 
 
 /*select * from trainee;*/
-insert into trainee(trainee_email,status,status_sw) values ('haphhe151269@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('haphhe1512691@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('haphhe1512692@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('traineecity1.1@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('traineecity1.2@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('traineecity1.3@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('traineecity1.4@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('traineecity1.5@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('traineecity1.6@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('traineecity2.1@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('traineecity2.2@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('traineecity2.3@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('traineecity2.4@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('traineecity2.5@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('traineecity2.6@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('traineecity3.1@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('traineecity3.2@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('traineecity3.3@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('traineecity3.4@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('traineecity3.5@fpt.edu.vn',1,0);
-insert into trainee(trainee_email,status,status_sw) values ('traineecity3.6@fpt.edu.vn',1,0);
+insert into trainee(trainee_email,status) values ('haphhe151269@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('haphhe1512691@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('haphhe1512692@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('traineecity1.1@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('traineecity1.2@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('traineecity1.3@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('traineecity1.4@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('traineecity1.5@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('traineecity1.6@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('traineecity2.1@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('traineecity2.2@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('traineecity2.3@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('traineecity2.4@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('traineecity2.5@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('traineecity2.6@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('traineecity3.1@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('traineecity3.2@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('traineecity3.3@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('traineecity3.4@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('traineecity3.5@fpt.edu.vn',1);
+insert into trainee(trainee_email,status) values ('traineecity3.6@fpt.edu.vn',1);
 
 /*select * from trainer;*/
 insert into trainer(trainer_email,status) values ('ducnvhe141646@fpt.edu.vn',1);

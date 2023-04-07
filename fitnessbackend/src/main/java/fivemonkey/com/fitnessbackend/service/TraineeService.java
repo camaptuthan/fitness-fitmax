@@ -34,34 +34,34 @@ public class TraineeService {
     ModelMapperConfiguration<Trainee, TraineeDTO> modelMapperConfiguration;
 
        
-    public List<TraineeDTO> getTraineeSw(String cityName) {
-        return modelMapperConfiguration.mapList(traineeRepository.getTraineeSw(cityName), TraineeDTO.class);
-    }
+//    public List<TraineeDTO> getTraineeSw(String cityName) {
+//        return modelMapperConfiguration.mapList(traineeRepository.getTraineeSw(cityName), TraineeDTO.class);
+//    }
 
 
     public void changeStatusChangeSt(String email,String cityName ,String studioId, String serviceId, String serviceOld) {
 
         Trainee trainee = traineeRepository.getTraineeByEmail(email);
-        trainee.setStatusSw(1);
-        trainee.setCitySwitch(cityName);
-        trainee.setStudioSwitch(studioId);
-        trainee.setServiceSwitch(serviceId);
+//        trainee.setStatusSw(1);
+//        trainee.setCitySwitch(cityName);
+//        trainee.setStudioSwitch(studioId);
+//        trainee.setServiceSwitch(serviceId);
 
 
         History history = new History();
-        history.setTrainee(trainee);
-        history.setNewCity(trainee.getCitySwitch());
-        history.setNewPackage(serviceId);
-        history.setNewStudio(studioId);
+//        history.setTrainee(trainee);
+//        history.setNewCity(trainee.getCitySwitch());
+//        history.setNewPackage(serviceId);
+//        history.setNewStudio(studioId);
 
 
         User user = userRepository.getUserByEmail(email);
         Services servicesNew = servicesRepository.getServicesById(serviceId);
         Services servicesOld = servicesRepository.getServicesByRegistrationsId(serviceOld);
-        history.setOldCity(user.getCity().getName());
-        history.setOldPackage(serviceOld);
-        history.setOldPrice(servicesOld.getPrice());
-        history.setNewPrice(servicesNew.getPrice());
+//        history.setOldCity(user.getCity().getName());
+//        history.setOldPackage(serviceOld);
+//        history.setOldPrice(servicesOld.getPrice());
+//        history.setNewPrice(servicesNew.getPrice());
 
         history.setDate(new Date());
         historyRepository.save(history);
@@ -76,7 +76,7 @@ public class TraineeService {
        
     public void acceptSwichSt(TraineeDTO traineeDTO) {
         Trainee trainee = traineeRepository.getTraineeByEmail(traineeDTO.getEmail());
-        trainee.setStatusSw(2);
+//        trainee.setStatusSw(2);
 
         City city = cityRepository.getCityByName(traineeDTO.getCitySwitch());
         city.setName(traineeDTO.getCitySwitch());
@@ -89,15 +89,15 @@ public class TraineeService {
        
     public void rejectSwichSt(TraineeDTO traineeDTO) {
         Trainee trainee = traineeRepository.getTraineeByEmail(traineeDTO.getEmail());
-        trainee.setStatusSw(0);
-        trainee.setCitySwitch("");
-        trainee.setStudioSwitch("");
+//        trainee.setStatusSw(0);
+//        trainee.setCitySwitch("");
+//        trainee.setStudioSwitch("");
         traineeRepository.save(trainee);
     }
 
 
-    public List<TraineeDTO> getTraineeSwByAdmin() {
-        return modelMapperConfiguration.mapList(traineeRepository.getTraineeByEmailByAdmin(), TraineeDTO.class);
-    }
+//    public List<TraineeDTO> getTraineeSwByAdmin() {
+//        return modelMapperConfiguration.mapList(traineeRepository.getTraineeByEmailByAdmin(), TraineeDTO.class);
+//    }
 
 }
