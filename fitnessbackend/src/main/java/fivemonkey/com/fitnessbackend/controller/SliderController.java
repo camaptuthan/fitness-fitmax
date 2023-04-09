@@ -1,7 +1,7 @@
 package fivemonkey.com.fitnessbackend.controller;
 
 import fivemonkey.com.fitnessbackend.entities.Slider;
-import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
+import fivemonkey.com.fitnessbackend.configuration.ImageUploader;
 import fivemonkey.com.fitnessbackend.repository.SliderRepository;
 import fivemonkey.com.fitnessbackend.service.SliderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,8 +78,5 @@ public class SliderController {
         sliderRepository.save(slider);
         return "redirect:/slider/management";
     }
-
-
-
 
 }

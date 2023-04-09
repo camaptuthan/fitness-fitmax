@@ -3,7 +3,7 @@ import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.BlogDTO;
 import fivemonkey.com.fitnessbackend.entities.Blog;
 import fivemonkey.com.fitnessbackend.entities.Category;
-import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
+import fivemonkey.com.fitnessbackend.configuration.ImageUploader;
 import fivemonkey.com.fitnessbackend.repository.BlogRepository;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.service.BlogService;

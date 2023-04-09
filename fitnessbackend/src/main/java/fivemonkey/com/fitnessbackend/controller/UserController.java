@@ -3,7 +3,7 @@ import fivemonkey.com.fitnessbackend.configuration.Utility;
 import fivemonkey.com.fitnessbackend.dto.*;
 import fivemonkey.com.fitnessbackend.entities.*;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
-import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
+import fivemonkey.com.fitnessbackend.configuration.ImageUploader;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -238,7 +238,7 @@ public class UserController {
         userService.saveThumbnail(imageUploader.upload(multipartFile), userDTO.getEmail());
 
 
-        return "redirect:/";
+        return "redirect:/user/updateprofile";
     }
 
 
@@ -259,7 +259,7 @@ public class UserController {
             model.addAttribute("userEmail", "");
             model.addAttribute("userPhone", "");
         }
-
+//        model.addAttribute("userRole", userDetail.getUser().getRole().getId());
         model.addAttribute("listservice", servicesService.getServicesPT());
         model.addAttribute("hasRegistered", hasRegistered);
         model.addAttribute("trainer", trainerDTO);
@@ -318,11 +318,11 @@ public class UserController {
     @PostMapping("/updateprofile/{email}")
     public String userUpdateAll(@ModelAttribute("user") UserDTO userDTO, Model model) throws IOException {
         userService.updateUser(userDTO);
-        return "redirect:/";
+        return "redirect:/user/updateprofile";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registerUser(@Valid @ModelAttribute("userDTO") User user, RedirectAttributes attributes, HttpServletRequest request, BindingResult bindingResult) throws MessagingException, UnsupportedEncodingException {
+    public String registerUser(@Valid @ModelAttribute("userDTO") User user, RedirectAttributes attributes, HttpServletRequest request, BindingResult bindingResult,Model model) throws MessagingException, UnsupportedEncodingException {
         if (bindingResult.hasErrors()) {
             return "register";
         }
@@ -335,12 +335,14 @@ public class UserController {
             attributes.addFlashAttribute("regexPhone", "Phone Must Be Matches (+84) 35 539-0605;");
             return "redirect:/register";
         }
-        userService.registerUser(user);
+
         try{
             userService.sendVerificationEmail(user, siteUrl);
-        }catch (MailException e){
-            attributes.addFlashAttribute("message", "Connection Time Out --Sent Fail");
+        }catch (Exception e){
+            model.addAttribute("errorMessage", e);
+            return  "error-email";
         }
+        userService.registerUser(user);
         attributes.addFlashAttribute("message", "You have to registered as a member.");
         attributes.addFlashAttribute("message2", "Please check your email verify account ");
         return "redirect:/register";
@@ -397,10 +399,15 @@ public class UserController {
     public String resetPassGetOtp(@ModelAttribute("userDTO") User user, Model model, RedirectAttributes attributes) throws MessagingException, UnsupportedEncodingException {
         //validate email not exist
         List<Object> userPresentObj = userService.isUserPresent(user);
-        if ((Boolean) userPresentObj.get(0)) {
-            userService.sendOTP(user.getEmail());
-            model.addAttribute("email", user.getEmail());
-            return "verifyOTP";
+        try{
+            if ((Boolean) userPresentObj.get(0)) {
+                userService.sendOTP(user.getEmail());
+                model.addAttribute("email", user.getEmail());
+                return "verifyOTP";
+            }
+        }catch (Exception e){
+            attributes.addFlashAttribute("errorMessage", e);
+            return  "error-email";
         }
         attributes.addFlashAttribute("fail", "Email Invalid");
         return "redirect:/reset-password";
@@ -414,6 +421,7 @@ public class UserController {
             return "changepass";
         } else {
             model.addAttribute("error", "Invalid OTP");
+            model.addAttribute("email", email);
             return "verifyOTP";
         }
     }

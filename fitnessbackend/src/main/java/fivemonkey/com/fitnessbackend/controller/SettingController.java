@@ -12,7 +12,6 @@ import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.service.CategoryService;
 import fivemonkey.com.fitnessbackend.service.CityService;
 import fivemonkey.com.fitnessbackend.service.DistrictService;
-import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

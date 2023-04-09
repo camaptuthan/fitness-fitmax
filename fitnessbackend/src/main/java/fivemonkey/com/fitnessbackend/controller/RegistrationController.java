@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/registration")
@@ -58,12 +59,17 @@ public class RegistrationController {
         //truong hop login account verify register by input otp
         if(userDetail!=null){
             try {
-                userService.sendOTP(email);
+                userService.verifyCodeRegistration(email,serviceId);
             } catch (MessagingException e) {
                 throw new RuntimeException(e);
             } catch (UnsupportedEncodingException e) {
                 throw new RuntimeException(e);
+            }catch (Exception e){
+                model.addAttribute("errorMessage", e);
+                path="error-email";
+                return path;
             }
+
             model.addAttribute("email", email);
             model.addAttribute("idP",serviceId);
             path= "verify_registration";
@@ -78,16 +84,24 @@ public class RegistrationController {
             User user = new User();
             user.setEmail(email);
             user.setPhone(phone);
-            user.setPassword("123456");
             user.setStatus(false);
+            Random random= new Random();
+            int randomPass = 100000 + random.nextInt(9000000);
+            //sent for new user new password random
+            String password=String.valueOf(randomPass);
+            user.setPassword(password);
             userService.registerUser(user);
             String siteUrl = Utility.getSiteURL(request);
             try {
-                userService.sendVerificationEmail(user, siteUrl);
+                userService.verifyNewUserEnrollService(user, siteUrl,serviceId,password);
             } catch (MessagingException e) {
                 throw new RuntimeException(e);
             } catch (UnsupportedEncodingException e) {
                 throw new RuntimeException(e);
+            }catch (Exception e){
+                model.addAttribute("errorMessage", e);
+                path="error-email";
+                return path;
             }
 
             //Create new registration
@@ -111,6 +125,8 @@ public class RegistrationController {
             return "redirect:/user/myregistrations";
         } else {
             model.addAttribute("error", "Invalid OTP");
+            model.addAttribute("email", email);
+            model.addAttribute("idP",idP);
             return "verify_registration";
         }
 

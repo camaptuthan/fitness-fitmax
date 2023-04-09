@@ -3,17 +3,13 @@ package fivemonkey.com.fitnessbackend.service;
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.entities.*;
-import fivemonkey.com.fitnessbackend.repository.RegistrationRepository;
-import fivemonkey.com.fitnessbackend.repository.RoleRepository;
-import fivemonkey.com.fitnessbackend.repository.StudioRepository;
-import fivemonkey.com.fitnessbackend.repository.UserRepository;
+import fivemonkey.com.fitnessbackend.repository.*;
 import net.bytebuddy.utility.RandomString;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,7 +27,11 @@ public class UserService {
     private Map<String, String> otpMap = new HashMap<>();
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    private ClassRepository classRepository;
 
+    @Autowired
+    private TraineeRepository traineeRepository;
     @Autowired
     private RegistrationRepository registrationRepository;
     @Autowired
@@ -46,7 +46,8 @@ public class UserService {
     @Autowired
     private ModelMapperConfiguration<User, UserDTO> modelMapper;
 
-
+    @Autowired
+    private ServicesRepository servicesRepository;
     @Autowired
     ModelMapperConfiguration<User, UserDTO> modelMapperConfiguration;
 
@@ -220,6 +221,7 @@ public class UserService {
                 + "<br>"
                 + "Thank you,<br>"
                 + "From FSM.";
+
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
             helper.setFrom(fromAddress, senderName);
@@ -227,6 +229,7 @@ public class UserService {
             helper.setSubject(subject);
             helper.setText(content, true);
             mailSender.send(message);
+
     }
 
 
@@ -243,9 +246,6 @@ public class UserService {
         }
     }
 
-
-    //send otp to forgot password
-     
     public void sendOTP(String email) throws MessagingException, UnsupportedEncodingException {
         String otp = generateOTP();
         // send the OTP to the user's email
@@ -253,7 +253,7 @@ public class UserService {
         // set the expiration time for the OTP
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
-             
+
             public void run() {
                 otpMap.remove(email);
             }
@@ -270,7 +270,6 @@ public class UserService {
                 + "Thank you,<br>"
                 + "From FSM.";
 
-        try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
             helper.setFrom(fromAddress, senderName);
@@ -278,13 +277,9 @@ public class UserService {
             helper.setSubject(subject);
             helper.setText(content, true);
             mailSender.send(message);
-        } catch (MailException e) {
-            e.printStackTrace();
-        }
-
     }
 
-    
+
     public boolean verifyOTP(String email, String otp) {
         String storedOTP = otpMap.get(email);
         //check otp equal or not >>>
@@ -424,6 +419,85 @@ public class UserService {
     }
 
 
+    //case have account enrol service
+    public void verifyCodeRegistration(String email,String serviceId) throws MessagingException, UnsupportedEncodingException {
+        String code = generateOTP();
+        // send the OTP to the user's email
+        otpMap.put(email, code);
+        // set the expiration time for the OTP
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            public void run() {
+                otpMap.remove(email);
+            }
+        }, OTP_EXPIRATION_TIME_MINUTES * 60 * 1000);
+        Registration registration = new Registration();
+        registration.setTrainee(traineeRepository.getById(email));
+        Services services = servicesRepository.findById(serviceId).orElseGet(() -> classRepository.getClazzByServices(serviceId).getServices());
+        registration.setServices(services);
+        registration.setDate(new Date());
+        String toAddress = email;
+        String fromAddress = "ducnvhe141646@fpt.edu.vn";
+        String senderName = "Fitness Service Management System";
+        String subject = "Please verify ";
+
+        String content = "Dear <br>"
+                + "This is your code please verify enroll service now :<br>"
+                + "<h3>" + code + "</h3> "
+                + "<h4>" +"ServiceID: "+ serviceId + "</h4> "
+                + "<h4>" +"ServiceName: " +registration.getServices().getName()+ "</h4> "
+                + "<h4>" +"Price: " +registration.getServices().getPrice()+" VND"+ "</h4> "
+                + "<h4>" +"City: " +registration.getServices().getCity().getName()+ "</h4> "
+                + "<h4>" +"Date: "+registration.getDate()+ "</h4> "
+                + "<a>" + "Code expired time after " + OTP_EXPIRATION_TIME_MINUTES + " minutes </a>"
+                + "Thank you,<br>"
+                + "From FSM.";
+
+
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
+            helper.setFrom(fromAddress, senderName);
+            helper.setTo(toAddress);
+            helper.setSubject(subject);
+            helper.setText(content, true);
+            mailSender.send(message);
+
+    }
+
+// case not login create new user by the way verify link
+    public void verifyNewUserEnrollService(User user, String siteUrl,String serviceId,String password) throws MessagingException, UnsupportedEncodingException {
+        Registration registration = new Registration();
+        registration.setTrainee(traineeRepository.getById(user.getEmail()));
+        Services services = servicesRepository.findById(serviceId).orElseGet(() -> classRepository.getClazzByServices(serviceId).getServices());
+        registration.setServices(services);
+        registration.setDate(new Date());
+        String toAddress = user.getEmail();
+        String fromAddress = "ducnvhe141646@fpt.edu.vn";
+        String senderName = "Fitness Service Management System";
+        String subject = "Please verify your registration";
+        String verifyURL = siteUrl + "/user/verify?code=" + user.getVerificationCode();
+        String content = "Hear:  <br>"
+                + "Please click the link below to verify your registration:"
+                + "<h3><a href=\"" + verifyURL + "\" >VERIFY</a></h3>"
+                + "<h4>" +"Password: " +password+ "</h4> "
+                + "<h4>" +"ServiceID: "+ serviceId + "</h4> "
+                + "<h4>" +"ServiceName: " +registration.getServices().getName()+ "</h4> "
+                + "<h4>" +"Price: " +registration.getServices().getPrice()+" VND"+ "</h4> "
+                + "<h4>" +"City: " +registration.getServices().getCity().getName()+ "</h4> "
+                + "<h4>" +"Date: "+registration.getDate()+ "</h4> "
+                + "<br>"
+                + "Thank you,<br>"
+                + "From FSM.";
+
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
+            helper.setFrom(fromAddress, senderName);
+            helper.setTo(toAddress);
+            helper.setSubject(subject);
+            helper.setText(content, true);
+            mailSender.send(message);
+    }
 }
 
 

@@ -37,7 +37,7 @@
     <div class="container">
         <h1 class="title">Program</h1>
         <ul class="breadcrambs">
-            <li><a href="index-2.html">Home</a></li>
+            <li><a href="/">Home</a></li>
             <li>Program</li>
         </ul>
     </div>
@@ -66,7 +66,9 @@
                 <h2 class="title-decor">About <span th:text="*{servicesName}"></span>
                     <!-- Button trigger modal -->
                 </h2>
-                <div th:if="${!hasRegistered}" >
+                <br>
+                <h3 class="title" th:text="${(class.servicesPrice)+' VNĐ'}"></h3>
+                <div th:if="${!hasRegistered}">
 
                     <!-- Button trigger modal -->
                     <button class="btn btn-primary"
@@ -87,7 +89,8 @@
                                              style="background-image: url(/img/bg-contacts.svg); padding: 0">
                                         <div class="container">
                                             <h2 class="title-decor">About <span th:text="*{servicesName}"></span></h2>
-                                            <h3 class="about-subtitle">Price: <span th:text="*{servicesPrice}"></span> VNĐ</h3>
+                                            <h3 class="about-subtitle">Price: <span th:text="*{servicesPrice}"></span>
+                                                VNĐ</h3>
                                             <div class="row">
                                                 <div class="col-md-5 col-lg-4">
                                                     <div class="contact-item">
@@ -136,16 +139,20 @@
                                                     <form method="post" th:action="@{/registration/make}">
                                                         <ul class="form-cover">
                                                             <li class="inp-name">
-                                                                <input id="id"  name="id" hidden="hidden" th:value="${service_id}" th:text="*{servicesName}">
+                                                                <input id="id" name="id" hidden="hidden"
+                                                                       th:value="${service_id}"
+                                                                       th:text="*{servicesName}">
                                                             </li>
                                                             <li class="inp-name">
                                                                 <label>Email <span style="color: red"> *</span></label>
-                                                                <input id="emailRegis" name="emailRegis" required="" th:text="${userEmail}" th:value="${userEmail}"
+                                                                <input id="emailRegis" name="emailRegis" required=""
+                                                                       th:text="${userEmail}" th:value="${userEmail}"
                                                                        type="email">
                                                             </li>
                                                             <li class="inp-email">
                                                                 <label>Phone <span style="color: red"> *</span></label>
-                                                                <input id="phoneRegis" name="phoneRegis" required="" th:text="${userPhone}" th:value="${userPhone}"
+                                                                <input id="phoneRegis" name="phoneRegis" required=""
+                                                                       th:text="${userPhone}" th:value="${userPhone}"
                                                                        type="tel">
                                                             </li>
                                                             <li class="inp-text">
@@ -285,13 +292,13 @@
                 </div>
             </th:block>
         </div>
-        <form class="my-3" method="post" style="text-align: center" th:action="@{/registration/make}"
-              th:if="${hasRegistered == false}">
-            <input th:name="item_id" th:value="*{servicesId}" type="hidden">
-            <button class="btn" type="submit">
-                Enroll now
-            </button>
-        </form>
+<!--        <form class="my-3" method="post" style="text-align: center" th:action="@{/registration/make}"-->
+<!--              th:if="${hasRegistered == false}">-->
+<!--            <input th:name="item_id" th:value="*{servicesId}" type="hidden">-->
+<!--            <button class="btn" type="submit">-->
+<!--                Enroll now-->
+<!--            </button>-->
+<!--        </form>-->
         <style>
             .accordion {
                 --bs-accordion-bg: #202020;
@@ -315,7 +322,7 @@
                     <div class="carousel-item col-12 p-2" th:classappend="${iter.index == 0} ? active : '' ">
                         <div class="row">
                             <th:block th:each="class : ${item.value}">
-                                <div class="col-md-4 club-card-col" >
+                                <div class="col-md-4 club-card-col">
                                     <div class="club-card-item">
                                         <div class="price-cover">
                                             <div class="price" th:text="${class.servicesPrice}">price</div>

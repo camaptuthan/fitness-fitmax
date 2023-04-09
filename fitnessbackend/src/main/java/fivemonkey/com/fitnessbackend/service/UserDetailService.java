@@ -1,7 +1,8 @@
-package fivemonkey.com.fitnessbackend.security;
+package fivemonkey.com.fitnessbackend.service;
 
 import fivemonkey.com.fitnessbackend.entities.User;
 import fivemonkey.com.fitnessbackend.repository.UserRepository;
+import fivemonkey.com.fitnessbackend.security.UserDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

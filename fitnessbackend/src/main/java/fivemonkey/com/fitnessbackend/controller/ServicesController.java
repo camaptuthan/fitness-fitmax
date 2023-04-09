@@ -2,7 +2,7 @@ package fivemonkey.com.fitnessbackend.controller;
 import fivemonkey.com.fitnessbackend.dto.*;
 import fivemonkey.com.fitnessbackend.entities.Services;
 import fivemonkey.com.fitnessbackend.entities.Status;
-import fivemonkey.com.fitnessbackend.imageuploader.ImageUploader;
+import fivemonkey.com.fitnessbackend.configuration.ImageUploader;
 import fivemonkey.com.fitnessbackend.repository.ServicesRepository;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.service.*;
