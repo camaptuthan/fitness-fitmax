@@ -79,7 +79,4 @@ public class SliderController {
         return "redirect:/slider/management";
     }
 
-
-
-
 }

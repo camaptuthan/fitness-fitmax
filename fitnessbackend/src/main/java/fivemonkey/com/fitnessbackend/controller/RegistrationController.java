@@ -124,6 +124,8 @@ public class RegistrationController {
             return "redirect:/user/myregistrations";
         } else {
             model.addAttribute("error", "Invalid OTP");
+            model.addAttribute("email", email);
+            model.addAttribute("idP",idP);
             return "verify_registration";
         }
 

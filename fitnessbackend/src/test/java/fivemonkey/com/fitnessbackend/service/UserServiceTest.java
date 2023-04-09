@@ -10,11 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
@@ -36,15 +31,10 @@ class UserServiceTest {
         User user= new User();
         user.setPassword("12345");
         user.setEmail("ducnvhe141646@fpt.edu.vn");
-
-//        System.out.println(u.getRoleId());
-        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
         when(userRepository.save(user)).thenReturn(user);
-
-//        User saveUser=userService.save(user);
+        userService.registerUser(user);
         verify(userRepository,times(1)).save(user);
-        verify(userRepository).findUserByEmail(user.getEmail());
-//        userService.isUserPresent(user);
+
 
     }
 }

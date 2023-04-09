@@ -322,7 +322,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registerUser(@Valid @ModelAttribute("userDTO") User user, RedirectAttributes attributes, HttpServletRequest request, BindingResult bindingResult) throws MessagingException, UnsupportedEncodingException {
+    public String registerUser(@Valid @ModelAttribute("userDTO") User user, RedirectAttributes attributes, HttpServletRequest request, BindingResult bindingResult,Model model) throws MessagingException, UnsupportedEncodingException {
         if (bindingResult.hasErrors()) {
             return "register";
         }
@@ -335,13 +335,14 @@ public class UserController {
             attributes.addFlashAttribute("regexPhone", "Phone Must Be Matches (+84) 35 539-0605;");
             return "redirect:/register";
         }
-        userService.registerUser(user);
+
         try{
             userService.sendVerificationEmail(user, siteUrl);
         }catch (Exception e){
-            attributes.addFlashAttribute("errorMessage", e);
+            model.addAttribute("errorMessage", e);
             return  "error-email";
         }
+        userService.registerUser(user);
         attributes.addFlashAttribute("message", "You have to registered as a member.");
         attributes.addFlashAttribute("message2", "Please check your email verify account ");
         return "redirect:/register";
@@ -420,6 +421,7 @@ public class UserController {
             return "changepass";
         } else {
             model.addAttribute("error", "Invalid OTP");
+            model.addAttribute("email", email);
             return "verifyOTP";
         }
     }
