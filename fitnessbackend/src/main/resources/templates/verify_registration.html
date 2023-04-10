@@ -30,7 +30,7 @@
           <h4 style="color: green">An Code has been sent to your email  <span th:text="${email}"></span>. </h4>
           <h4 style="color: green">Confirm your enroll service . </h4>
           <br>
-          <h4 th:text="${error}"></h4>
+          <h4 th:text="${error}" style="color: red"></h4>
           <form  method="post" id="form-code" th:action="@{/registration/enrolled}" class="signin-form">
             <div class="form-group">
               <input type="text" class="form-control"  id="otp" name="otp" placeholder="Enter Code Here"
