@@ -29,10 +29,10 @@ public class Services {
     private String name;
     @Column(name = "image")
     private String image = "https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg";
-    @Min(value = 1, message = "{Size.Field.Duration}")
+
     @Column(name = "duration")
     private int duration;
-    @Min(value = 1, message = "{Size.Field.Price}")
+
     @Column(name = "price")
     private Float price;
     @Column(name = "[description]", columnDefinition = "longtext")

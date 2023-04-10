@@ -8,20 +8,20 @@ $(document).ready(function () {
                 required: true,
                 minlength: 6
             },
-            // lastname: "required",
-            // address: "required",
-            // phone: "required",
+            lastname: "required",
+            address: "required",
+            phone: "required",
         },
 
         // Specify validation error messages
         messages: {
             firstname: "Please enter first name",
-            // lastname: "Please enter last name",
-            // address:
-            //      "Please provide address",
-            //
-            // phone:
-            //     "Please provide phone",
+            lastname: "Please enter last name",
+            address:
+                 "Please provide address",
+
+            phone:
+                "Please provide phone",
 
         },
 

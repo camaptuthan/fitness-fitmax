@@ -29,7 +29,7 @@
                     <h3 class="mb-4 text-center"><a href="/login">Back Login</a></h3>
                     <h4 style="color: green">An OTP has been sent to <span th:text="${email}"></span>. </h4>
                     <br>
-                    <h4 th:text="${error}"></h4>
+                    <h4 th:text="${error}" style="color:red;"></h4>
                     <form method="post" id="form-otp" th:action="@{/user/verifyOTP}" class="signin-form">
                         <div class="form-group">
                             <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP"

@@ -18,7 +18,11 @@
 
     <!-- jQuery Validation Plugin -->
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-
+    <style>
+        label.error {
+            color: red;
+        }
+    </style>
 </head>
 
 <!------ Include the above in your HEAD tag ---------->
@@ -65,7 +69,7 @@
             <label class="col-md-4 control-label" for="price">Price</label>
             <div class="col-md-4">
                 <input id="price" th:field="*{price}" th:value="${package.price}" name="price" placeholder="Price"
-                       class="form-control input-md" required type="number">
+                       class="form-control input-md" required type="number" min="0" step="0.01">
                 <div class="alert-warning" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
             </div>
         </div>
@@ -74,7 +78,7 @@
             <div class="col-md-4">
                 <input id="duration" th:field="*{duration}" th:value="${package.duration}" name="duration"
                        placeholder="Duration"
-                       class="form-control input-md" required type="number">
+                       class="form-control input-md" required type="number" min="0" step="0.01">
                 <div class="alert-warning" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></div>
             </div>
         </div>
@@ -182,15 +186,27 @@
             // Specify validation rules
             rules: {
                 name: "required",
-                price: "required",
-                duration: "required",
+                price: {
+                    required: true,
+                    min: 0.01
+                },
+                duration: {
+                    required: true,
+                    min: 0.01
+                }
             },
 
             // Specify validation error messages
             messages: {
                 name: "Please enter name",
-                price: "Please enter price",
-                duration: "Please enter duration",
+                price: {
+                    required: "Please enter a price",
+                    min: "Price must be greater than 0"
+                },
+                duration: {
+                    required: "Please enter a duration",
+                    min: "Duration must be greater than 0"
+                }
             },
 
             // Submit form if validation passes

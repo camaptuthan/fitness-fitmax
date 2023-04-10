@@ -9,6 +9,15 @@
     <meta content="" name="description">
     <meta content="telephone=no" name="format-detection">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- jQuery Validation Plugin -->
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <style>
+        label.error {
+            color: red;
+        }
+    </style>
     <th:block th:replace="fragments/head :: head"></th:block>
 </head>
 
@@ -132,19 +141,19 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-7 col-lg-8">
-                                                        <form method="post" th:action="@{/registration/make}">
+                                                        <form id="form_registration" method="post" th:action="@{/registration/make}">
                                                             <ul class="form-cover">
                                                                 <li class="inp-name">
                                                                     <input id="id"  name="id" hidden="hidden" th:value="${id}" th:text="*{name}">
                                                                 </li>
                                                                 <li class="inp-name">
                                                                     <label>Email <span style="color: red"> *</span></label>
-                                                                    <input id="emailRegis" name="emailRegis" required="" th:text="${userEmail}" th:value="${userEmail}"
+                                                                    <input id="emailRegis" name="emailRegis" required  th:value="${userEmail}"
                                                                            type="email">
                                                                 </li>
                                                                 <li class="inp-email">
                                                                     <label>Phone <span style="color: red"> *</span></label>
-                                                                    <input id="phoneRegis" name="phoneRegis" required="" th:text="${userPhone}" th:value="${userPhone}"
+                                                                    <input id="phoneRegis" name="phoneRegis" required  th:value="${userPhone}"
                                                                            type="tel">
                                                                 </li>
                                                                 <li class="inp-text">
@@ -160,7 +169,28 @@
                                                                         handling of your data by this website.</p>
                                                                 </div>
                                                             </div>
+                                                            <script>
+                                                                $(document).ready(function () {
+                                                                    $("#form_registration").validate({
+                                                                        // Specify validation rules
+                                                                        rules: {
+                                                                            emailRegis: "required",
+                                                                            phoneRegis: "required",
+                                                                        },
 
+                                                                        // Specify validation error messages
+                                                                        messages: {
+                                                                            emailRegis: "Please enter email",
+                                                                            phoneRegis: "Please enter email",
+                                                                        },
+
+                                                                        // Submit form if validation passes
+                                                                        submitHandler: function (form) {
+                                                                            form.submit();
+                                                                        }
+                                                                    });
+                                                                });
+                                                            </script>
                                                             <div class="btn-form-cover">
                                                                 <button class="btn" id="#submit1" type="submit">submit
                                                                 </button>
