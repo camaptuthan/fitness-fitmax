@@ -14,6 +14,10 @@
 
 <body class="ttr-opened-sidebar ttr-pinned-sidebar">
 <th:block th:insert="/fragments/admin_fragment/sidebar_fragment"></th:block>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- jQuery Validation Plugin -->
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <!-- Left sidebar menu end -->
 
 <!--Main container start -->
@@ -52,7 +56,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12">
-                                    <form enctype="multipart/form-data"
+                                    <form id="form_add_class" enctype="multipart/form-data"
                                           th:attr="id='class-form-'+${item.servicesId == null ? 'new' : item.servicesId}">
                                         <div class="row">
                                             <div class="col-8">
@@ -98,7 +102,7 @@
                                                             <input aria-describedby="addon-wrapping-name"
                                                                    aria-label="Username" class="form-control"
                                                                    name="servicesName" placeholder="Class name"
-                                                                   th:value="${item.servicesName}" type="text">
+                                                                   th:value="${item.servicesName}" type="text" id="name"  required>
                                                         </div>
                                                     </div>
                                                     <div class="col-3">
@@ -108,14 +112,16 @@
                                                             <input aria-describedby="addon-wrapping-price"
                                                                    aria-label="Username" class="form-control"
                                                                    name="servicesPrice" placeholder="Price"
-                                                                   th:value="${item.servicesPrice}" type="text">
+                                                                   th:value="${item.servicesPrice}" type="number"
+                                                            min="0" step="0.01" id="price"  required>
                                                             <span class="input-group-text"
                                                                   id="addon-wrapping-$-unit">$</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row my-3">
-                                                    <div class="col-4" sec:authorize="hasAnyAuthority('ROLE01','ROLE02')">
+                                                    <div class="col-4"
+                                                         sec:authorize="hasAnyAuthority('ROLE01','ROLE02')">
                                                         <div class="input-group flex-nowrap">
                                                                 <span class="input-group-text "
                                                                       id="addon-wrapping-city">City</span>
@@ -166,7 +172,7 @@
                                                 <div class="row my-3">
                                                     <div class="col-12">
                                                         <div class="form-floating">
-                                                        <textarea class="form-control" id="floatingTextarea2"
+                                                        <textarea  class="form-control" id="floatingTextarea2"
                                                                   name="servicesDes" placeholder="Leave a comment here"
                                                                   style="height: 50rem;">[[${item.servicesDes}]]</textarea>
                                                             <label for="floatingTextarea2">Comments</label>
@@ -520,6 +526,34 @@
     </div>
 </main>
 <div class="ttr-overlay"></div>
+<script>
+    $(document).ready(function () {
+        $("#form_add_class").validate({
+            // Specify validation rules
+            rules: {
+                name: "required",
+                price: {
+                    required: true,
+                    min: 0.01
+                }
+            },
+
+            // Specify validation error messages
+            messages: {
+                name: "Please enter name",
+                price: {
+                    required: "Please enter a price",
+                    min: "Price must be greater than 0"
+                }
+            },
+
+            // Submit form if validation passes
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+    });
+</script>
 
 <!-- External JavaScripts -->
 <th:block th:insert="/fragments/admin_fragment/script"></th:block>
@@ -667,6 +701,7 @@
     }
 
 </script>
+
 <style>
     .rte-editable {
         min-height: 100% !important;

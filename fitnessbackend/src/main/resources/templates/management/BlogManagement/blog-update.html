@@ -60,8 +60,9 @@
                           th:object="${blogDTO}">
                         <fieldset disabled>
                             <div class="mb-3 row">
-                                <label class="col-sm-2 col-form-label" for="blog_author">Author</label>
-                                <div class="col-sm-10">
+                                <label class=" col-form-label" for="blog_author">Author</label>
+                                <br>
+                                <div >
                                     <input class="form-control-plaintext" disabled id="blog_author" readonly
                                            style="border-bottom-color: unset;"
                                            th:value="${authorEmail}" type="text">
@@ -94,11 +95,11 @@
                             })
 
                         </script>
-                        <div class="input-group mb-3">
+                        <div class=" mb-3">
                             <label class="form-label">Category</label>
                             <br>
                             <select class="form-select" id="category_id" name="category_id"
-                                    style="margin-left: 10px;" th:field="${blogDTO.categoryId}" th:name="category_id">
+                                     th:field="${blogDTO.categoryId}" th:name="category_id">
                                 <option th:each="cate:${catelist}" th:text="${cate.name}" th:value="${cate.id}">
                                 </option>
                             </select>
