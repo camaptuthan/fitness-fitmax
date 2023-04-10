@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fitmax</title>
+    <!-- =================== META =================== -->
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" th:href="@{/img/favicon.png}">
+    <!-- =================== STYLE =================== -->
+    <link rel="stylesheet" th:href="@{/css/slick.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-grid.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body id="home" class="page-program">
+
+<!--================ PRELOADER ================-->
+<div class="preloader-cover">
+    <div id="cube-loader">
+        <div class="caption">
+            <div class="cube-loader">
+                <div class="cube loader-1"></div>
+                <div class="cube loader-2"></div>
+                <div class="cube loader-4"></div>
+                <div class="cube loader-3"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--============== PRELOADER END ==============-->
+
+<!-- ================= HEADER ================= -->
+<div th:include="fragments/header.html"></div>
+<!-- =============== HEADER END =============== -->
+
+<!-- =============== HEADER-TITLE =============== -->
+<section class="s-header-title" style="background-image: url(/img/bg-1-min.png);">
+    <div class="container">
+        <h1 class="title">Package</h1>
+        <ul class="breadcrambs">
+            <li><a href="index.html">Home</a></li>
+            <li>Package</li>
+        </ul>
+    </div>
+</section>
+<!-- ============= HEADER-TITLE END ============= -->
+
+<section class="s-about">
+    <div class="container">
+        <img class="about-effect-tringle" th:src="@{/img/tringle-about-top.svg}" alt="img">
+        <div class="row about-row">
+            <div class="col-md-5 about-img-col">
+                <div class="about-img-cover">
+                    <div class="about-img-1">
+                        <img class="about-img-effect-1" th:src="@{/img/square-yellow.svg}" alt="img">
+                        <img class="about-img-effect-2" th:src="@{/img/group-circle-2.svg}" alt="img">
+                        <img th:src="@{/img/about-top-1.jpg}" alt="img">
+                    </div>
+                    <div class="about-img-2">
+                        <img th:src="@{/img/about-top-2.jpg}" alt="img">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7 about-info-cover">
+                <h2 class="title-decor"><span th:text = "${package.name}"></span></h2>
+                <div class="text">
+                    <p th:text="${package.des}"></p>
+                </div>
+                <ul class="about-cont">
+                    <li><i class="fa fa-phone" aria-hidden="true"></i><a th:text="${package.duration}"></a><a> Months</a></li>
+                    <li><i class="fa fa-envelope" aria-hidden="true"></i><a th:text="${package.price}"></a><a> $</a></li>
+                </ul>
+                <ul class="social-list">
+                    <li><a target="_blank" href="https://www.facebook.com/rovadex"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a target="_blank" href="https://twitter.com/RovadexStudio"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a target="_blank" href="https://www.youtube.com/"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+                    <li><a target="_blank" href="https://www.instagram.com/rovadex"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ============ S-ABOUT-PROGRAM END ============ -->
+
+<!-- ============== S-ABOUT-BOTTOM ============== -->
+<section class="s-about-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="about-bottom-item">
+                    <div class="date-cover">
+                        <div class="date">10</div>
+                        <h4>years</h4>
+                    </div>
+                    <div class="about-bottom-info">Facilis voluptas harum natus enim dolorum dolores</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="about-bottom-item">
+                    <div class="date-cover">
+                        <div class="date">27</div>
+                        <h4>trainer</h4>
+                    </div>
+                    <div class="about-bottom-info">But I must explain to you all this mistaken idea of</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="about-bottom-item">
+                    <div class="date-cover">
+                        <div class="date">18</div>
+                        <h4>club</h4>
+                    </div>
+                    <div class="about-bottom-info">Nor again is there anyone who loves or pursues or</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ============ S-ABOUT-BOTTOM END ============ -->
+
+<!-- ================== FOOTER ================== -->
+<div th:include="fragments/footer.html"></div>
+<!-- ================ FOOTER END ================ -->
+
+<!--=================== TO TOP ===================-->
+<a class="to-top" href="#home">
+    <i class="fa fa-chevron-up" aria-hidden="true"></i>
+</a>
+<!--================= TO TOP END =================-->
+
+<!--=================== SCRIPT	===================-->
+<script th:src="@{/js/jquery-2.2.4.min.js}"></script>
+<script th:src="@{/js/slick.min.js}"></script>
+<script th:src="@{/js/rx-lazy.js}"></script>
+<script th:src="@{/js/parallax.min.js}"></script>
+<script th:src="@{/js/scripts.js}"></script>
+</body>
+</html>

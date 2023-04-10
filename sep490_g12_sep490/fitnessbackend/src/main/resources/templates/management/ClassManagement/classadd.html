@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- =================== META =================== -->
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link th:href="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css}" rel="stylesheet" id="bootstrap-css">
+    <script th:src="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js}"></script>
+    <script th:src="@{//code.jquery.com/jquery-1.11.1.min.js}"></script>
+</head>
+
+<!------ Include the above in your HEAD tag ---------->
+
+<form class="form-horizontal"   th:action="@{/admin/save-class}"   th:object="${clazz}" method="post">
+    <fieldset>
+
+        <!-- Form Name -->
+
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label"  > Form Add Class</label>
+
+        </div>
+
+        <!-- Text input-->
+        <div  class="form-group">
+            <label class="col-md-4 control-label" for="name">NAME</label>
+            <div class="col-md-4">
+                <input id="name"  th:value="${clazz.name}" name="name"  placeholder="Name" class="form-control input-md"
+                       required  type="text"/>
+            </div>
+        </div>
+        <!-- Select Basic -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="service"> Service Type</label>
+            <div class="col-md-4">
+                <select id="service"  name="services" class="form-control">
+                    <option th:each="list:${list}" th:value="${list.id}"  th:text="${list.name}"  >
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="des">Description</label>
+            <div class="col-md-4">
+                <input required id="des"  name="des" th:value="${clazz.des}" placeholder=" Description" class="form-control input-md"
+                       type="text">
+
+            </div>
+
+        </div>
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="price">Price</label>
+            <div class="col-md-4">
+                <input required id="price"  th:value="${clazz.price}" name="price" placeholder="Price" class="form-control input-md"
+                       type="number">
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="duration">Duration</label>
+            <div class="col-md-4">
+                <input required id="duration" th:value="${clazz.duration}" name="duration" placeholder="Duration" class="form-control input-md"
+                       type="text">
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="filebutton">Img</label>
+            <div class="col-md-4">
+                <input id="filebutton" name="filebutton" class="input-file" type="file">
+            </div>
+        </div>
+
+        <!-- Button -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="singlebutton"></label>
+            <div class="col-md-4">
+                <button   type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Save</button>
+
+            </div>
+
+        </div>
+
+    </fieldset>
+</form>
+<script>
+
+
+</script>
+
+
+</html>
+
+
+

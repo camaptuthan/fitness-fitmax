@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Fitmax</title>
+  <!-- =================== META =================== -->
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <th:block th:insert="~{fragments/head::link}"></th:block>
+  <script th:src="@{/js/jquery-2.2.4.min.js}"></script>
+</head>
+
+<body id="home">
+<!--================ PRELOADER ================-->
+<div class="preloader-cover">
+  <div id="cube-loader">
+    <div class="caption">
+      <div class="cube-loader">
+        <div class="cube loader-1"></div>
+        <div class="cube loader-2"></div>
+        <div class="cube loader-4"></div>
+        <div class="cube loader-3"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--============== PRELOADER END ==============-->
+
+<!-- ================= HEADER ================= -->
+
+<div th:include="fragments/header.html"></div>
+<!-- =============== HEADER END =============== -->
+
+<!-- ============ S-CROSSFIT-SLIDER ============ -->
+
+<!-- ========== S-CROSSFIT-SLIDER END ========== -->
+
+<!-- ============== S-CROSSFIT END ============== -->
+
+<!-- ============== S-OUR-PROGRAMS ============== -->
+<!--<th:block th:insert="fragments/home_program"></th:block>-->
+
+<!-- ============ S-OUR-PROGRAMS END ============ -->
+
+<!-- =============== S-OUT-TRAINER =============== -->
+
+<!-- ============= S-OUT-TRAINER END ============= -->
+
+<!-- ============ S-CROSSFIT-BANNER ============ -->
+
+<!-- ========== S-CROSSFIT-BANNER END ========== -->
+
+<!-- ============== S-CLUB-CARDS ============== -->
+
+<!-- ============ S-CLUB-CARDS END ============ -->
+
+<!-- ============== S-TESTIMONIALS ============== -->
+
+<!-- ============ S-TESTIMONIALS END ============ -->
+
+<!--================ RELATED POSTS ================-->
+<section class="s-related-posts home-related-posts">
+  <div class="container">
+    <h2 class="title-decor">Studio <span>Fitness</span></h2>
+    <div class="custom-select" style="width:400px;">
+      <select>
+        <option value="0">Select City:</option>
+        <option value="1">Ha Noi</option>
+        <option value="2">Hai Phong</option>
+        <option value="3">Ho Chi Minh</option>
+
+      </select>
+    </div>
+    <p class="slogan">CLB tiên phong của Elite Fitness đáng sống bậc nhất tại Hà Nội; Elite Fitness Xuân Diệu là sự lựa chọn hoàn hảo để tận hưởng trọn vẹn không gian tập luyện đẳng cấp, cộng đồng văn minh, một nhịp sống bình yên rất Hà Nội mà không kém phần sôi động.</p>
+
+    <div class="row">
+      <div th:each="s : ${studios}" class="col-md-6 related-post-col">
+        <div class="post-item-cover">
+          <div class="post-header">
+            <div class="related-post-categ">fitness</div>
+            <div class="post-thumbnail">
+              <a href="single-blog.html"><img class="rx-lazy" src="/img/placeholder-all.png" data-src="img/blog-4.jpg" alt="img"></a>
+            </div>
+          </div>
+          <div class="post-content">
+            <div class="meta">
+              <span class="post-date"><i class="fa fa-calendar" aria-hidden="true" th:text="${s.date}"></i></span>
+            </div>
+            <h3 class="title" th:text="${s.name}"><a href="single-blog.html">Sed ut perspiciatis unde omnis</a></h3>
+            <div class="text">
+              <p th:text="${s.des}"></p>
+            </div>
+          </div>
+          <div class="post-footer">
+            <div class="meta">
+              <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a href="#" th:text="${s.district}+', '+${s.city}"></a></span>
+              <span th:text="${s.contact}" class="post-comment"><i class="fa fa-comment" aria-hidden="true"></i><a href="#">2 Comments(s)</a></span>
+            </div>
+            <a href="single-blog.html" class="btn"><span>read more</span></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!--============== RELATED POSTS END ==============-->
+
+
+<!-- ========= S-TRAINING-SCHEDULE END ========= -->
+
+<!-- ================== FOOTER ================== -->
+<section class="s-counter" style="background-image: url(/img/bg-2.jpg);">
+  <div class="mask"></div>
+  <div class="container">
+    <h2 class="title-decor">CrossFit <span>Competitions</span></h2>
+    <p class="slogan">Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor tincidunt lorem ut, venenatis dapibus miq.</p>
+    <div id="clockdiv">
+      <div class="clock-item">
+        <span class="days"></span>
+        <div class="smalltext">Days</div>
+      </div>
+      <div class="clock-item">
+        <span class="hours"></span>
+        <div class="smalltext">Hours</div>
+      </div>
+      <div class="clock-item">
+        <span class="minutes"></span>
+        <div class="smalltext">Minutes</div>
+      </div>
+      <div class="clock-item">
+        <span class="seconds"></span>
+        <div class="smalltext">Seconds</div>
+      </div>
+    </div>
+    <form class="subscribe-form">
+      <input class="inp-form" type="email" name="subscribe" placeholder="Your E-mail">
+      <button type="submit" class="btn">Subscribe</button>
+    </form>
+  </div>
+</section>
+<!-- ================== FOOTER ================== -->
+
+<!-- ================== FOOTER ================== -->
+
+<div th:include="fragments/footer.html"></div>
+<!-- ================ FOOTER END ================ -->
+
+<!--=================== TO TOP ===================-->
+<a class="to-top" href="#home">
+  <i class="fa fa-chevron-up" aria-hidden="true"></i>
+</a>
+<!--================= TO TOP END =================-->
+
+<!--=================== SCRIPT	===================-->
+
+<script th:src="@{/js/slick.min.js}"></script>
+<script th:src="@{/js/rx-lazy.js}"></script>
+<script th:src="@{/js/parallax.min.js}"></script>
+<script th:src="@{/js/scripts.js}"></script>
+
+</body>
+
+</html>

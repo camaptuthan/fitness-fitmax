@@ -1,0 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<!--th:style="'background-image: url(' + @{/img/landing-background.jpg} + ')-->
+<!--style="background-image: url(/static/img/bg-programs.jpg);-->
+<div class="s-our-programs" style="background-image: url(/img/bg-programs.jpg);">
+    <div class="mask"></div>
+    <div class="our-programs-effect" style="background-image: url(/img/bg-programs.svg);"></div>
+    <div class="container">
+        <h2 class="title-decor">Our <span>Service</span></h2>
+        <p class="slogan">Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor tincidunt lorem ut, venenatis dapibus miq.</p>
+        <div class="row">
+
+            <div th:each="list: ${list}" class="col-sm-6 col-md-3 program-col">
+                <div class="program-item">
+                    <div class="program-item-front" style="background-image: url(/img/programs-1.jpg);">
+                        <div class="program-item-inner">
+                            <h3 th:text="${list.name}"></h3>
+                        </div>
+                    </div>
+                    <div class="program-item-back" style="background-image: url(/static/img/programs-1.jpg);">
+                        <div class="program-item-inner">
+                            <h3 th:text="${list.name}"></h3>
+                            <a href="program.html" class="btn">More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

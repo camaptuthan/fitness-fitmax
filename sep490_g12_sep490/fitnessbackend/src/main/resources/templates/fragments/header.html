@@ -1,0 +1,92 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<header class="header">
+    <a href="#" class="nav-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </a>
+    <div class="top-panel">
+        <div class="container">
+            <div class="header-left">
+                <ul class="header-cont">
+                    <li><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:18004886040">1-800-488-6040</a></li>
+                    <li><i class="fa fa-clock-o" aria-hidden="true"></i>Mon - Fri: 8:00AM - 7:00PM | Sat - Sun: Closed
+                    </li>
+                </ul>
+            </div>
+            <div class="header-right">
+                <form class="search-form">
+                    <input type="search" class="search-form__field" placeholder="Search" value="" name="s">
+                    <button type="submit" class="search-form__submit"><i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </form>
+                <div class="btn-group mx-2">
+                    <a class="btn-sm dropdown-toggle p-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/user/profile">Profile</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                    </ul>
+                </div>
+                <ul class="social-list">
+                    <li><a target="_blank" href="https://www.facebook.com/rovadex"><i class="fa fa-facebook"
+                                aria-hidden="true"></i></a></li>
+                    <li><a target="_blank" href="https://twitter.com/RovadexStudio"><i class="fa fa-twitter"
+                                aria-hidden="true"></i></a></li>
+                    <li><a target="_blank" href="https://www.youtube.com/"><i class="fa fa-youtube"
+                                aria-hidden="true"></i></a></li>
+                    <li><a target="_blank" href="https://www.instagram.com/rovadex"><i class="fa fa-instagram"
+                                aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="header-menu">
+        <div class="container">
+            <div class="header-logo">
+                <a class="logo" href="/"><img th:src="@{/img/logo.svg}" alt="logo" /></a>
+            </div>
+
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li class="dropdown">
+                        <a href="/">HOMEPAGE <i class="fa fa-caret-down"></i></a>
+                        <ul>
+                            <li class="menu-active"><a href="index-2.html">Crossfit</a></li>
+                            <li><a href="home-fitness.html">Fitness</a></li>
+                            <li><a href="home-crossfit-lite.html">Crossfit Lite</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/service">Services</a></li>
+                    <li class="dropdown">
+                        <a href="#">NEWS <i class="fa fa-caret-down"></i></a>
+                        <ul>
+                            <li><a href="/program">PROGRAM</a></li>
+                            <li><a href="/trainer">TRAINER</a></li>
+                            <li><a href="/blog">BLOG</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/">SCHEDULE</a></li>
+                    <li><a href="/register">TRIAL PRACTICE</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <style>
+        .dropdown-menu {
+            background-color: #202020;
+        }
+
+        .dropdown-menu .dropdown-item {
+            color: #fff;
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+            color: #f23849;
+            background-color: #202020;
+        }
+    </style>
+</header>

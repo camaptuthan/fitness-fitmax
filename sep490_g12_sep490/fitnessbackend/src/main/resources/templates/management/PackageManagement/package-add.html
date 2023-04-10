@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- =================== META =================== -->
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link th:href="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css}" rel="stylesheet"
+          id="bootstrap-css">
+    <script th:src="@{//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js}"></script>
+    <script th:src="@{//code.jquery.com/jquery-1.11.1.min.js}"></script>
+</head>
+
+<!------ Include the above in your HEAD tag ---------->
+
+<form class="form-horizontal" th:action="@{/package/save-package}" method="post" th:object="${packagenew}">
+    <fieldset>
+
+        <!-- Form Name -->
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label">Add Package</label>
+        </div>
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="name">Name</label>
+            <div class="col-md-4">
+                <input id="name" name="name" th:field="*{name}" th:value="${packagenew.name}" placeholder="Name"
+                       class="form-control input-md" type="text">
+                <div class="alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            </div>
+        </div>
+
+        <!-- Select Basic -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="des">Description</label>
+            <div class="col-md-4">
+                <input id="des" name="des" th:value="${packagenew.des}" placeholder=" Description"
+                       class="form-control input-md" type="text">
+            </div>
+        </div>
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="price">Price</label>
+            <div class="col-md-4">
+                <input id="price" th:field="*{price}" th:value="${packagenew.price}" name="price" placeholder="Price"
+                       class="form-control input-md" type="text">
+                <div class="alert-warning" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="duration">Duration</label>
+            <div class="col-md-4">
+                <input id="duration" th:field="*{duration}" th:value="${packagenew.duration}" name="duration" placeholder="Duration"
+                       class="form-control input-md" type="text">
+                <div class="alert-warning" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="singlebutton"></label>
+            <div class="col-md-4">
+                <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+</html>

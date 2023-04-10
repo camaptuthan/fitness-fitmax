@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <link crossorigin="anonymous"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" data-target="#collapsibleNavbar" data-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h1 class="text-center"> Create New Studio </h1>
+            <div class="card-body">
+                <form method="POST" th:action="@{/studios}" th:object="${studio}">
+                    <div class="form-group">
+                        <label> Studio Name </label>
+                        <input
+                                class="form-control"
+                                name="name"
+                                required=""
+                                placeholder="Enter Studio Name"
+                                th:field="*{name}"
+                                type="text"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="manager"> Manager</label>
+                        <div class="">
+                            <select id="manager"  name="manager" class="form-control">
+                                <option th:each="list:${list}" th:value="${list.email}"  th:text="${list.email}"  >
+
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label> Studio City </label>
+                        <input
+                                required=""
+                                class="form-control"
+                                name="city"
+                                placeholder="Enter Student Last Name"
+                                th:field="*{city}"
+                                type="text"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label> District </label>
+                        <input
+                                required=""
+                                class="form-control"
+                                name="district"
+                                placeholder="Enter studio district"
+                                th:field="*{district}"
+                                type="text"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label> Contact </label>
+                        <input
+                                class="form-control"
+                                name="contact"
+                                placeholder="Enter contact"
+                                th:field="*{contact}"
+                                type="tel" id="phone"
+                                pattern="[0]{1}[0-9]{9}"
+                                required
+                                oninvalid="this.setCustomValidity('Enter Phone number')"
+                                oninput="this.setCustomValidity('')"
+                        />
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <input
+                                class="form-control"
+                                hidden="true"
+                                name="contact"
+                                placeholder="Enter contact"
+                                th:field="*{id}"
+                                type="text"
+                        />
+                    </div>
+                    <div class="form-group">
+
+<!--                        <input-->
+<!--                                class="form-control"-->
+<!--                                hidden="fasle"-->
+<!--                                name="date"-->
+<!--                                placeholder="Enter date"-->
+<!--                                th:field="*{date}"-->
+<!--                                th:text="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}"-->
+<!--                                th:value="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}"-->
+<!--                                type="date"-->
+<!--                        />-->
+<!--                    </div>-->
+
+                        <input
+                                class="form-control"
+                                hidden="true"
+                                name="contact"
+                                placeholder="Enter contact"
+                                th:field="*{status}"
+                                type="text"
+                                value="true"
+                        />
+                    </div>
+                    <!--						<div class ="form-group">-->
+
+                    <!--							<input-->
+                    <!--									hidden="true"-->
+                    <!--									type = "text"-->
+                    <!--									name = "contact"-->
+                    <!--									th:field = "*{manager}"-->
+                    <!--									class = "form-control"-->
+                    <!--									placeholder="Enter contact"-->
+                    <!--							/>-->
+                    <!--						</div>-->
+                    <div class="box-footer">
+                        <button class="btn btn-primary" type="submit">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

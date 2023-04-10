@@ -1,0 +1,49 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<section id="training-schedule" class="s-training-schedule p-0 pb-5" style="background-image: url(/static/img/bg-table-1.svg);">
+    <div class="container">
+        <h2 class="title-decor">Class <span>Schedule</span></h2>
+        <p class="slogan">Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor
+            tincidunt lorem ut, venenatis dapibus miq.</p>
+
+
+        <div class="training-schedule-cover">
+            <h6 class="training-schedule-top " style="height: 5.25rem">
+                <nav class="nav-menu position-absolute">
+                    <ul class="nav-list my-4">
+                        <li class="dropdown">
+                            <a>Select Time<i class="fa fa-caret-down"></i></a>
+                            <ul id="list-year" style="min-width: 125px">
+
+                            </ul>
+                        </li>
+                        <li>
+                            <a id="current-year">current year</a>
+                        </li>
+                        <li class="dropdown">
+                            <a>Select Time<i class="fa fa-caret-down"></i></a>
+                            <ul id="list-week" style="min-width: 140px; max-height: 300px; overflow: auto;">
+
+                            </ul>
+                        </li>
+                        <li style="display: inherit">
+                            <a id="start-week">start week</a>to<a id="end-week">end week</a>
+                        </li>
+                    </ul>
+                </nav>
+            </h6>
+            <div class="training-schedule-table">
+                <table id="schedule-table">
+                    <thead id="schedule-header">
+                    
+                    </thead>
+                    <tbody id="schedule-body">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script th:src="@{/js/schedule-script2.js}"></script>

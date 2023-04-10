@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fitmax - Trainer</title>
+    <!-- =================== META =================== -->
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <th:block th:insert="~{fragments/head::link}"></th:block>
+</head>
+
+<body id="home" class="page-trainer">
+<!--================ PRELOADER ================-->
+<div class="preloader-cover">
+    <div id="cube-loader">
+        <div class="caption">
+            <div class="cube-loader">
+                <div class="cube loader-1"></div>
+                <div class="cube loader-2"></div>
+                <div class="cube loader-4"></div>
+                <div class="cube loader-3"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--============== PRELOADER END ==============-->
+
+<!-- ================= HEADER ================= -->
+<div th:include="fragments/header.html"></div>
+<!-- =============== HEADER END =============== -->
+
+<!-- =============== HEADER-TITLE =============== -->
+<section class="s-header-title" style="background-image: url(static/img/bg-1-min.png);">
+    <div class="container">
+        <h1 class="title">Trainer</h1>
+        <ul class="breadcrambs">
+            <li><a href="index-2.html">Home</a></li>
+            <li>Trainer</li>
+        </ul>
+    </div>
+</section>
+<!-- ============= HEADER-TITLE END ============= -->
+
+<!-- ============= HEADER-TITLE END ============= -->
+<section class="s-our-trainer">
+    <div class="container">
+        <img class="about-effect-tringle" th:src="@{/img/tringle-about-top.svg}" alt="img">
+        <h2 class="title-decor">Our <span>Trainer</span></h2>
+        <p class="slogan">Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor tincidunt lorem ut, venenatis dapibus miq.</p>
+        <div class="row our-trainer-row">
+            <div class="col-md-5 trainer-img-col">
+                <div class="trainer-img-cover">
+                    <img class="our-trainer-effect-1" th:src="@{/img/line-red-1.svg}" alt="img">
+                    <img class="our-trainer-effect-2" th:src="@{/img/line-red-2.svg}" alt="img">
+                    <img class="our-trainer-effect-3" th:src="@{/img/square-yellow.svg}" alt="img">
+                    <img class="our-trainer-img" th:src="@{/img/image-1.jpg}" alt="img">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="our-trainer-info">
+                    <h3 class="name">Keir Prestonly</h3>
+                    <div class="prof">Co-Founder</div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</p>
+                    <ul class="social-list">
+                        <li><a target="_blank" href="https://www.facebook.com/rovadex"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a target="_blank" href="https://twitter.com/RovadexStudio"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a target="_blank" href="https://www.youtube.com/"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+                        <li><a target="_blank" href="https://www.instagram.com/rovadex"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ============= HEADER-TITLE END ============= -->
+
+<!-- ============= S-TRAINER-AWARDS ============= -->
+<section class="s-trainer-awards" style="background-image: url(static/img/bg-2.jpg);">
+    <div class="mask"></div>
+    <img class="trainer-awards-effect" th:src="@{/img/bg-competitions.svg}" alt="effect">
+    <div class="container">
+        <h2 class="title-decor">Trainer's <span>Awards</span></h2>
+        <p class="slogan">Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor tincidunt lorem ut, venenatis dapibus miq.</p>
+        <div class="row">
+            <div class="col-sm-6 col-lg-3 trainer-award-col">
+                <i class="fa fa-users" aria-hidden="true"></i>
+                <h3>body bulding</h3>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem</p>
+            </div>
+            <div class="col-sm-6 col-lg-3 trainer-award-col">
+                <i class="fa fa-trophy" aria-hidden="true"></i>
+                <h3>lorem ipsum</h3>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem</p>
+            </div>
+            <div class="col-sm-6 col-lg-3 trainer-award-col">
+                <i class="fa fa-area-chart" aria-hidden="true"></i>
+                <h3>dolor sit amet</h3>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem</p>
+            </div>
+            <div class="col-sm-6 col-lg-3 trainer-award-col">
+                <i class="fa fa-motorcycle" aria-hidden="true"></i>
+                <h3>etiam aliquam</h3>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- =========== S-TRAINER-AWARDS END =========== -->
+
+<!-- =========== S-TRAINING-SCHEDULE =========== -->
+<!--<div th:include="fragments/management/"></div>-->
+<!-- ========= S-TRAINING-SCHEDULE END ========= -->
+
+<!-- ============== S-TESTIMONIALS ============== -->
+<section class="s-testimonials testimonials-border" style="background-image: url(static/img/bg-testimonials.jpg);">
+    <div class="mask"></div>
+    <img class="testimonials-effect" th:src="@{/img/bg-testi-2.svg}" alt="effect">
+    <div class="container">
+        <div class="testimonials-slider">
+            <div class="testimonial-slide">
+                <img th:src="@{/img/testimonials-1.png}" alt="img">
+                <h3 class="name">Anna Piters</h3>
+                <div class="prof">our client</div>
+                <p>“Phasellus vestibulum nec dolor quis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus gravida magna sit amet euismod lacinia. Lorem ipsum dolor sit amet, consectetur adipiscing elit”</p>
+            </div>
+            <div class="testimonial-slide">
+                <img th:src="@{/img/testimonials-2.png}" alt="img">
+                <h3 class="name">Mark Klark</h3>
+                <div class="prof">our client</div>
+                <p>“Phasellus vestibulum nec dolor quis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus gravida magna sit amet euismod lacinia.”</p>
+            </div>
+            <div class="testimonial-slide">
+                <img th:src="@{/img/testimonials-3.png}" alt="img">
+                <h3 class="name">Kat Smith</h3>
+                <div class="prof">our client</div>
+                <p>“Phasellus vestibulum nec dolor quis varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus gravida magna sit amet euismod lacinia. Lorem ipsum dolor sit amet, consectetur adipiscing elit”</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ============ S-TESTIMONIALS END ============ -->
+
+<!-- ============== S-BEST-TRAINER ============== -->
+<section class="s-best-trainer">
+    <div class="container">
+        <h2 class="title-decor">Best <span>Trainer</span></h2>
+        <p class="slogan">Maecenas consequat ex id lobortis venenatis. Mauris id erat enim. Morbi dolor dolor, auctor tincidunt lorem ut, venenatis dapibus miq.</p>
+    </div>
+    <div class="best-trainer-slider">
+        <a href="trainer.html" class="best-trainer-slide">
+            <div class="best-trainer-img">
+                <img th:src="@{/img/single-1.jpg}" alt="img">
+            </div>
+            <h3 class="name">Samanta</h3>
+            <h3 class="surname">Piters</h3>
+            <div class="prof">weightlifting</div>
+        </a>
+        <a href="trainer.html" class="best-trainer-slide">
+            <div class="best-trainer-img">
+                <img th:src="@{/img/single-2.jpg}" alt="img">
+            </div>
+            <h3 class="name">Artur</h3>
+            <h3 class="surname">Piters</h3>
+            <div class="prof">weightlifting</div>
+        </a>
+        <a href="trainer.html" class="best-trainer-slide">
+            <div class="best-trainer-img">
+                <img th:src="@{/img/single-3.jpg}" alt="img">
+            </div>
+            <h3 class="name">Kim</h3>
+            <h3 class="surname">Piters</h3>
+            <div class="prof">weightlifting</div>
+        </a>
+        <a href="trainer.html" class="best-trainer-slide">
+            <div class="best-trainer-img">
+                <img th:src="@{/img/single-4.jpg}" alt="img">
+            </div>
+            <h3 class="name">Sam</h3>
+            <h3 class="surname">Piters</h3>
+            <div class="prof">weightlifting</div>
+        </a>
+        <a href="trainer.html" class="best-trainer-slide">
+            <div class="best-trainer-img">
+                <img th:src="@{/img/single-5.jpg}" alt="img">
+            </div>
+            <h3 class="name">Anna</h3>
+            <h3 class="surname">Piters</h3>
+            <div class="prof">weightlifting</div>
+        </a>
+    </div>
+</section>
+<!-- ============ S-BEST-TRAINER END ============ -->
+
+<!-- ================== FOOTER ================== -->
+<div th:include="fragments/footer.html"></div>
+<!-- ================ FOOTER END ================ -->
+
+<!--=================== TO TOP ===================-->
+<a class="to-top" href="#home">
+    <i class="fa fa-chevron-up" aria-hidden="true"></i>
+</a>
+<!--================= TO TOP END =================-->
+
+<!--=================== SCRIPT	===================-->
+<script th:src="@{/js/jquery-2.2.4.min.js}"></script>
+<script th:src="@{/js/slick.min.js}"></script>
+<script th:src="@{/js/scripts.js}"></script>
+</body>
+
+</html>

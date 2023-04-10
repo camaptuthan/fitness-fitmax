@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Studio Management</title>
+    <link crossorigin="anonymous"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" data-target="#collapsibleNavbar" data-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h1 class="text-center"> Create New Studio </h1>
+            <div class="card-body">
+                <form method="POST" name="updatestudio" th:action="@{/studioupdate/{id} (id=${studio.id})}" th:object="${studio}">
+                    <div class="form-group">
+                        <label> Studio Name </label>
+                        <input
+                                class="form-control"
+                                name="name"
+                                placeholder="Enter Studio Name"
+                                th:field="*{name}"
+                                type="text"
+                                required=""
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label> Studio City </label>
+                        <input
+                                class="form-control"
+                                name="city"
+                                placeholder="Enter Student Last Name"
+                                th:field="*{city}"
+                                type="text"
+                                required=""
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label> District </label>
+                        <input
+                                class="form-control"
+                                name="district"
+                                placeholder="Enter studio district"
+                                th:field="*{district}"
+                                type="text"
+                                required=""
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label> Contact </label>
+                        <input
+                                class="form-control"
+                                name="contact"
+                                placeholder="Mobile Number (10 digits only)"
+                                th:field="*{contact}"
+                                type="tel" id="phone"
+                                pattern="[0]{1}[0-9]{9}"
+                                required
+                                oninvalid="this.setCustomValidity('Enter Phone number')"
+                                oninput="this.setCustomValidity('')">
+
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('contact')}" th:errors="*{contact}" />
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <input
+                                class="form-control"
+                                hidden="true"
+                                name="id"
+                                placeholder="Enter id"
+                                th:field="*{id}"
+                                type="text" />
+
+                    </div>
+                    <!--						<div class ="form-group">-->
+
+                    <!--							<input-->
+
+                    <!--									type = "date"-->
+                    <!--									name = "date"-->
+                    <!--									th:field = "*{date}"-->
+                    <!--									class = "form-control"-->
+                    <!--									placeholder="Enter date"-->
+                    <!--							/>-->
+                    <!--						</div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label> Status </label>-->
+<!--                        <input-->
+<!--                                class="form-control"-->
+<!--                                name="1status"-->
+<!--                                placeholder="Enter contact"-->
+<!--                                th:field="*{status}"-->
+<!--                                type="text"-->
+<!--                        />-->
+<!--                    </div>-->
+                    <div class="form-group">
+                    <label> Status </label>
+                    <div>
+                        <input th:type="radio" th:value="true"
+                               th:checked="*{status}" name = "status" th:field="*{status}"/>
+                        Active
+                        <input th:type="radio" th:value="false"
+                               th:checked="*{status==false}" th:field="*{status}" name = "status" />
+                        Inactive
+                    </div>
+                    </div>
+                    <!--						<div class ="form-group">-->
+
+                    <!--							<input-->
+                    <!--									hidden="true"-->
+                    <!--									type = "text"-->
+                    <!--									name = "contact"-->
+                    <!--									th:field = "*{manager}"-->
+                    <!--									class = "form-control"-->
+                    <!--									placeholder="Enter contact"-->
+                    <!--							/>-->
+                    <!--						</div>-->
+                    <div class="form-group">
+                        <label> Description </label>
+
+                        <textarea
+                                class="form-control"
+                                name="description"
+                                placeholder="Enter description"
+                                th:field="*{des}"
+                                rows ="5"
+                                type="textarea"
+                        />
+
+                    </div>
+                    <div class="box-footer">
+                        <button class="btn btn-primary" type="submit" onclick="phonenumber(document.updatestudio.contact)">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

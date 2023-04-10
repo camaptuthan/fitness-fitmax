@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fitmax</title>
+    <!-- =================== META =================== -->
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" th:href="@{/img/favicon.png}">
+    <!-- =================== STYLE =================== -->
+    <link rel="stylesheet" th:href="@{/css/slick.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-grid.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body id="home">
+
+<!--================ PRELOADER ================-->
+<div class="preloader-cover">
+    <div id="cube-loader">
+        <div class="caption">
+            <div class="cube-loader">
+                <div class="cube loader-1"></div>
+                <div class="cube loader-2"></div>
+                <div class="cube loader-4"></div>
+                <div class="cube loader-3"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--============== PRELOADER END ==============-->
+
+<!-- ================= HEADER ================= -->
+<div th:include="fragments/header.html"></div>
+<!-- =============== HEADER END =============== -->
+
+<section class="s-crossfit">
+    <div class="container">
+        <img th:src="@{/img/placeholder-all.png}" data-src="/img/group-circle-2.svg" alt="img"
+             class="crossfit-icon-1 rx-lazy">
+        <img th:src="@{/img/placeholder-all.png}" data-src="/img/line-red-1.svg" alt="img"
+             class="crossfit-icon-2 rx-lazy">
+        <img th:src="@{/img/placeholder-all.png}" data-src="/img/tringle-about-top.svg" alt="img"
+             class="crossfit-icon-3 rx-lazy">
+        <h2 class="title-decor">Welcome To <span>Fitmax </span></h2>
+        <p class="slogan">Package List</p>
+        <div class="row" >
+            <div class="col-md-4 crossfit-col" th:each="package: ${packageList}">
+                <div class="crossfit-item">
+                    <img class="rx-lazy" th:src="@{/img/placeholder-all.png}" data-src="/img/serv-1.svg" alt="img">
+                    <h3 th:text="${package.name}"></h3>
+                    <p th:text="${package.des}"></p>
+                    <a class="btn" th:href="@{'/package/package_detail/'+${package.getId()}}">view detail</a>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <br/>
+        <a class="btn" th:href="@{'/package/add-package'}">Add</a>
+    </div>
+</section>
+
+<!-- ================== FOOTER ================== -->
+<div th:include="fragments/footer.html"></div>
+<!-- ================ FOOTER END ================ -->
+
+<!--=================== TO TOP ===================-->
+<a class="to-top" href="#home">
+    <i class="fa fa-chevron-up" aria-hidden="true"></i>
+</a>
+<!--================= TO TOP END =================-->
+
+<!--=================== SCRIPT	===================-->
+<script th:src="@{/js/jquery-2.2.4.min.js}"></script>
+<script th:src="@{/js/slick.min.js}"></script>
+<script th:src="@{/js/rx-lazy.js}"></script>
+<script th:src="@{/js/parallax.min.js}"></script>
+<script th:src="@{/js/scripts.js}"></script>
+</body>
+</html>

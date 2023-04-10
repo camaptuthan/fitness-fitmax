@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<section class="s-training-schedule p-0 pb-5"
+         style="background-image: url(assets/img/bg-table-1.svg);">
+    <div class="container">
+        <div class="training-schedule-cover">
+            <div class="training-schedule-table">
+                <table id="registration-table" class="table table-bordered table-hover">
+                    <thead>
+                    <th>#</th>
+                    <th>Service Name</th>
+                    <th>Registration Date</th>
+                    <th>Status</th>
+                    </thead>
+                    <tbody>
+                    <!--                    <th:block th:each="registration : ${registrations}">-->
+                    <!--                        <tr>-->
+                    <!--                            <td th:text="${registration.id}">9-00</td>-->
+                    <!--                            <td>-->
+                    <!--                                <h4>-->
+                    <!--                                    <a href="" th:text="${registration.servicesName}"></a>-->
+                    <!--                                </h4>-->
+                    <!--                            </td>-->
+                    <!--                            <td>-->
+                    <!--                                <div class="date" th:text="${registration.date}">9-00 – 11:00</div>-->
+                    <!--                            </td>-->
+                    <!--                            <td>-->
+                    <!--                                <div class="name text-light"-->
+                    <!--                                     th:text="${registration.isStatus()?'Current':'Expired'}">Mark-->
+                    <!--                                    Klark-->
+                    <!--                                </div>-->
+                    <!--                            </td>-->
+                    <!--                        </tr>-->
+                    <!--                    </th:block>-->
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "http://localhost:8080/user/profile/registration",
+            type: "GET",
+            success: function (data) {
+                console.log(data);
+                const registrationTable = $('#registration-table');
+                let body = `<thead>
+                    <th>#</th>
+                    <th>Service Name</th>
+                    <th>Registration Date</th>
+                    <th>Status</th>
+                    </thead>
+                    <tbody>`;
+                data.forEach((registration, index) => {
+                    body += `<tr>
+                            <td>${registration.id}</td>
+                            <td>
+                                <h4>
+                                    <a href="">${registration.servicesName}</a>
+                                </h4>
+                            </td>
+                            <td>
+                                <div class="date">${registration.date}</div>
+                            </td>
+                            <td>
+                                <div class="name text-light">
+                                    ${registration.status ? 'Current' : 'Expired'}
+                                </div>
+                            </td>
+                        </tr>`;
+                });
+                body += `</tbody>`;
+                registrationTable.html(body);
+            }
+        });
+    });
+</script>
+</body>
+</html>
