@@ -1,5 +1,6 @@
 package fivemonkey.com.fitnessbackend.controller;
 
+import fivemonkey.com.fitnessbackend.configuration.ImageUploader;
 import fivemonkey.com.fitnessbackend.configuration.ModelMapperConfiguration;
 import fivemonkey.com.fitnessbackend.dto.CategoryDTO;
 import fivemonkey.com.fitnessbackend.dto.CityDTO;
@@ -16,6 +17,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -25,7 +27,8 @@ public class StudioController {
 
     @Autowired
     private StudioService studioService;
-
+    @Autowired
+    private ImageUploader imageUploader;
     @Autowired
     private UserService userService;
 
@@ -161,7 +164,7 @@ public String homepageStudioDetail(@PathVariable("id") String id, Model model, @
     //Update Studio Post
     @PostMapping("management/studioupdate")
     public String updateStudio(@ModelAttribute("studioDTO") StudioDTO studio,
-                               Model model) {
+                               Model model,@RequestParam("fileImage") MultipartFile multipartFile) {
         // get studio from database by id
         Studio existingStudio = studioService.getStudioByStudioId(studio.getId());
         existingStudio.setName(studio.getName());
@@ -177,7 +180,8 @@ public String homepageStudioDetail(@PathVariable("id") String id, Model model, @
     //Add Studio Post
     @PostMapping("/management/poststudio")
     public String saveStudio( @ModelAttribute("studio") StudioDTO studioDTO , Model model, @RequestParam(value = "city", required =false, defaultValue = "") String city,
-                              @RequestParam(value = "", required =false, defaultValue = "") String district) {
+                              @RequestParam(value = "", required =false, defaultValue = "") String district,
+                              @RequestParam("fileImage") MultipartFile multipartFile) {
         Studio studio = new Studio();
         studio.setStatus(true);
         studio.setName(studioDTO.getName());
@@ -186,16 +190,15 @@ public String homepageStudioDetail(@PathVariable("id") String id, Model model, @
         studio.setDate(new Date());
         studio.setAddress(studioDTO.getAddress());
         studio.setImage(studioDTO.getImage());
+        if (multipartFile.isEmpty()) {
+            studio.setImage("https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_package_default.jpg?alt=media&token=d96f81d3-65fc-43ac-be80-b8c9b6f55951");
+        } else {
+            studio.setImage(imageUploader.upload(multipartFile));
+        }
 
         //New District
         District district1 = districtService.getDistrictByDistrictId(studioDTO.getDistrictName());
-        System.out.println(district1.getId()+" "+district1.getName()+" "+district1.getCity().getName());
-//        district1.setName(studioDTO.getDistrictName());
-//        City city1 = cityService.getCityByName(studioDTO.getDistrictCityName());
-//        district1.setCity(city1);
         studio.setDistrict(district1);
-
-
         studioService.saveStudio(studio);
         return "redirect:/studio/management/studios";
     }

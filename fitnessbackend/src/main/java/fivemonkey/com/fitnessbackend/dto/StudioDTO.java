@@ -27,6 +27,5 @@ public class StudioDTO {
     private boolean status;
 
     private String managerEmail;
-
     private String image;
 }

@@ -4,6 +4,7 @@ import fivemonkey.com.fitnessbackend.dto.*;
 import fivemonkey.com.fitnessbackend.entities.*;
 import fivemonkey.com.fitnessbackend.dto.UserDTO;
 import fivemonkey.com.fitnessbackend.configuration.ImageUploader;
+import fivemonkey.com.fitnessbackend.repository.UserRepository;
 import fivemonkey.com.fitnessbackend.security.UserDetail;
 import fivemonkey.com.fitnessbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Controller
@@ -61,6 +59,8 @@ public class UserController {
 
     @Autowired
     private DistrictService districtService;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/management/listusers")
     public String listUser(Model model, @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword
@@ -438,6 +438,40 @@ public class UserController {
     public String myRegistrations(@AuthenticationPrincipal UserDetail userDetail, Model model) {
         model.addAttribute("registrations", registrationService.getRegistrationsByUserEmail(userDetail.getUser().getEmail()));
         return "user/registration";
+    }
+
+    //Add Manager
+    @GetMapping("/management/addmanager")
+    public String newManager(@AuthenticationPrincipal UserDetail userDetail, Model model){
+        User user = new User();
+        List<StudioDTO> studioList = studioService.listNonManagerStudio();
+        model.addAttribute("user", user);
+        model.addAttribute("studioList", studioList);
+        return "./management/UserManagement/add_user";
+    }
+
+    //Add Studio Manager Post
+    @PostMapping("/management/poststudiomanager")
+    public String saveStudioManager(@ModelAttribute("user") UserDTO userdto,
+                                    @RequestParam("studio") String studioId,
+                                    @RequestParam("fileImage") MultipartFile multipartFile) {
+        Role role = roleService.getRoleAdmin().get(0);
+        User user = new User();
+        user.setRole(role);
+        Studio studio = studioService.getStudioById(studioId);
+        user.setStudio(studio);
+        if (multipartFile.isEmpty()) {
+            user.setAvatar("https://firebasestorage.googleapis.com/v0/b/fitness-fitmax-01.appspot.com/o/gym_package_default.jpg?alt=media&token=d96f81d3-65fc-43ac-be80-b8c9b6f55951");
+        } else {
+            user.setAvatar(imageUploader.upload(multipartFile));
+        }
+        user.setEmail(userdto.getEmail());
+        user.setDate(new Date());
+        user.setFirstName("Manager");
+        user.setLastName(studioId);
+        user.setPhone(userdto.getPhone());
+        userRepository.save(user);
+        return "redirect:/user/management/add_user";
     }
 
 }

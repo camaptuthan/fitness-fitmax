@@ -47,11 +47,9 @@ public class StudioService  {
     //remove
 
         
-    public StudioDTO getStudioByStudioManager(String email) {
-
-        return modelMapper.map(studioRepository.findStudioByStudioManager(email), StudioDTO.class);
+    public List<StudioDTO> getStudioByStudioManager(String email) {
+        return modelMapper.mapList(studioRepository.findStudioByStudioManager(email), StudioDTO.class);
     }
-
         
     public StudioDTO getStudioDTOById(String id) {
         return modelMapper.map(studioRepository.findStudioById(id), StudioDTO.class);
@@ -202,6 +200,10 @@ public class StudioService  {
         
     public List<StudioDTO> listStudioByService(String servicesId) {
         return modelMapper.mapList(servicesRepository.listStudioByService(servicesId),StudioDTO.class);
+    }
+
+    public List<StudioDTO> listNonManagerStudio() {
+        return modelMapper.mapList(studioRepository.getNonManagerStudio(),StudioDTO.class);
     }
 
 }

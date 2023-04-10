@@ -21,7 +21,7 @@ public interface StudioRepository extends JpaRepository<Studio, String> {
     List<Studio> findStudioByCityName(String cityname);
 
     @Query("select u.studio from User u where u.email = ?1")
-    Studio findStudioByStudioManager(String email);
+    List<Studio> findStudioByStudioManager(String email);
 
     @Query("select s from Studio s where s.id = ?1")
     Studio findStudioById(String id);
@@ -45,7 +45,8 @@ public interface StudioRepository extends JpaRepository<Studio, String> {
     @Query("select s.id, s.name from Studio s where s.district.id = ?1")
     Studio findCityStudioByDistrict(Long id);
 
-
+    @Query("select s from Studio s where s.id not in (select u.studio.id from User u where u.studio.id != '')")
+    List<Studio> getNonManagerStudio();
 
 
 }

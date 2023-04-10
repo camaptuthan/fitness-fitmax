@@ -130,7 +130,28 @@
                                 type="textarea"
                         />    </textarea>
                     </div>
-
+                    <div class="form-group" style="display: flex; align-items: center; justify-content: center;">
+                        <div class="col-md-4">
+                            <label class="btn btn-primary" for="fileImage">Upload
+                                Studio Image</label>
+                            <input accept="image/jpeg, image/png" class="form-control-file" id="fileImage"
+                                   name="fileImage"
+                                   style="display: none" type="file"/>
+                            <div id="up-img">
+                                <img th:src="${images}" style="width: 800px; height: 600px">
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        $("#fileImage").on("change", () => {
+                            const file = $("#fileImage")[0].files[0];
+                            const reader = new FileReader();
+                            reader.onload = () => {
+                                $("#up-img").html(`<img src="${reader.result}" alt="img" style="width: 800px; height: 600px">`);
+                            }
+                            reader.readAsDataURL(file);
+                        })
+                    </script>
                     <div class="box-footer">
                         <button class="btn btn-primary" type="submit">
                             Submit

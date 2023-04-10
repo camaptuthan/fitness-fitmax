@@ -70,7 +70,6 @@ public class UserService {
         return userRepository.save(user);
     }
 
-
     public User update(UserDTO u) {
         try {
             User user = userRepository.getUserByEmail(u.getEmail());
